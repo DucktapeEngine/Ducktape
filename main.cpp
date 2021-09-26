@@ -1,14 +1,14 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "./ducktape.h"
-#include "./game.h"
 #include "bits/stdc++.h"
+
+using namespace DT;
 
 /*
 Building with gcc for Linux:
 
-g++ -std=c++20 main.cpp -o Ducktape -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system
-chown -R aryanbaburajan Ducktape
+g++ -std=c++20 main.cpp -o Ducktape -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-systemchown -R aryanbaburajan Ducktape.
 ./Ducktape
 */
 
@@ -21,6 +21,7 @@ int main()
 
     Renderer renderer;
     sf::Clock clock;
+    sf::Clock deltaClock;
 
     // sf::RenderWindow screen(sf::VideoMode(2000, 2000), "Ducktape", sf::Style::Default, settings);
     if(iFrameRateLimit > 0 && bVerticalSync)
@@ -30,7 +31,24 @@ int main()
     screen.setVerticalSyncEnabled(bVerticalSync);
     screen.setFramerateLimit(iFrameRateLimit);
 
+    // DT::SplashScreen(screen, "light");
+
+    sf::View view(sf::FloatRect(0.f, 0.f, WIDTH, HEIGHT));
+    screen.setView(view);
+
     ExampleScene(screen);
+
+    // Start Loop
+
+    UpdateEssentials updateEssentials = UpdateEssentials(&screen, &view);
+
+    for(GameObject* go:gameObjects)
+    {
+        for(BehaviourScript* bs:go->components)
+        {
+            bs->Start(&updateEssentials);
+        }
+    }
 
     // run the program as long as the window is open
     while (screen.isOpen())
@@ -44,7 +62,7 @@ int main()
                 screen.close();
         }
 
-        // screen.clear(sf::Color::Black);
+        screen.clear(sf::Color::Black);
 
         // Start Draw
 
@@ -52,9 +70,11 @@ int main()
         {
             for(BehaviourScript* bs:go->components)
             {
-                bs->Update(screen);
+                bs->Update(&updateEssentials);
             }
         }
+
+        screen.setView(view);
 
         // Finish Draw
 
