@@ -2,7 +2,9 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <cmath>
 
 namespace DT
 {
