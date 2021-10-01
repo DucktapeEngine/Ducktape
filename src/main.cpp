@@ -73,8 +73,6 @@ int main()
             }
         }
 
-        screen.setView(view);
-
         // Finish Draw
 
         screen.display();
