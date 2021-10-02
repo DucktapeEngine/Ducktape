@@ -1,3 +1,4 @@
+
 # Contributing
 
 **Note**: Please do not submit pull requests with new features or major changes. Instead, please file an issue first for discussion. If you'd like a feature implemented into the Game Engine, feel free to use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=feature_request.md&title=). Or if you encountered a bug, you may use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=bug_report.md&title=) instead.
@@ -11,4 +12,12 @@ If you'd like to work on a specific [Issue](https://github.com/DucktapeEngine/Du
 Then, please create a pull request - which the maintainers would review and suggest some improvements, or merge the pull request. 
 If you'd like any kind of help on Ducktape, feel free to join [Ducktape's Official Discord server](https://theduckdev.github.io/discord)
 
-Thanks for the contribution! :)
+#### Programming standards
+-   Class names:  `UpperCamelCase`
+-   Variables:  `lowerCamelCase`
+-   Function/Method arguments:  `lowerCamelCase`
+-   Function/Method names:  `UpperCamelCase`
+
+That's it.
+
+Thanks for the contributions! :)
