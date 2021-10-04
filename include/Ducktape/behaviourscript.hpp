@@ -5,7 +5,6 @@ class BehaviourScript
     public:
         bool enabled = true;
         GameObject* gameObject;
-        // Transform transform;
         virtual void Start(UpdateEssentials* updateEssentials){;}
         virtual void Update(UpdateEssentials* updateEssentials){;}
         virtual void FixedUpdate(){}

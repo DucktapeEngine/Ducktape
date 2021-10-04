@@ -9,9 +9,9 @@ class SpriteRenderer : public BehaviourScript
         {
         }
 
-        SpriteRenderer(std::string path)
+        SpriteRenderer(std::string _spritePath)
         {
-            spritePath = path;
+            spritePath = _spritePath;
         }
 
         Transform* tTransform;

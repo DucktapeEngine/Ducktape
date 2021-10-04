@@ -12,19 +12,19 @@ class Camera : public BehaviourScript
 
         Transform* tTransform;
 
-        void Start(UpdateEssentials* updateEssentials)
-        {
-            tTransform = gameObject->GetComponent<Transform>();
-        }
+        // void Start(UpdateEssentials* updateEssentials)
+        // {
+        //     tTransform = gameObject->GetComponent<Transform>();
+        // }
 
-        void Update(UpdateEssentials* updateEssentials)
-        {
-            updateEssentials->view->setCenter((*tTransform).position.x, (*tTransform).position.y);
-            updateEssentials->view->setRotation((*tTransform).rotation);
+        // void Update(UpdateEssentials* updateEssentials)
+        // {
+        //     updateEssentials->view->setCenter((*tTransform).position.x, (*tTransform).position.y);
+        //     updateEssentials->view->setRotation((*tTransform).rotation);
 
-            updateEssentials->view->setSize(HEIGHT, WIDTH);
-            updateEssentials->view->zoom(size);
-        }
+        //     updateEssentials->view->setSize(HEIGHT, WIDTH);
+        //     updateEssentials->view->zoom(size);
+        // }
 
         static Vector2 ScreenToWorldPos(Vector2 pos, sf::RenderWindow* screen)
         {

@@ -8,7 +8,7 @@ class GameObject
         Scene scene;
         std::string name = "New GameObject";
         std::string tag = "Default";
-        // Transform transform;
+        Transform* transform;
         std::vector<BehaviourScript*> components;
 
         GameObject()
@@ -16,7 +16,7 @@ class GameObject
             isActive = true;
             layer = 0;
             tag = "Default";
-            name = "New GameObject";
+            transform = this->AddComponent<Transform>();
         }
 
         GameObject(std::string _name)
@@ -27,17 +27,20 @@ class GameObject
             name = _name;
         }
 
-        BehaviourScript* AddComponent(BehaviourScript* script)
+        template <typename T>
+        T* AddComponent()
         {
-            components.push_back(script);
-            components[components.size()-1]->gameObject = this;
-            return components[components.size()-1];
+            this->components.push_back(new T());
+            int size = this->components.size()-1;
+            this->components[size]->gameObject = this;
+            if(GetComponent<Transform>() == nullptr) std::cout<<"yes"<<std::endl;
+            return (T*)this->components[size];
         }
 
         template <typename T>
         T* GetComponent() 
         {
-          for(auto script:components) 
+          for(auto script:this->components) 
           {
             if(T *ptr = dynamic_cast<T *>(script)) 
             {

@@ -9,9 +9,21 @@ struct Vector2
         y = ypos;
     }
 
+    Vector2()
+    {
+        x = 0.0;
+        y = 0.0;
+    }
+
     Vector2 operator+(Vector2 vec2)
     {
         return Vector2(x + vec2.x, y + vec2.y);
+    }
+
+    void operator+=(Vector2 vec2)
+    {
+        x = (Vector2(x, y) + vec2).x;
+        y = (Vector2(x, y) + vec2).y;
     }
 
     Vector2 operator-(Vector2 vec2)
