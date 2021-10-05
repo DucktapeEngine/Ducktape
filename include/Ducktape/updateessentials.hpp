@@ -1,4 +1,6 @@
 #pragma once
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 struct UpdateEssentials 
 {
@@ -6,8 +8,7 @@ struct UpdateEssentials
     sf::View* view;
 
     UpdateEssentials(sf::RenderWindow* _screen, sf::View* _view)
+        : screen(_screen), view(_view)
     {
-        screen = _screen;
-        view = _view;
     }
 };
