@@ -1,3 +1,5 @@
+//Using basic libraries
+
 #include "../include/Ducktape/ducktape.hpp"
 #include <iostream>
 #include <string>
@@ -11,7 +13,7 @@ Building with gcc for Linux:
 g++ -std=c++20 main.cpp -o Ducktape -I../include/SFML-linux-gcc/include -lsfml-graphics -lsfml-window -L../include/SFML-linux-gcc/lib -lsfml-audio -lsfml-network -lsfml-system
 */
 
-int main()
+int main() //main funcion starts here
 {
     sf::RenderWindow screen(sf::VideoMode(DT::WIDTH, DT::HEIGHT), "Ducktape", sf::Style::Default);
 
@@ -75,8 +77,8 @@ int main()
 
         // Finish Draw
 
-        screen.display();
+        screen.display(); //This function displays the output
     }
 
-    return 0;
+    return 0; //Program ends with returning intger data type
 }
