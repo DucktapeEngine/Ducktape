@@ -29,7 +29,7 @@ class Camera : public BehaviourScript
         static Vector2 ScreenToWorldPos(Vector2 pos, sf::RenderWindow* screen)
         {
             sf::Vector2f vec = screen->mapPixelToCoords(sf::Vector2i(pos.x, pos.y));
-            return Vector2(vec.x, vec.y);
+            return Vector2(vec.x/10.0, vec.y/10.0);
         }
 
         static Vector2 WorldToScreenPos(Vector2 pos, sf::RenderWindow* screen)
