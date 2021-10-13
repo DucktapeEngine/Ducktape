@@ -7,7 +7,8 @@ class BehaviourScript
         GameObject* gameObject;
         virtual void Start(UpdateEssentials* updateEssentials){;}
         virtual void Update(UpdateEssentials* updateEssentials){;}
-        virtual void FixedUpdate(){}
+        virtual void LateUpdate(UpdateEssentials* updateEssentials){;}
+        virtual void MidUpdate(UpdateEssentials* updateEssentials){;}
         virtual void Invoke(std::string methodName, float time)
         {
             Debug::LogWarning("Invoke not Implemented yet.");

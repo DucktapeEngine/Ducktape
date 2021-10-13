@@ -3,7 +3,7 @@
 class Renderer
 {
     public:
-        static void DrawSprite(std::string path, Vector2 pos, sf::RenderWindow* screen)
+        static void DrawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, sf::RenderWindow* screen)
         {
             sf::Texture texture;
             if (!texture.loadFromFile(path))
@@ -19,6 +19,9 @@ class Renderer
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(pos.ToSFMLVector());
+            sprite.setRotation(rot);
+            sprite.setScale(scl.ToSFMLVector());
+            sprite.setOrigin(sf::Vector2f(texture.getSize().x/2, texture.getSize().y/2));
 
             screen->draw(sprite);
         }

@@ -2,7 +2,14 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+<<<<<<< Updated upstream
 #include <bits/stdc++.h>
+=======
+#include "../box2d/include/box2d/box2d.h"
+#include <iostream>
+#include <string>
+#include <cmath>
+>>>>>>> Stashed changes
 
 namespace DT
 {
@@ -15,17 +22,19 @@ namespace DT
 
     #include "mathf.hpp"
     #include "vector2.hpp"
+    #include "physics.hpp"
     #include "debug.hpp"
     #include "input.hpp"
     #include "scene.hpp"
     class GameObject;
     #include "updateessentials.hpp"
     #include "behaviourscript.hpp"
-    #include "gameobject.hpp"
     #include "transform.hpp"
+    #include "gameobject.hpp"
     #include "camera.hpp"
     #include "renderer.hpp"
     #include "spriterenderer.hpp"
+    #include "rigidbody.hpp"
 
     void SplashScreen(sf::RenderWindow& screen, std::string color)
     {
@@ -70,45 +79,5 @@ namespace DT
         }
     }
 
-    std::vector<GameObject*> gameObjects;
-    BehaviourScript* mainCamera;
-
-    class TopDownController : public BehaviourScript
-    {
-        public:
-            TopDownController()
-            {
-                ;
-            }
-
-            Transform* tTransform;
-
-            void Start(UpdateEssentials* updateEssentials)
-            {
-                tTransform = gameObject->GetComponent<Transform>();
-            }
-
-            void Update(UpdateEssentials* updateEssentials)
-            {
-                tTransform->position = Camera::ScreenToWorldPos(Input::MousePosition(updateEssentials->screen), updateEssentials->screen);
-            }
-    };
-
-    void ExampleScene(sf::RenderWindow& screen)
-    {
-        gameObjects.clear();
-        int n = -1;
-        gameObjects.push_back(new GameObject("Player"));
-        n++;
-        gameObjects[n]->AddComponent(new Transform());
-        gameObjects[n]->AddComponent(new SpriteRenderer("./Assets/Characters/character_0000.png"));
-        gameObjects[n]->AddComponent(new TopDownController());
-
-        gameObjects.push_back(new GameObject("Camera"));
-        n++;
-        gameObjects[n]->AddComponent(new Camera());
-        gameObjects[n]->AddComponent(new Transform(Vector2(0.0,0.0), 0.0, Vector2(1.0, 1.0)));
-        // mainCamera = gameObjects[n]->GetComponent("Camera");
-        mainCamera = gameObjects[n]->GetComponent<Camera>();
-    }
+    #include "game.hpp"
 };

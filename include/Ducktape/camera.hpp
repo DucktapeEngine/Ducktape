@@ -4,6 +4,7 @@ class Camera : public BehaviourScript
 {
     public:
         float size = 1.0;
+<<<<<<< Updated upstream
 
         Camera()
         {
@@ -25,6 +26,17 @@ class Camera : public BehaviourScript
         //     updateEssentials->view->setSize(HEIGHT, WIDTH);
         //     updateEssentials->view->zoom(size);
         // }
+=======
+        
+        void Update(UpdateEssentials* updateEssentials)
+        {
+            updateEssentials->view->setCenter(gameObject->transform->position.x, gameObject->transform->position.y);
+            updateEssentials->view->setRotation(gameObject->transform->rotation);
+
+            updateEssentials->view->setSize(HEIGHT, WIDTH);
+            updateEssentials->view->zoom(size);
+        }
+>>>>>>> Stashed changes
 
         static Vector2 ScreenToWorldPos(Vector2 pos, sf::RenderWindow* screen)
         {
@@ -35,6 +47,6 @@ class Camera : public BehaviourScript
         static Vector2 WorldToScreenPos(Vector2 pos, sf::RenderWindow* screen)
         {
             sf::Vector2i vec = screen->mapCoordsToPixel(sf::Vector2f(pos.x, pos.y));
-            return Vector2(vec.x, vec.y);
+            return Vector2(vec.x*10.0, vec.y*10.0);
         }
 };

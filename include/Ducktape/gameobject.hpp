@@ -16,7 +16,12 @@ class GameObject
             isActive = true;
             layer = 0;
             tag = "Default";
+<<<<<<< Updated upstream
             transform = this->AddComponent<Transform>();
+=======
+            name = "New GameObject";
+            transform = this->AddComponent<Transform>(new Transform());
+>>>>>>> Stashed changes
         }
 
         GameObject(std::string _name)
@@ -25,8 +30,10 @@ class GameObject
             layer = 0;
             tag = "Default";
             name = _name;
+            transform = this->AddComponent<Transform>(new Transform());
         }
 
+<<<<<<< Updated upstream
         template <typename T>
         T* AddComponent()
         {
@@ -34,6 +41,38 @@ class GameObject
             int size = this->components.size()-1;
             this->components[size]->gameObject = this;
             if(GetComponent<Transform>() == nullptr) std::cout<<"yes"<<std::endl;
+=======
+        GameObject(Vector2 pos, float rot, Vector2 scl)
+        {
+            isActive = true;
+            layer = 0;
+            tag = "Default";
+            name = "New GameObject";
+            transform = this->AddComponent<Transform>(new Transform());
+            transform->position = pos;
+            transform->rotation = rot;
+            transform->scale = scl;
+        }
+
+        GameObject(std::string _name, Vector2 pos, float rot, Vector2 scl)
+        {
+            isActive = true;
+            layer = 0;
+            tag = "Default";
+            name = _name;
+            transform = this->AddComponent<Transform>(new Transform());
+            transform->position = pos;
+            transform->rotation = rot;
+            transform->scale = scl;
+        }
+
+        template <typename T>
+        T* AddComponent(BehaviourScript* script)
+        {
+            this->components.push_back(script);
+            int size = this->components.size()-1;
+            this->components[size]->gameObject = this;
+>>>>>>> Stashed changes
             return (T*)this->components[size];
         }
 

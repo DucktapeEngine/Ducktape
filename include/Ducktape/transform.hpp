@@ -6,6 +6,7 @@ class Transform : public BehaviourScript
         Vector2 position = Vector2(0.0, 0.0);
         float rotation;
         Vector2 scale = Vector2(1.0, 1.0);
+<<<<<<< Updated upstream
 
         Transform()
         {
@@ -13,4 +14,6 @@ class Transform : public BehaviourScript
             rotation = 0.0;
             scale = Vector2(1.0, 1.0);
         }
+=======
+>>>>>>> Stashed changes
 };

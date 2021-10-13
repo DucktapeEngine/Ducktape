@@ -4,6 +4,7 @@ class SpriteRenderer : public BehaviourScript
 {
     public:
         std::string spritePath;
+<<<<<<< Updated upstream
 
         SpriteRenderer()
         {
@@ -21,11 +22,14 @@ class SpriteRenderer : public BehaviourScript
             tTransform = gameObject->GetComponent<Transform>();
         }
 
+=======
+        
+>>>>>>> Stashed changes
         void Update(UpdateEssentials* updateEssentials)
         {
             if(spritePath != "")
             {
-                Renderer::DrawSprite(spritePath, (*tTransform).position, updateEssentials->screen);
+                Renderer::DrawSprite(spritePath, Camera::WorldToScreenPos(gameObject->transform->position, updateEssentials->screen), gameObject->transform->rotation, gameObject->transform->scale, updateEssentials->screen);
             }
         }
 };
