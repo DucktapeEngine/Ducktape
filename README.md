@@ -7,7 +7,7 @@ Ducktape is an Open source Light weight 2d Game Engine that gives utmost priorit
 ##### Features
 <trellolink> Here's a list of all of the features that have been finished/is going to be implemented in the Ducktape engine.
 ##### Contributing to Ducktape
-See [CONTRIBUTING.md]((https://github.com/DucktapeEngine/Ducktape/blob/main/CONTRIBUTING.md)) for more information on contributing to Ducktape.
+See [CONTRIBUTING.md](https://github.com/DucktapeEngine/Ducktape/blob/main/CONTRIBUTING.md) for more information on contributing to Ducktape.
 ##### Community
 Join the [Ducktape Discord Server](https://ducktapeengine.github.io/discord) if you need any help on contributing/using the engine, or if you just wanna hang out with a bunch of awesome people.
 ![](https://img.shields.io/badge/Ducktape-Join-brightgreen?style=for-the-badge&logo=appveyor)
