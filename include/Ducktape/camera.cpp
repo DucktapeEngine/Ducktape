@@ -19,12 +19,12 @@ void Camera::Update()
     
 }
 
-Vector2 Camera::ScreenToWorldPos(Vector2 pos)
+Vector2 Camera::ScreenToWorldPos(Vector2 pos, sf::RenderWindow* screen)
 {
     sf::Vector2f vec = screen->mapPixelToCoords(sf::Vector2i(pos.x, pos.y));
     return Vector2(vec.x, vec.y);
 }
-Vector2 Camera::WorldToScreenPos(Vector2 pos)
+Vector2 Camera::WorldToScreenPos(Vector2 pos, sf::RenderWindow* screen)
 {
     sf::Vector2i vec = screen->mapCoordsToPixel(sf::Vector2f(pos.x, pos.y));
     return Vector2(vec.x, vec.y);
