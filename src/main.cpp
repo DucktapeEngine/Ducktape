@@ -48,13 +48,11 @@ int main() //main funcion starts here
 
     // Start Loop
 
-    UpdateEssentials updateEssentials = UpdateEssentials(&screen, &view);
-
     for(GameObject* go : exampleClass.gameObjects)
     {
         for(BehaviourScript* bs:go->components)
         {
-            bs->Start(&updateEssentials);
+            bs->Start();
         }
     }
 
@@ -78,7 +76,7 @@ int main() //main funcion starts here
         {
             for(BehaviourScript* bs:go->components)
             {
-                bs->Update(&updateEssentials);
+                bs->Update();
             }
         }
 
