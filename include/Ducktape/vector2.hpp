@@ -40,53 +40,21 @@ struct Vector2
         return false;
     }
 
-  //REPLACE
-    inline static Vector2 Down()
-    {
-        return Vector2(0.0, -1.0);
-    }
+    inline static Vector2 Down = Vector2(0.0, -1.0);
 
-  //REPLACE
-    inline static Vector2 Left()
-    {
-        return Vector2(-1.0, 0.0);
-    }
+    inline static Vector2 Left = Vector2(-1.0, 0.0);
 
-  //REPLACE
-    inline static Vector2 NegativeInfinity()
-    {
-        return Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
-    }
+    inline static Vector2 NegativeInfinity = Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
 
-  //REPLACE
-    inline static Vector2 One()
-    {
-        return Vector2(1.0, 1.0);
-    }
+    inline static Vector2 One = Vector2(1.0, 1.0);
 
-  //REPLACE
-    inline static Vector2 PositiveInfinity()
-    {
-        return Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
-    }
-
-  //REPLACE
-    inline static Vector2 Right()
-    {
-        return Vector2(1.0, 0.0);
-    }
-
-  //REPLACE
-    inline static Vector2 Up()
-    {
-        return Vector2(0.0, 1.0);
-    }
-
-  //REPLACE
-    inline static Vector2 Zero()
-    {
-        return Vector2(0.0, 0.0);
-    }
+    inline static Vector2 PositiveInfinity = Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
+   
+    inline static Vector2 Right = Vector2(1.0, 0.0);
+    
+    inline static Vector2 Up = Vector2(0.0, 1.0);
+    
+    inline static Vector2 Zero = Vector2(0.0, 0.0);
 
     inline float Magnitude()
     {
