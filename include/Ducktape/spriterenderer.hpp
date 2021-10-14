@@ -17,16 +17,16 @@ class SpriteRenderer : public BehaviourScript
 
         Transform* tTransform;
 
-        inline void Start(UpdateEssentials* updateEssentials)
+        inline void Start()
         {
             tTransform = gameObject->GetComponent<Transform>();
         }
 
-        inline void Update(UpdateEssentials* updateEssentials)
+        inline void Update()
         {
             if(spritePath != "")
             {
-                Renderer::DrawSprite(spritePath, (*tTransform).position, updateEssentials->screen);
+                Renderer::DrawSprite(spritePath, (*tTransform).position);
             }
         }
 };
