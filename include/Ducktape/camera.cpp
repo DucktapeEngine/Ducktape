@@ -10,16 +10,13 @@ Camera::Camera(int w,int h)
 {
     size = 1.0;
 }
-void Camera::Start(UpdateEssentials* updateEssentials)
+void Camera::Start()
 {
     tTransform = gameObject->GetComponent<Transform>();
 }
-void Camera::Update(UpdateEssentials* updateEssentials)
+void Camera::Update()
 {
-    updateEssentials->view->setCenter((*tTransform).position.x, (*tTransform).position.y);
-    updateEssentials->view->setRotation((*tTransform).rotation);
-    updateEssentials->view->setSize(m_Height, m_Width);
-    updateEssentials->view->zoom(size);
+    
 }
 
 Vector2 Camera::ScreenToWorldPos(Vector2 pos, sf::RenderWindow* screen)
