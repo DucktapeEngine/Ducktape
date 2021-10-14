@@ -2,7 +2,6 @@
 #include <string>
 
 class GameObject;
-class UpdateEssentials;
 
 class BehaviourScript
 {
@@ -10,8 +9,8 @@ class BehaviourScript
         bool enabled = true;
         GameObject* gameObject;
         // Transform transform;
-        virtual void Start(UpdateEssentials* updateEssentials);
-        virtual void Update(UpdateEssentials* updateEssentials);
+        virtual void Start();
+        virtual void Update();
         virtual void FixedUpdate();
         virtual void Invoke(std::string methodName, float time);
 
