@@ -11,14 +11,14 @@
 #include "spriterenderer.hpp"
 #include "renderer.hpp"
 
-void DT::TopDownController::Start(UpdateEssentials *updateEssentials)
+void DT::TopDownController::Start()
 {
     tTransform = gameObject->GetComponent<Transform>();
 }
 
-void DT::TopDownController::Update(UpdateEssentials *updateEssentials)
+void DT::TopDownController::Update()
 {
-    tTransform->position = Camera::ScreenToWorldPos(Input::MousePosition(updateEssentials->screen), updateEssentials->screen);
+    tTransform->position = Camera::ScreenToWorldPos(Input::MousePosition());
 }
 
 void DT::ExampleClass::SplashScreen(sf::RenderWindow &screen, std::string color, int w, int h)
