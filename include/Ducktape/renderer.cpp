@@ -2,7 +2,7 @@
 #include "vector2.hpp"
 #include "debug.hpp"
 
-void Renderer::DrawSprite(std::string path, Vector2 pos, sf::RenderWindow *screen)
+void Renderer::DrawSprite(std::string path, Vector2 pos)
 {
     sf::Texture texture;
     if (!texture.loadFromFile(path))
