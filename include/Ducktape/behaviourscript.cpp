@@ -2,10 +2,10 @@
 #include "updateessentials.hpp"
 #include "debug.hpp"
 
-void BehaviourScript::Start(UpdateEssentials *updateEssentials)
+void BehaviourScript::Start()
 {
 }
-void BehaviourScript::Update(UpdateEssentials *updateEssentials)
+void BehaviourScript::Update()
 {
 }
 void BehaviourScript::FixedUpdate()
