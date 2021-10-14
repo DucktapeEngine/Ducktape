@@ -14,9 +14,9 @@ public:
 
     Transform* tTransform;
 
-    void Start(UpdateEssentials* updateEssentials);
+    void Start();
 
-    void Update(UpdateEssentials* updateEssentials);
+    void Update();
 
     static Vector2 ScreenToWorldPos(Vector2 pos, sf::RenderWindow* screen);
 
