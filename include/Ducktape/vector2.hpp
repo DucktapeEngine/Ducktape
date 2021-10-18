@@ -9,6 +9,21 @@ struct Vector2
     {
         x = xpos;
         y = ypos;
+	*Down = Vector2(0.0, -1.0);
+
+    *Left = Vector2(-1.0, 0.0);
+
+    *NegativeInfinity = Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
+
+    *One = Vector2(1.0, 1.0);
+
+    *PositiveInfinity = Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
+   
+    *Right = Vector2(1.0, 0.0);
+    
+    *Up = Vector2(0.0, 1.0);
+    
+    *Zero = Vector2(0.0, 0.0);    
     }
 
     inline Vector2 operator+(Vector2 vec2)
@@ -39,22 +54,22 @@ struct Vector2
         }
         return false;
     }
+  static Vector2* Down;// = Vector2(0.0, -1.0);
 
-    inline static Vector2 Down = Vector2(0.0, -1.0);
+  static Vector2* Left;// = Vector2(-1.0, 0.0);
 
-    inline static Vector2 Left = Vector2(-1.0, 0.0);
+  static Vector2* NegativeInfinity;// = Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
 
-    inline static Vector2 NegativeInfinity = Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
+  static Vector2* One;// = Vector2(1.0, 1.0);
 
-    inline static Vector2 One = Vector2(1.0, 1.0);
-
-    inline static Vector2 PositiveInfinity = Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
+  static Vector2* PositiveInfinity;// = Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
    
-    inline static Vector2 Right = Vector2(1.0, 0.0);
+  static Vector2* Right;// = Vector2(1.0, 0.0);
     
-    inline static Vector2 Up = Vector2(0.0, 1.0);
+  static Vector2* Up;// = Vector2(0.0, 1.0);
     
-    inline static Vector2 Zero = Vector2(0.0, 0.0);
+  static Vector2* Zero;// = Vector2(0.0, 0.0);    
+
 
     inline float Magnitude()
     {
