@@ -1,11 +1,15 @@
 #pragma once
+#include <SFML/Window.hpp>
+#include "vector2.hpp"
+typedef sf::Keyboard::Key KeyCode;
 
-class Input
+namespace Input
 {
-    public:
-        static Vector2 MousePosition(sf::RenderWindow* screen)
-        {
-            sf::Vector2i vec = sf::Mouse::getPosition(*screen);
-            return Vector2(vec.x, vec.y);
-        }
+    Vector2 mousePosition;
+
+    bool GetMouseButton(int num);
+
+    static bool GetKey(KeyCode k);
+
+    void Update();
 };

@@ -1,4 +1,10 @@
 #pragma once
+#include "transform.hpp"
+#include <string>
+#include "debug.hpp"
+#include "scene.hpp"
+#include <vector>
+#include "behaviourscript.hpp"
 
 class GameObject
 {
@@ -8,43 +14,37 @@ class GameObject
         Scene scene;
         std::string name = "New GameObject";
         std::string tag = "Default";
-        // Transform transform;
+        Transform* transform;
         std::vector<BehaviourScript*> components;
 
-        GameObject()
-        {
-            isActive = true;
-            layer = 0;
-            tag = "Default";
-            name = "New GameObject";
-        }
+        GameObject();
 
-        GameObject(std::string _name)
-        {
-            isActive = true;
-            layer = 0;
-            tag = "Default";
-            name = _name;
-        }
+        GameObject(std::string _name);
 
-        BehaviourScript* AddComponent(BehaviourScript* script)
+        GameObject(Vector2 pos, float rot, Vector2 scl);
+
+        GameObject(std::string _name, Vector2 pos, float rot, Vector2 scl);
+
+        template <typename T>
+        T* AddComponent(BehaviourScript* script)
         {
-            components.push_back(script);
-            components[components.size()-1]->gameObject = this;
-            return components[components.size()-1];
+            this->components.push_back(script);
+            int size = this->components.size()-1;
+            this->components[size]->gameObject = this;
+            return (T*)this->components[size];
         }
 
         template <typename T>
-        T* GetComponent() 
+        T* GetComponent()
         {
-          for(auto script:components) 
-          {
-            if(T *ptr = dynamic_cast<T *>(script)) 
+            for(auto script:this->components) 
             {
-              return ptr;
+                if(T *ptr = dynamic_cast<T *>(script)) 
+                {
+                    return ptr;
+                }
             }
-          }
-          Debug::LogWarning(std::string("Component ") + typeid(T).name() + " not found!");
-          return nullptr;
+            Debug::LogWarning(std::string("Component ") + typeid(T).name() + " not found!");
+            return nullptr;
         }
 };

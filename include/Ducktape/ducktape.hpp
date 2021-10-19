@@ -1,116 +1,95 @@
 #pragma once
+#ifndef DUCKTAPE_H
+#define DUCKTAPE_H
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <vector>
 
-namespace DT
-{
-    int WIDTH = 600;
-    int HEIGHT = 600;
-    int iFrameRateLimit = 0;
-    bool bVerticalSync = true;
-
-    // including Ducktape's built-in libraries
-
-    #include "mathf.hpp"
-    #include "vector2.hpp"
-    #include "debug.hpp"
-    #include "input.hpp"
-    #include "scene.hpp"
+namespace DT {
+    #include "application.hpp"
     class GameObject;
-    #include "updateessentials.hpp"
+    #include "component.hpp"
+    class Component;
     #include "behaviourscript.hpp"
     #include "gameobject.hpp"
-    #include "transform.hpp"
     #include "camera.hpp"
+    #include "debug.hpp"
+    #include "input.hpp"
+    #include "mathf.hpp"
+    #include "vector2.hpp"
+    #include "physics.hpp"
     #include "renderer.hpp"
+    #include "scene.hpp"
+    #include "time.hpp"
+    #include "transform.hpp"
     #include "spriterenderer.hpp"
+    #include "rigidbody.hpp"
+    
+    std::vector<GameObject*> gameObjects;
 
-    void SplashScreen(sf::RenderWindow& screen, std::string color)
+    void Initialize()
     {
-        sf::Clock clock;
+        Physics::Initialize();
+        Application::Initialize();
+    }
 
-        while (clock.getElapsedTime().asSeconds() < 5 && screen.isOpen())
+    void Update()
+    {
+        for(GameObject* go:gameObjects)
         {
-            // check all the window's events that were triggered since the last iteration of the loop
-            sf::Event event;
-            while (screen.pollEvent(event))
+            for(BehaviourScript* bs:go->components)
             {
-                // "close requested" event: we close the window
-                if (event.type == sf::Event::Closed)
-                    screen.close();
+                bs->Start();
             }
+        }
 
-            screen.clear(sf::Color::White);
+        // run the program as long as the window is open
+        while (Application::IsOpen())
+        {
+            Input::Update();
+            DT::Time::Update();
 
-            if(color == "light")
+            Application::renderWindow.clear(sf::Color::Black);
+
+            // Start Draw
+
+            for(GameObject* go:gameObjects)
             {
-                sf::Texture texture;
-                if (!texture.loadFromFile("./Assets/Branding/pfpFillWhite.png"))
+                for(BehaviourScript* bs:go->components)
                 {
-                    Debug::LogError("Error loading sprite from ./Assets/Branding/pfpFillWhite.png");
-                    return;
+                    bs->Update();
                 }
-
-                sf::Image image;
-                texture.update(image);
-                texture.setSmooth(true);
-
-                sf::Sprite sprite;
-                sprite.setTexture(texture);
-                sprite.setScale(0.1, 0.1);
-                sprite.setOrigin(2000.0, 2000.0);
-                sprite.setPosition(WIDTH/2, HEIGHT/2);
-
-                screen.draw(sprite);
             }
 
-            screen.display();
+            for(GameObject* go:gameObjects)
+            {
+                for(BehaviourScript* bs:go->components)
+                {
+                    bs->MidUpdate();
+                }
+            }
+            
+            Physics::physicsWorld.Step(Time::deltaTime, Physics::velocityIterations, Physics::positionIterations);
+
+            // Late Update call
+
+            for(GameObject* go:gameObjects)
+            {
+                for(BehaviourScript* bs:go->components)
+                {
+                    bs->LateUpdate();
+                }
+            }
+
+            Application::renderWindow.setView(Application::view);
+
+            Application::renderWindow.display();
         }
     }
-
-    std::vector<GameObject*> gameObjects;
-    BehaviourScript* mainCamera;
-
-    class TopDownController : public BehaviourScript
-    {
-        public:
-            TopDownController()
-            {
-                ;
-            }
-
-            Transform* tTransform;
-
-            void Start(UpdateEssentials* updateEssentials)
-            {
-                tTransform = gameObject->GetComponent<Transform>();
-            }
-
-            void Update(UpdateEssentials* updateEssentials)
-            {
-                tTransform->position = Camera::ScreenToWorldPos(Input::MousePosition(updateEssentials->screen), updateEssentials->screen);
-            }
-    };
-
-    void ExampleScene(sf::RenderWindow& screen)
-    {
-        gameObjects.clear();
-        int n = -1;
-        gameObjects.push_back(new GameObject("Player"));
-        n++;
-        gameObjects[n]->AddComponent(new Transform());
-        gameObjects[n]->AddComponent(new SpriteRenderer("./Assets/Characters/character_0000.png"));
-        gameObjects[n]->AddComponent(new TopDownController());
-
-        gameObjects.push_back(new GameObject("Camera"));
-        n++;
-        gameObjects[n]->AddComponent(new Camera());
-        gameObjects[n]->AddComponent(new Transform(Vector2(0.0,0.0), 0.0, Vector2(1.0, 1.0)));
-        // mainCamera = gameObjects[n]->GetComponent("Camera");
-        mainCamera = gameObjects[n]->GetComponent<Camera>();
-    }
 };
+
+#endif

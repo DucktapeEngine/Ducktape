@@ -1,82 +1,82 @@
-#include "../include/Ducktape/ducktape.hpp"
-#include <iostream>
-#include <string>
-#include <cmath>
+#include "ducktape.hpp"
 
-using namespace DT;
+class PlayerController : public BehaviourScript
+{
+    public:
+        Rigidbody* rb;
 
-/*
-Building with gcc for Linux:
+        void Start()
+        {
+            rb = gameObject->GetComponent<Rigidbody>();
+        }
 
-g++ -std=c++20 main.cpp -o Ducktape -I../include/SFML-linux-gcc/include -lsfml-graphics -lsfml-window -L../include/SFML-linux-gcc/lib -lsfml-audio -lsfml-network -lsfml-system
-*/
+        void Update()
+        {
+            if(Input::GetMouseButton(0))
+            {
+                gameObject->transform->position = Camera::ScreenToWorldPos(Input::mousePosition);
+                rb->velocity = Vector2(0.0f, 0.0f);
+            }
+            Vector2 move = Vector2(0.0, rb->velocity.y);
+
+            move.x += 10.0f;
+            if(Input::GetKey(KeyCode::W))
+            {
+                move.y = -20.0;
+            }
+            rb->velocity = move;
+        }
+};
+
+void ExampleScene()
+{
+    gameObjects.clear();
+    int n = -1;
+    int m;  
+
+    m = 0;
+    gameObjects.push_back(new GameObject("Player", Vector2(1, 0), 0.0, Vector2(1, 1)));
+    n++;
+    gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
+    m++;
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "./Assets/Characters/character_0000.png";
+    gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
+    m++;
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "dynamic";
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->isTrigger = false;
+    gameObjects[n]->AddComponent<PlayerController>(new PlayerController());
+    m++;
+
+    m = 0;
+    gameObjects.push_back(new GameObject("Ground", Vector2(10, 20), 0.0, Vector2(5, 1)));
+    n++;
+    gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
+    m++;
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "./Assets/Tiles/tile_0022.png";
+    gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
+    m++;
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "static";
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->isTrigger = false;
+
+    m = 0;
+    gameObjects.push_back(new GameObject("Camera"));
+    n++;
+    gameObjects[n]->AddComponent<Camera>(new Camera());
+}
 
 int main()
 {
-    sf::RenderWindow screen(sf::VideoMode(DT::WIDTH, DT::HEIGHT), "Ducktape", sf::Style::Default);
+    // Initializing the Ducktape Engine
+    DT::Initialize();
 
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
+    /* Each function is considered a scene. 
+    The list below will initiate a new scene in the order of which they're called. 
+    Note that it is possible to initiate a scene from another scene.
+    Thus calling all of the scenes here is not important. */
+    ExampleScene();
 
-    Renderer renderer;
-    sf::Clock clock;
-    sf::Clock deltaClock;
-
-    // sf::RenderWindow screen(sf::VideoMode(2000, 2000), "Ducktape", sf::Style::Default, settings);
-    if(iFrameRateLimit > 0 && bVerticalSync)
-    {
-        Debug::LogWarning("Never use both setVerticalSyncEnabled and setFramerateLimit at the same time! They would badly mix and make things worse.");
-    }
-    screen.setVerticalSyncEnabled(bVerticalSync);
-    screen.setFramerateLimit(iFrameRateLimit);
-
-    // DT::SplashScreen(screen, "light");
-
-    sf::View view(sf::FloatRect(0.f, 0.f, WIDTH, HEIGHT));
-    screen.setView(view);
-
-    ExampleScene(screen);
-
-    // Start Loop
-
-    UpdateEssentials updateEssentials = UpdateEssentials(&screen, &view);
-
-    for(GameObject* go:gameObjects)
-    {
-        for(BehaviourScript* bs:go->components)
-        {
-            bs->Start(&updateEssentials);
-        }
-    }
-
-    // run the program as long as the window is open
-    while (screen.isOpen())
-    {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
-        while (screen.pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                screen.close();
-        }
-
-        screen.clear(sf::Color::Black);
-
-        // Start Draw
-
-        for(GameObject* go:gameObjects)
-        {
-            for(BehaviourScript* bs:go->components)
-            {
-                bs->Update(&updateEssentials);
-            }
-        }
-
-        // Finish Draw
-
-        screen.display();
-    }
+    // This will take care of the rest of the Engine.
+    DT::Update();
 
     return 0;
 }

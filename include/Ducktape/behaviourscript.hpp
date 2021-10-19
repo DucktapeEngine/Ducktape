@@ -1,25 +1,19 @@
 #pragma once
+#include "gameobject.hpp"
+#include "scene.hpp"
+#include "component.hpp"
 
-class BehaviourScript
+class BehaviourScript;
+
+class BehaviourScript: public Component
 {
     public:
         bool enabled = true;
-        GameObject* gameObject;
-        // Transform transform;
-        virtual void Start(UpdateEssentials* updateEssentials){;}
-        virtual void Update(UpdateEssentials* updateEssentials){;}
-        virtual void FixedUpdate(){}
-        virtual void Invoke(std::string methodName, float time)
-        {
-            Debug::LogWarning("Invoke not Implemented yet.");
-        }
+        virtual void Start();
+        virtual void Update();
+        virtual void MidUpdate();
+        virtual void LateUpdate();
+        void Invoke(std::string methodName, float time);
 
-        bool operator==(BehaviourScript script)
-        {
-            if(enabled == script.enabled && gameObject == script.gameObject /* && transform == script.transform*/)
-            {
-                return true;
-            }
-            return false;
-        }
+        bool operator==(BehaviourScript script);
 };
