@@ -1,5 +1,11 @@
 #pragma once
+<<<<<<< Updated upstream
 
+=======
+#include "mathf.hpp"
+#include <string>
+// #include <SFML/System/Vector2.hpp>
+>>>>>>> Stashed changes
 struct Vector2
 {
     float x, y;

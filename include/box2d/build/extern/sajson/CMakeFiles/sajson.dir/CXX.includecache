@@ -1,0 +1,10 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/aryanbaburajan/Duckie/Programming/Ducktape/Workspace/DucktapeEngine/include/box2d/extern/sajson/sajson.cpp
+
