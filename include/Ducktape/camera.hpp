@@ -1,27 +1,33 @@
 #pragma once
-#include "behaviourscript.hpp"
-#include <SFML/Graphics.hpp>
-
-class Transform;
-class Vector2;
 
 class Camera : public BehaviourScript
 {
-public:
-    float size = 1.0;
+    public:
+        float size = 1.0;
+        
+        void Update()
+        {
+            Application::view.setCenter(500/2 + gameObject->transform->position.x, 500/2 + gameObject->transform->position.y);
+            Application::view.setRotation(gameObject->transform->rotation);
 
-    Camera(int w, int h);
+            Application::view.setSize(500, 500);
+            Application::view.zoom(size);
+        }
 
-    Transform* tTransform;
+        static Vector2 ScreenToWorldPos(Vector2 pos)
+        {
+            sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x/PPU(), pos.y/PPU()));
+            return Vector2(vec.x, vec.y);
+        }
 
-    void Start(UpdateEssentials* updateEssentials);
+        static Vector2 WorldToScreenPos(Vector2 pos)
+        {
+            sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x*PPU(), pos.y*PPU()));
+            return Vector2(vec.x, vec.y);
+        }
 
-    void Update(UpdateEssentials* updateEssentials);
-
-    static Vector2 ScreenToWorldPos(Vector2 pos, sf::RenderWindow* screen);
-
-    static Vector2 WorldToScreenPos(Vector2 pos, sf::RenderWindow* screen);
-private:
-    int m_Width;
-    int m_Height;
+        static float PPU()
+        {
+            return 10.0;
+        }
 };
