@@ -1,3 +1,0 @@
-/home/aryanbaburajan/Duckie/Programming/Ducktape/GithubClones/DucktapeEngine/build/CMakeFiles/rebuild_cache.dir
-/home/aryanbaburajan/Duckie/Programming/Ducktape/GithubClones/DucktapeEngine/build/CMakeFiles/edit_cache.dir
-/home/aryanbaburajan/Duckie/Programming/Ducktape/GithubClones/DucktapeEngine/build/CMakeFiles/ducktape.dir

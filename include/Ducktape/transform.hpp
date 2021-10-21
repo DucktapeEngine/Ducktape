@@ -1,6 +1,4 @@
 #pragma once
-#include "vector2.hpp"
-#include "behaviourscript.hpp"
 
 class Transform : public BehaviourScript
 {

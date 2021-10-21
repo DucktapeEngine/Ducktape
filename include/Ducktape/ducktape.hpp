@@ -8,24 +8,22 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include "include/box2d/include/box2d/box2d.h"
 
 namespace DT {
-    #include "application.hpp"
-    class GameObject;
-    #include "component.hpp"
-    class Component;
-    #include "behaviourscript.hpp"
-    #include "gameobject.hpp"
-    #include "camera.hpp"
-    #include "debug.hpp"
-    #include "input.hpp"
     #include "mathf.hpp"
     #include "vector2.hpp"
+    #include "application.hpp"
+    class GameObject;
+    #include "debug.hpp"
+    #include "behaviourscript.hpp"
+    #include "transform.hpp"
+    #include "gameobject.hpp"
+    #include "input.hpp"
+    #include "camera.hpp"
     #include "physics.hpp"
     #include "renderer.hpp"
-    #include "scene.hpp"
     #include "time.hpp"
-    #include "transform.hpp"
     #include "spriterenderer.hpp"
     #include "rigidbody.hpp"
     
@@ -33,6 +31,7 @@ namespace DT {
 
     void Initialize()
     {
+        // Vector2::*Down = Vector2(0.0f, -1.0f);
         Physics::Initialize();
         Application::Initialize();
     }

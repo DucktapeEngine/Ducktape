@@ -1,19 +1,25 @@
 #pragma once
-#include "gameobject.hpp"
-#include "scene.hpp"
-#include "component.hpp"
 
-class BehaviourScript;
-
-class BehaviourScript: public Component
+class BehaviourScript
 {
     public:
         bool enabled = true;
-        virtual void Start();
-        virtual void Update();
-        virtual void MidUpdate();
-        virtual void LateUpdate();
-        void Invoke(std::string methodName, float time);
+        GameObject* gameObject;
+        virtual void Start(){}
+        virtual void Update(){}
+        virtual void MidUpdate(){}
+        virtual void LateUpdate(){}
+        void Invoke(std::string methodName, float time)
+        {
+            Debug::LogWarning("Invoke not Implemented yet.");
+        }
 
-        bool operator==(BehaviourScript script);
+        bool operator==(BehaviourScript* script)
+        {
+            if(this == script)
+            {
+                return true;
+            }
+            return false;
+        }
 };

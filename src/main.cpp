@@ -1,4 +1,5 @@
 #include "ducktape.hpp"
+using namespace DT;
 
 class PlayerController : public BehaviourScript
 {
@@ -35,11 +36,12 @@ void ExampleScene()
     int m;  
 
     m = 0;
-    gameObjects.push_back(new GameObject("Player", Vector2(1, 0), 0.0, Vector2(1, 1)));
+    gameObjects.push_back(new GameObject("Player", Vector2(1, 0), 0.0, Vector2(2, 2)));
     n++;
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
     m++;
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "./Assets/Characters/character_0000.png";
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../Assets/duck.png";
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 30;
     gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
     m++;
     dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "dynamic";
@@ -48,11 +50,12 @@ void ExampleScene()
     m++;
 
     m = 0;
-    gameObjects.push_back(new GameObject("Ground", Vector2(10, 20), 0.0, Vector2(5, 1)));
+    gameObjects.push_back(new GameObject("Ground", Vector2(10, 20), 0.0, Vector2(2, 2)));
     n++;
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
     m++;
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "./Assets/Tiles/tile_0022.png";
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../Assets/pipe.png";
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 30;
     gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
     m++;
     dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "static";

@@ -1,6 +1,4 @@
 #pragma once
-#include "include/box2d/include/box2d/box2d.h"
-#include "vector2.hpp"
 
 namespace Physics
 {
@@ -10,5 +8,12 @@ namespace Physics
 	int32 positionIterations = 2;
 	Vector2 globalGravity = Vector2(0.0f, 1.0f);
 
-	void Initialize();
+	void Initialize()
+	{
+		/* 
+		This function is empty for now. A feature will be added in the future
+		that reads from a JSON ducktape-project-file, and extract the settings which includes
+		the globalGravity.
+		*/
+	}
 };

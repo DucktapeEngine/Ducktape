@@ -1,29 +1,56 @@
 #pragma once
-#include "transform.hpp"
-#include <string>
-#include "debug.hpp"
-#include "scene.hpp"
-#include <vector>
-#include "behaviourscript.hpp"
 
 class GameObject
 {
     public:
         bool isActive = true;
         int layer = 0;
-        Scene scene;
         std::string name = "New GameObject";
         std::string tag = "Default";
         Transform* transform;
         std::vector<BehaviourScript*> components;
 
-        GameObject();
+        GameObject()
+        {
+            isActive = true;
+            layer = 0;
+            tag = "Default";
+            name = "New GameObject";
+            transform = this->AddComponent<Transform>(new Transform());
+        }
 
-        GameObject(std::string _name);
+        GameObject(std::string _name)
+        {
+            isActive = true;
+            layer = 0;
+            tag = "Default";
+            name = _name;
+            transform = this->AddComponent<Transform>(new Transform());
+        }
 
-        GameObject(Vector2 pos, float rot, Vector2 scl);
+        GameObject(Vector2 pos, float rot, Vector2 scl)
+        {
+            isActive = true;
+            layer = 0;
+            tag = "Default";
+            name = "New GameObject";
+            transform = this->AddComponent<Transform>(new Transform());
+            transform->position = pos;
+            transform->rotation = rot;
+            transform->scale = scl;
+        }
 
-        GameObject(std::string _name, Vector2 pos, float rot, Vector2 scl);
+        GameObject(std::string _name, Vector2 pos, float rot, Vector2 scl)
+        {
+            isActive = true;
+            layer = 0;
+            tag = "Default";
+            name = _name;
+            transform = this->AddComponent<Transform>(new Transform());
+            transform->position = pos;
+            transform->rotation = rot;
+            transform->scale = scl;
+        }
 
         template <typename T>
         T* AddComponent(BehaviourScript* script)
