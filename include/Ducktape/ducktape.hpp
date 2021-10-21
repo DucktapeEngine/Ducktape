@@ -31,6 +31,7 @@ namespace DT {
 
     void Initialize()
     {
+        // Vector2::*Down = Vector2(0.0f, -1.0f);
         Physics::Initialize();
         Application::Initialize();
     }
