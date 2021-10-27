@@ -165,4 +165,9 @@ struct Vector2
     {
         return sf::Vector2f(x, y);
     }
+
+    b2Vec2 ToBox2DVector()
+    {
+        return b2Vec2(x, y);
+    }
 };

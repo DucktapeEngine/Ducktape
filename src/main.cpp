@@ -20,12 +20,12 @@ class PlayerController : public BehaviourScript
             }
             Vector2 move = Vector2(0.0, rb->velocity.y);
 
-            move.x += 10.0f;
+            move.x += 1.0f;
             if(Input::GetKey(KeyCode::W))
             {
                 move.y = -20.0;
             }
-            rb->velocity = move;
+            rb->velocity = move;        
         }
 };
 
@@ -46,6 +46,9 @@ void ExampleScene()
     m++;
     dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "dynamic";
     dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->isTrigger = false;
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->colliderType = "none";
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->edgeCollider.points.push_back(Vector2(1.0, 0.0));
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->edgeCollider.points.push_back(Vector2(0.0, 5.0));
     gameObjects[n]->AddComponent<PlayerController>(new PlayerController());
     m++;
 
@@ -60,6 +63,7 @@ void ExampleScene()
     m++;
     dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "static";
     dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->isTrigger = false;
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->colliderType = "box";
 
     m = 0;
     gameObjects.push_back(new GameObject("Camera"));
