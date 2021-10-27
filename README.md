@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/DucktapeEngine/ducktapeengine.github.io/main/logoHead.png)
+![](https://raw.githubusercontent.com/DucktapeEngine/ducktapeengine.github.io/main/branding/Black/Black-02.png)
 
 ![]() 
 [![](https://img.shields.io/badge/Ducktape-Join-brightgreen?style=for-the-badge&logo=appveyor)](https://ducktapeengine.github.io/discord)
