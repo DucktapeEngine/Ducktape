@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RIGIDBODY_H
+#define RIGIDBODY_H
 
 class Box 
 {
@@ -178,3 +179,5 @@ class Rigidbody : public BehaviourScript
             body->CreateFixture(&fixtureDef);
         }
 };
+
+#endif

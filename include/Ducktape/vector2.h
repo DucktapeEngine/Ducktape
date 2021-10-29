@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VECTOR_2_H
+#define VECTOR_2_H
 
 struct Vector2
 {
@@ -171,3 +172,5 @@ struct Vector2
         return b2Vec2(x, y);
     }
 };
+
+#endif

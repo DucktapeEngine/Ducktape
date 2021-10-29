@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
 
 class Camera : public BehaviourScript
 {
@@ -31,3 +32,6 @@ class Camera : public BehaviourScript
             return 10.0;
         }
 };
+
+
+#endif

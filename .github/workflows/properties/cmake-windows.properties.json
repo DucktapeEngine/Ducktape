@@ -1,0 +1,6 @@
+{
+    "name": "CMake Build on Windows",
+    "description": "Build and test a CMake based project. on OSX",
+    "iconName": "cmake",
+    "categories": ["Continuous integration", "C", "C++"]
+}

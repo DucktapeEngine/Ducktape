@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DEBUG_H
+#define DEBUG_H
+
 
 class Debug
 {
@@ -39,3 +41,6 @@ class Debug
             Debug::DrawLine(start, dir, color);
         }
 };
+
+
+#endif

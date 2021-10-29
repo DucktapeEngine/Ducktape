@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TIME_H
+#define TIME_H
 
 namespace Time {
 	float deltaTime;
@@ -10,3 +11,5 @@ namespace Time {
 		Time::deltaTime = Time::deltaClock.restart().asSeconds();
 	}
 };
+
+#endif

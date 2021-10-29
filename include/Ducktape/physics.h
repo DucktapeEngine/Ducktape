@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_H
+#define PHYSICS_H
 
 namespace Physics
 {
@@ -17,3 +18,5 @@ namespace Physics
 		*/
 	}
 };
+
+#endif

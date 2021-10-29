@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATHF_H
+#define MATHF_H
 
 struct Mathf
 {
@@ -134,3 +135,6 @@ struct Mathf
         return std::tan(val);
     }
 };
+
+
+#endif

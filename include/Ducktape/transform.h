@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRANSFORM_H
+#define TRANSFORM_H
 
 class Transform : public BehaviourScript
 {
@@ -7,3 +8,5 @@ class Transform : public BehaviourScript
         float rotation;
         Vector2 scale = Vector2(1.0, 1.0);
 };
+
+#endif

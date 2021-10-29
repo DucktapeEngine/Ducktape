@@ -1,4 +1,11 @@
-#pragma once
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
+
+#include <iostream>
+#include <vector>
+
+#include "behaviourscript.h"
+
 
 class GameObject
 {
@@ -75,3 +82,6 @@ class GameObject
             return nullptr;
         }
 };
+
+
+#endif

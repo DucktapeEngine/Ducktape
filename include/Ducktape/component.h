@@ -1,5 +1,8 @@
-#pragma once
-#include "gameobject.hpp"
+#ifndef COMPONENT_H
+#define COMPONENT_H
+
+#include "gameobject.h"
+
 class GameObject;
 
 class Component 
@@ -7,3 +10,6 @@ class Component
     public:
         GameObject* gameObject;
 };
+
+
+#endif

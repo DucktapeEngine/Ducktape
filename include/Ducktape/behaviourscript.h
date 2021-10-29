@@ -1,4 +1,6 @@
-#pragma once
+#ifndef BEHAVIOR_SCRIPT_H
+#define BEHAVIOR_SCRIPT_H
+
 
 class BehaviourScript
 {
@@ -23,3 +25,5 @@ class BehaviourScript
             return false;
         }
 };
+
+#endif

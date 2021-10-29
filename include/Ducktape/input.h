@@ -1,4 +1,7 @@
-#pragma once
+#ifndef INPUT_H
+#define INPUT_H
+
+
 typedef sf::Keyboard::Key KeyCode;
 
 namespace Input
@@ -47,3 +50,6 @@ namespace Input
         mousePosition = Vector2(sf::Mouse::getPosition(Application::renderWindow).x, sf::Mouse::getPosition(Application::renderWindow).y);
     }
 };
+
+
+#endif

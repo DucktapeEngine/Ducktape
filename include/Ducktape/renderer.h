@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RENDERER_H
+#define RENDERER_H
 
 class Renderer
 {
@@ -22,3 +23,5 @@ class Renderer
             Application::renderWindow.draw(sprite);
         }
 };
+
+#endif
