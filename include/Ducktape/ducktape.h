@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <cmath>
 #include <vector>
@@ -28,6 +29,25 @@ namespace DT {
     #include "rigidbody.h"
     
     std::vector<GameObject*> gameObjects;
+
+
+    static bool Instantiate(std::string _name)
+    {
+        GameObject gameObj(_name);
+        gameObjects.push_back(gameObj);
+    }
+
+    static bool Instantiate(Vector2 pos, float rot, Vector2 scl)
+    {
+        GameObject gameObj(pos, rot, scl);
+        gameObjects.push_back(gameObj);
+    }
+
+    static bool Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
+    {
+        GameObject gameObj(_name, pos, rot, scl);
+        gameObjects.push_back(gameObj);
+    }
 
     void Initialize()
     {

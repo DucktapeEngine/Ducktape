@@ -81,6 +81,11 @@ class GameObject
             Debug::LogWarning(std::string("Component ") + typeid(T).name() + " not found!");
             return nullptr;
         }
+
+        static bool Instantiate();
+        static bool Instantiate(std::string _name);
+        static bool Instantiate(Vector2 pos, float rot, Vector2 scl);
+        static bool Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
 };
 
 
