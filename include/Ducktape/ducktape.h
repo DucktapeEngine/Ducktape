@@ -11,21 +11,21 @@
 
 
 namespace DT {
-    #include "mathf.hpp"
-    #include "vector2.hpp"
-    #include "application.hpp"
+    #include "mathf.h"
+    #include "vector2.h"
+    #include "application.h"
     class GameObject;
-    #include "debug.hpp"
-    #include "behaviourscript.hpp"
-    #include "transform.hpp"
-    #include "gameobject.hpp"
-    #include "input.hpp"
-    #include "camera.hpp"
-    #include "physics.hpp"
-    #include "renderer.hpp"
-    #include "time.hpp"
-    #include "spriterenderer.hpp"
-    #include "rigidbody.hpp"
+    #include "debug.h"
+    #include "behaviourscript.h"
+    #include "transform.h"
+    #include "gameobject.h"
+    #include "input.h"
+    #include "camera.h"
+    #include "physics.h"
+    #include "renderer.h"
+    #include "time.h"
+    #include "spriterenderer.h"
+    #include "rigidbody.h"
     
     std::vector<GameObject*> gameObjects;
 
