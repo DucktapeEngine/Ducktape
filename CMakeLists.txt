@@ -7,7 +7,7 @@ set(executable_name "Ducktape")
 set(CMAKE_BUILD_TYPE "Debug")
 
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/include/Ducktape/*.cpp" "${PROJECT_SOURCE_DIR}/include/Ducktape/*.h")
-add_executable(ducktape  ${source_list} ${PROJECT_SOURCE_DIR}/src/main.cpp)
+add_executable(ducktape  ${source_list} ${PROJECT_SOURCE_DIR}/examples/flappybird.cpp)
 set_target_properties(ducktape PROPERTIES
             CXX_STANDARD 20
             CXX_EXTENSIONS OFF)

@@ -10,7 +10,6 @@
 #include <vector>
 #include "include/box2d/include/box2d/box2d.h"
 
-
 namespace DT {
     #include "mathf.h"
     #include "vector2.h"
@@ -24,29 +23,29 @@ namespace DT {
     #include "camera.h"
     #include "physics.h"
     #include "renderer.h"
-    #include "time.h"
+    #include "dt_time.h"
     #include "spriterenderer.h"
     #include "rigidbody.h"
+    #include "boxcollider.h"
+    #include "circlecollider.h"
+    #include "edgecollider.h"
+    #include "polygoncollider.h"
     
     std::vector<GameObject*> gameObjects;
 
-
-    static bool Instantiate(std::string _name)
+    static void Instantiate(std::string _name)
     {
-        GameObject gameObj(_name);
-        gameObjects.push_back(gameObj);
+        gameObjects.push_back(new GameObject(_name));
     }
 
-    static bool Instantiate(Vector2 pos, float rot, Vector2 scl)
+    static void Instantiate(Vector2 pos, float rot, Vector2 scl)
     {
-        GameObject gameObj(pos, rot, scl);
-        gameObjects.push_back(gameObj);
+       gameObjects.push_back(new GameObject(pos, rot, scl));
     }
 
-    static bool Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
+    static void Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
     {
-        GameObject gameObj(_name, pos, rot, scl);
-        gameObjects.push_back(gameObj);
+        gameObjects.push_back(new GameObject(_name, pos, rot, scl));
     }
 
     void Initialize()
@@ -62,7 +61,10 @@ namespace DT {
         {
             for(BehaviourScript* bs:go->components)
             {
-                bs->Start();
+                if(bs != nullptr)
+                {
+                    bs->Start();
+                }
             }
         }
 
@@ -80,7 +82,10 @@ namespace DT {
             {
                 for(BehaviourScript* bs:go->components)
                 {
-                    bs->Update();
+                    if(bs != nullptr)
+                    {
+                        bs->Update();
+                    }
                 }
             }
 
@@ -88,7 +93,10 @@ namespace DT {
             {
                 for(BehaviourScript* bs:go->components)
                 {
-                    bs->MidUpdate();
+                    if(bs != nullptr)
+                    {
+                        bs->MidUpdate();
+                    }
                 }
             }
             
@@ -100,7 +108,10 @@ namespace DT {
             {
                 for(BehaviourScript* bs:go->components)
                 {
-                    bs->LateUpdate();
+                    if(bs != nullptr)
+                    {
+                        bs->LateUpdate();
+                    }
                 }
             }
 
