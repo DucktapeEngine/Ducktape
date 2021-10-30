@@ -1,6 +1,9 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
+#define FATAL_ERROR 8
+
+#include <stdlib.h>
 
 class Debug
 {
@@ -13,6 +16,12 @@ class Debug
         static void LogError(std::string str)
         {
             std::cout<<"\033[0;31m"<<str<<"\033[0m\n";
+        }
+
+        static void LogFatalError(std::string str)
+        {
+            std::cout << "\033[0;31m [FATAL ERR]" << str << "\033[0m" << std::endl;
+            exit(FATAL_ERROR);
         }
 
         static void LogWarning(std::string str)
