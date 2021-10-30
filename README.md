@@ -1,6 +1,3 @@
-![](https://raw.githubusercontent.com/DucktapeEngine/ducktapeengine.github.io/main/branding/Black/Black-02.png)
-
-![]() 
 [![](https://img.shields.io/badge/Ducktape-Join-brightgreen?style=for-the-badge&logo=appveyor)](https://ducktapeengine.github.io/discord)
 ![](https://img.shields.io/github/downloads/ducktapeengine/ducktape/total?style=for-the-badge) ![](https://img.shields.io/bitbucket/issues/DucktapEngine/Ducktape?style=for-the-badge)
 # Ducktape
