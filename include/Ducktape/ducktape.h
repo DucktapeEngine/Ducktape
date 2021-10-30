@@ -22,6 +22,7 @@ namespace DT {
     #include "input.h"
     #include "camera.h"
     #include "physics.h"
+    #include "color.h"
     #include "renderer.h"
     #include "dt_time.h"
     #include "spriterenderer.h"

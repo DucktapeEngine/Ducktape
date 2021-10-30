@@ -39,8 +39,9 @@ void ExampleScene()
 
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
     m++;
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/blue_square.png";
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/square.png";
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 1;
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(232, 69, 69, 255);
 
     m = 0;
     gameObjects.push_back(new GameObject("Player", Vector2(1, 0), 0.0, Vector2(2, 2)));
@@ -48,8 +49,9 @@ void ExampleScene()
 
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
     m++;
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/yellow_circle.png";
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/circle.png";
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 30;
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(43, 46, 74, 255);
 
     gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
     m++;
@@ -68,8 +70,9 @@ void ExampleScene()
 
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
     m++;
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/green_square.png";
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/square.png";
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 30;
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(43, 46, 74, 255);
 
     gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
     m++;
