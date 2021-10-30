@@ -30,6 +30,7 @@ namespace DT {
     #include "circlecollider.h"
     #include "edgecollider.h"
     #include "polygoncollider.h"
+    #include "color.h"
     
     std::vector<GameObject*> gameObjects;
 
