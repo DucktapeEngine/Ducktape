@@ -27,6 +27,15 @@ public:
     }
 };
 
+class CameraController : public BehaviourScript
+{
+public:
+    void Update()
+    {
+        gameObject->transform->position = gameObject->transform->position + Vector2::Right() * 0.9f;
+    }
+};
+
 void ExampleScene()
 {
     gameObjects.clear();
@@ -56,10 +65,12 @@ void ExampleScene()
     gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
     m++;
     dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "dynamic";
+    dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->linearDamping = 0.0f;
 
     gameObjects[n]->AddComponent<BoxCollider>(new BoxCollider());
     m++;
     dynamic_cast<BoxCollider*>(gameObjects[n]->components[m])->isTrigger = false;
+    dynamic_cast<BoxCollider*>(gameObjects[n]->components[m])->friction = 0.0f;
 
     gameObjects[n]->AddComponent<PlayerController>(new PlayerController());
     m++;
@@ -83,9 +94,10 @@ void ExampleScene()
     dynamic_cast<BoxCollider*>(gameObjects[n]->components[m])->isTrigger = false;
 
     m = 0;
-    GameObject::Instantiate("Camera");
+    GameObject::Instantiate("Camera", Vector2(-100, -100), 0.0, Vector2(1, 1));
     n++;
     gameObjects[n]->AddComponent<Camera>(new Camera());
+    gameObjects[n]->AddComponent<CameraController>(new CameraController());
 }
 
 int main()
