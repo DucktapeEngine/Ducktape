@@ -31,21 +31,20 @@ namespace DT {
     #include "circlecollider.h"
     #include "edgecollider.h"
     #include "polygoncollider.h"
-    #include "color.h"
     
     std::vector<GameObject*> gameObjects;
 
-    static void Instantiate(std::string _name)
+    void GameObject::Instantiate(std::string _name)
     {
         gameObjects.push_back(new GameObject(_name));
     }
 
-    static void Instantiate(Vector2 pos, float rot, Vector2 scl)
+    void GameObject::Instantiate(Vector2 pos, float rot, Vector2 scl)
     {
        gameObjects.push_back(new GameObject(pos, rot, scl));
     }
 
-    static void Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
+    void GameObject::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
     {
         gameObjects.push_back(new GameObject(_name, pos, rot, scl));
     }

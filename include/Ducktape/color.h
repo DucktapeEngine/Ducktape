@@ -20,7 +20,7 @@ struct Color
 		green = _green;
 		alpha = _alpha;
 	}
-	
+
 	sf::Color ToSFMLColor()
 	{
 		return sf::Color(red, blue, green, alpha);

@@ -34,7 +34,7 @@ void ExampleScene()
     int m;
 
     m = 0;
-    gameObjects.push_back(new GameObject("Sky", Vector2(0, 0), 0.0, Vector2(10, 10)));
+    GameObject::Instantiate("Sky", Vector2(0, 0), 0.0, Vector2(10, 10));
     n++;
 
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
@@ -44,13 +44,13 @@ void ExampleScene()
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(232, 69, 69, 255);
 
     m = 0;
-    gameObjects.push_back(new GameObject("Player", Vector2(1, 0), 0.0, Vector2(2, 2)));
+    GameObject::Instantiate("Player", Vector2(1, 0), 0.0, Vector2(2, 2));
     n++;
 
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
     m++;
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/circle.png";
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 30;
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 25;
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(43, 46, 74, 255);
 
     gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
@@ -65,13 +65,13 @@ void ExampleScene()
     m++;
 
     m = 0;
-    gameObjects.push_back(new GameObject("Ground", Vector2(10, 20), 0.0, Vector2(2, 2)));
+    GameObject::Instantiate("Ground", Vector2(10, 20), 0.0, Vector2(2, 2));
     n++;
 
     gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
     m++;
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/square.png";
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 30;
+    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 25;
     dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(43, 46, 74, 255);
 
     gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
@@ -83,7 +83,7 @@ void ExampleScene()
     dynamic_cast<BoxCollider*>(gameObjects[n]->components[m])->isTrigger = false;
 
     m = 0;
-    gameObjects.push_back(new GameObject("Camera"));
+    GameObject::Instantiate("Camera");
     n++;
     gameObjects[n]->AddComponent<Camera>(new Camera());
 }
