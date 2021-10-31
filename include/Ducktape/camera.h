@@ -8,10 +8,10 @@ class Camera : public BehaviourScript
         
         void Update()
         {
-            Application::view.setCenter(500/2 + gameObject->transform->position.x, 500/2 + gameObject->transform->position.y);
+            Application::view.setCenter(Application::resolution.x/2 + gameObject->transform->position.x, Application::resolution.y/2 + gameObject->transform->position.y);
             Application::view.setRotation(gameObject->transform->rotation);
 
-            Application::view.setSize(500, 500);
+            Application::view.setSize(Application::resolution.x, Application::resolution.y);
             Application::view.zoom(size);
         }
 

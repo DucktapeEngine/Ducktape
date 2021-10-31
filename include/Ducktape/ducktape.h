@@ -8,15 +8,20 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include <fstream>
 #include "include/box2d/include/box2d/box2d.h"
-
+#include "include/json/json.hpp"
+using json = nlohmann::json;
 
 namespace DT {
     #include "mathf.h"
     #include "vector2.h"
+    #include "dt_time.h"
+    #include "color.h"
+    #include "debug.h"
+    #include "projectsettings.h"
     #include "application.h"
     class GameObject;
-    #include "debug.h"
     #include "behaviourscript.h"
     #include "transform.h"
     #include "gameobject.h"
@@ -24,34 +29,49 @@ namespace DT {
     #include "camera.h"
     #include "physics.h"
     #include "renderer.h"
-    #include "time.h"
     #include "spriterenderer.h"
     #include "rigidbody.h"
+    #include "boxcollider.h"
+    #include "circlecollider.h"
+    #include "edgecollider.h"
+    #include "polygoncollider.h"
     
     std::vector<GameObject*> gameObjects;
 
-
-    static bool Instantiate(std::string _name)
+    GameObject* GameObject::Find(std::string _name)
     {
-        GameObject gameObj(_name);
-        gameObjects.push_back(gameObj);
+        for(int i=0,n=gameObjects.size();i<n;i++)
+        {
+            if(gameObjects[i]->name == _name)
+            {
+                return gameObjects[i];
+            }
+        }
+        Debug::LogError("GameObject with name \"" + _name +"\" doesn't exist!");
+        return nullptr;
     }
 
-    static bool Instantiate(Vector2 pos, float rot, Vector2 scl)
+    GameObject* GameObject::Instantiate(std::string _name)
     {
-        GameObject gameObj(pos, rot, scl);
-        gameObjects.push_back(gameObj);
+        gameObjects.push_back(new GameObject(_name));
+        return gameObjects[gameObjects.size()-1];
     }
 
-    static bool Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
+    GameObject* GameObject::Instantiate(Vector2 pos, float rot, Vector2 scl)
     {
-        GameObject gameObj(_name, pos, rot, scl);
-        gameObjects.push_back(gameObj);
+        gameObjects.push_back(new GameObject(pos, rot, scl));
+        return gameObjects[gameObjects.size()-1];
     }
 
-    void Initialize()
+    GameObject* GameObject::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
     {
-        // Vector2::*Down = Vector2(0.0f, -1.0f);
+        gameObjects.push_back(new GameObject(_name, pos, rot, scl));
+        return gameObjects[gameObjects.size()-1];
+    }
+
+    void Initialize(std::string _projectFilePath)
+    {
+        ProjectSettings::Initialize(_projectFilePath);
         Physics::Initialize();
         Application::Initialize();
     }
@@ -62,7 +82,10 @@ namespace DT {
         {
             for(BehaviourScript* bs:go->components)
             {
-                bs->Start();
+                if(bs != nullptr)
+                {
+                    bs->Start();
+                }
             }
         }
 
@@ -72,7 +95,7 @@ namespace DT {
             Input::Update();
             DT::Time::Update();
 
-            Application::renderWindow.clear(sf::Color::Black);
+            Application::renderWindow.clear(ProjectSettings::sceneBackgroundColor.ToSFMLColor());
 
             // Start Draw
 
@@ -80,7 +103,10 @@ namespace DT {
             {
                 for(BehaviourScript* bs:go->components)
                 {
-                    bs->Update();
+                    if(bs != nullptr)
+                    {
+                        bs->Update();
+                    }
                 }
             }
 
@@ -88,7 +114,10 @@ namespace DT {
             {
                 for(BehaviourScript* bs:go->components)
                 {
-                    bs->MidUpdate();
+                    if(bs != nullptr)
+                    {
+                        bs->MidUpdate();
+                    }
                 }
             }
             
@@ -100,7 +129,10 @@ namespace DT {
             {
                 for(BehaviourScript* bs:go->components)
                 {
-                    bs->LateUpdate();
+                    if(bs != nullptr)
+                    {
+                        bs->LateUpdate();
+                    }
                 }
             }
 

@@ -7,10 +7,15 @@ class BehaviourScript
     public:
         bool enabled = true;
         GameObject* gameObject;
+        bool destroyed = false;
         virtual void Start(){}
         virtual void Update(){}
         virtual void MidUpdate(){}
         virtual void LateUpdate(){}
+        virtual void Destroy()
+        {
+            delete this;
+        }
         void Invoke(std::string methodName, float time)
         {
             Debug::LogWarning("Invoke not Implemented yet.");

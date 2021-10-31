@@ -1,48 +1,46 @@
 #ifndef RIGIDBODY_H
 #define RIGIDBODY_H
 
-class Box 
-{
-public:
-    Vector2 scale = Vector2(1.0, 1.0);
-};
-
-class Polygon 
-{
-public:
-    std::vector<Vector2>points;
-};
-
-class Circle
-{
-public:
-    float radius = 1.0f;
-};
-
-class Edge
-{
-public:
-    std::vector<Vector2>points;
-};
-
 class Rigidbody : public BehaviourScript
 {
     public:
         Vector2 velocity;
         float gravityScale = 1.0;
         std::string type;
-        std::string colliderType;
         bool isTrigger = false;
         b2Body* body;
 
-        Box boxCollider;
-        Polygon polygonCollider;
-        Circle circleCollider;
-        Edge edgeCollider;
+        float linearDamping = 0.0f;
+        float angularDamping = 0.01f;
+        bool allowSleep = true;
+        bool continousCollision = false;
 
         void Start()
         {
-            UpdateCollider(colliderType);
+            b2BodyDef bodyDef;
+            bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(&gameObject);
+            bodyDef.position.Set(gameObject->transform->position.x, gameObject->transform->position.y);
+
+            if(type == "dynamic")
+            {
+                bodyDef.type = b2_dynamicBody;
+            } 
+            else if(type == "kinematic")
+            {
+                bodyDef.type = b2_kinematicBody;
+            }
+            else if(type == "static")
+            {
+                bodyDef.type = b2_staticBody;
+            }
+            body = Physics::physicsWorld.CreateBody(&bodyDef);
+            
+            body->SetAwake(true);
+
+            body->SetLinearDamping(linearDamping);
+            body->SetAngularDamping(angularDamping);
+            body->SetSleepingAllowed(allowSleep);
+            body->SetBullet(continousCollision);
         }
 
         void Update()
@@ -62,121 +60,35 @@ class Rigidbody : public BehaviourScript
             gameObject->transform->rotation = body->GetAngle();
             velocity = Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y);
         }
-
-        void UpdateCollider(std::string _colliderType)
+        
+        void AddForce(Vector2 direction, float force)
         {
-            colliderType = _colliderType;
+            body->ApplyForceToCenter((direction * force).ToBox2DVector(), true);
+        }
 
-            b2BodyDef groundBodyDef;
-            if(type == "dynamic")
+        void AddForceAtPoint(Vector2 direction, float force, Vector2 point)
+        {
+            body->ApplyForce((direction * force).ToBox2DVector(), point.ToBox2DVector(), true);
+        }
+
+        void AddTorque(float torque)
+        {
+            body->ApplyTorque(torque, true);
+        }
+
+        void Destroy()
+        {
+            if(body != nullptr && !destroyed)
             {
-                groundBodyDef.type = b2_dynamicBody;
-            }
-            body = Physics::physicsWorld.CreateBody(&groundBodyDef);
-            
-            body->SetAwake(true);
-
-            b2MassData* data;
-            body->GetMassData(data);
-            data->center.Set(0, 0);
-            body->SetMassData(data);
-            
-            b2PolygonShape collisionShape;
-            b2CircleShape circleShape;
-            b2ChainShape chainShape;
-            b2EdgeShape edgeShape;
-
-            if(colliderType == "none")
-            {
-                return;
-            }
-            else if(colliderType == "box")
-            {
-                collisionShape.SetAsBox(boxCollider.scale.x * gameObject->transform->scale.x, boxCollider.scale.y * gameObject->transform->scale.y);
-            }
-            else if(colliderType == "circle")
-            {
-                circleShape.m_p.Set(0.0f, 0.0f);
-                circleShape.m_radius = circleCollider.radius;
-            }
-            else if(colliderType == "edge")
-            {
-                int size = edgeCollider.points.size();
-
-                if(size > 2)
-                {
-                    if(size > 8)
-                    {
-                        Debug::LogError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
-                        return;
-                    }
-
-                    b2Vec2 vertices[size];
-                    for(int i=0,n=size;i<n;i++)
-                    {
-                        vertices[i].Set(edgeCollider.points[i].x, edgeCollider.points[i].y);
-                    }
-                    chainShape.CreateLoop(vertices, size);
-                }
-                else
-                {
-                    if(size <= 0)
-                    {
-                        Debug::LogError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
-                        return;
-                    }
-
-                    b2Vec2 vertices[size];
-                    for(int i=0,n=size;i<n;i++)
-                    {
-                        vertices[i].Set(edgeCollider.points[i].x, edgeCollider.points[i].y);
-                    }
-
-                    edgeShape.SetTwoSided(vertices[0], vertices[1]);
-                }
-            }
-            else
-            {
-                int size = edgeCollider.points.size();
-
-                if(size < 3 || size > 8)
-                {
-                    Debug::LogError("The number of vertices in a polygonCollider must be >= 3 and <= 8, the number of vertices chosen is " + std::to_string(size));
-                    return;
-                }
-
-                b2Vec2 vertices[size];
-                for(int i=0,n=size;i<n;i++)
-                {
-                    vertices[i].Set(edgeCollider.points[i].x, edgeCollider.points[i].y);
-                }
-                collisionShape.Set(vertices, size);
-            }
-
-            b2FixtureDef fixtureDef;
-            if(colliderType == "circle")
-            {
-                fixtureDef.shape = &circleShape;
-            }
-            else if(colliderType == "edge")
-            {
-                if(edgeCollider.points.size() > 2)
-                {
-                    fixtureDef.shape = &chainShape;
-                } 
-                else
-                {
-                    fixtureDef.shape = &edgeShape;
-                }
+                Physics::physicsWorld.DestroyBody(body);
+                destroyed = true;
+                body = nullptr;
             } 
-            else {
-                fixtureDef.shape = &collisionShape;
+            else 
+            {
+                Debug::LogError("You cannot delete an already deleted body.");
             }
-            fixtureDef.density = 1.0f;
-            fixtureDef.friction = 0.3f;
-            fixtureDef.isSensor = isTrigger;
-
-            body->CreateFixture(&fixtureDef);
+            delete this;
         }
 };
 

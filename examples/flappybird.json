@@ -1,0 +1,18 @@
+{
+	"application" : {
+		"windowTitle" : "Flappy Bird"
+	},
+	"scene" : {
+		"sceneBackgroundColor" : {
+			"red" : 232,
+			"blue" : 69,
+			"green" : 69
+		}
+	},
+	"physics" : {
+		"globalGravity" : {
+			"x" : 0,
+			"y" : 1
+		}
+	}
+}
