@@ -21,7 +21,7 @@ class Debug
 
         static void LogFatalError(std::string str)
         {
-            std::cout << "\033[0;31m [FATAL ERR]" << str << "\033[0m" << std::endl;
+            std::cout << "\033[0;31m [FATAL ERR] " << str << "\033[0m" << std::endl;
             exit(FATAL_ERROR);
         }
 

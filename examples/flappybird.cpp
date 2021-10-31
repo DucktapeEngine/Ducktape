@@ -43,16 +43,6 @@ void ExampleScene()
     int m;
 
     m = 0;
-    GameObject::Instantiate("Sky", Vector2(0, 0), 0.0, Vector2(10, 10));
-    n++;
-
-    gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
-    m++;
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/square.png";
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 1;
-    dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(232, 69, 69, 255);
-
-    m = 0;
     GameObject::Instantiate("Player", Vector2(1, 0), 0.0, Vector2(2, 2));
     n++;
 
@@ -103,7 +93,7 @@ void ExampleScene()
 int main()
 {
     // Initializing the Ducktape Engine
-    DT::Initialize();
+    DT::Initialize("~Duckie/Programming/Ducktape/Workspace/Ducktape/examples/flappybird.json");
 
     /* Each function is considered a scene. 
     The list below will initiate a new scene in the order of which they're called. 

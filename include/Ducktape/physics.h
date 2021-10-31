@@ -11,11 +11,7 @@ namespace Physics
 
 	void Initialize()
 	{
-		/* 
-		This function is empty for now. A feature will be added in the future
-		that reads from a JSON ducktape-project-file, and extract the settings which includes
-		the globalGravity.
-		*/
+		globalGravity = ProjectSettings::globalGravity;
 	}
 };
 
