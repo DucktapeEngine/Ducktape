@@ -8,6 +8,7 @@
 class Debug
 {
     public:
+        // string
         static void Log(std::string str)
         {
             std::cout<<"\033[0;37m"<<str<<"\033[0m\n";
@@ -30,6 +31,34 @@ class Debug
         }
 
         static void LogSuccess(std::string str)
+        {
+            std::cout<<"\033[0;32m"<<str<<"\033[0m\n";
+        }
+
+        // float overload
+
+        static void Log(float str)
+        {
+            std::cout<<"\033[0;37m"<<str<<"\033[0m\n";
+        }
+
+        static void LogError(float str)
+        {
+            std::cout<<"\033[0;31m"<<str<<"\033[0m\n";
+        }
+
+        static void LogFatalError(float str)
+        {
+            std::cout << "\033[0;31m [FATAL ERR]" << str << "\033[0m" << std::endl;
+            exit(FATAL_ERROR);
+        }
+
+        static void LogWarning(float str)
+        {
+            std::cout<<"\033[0;33m"<<str<<"\033[0m\n";
+        }
+
+        static void LogSuccess(float str)
         {
             std::cout<<"\033[0;32m"<<str<<"\033[0m\n";
         }

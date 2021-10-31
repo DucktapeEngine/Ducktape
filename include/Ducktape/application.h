@@ -27,6 +27,11 @@ namespace Application
 	{
 	    return renderWindow.isOpen();
 	}
+
+	float FPS()
+	{
+		return 1/Time::deltaTime;
+	}
 }
 
 #endif

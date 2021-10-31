@@ -82,10 +82,11 @@ class GameObject
             return nullptr;
         }
 
-        static void Instantiate();
-        static void Instantiate(std::string _name);
-        static void Instantiate(Vector2 pos, float rot, Vector2 scl);
-        static void Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
+        static GameObject* Find(std::string _name);
+        static GameObject* Instantiate();
+        static GameObject* Instantiate(std::string _name);
+        static GameObject* Instantiate(Vector2 pos, float rot, Vector2 scl);
+        static GameObject* Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
 };
 
 

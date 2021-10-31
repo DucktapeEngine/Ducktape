@@ -34,24 +34,39 @@ namespace DT {
     
     std::vector<GameObject*> gameObjects;
 
-    void GameObject::Instantiate(std::string _name)
+    GameObject* GameObject::Find(std::string _name)
+    {
+        for(int i=0,n=gameObjects.size();i<n;i++)
+        {
+            if(gameObjects[i]->name == _name)
+            {
+                return gameObjects[i];
+            }
+        }
+        Debug::LogError("GameObject with name \"" + _name +"\" doesn't exist!");
+        return nullptr;
+    }
+
+    GameObject* GameObject::Instantiate(std::string _name)
     {
         gameObjects.push_back(new GameObject(_name));
+        return gameObjects[gameObjects.size()-1];
     }
 
-    void GameObject::Instantiate(Vector2 pos, float rot, Vector2 scl)
+    GameObject* GameObject::Instantiate(Vector2 pos, float rot, Vector2 scl)
     {
-       gameObjects.push_back(new GameObject(pos, rot, scl));
+        gameObjects.push_back(new GameObject(pos, rot, scl));
+        return gameObjects[gameObjects.size()-1];
     }
 
-    void GameObject::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
+    GameObject* GameObject::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
     {
         gameObjects.push_back(new GameObject(_name, pos, rot, scl));
+        return gameObjects[gameObjects.size()-1];
     }
 
     void Initialize()
     {
-        // Vector2::*Down = Vector2(0.0f, -1.0f);
         Physics::Initialize();
         Application::Initialize();
     }
