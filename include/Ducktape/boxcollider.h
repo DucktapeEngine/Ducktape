@@ -16,7 +16,7 @@ public:
         rb = gameObject->GetComponent<Rigidbody>();
 
         b2PolygonShape collisionShape;
-        collisionShape.SetAsBox(scale.x * gameObject->transform->scale.x, scale.y * gameObject->transform->scale.y);
+        collisionShape.SetAsBox(scale.x * gameObject->transform->GetScale().x, scale.y * gameObject->transform->GetScale().y);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &collisionShape;

@@ -38,6 +38,45 @@ namespace DT {
     
     std::vector<GameObject*> gameObjects;
 
+    Vector2 Transform::SetPosition(Vector2 _pos)
+    {
+        position = _pos;
+        for(BehaviourScript* bs:gameObject->components)
+        {
+            if(bs != nullptr)
+            {
+                bs->OnTransformChange();
+            }
+        }
+        return _pos;
+    }
+
+    float Transform::SetRotation(float _rot)
+    {
+        rotation = _rot;
+        for(BehaviourScript* bs:gameObject->components)
+        {
+            if(bs != nullptr)
+            {
+                bs->OnTransformChange();
+            }
+        }
+        return _rot;
+    }
+
+    Vector2 Transform::SetScale(Vector2 _scl)
+    {
+        scale = _scl;
+        for(BehaviourScript* bs:gameObject->components)
+        {
+            if(bs != nullptr)
+            {
+                bs->OnTransformChange();
+            }
+        }
+        return _scl;
+    }
+
     GameObject* GameObject::Find(std::string _name)
     {
         for(int i=0,n=gameObjects.size();i<n;i++)
@@ -109,32 +148,8 @@ namespace DT {
                     }
                 }
             }
-
-            for(GameObject* go:gameObjects)
-            {
-                for(BehaviourScript* bs:go->components)
-                {
-                    if(bs != nullptr)
-                    {
-                        bs->MidUpdate();
-                    }
-                }
-            }
             
             Physics::physicsWorld.Step(Time::deltaTime, Physics::velocityIterations, Physics::positionIterations);
-
-            // Late Update call
-
-            for(GameObject* go:gameObjects)
-            {
-                for(BehaviourScript* bs:go->components)
-                {
-                    if(bs != nullptr)
-                    {
-                        bs->LateUpdate();
-                    }
-                }
-            }
 
             Application::renderWindow.setView(Application::view);
 

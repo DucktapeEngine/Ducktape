@@ -15,15 +15,15 @@ public:
     {
         if(Input::GetMouseButton(0))
         {
-            gameObject->transform->position = Camera::ScreenToWorldPos(Input::mousePosition);
-            rb->velocity = Vector2(0.0f, 0.0f);
+            gameObject->transform->SetPosition(Camera::ScreenToWorldPos(Input::mousePosition));
+            rb->SetVelocity(Vector2(0.0f, 0.0f));
         }
 
         if(Input::GetKey(KeyCode::W))
         {
-            rb->velocity.y = -20.0f;
+            rb->SetVelocity(Vector2(rb->GetVelocity().x, -20.0f));
         }
-        rb->velocity.x = 10.0f;
+        rb->SetVelocity(Vector2(10.0f, rb->GetVelocity().y));
     }
 };
 
@@ -32,7 +32,7 @@ class CameraController : public BehaviourScript
 public:
     void Update()
     {
-        gameObject->transform->position = gameObject->transform->position + Vector2::Right() * 0.9f;
+        gameObject->transform->SetPosition(gameObject->transform->GetPosition() + Vector2::Right() * 0.9f);
     }
 };
 

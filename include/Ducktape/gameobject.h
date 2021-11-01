@@ -42,9 +42,9 @@ class GameObject
             tag = "Default";
             name = "New GameObject";
             transform = this->AddComponent<Transform>(new Transform());
-            transform->position = pos;
-            transform->rotation = rot;
-            transform->scale = scl;
+            transform->SetPosition(pos);
+            transform->SetRotation(rot);
+            transform->SetScale(scl);
         }
 
         GameObject(std::string _name, Vector2 pos, float rot, Vector2 scl)
@@ -54,9 +54,9 @@ class GameObject
             tag = "Default";
             name = _name;
             transform = this->AddComponent<Transform>(new Transform());
-            transform->position = pos;
-            transform->rotation = rot;
-            transform->scale = scl;
+            transform->SetPosition(pos);
+            transform->SetRotation(rot);
+            transform->SetScale(scl);
         }
 
         template <typename T>

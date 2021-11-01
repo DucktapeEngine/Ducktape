@@ -12,7 +12,7 @@ class SpriteRenderer : public BehaviourScript
         {
             if(spritePath != "")
             {
-                Renderer::DrawSprite(spritePath, Camera::WorldToScreenPos(gameObject->transform->position), gameObject->transform->rotation, gameObject->transform->scale, pixelPerUnit, color);
+                Renderer::DrawSprite(spritePath, Camera::WorldToScreenPos(gameObject->transform->GetPosition()), gameObject->transform->GetRotation(), gameObject->transform->GetScale(), pixelPerUnit, color);
             }
         }
 };

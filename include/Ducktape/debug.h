@@ -8,59 +8,59 @@
 class Debug
 {
     public:
-        // string
-        static void Log(std::string str)
+        // valing
+        static void Log(std::string val)
         {
-            std::cout<<"\033[0;37m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;37m"<<val<<"\033[0m\n";
         }
 
-        static void LogError(std::string str)
+        static void LogError(std::string val)
         {
-            std::cout<<"\033[0;31m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;31m"<<val<<"\033[0m\n";
         }
 
-        static void LogFatalError(std::string str)
+        static void LogFatalError(std::string val)
         {
-            std::cout << "\033[0;31m [FATAL ERR] " << str << "\033[0m" << std::endl;
+            std::cout << "\033[0;31m [FATAL ERR] " << val << "\033[0m" << std::endl;
             exit(FATAL_ERROR);
         }
 
-        static void LogWarning(std::string str)
+        static void LogWarning(std::string val)
         {
-            std::cout<<"\033[0;33m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;33m"<<val<<"\033[0m\n";
         }
 
-        static void LogSuccess(std::string str)
+        static void LogSuccess(std::string val)
         {
-            std::cout<<"\033[0;32m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;32m"<<val<<"\033[0m\n";
         }
 
         // float overload
 
-        static void Log(float str)
+        static void Log(float val)
         {
-            std::cout<<"\033[0;37m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;37m"<<val<<"\033[0m\n";
         }
 
-        static void LogError(float str)
+        static void LogError(float val)
         {
-            std::cout<<"\033[0;31m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;31m"<<val<<"\033[0m\n";
         }
 
-        static void LogFatalError(float str)
+        static void LogFatalError(float val)
         {
-            std::cout << "\033[0;31m [FATAL ERR]" << str << "\033[0m" << std::endl;
+            std::cout << "\033[0;31m [FATAL ERR]" << val << "\033[0m" << std::endl;
             exit(FATAL_ERROR);
         }
 
-        static void LogWarning(float str)
+        static void LogWarning(float val)
         {
-            std::cout<<"\033[0;33m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;33m"<<val<<"\033[0m\n";
         }
 
-        static void LogSuccess(float str)
+        static void LogSuccess(float val)
         {
-            std::cout<<"\033[0;32m"<<str<<"\033[0m\n";
+            std::cout<<"\033[0;32m"<<val<<"\033[0m\n";
         }
 
         static void DrawLine(Vector2 start, Vector2 end, sf::Color color)

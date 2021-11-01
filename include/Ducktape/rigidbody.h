@@ -4,7 +4,6 @@
 class Rigidbody : public BehaviourScript
 {
     public:
-        Vector2 velocity;
         float gravityScale = 1.0;
         std::string type;
         bool isTrigger = false;
@@ -19,7 +18,7 @@ class Rigidbody : public BehaviourScript
         {
             b2BodyDef bodyDef;
             bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(&gameObject);
-            bodyDef.position.Set(gameObject->transform->position.x, gameObject->transform->position.y);
+            bodyDef.position.Set(gameObject->transform->GetPosition().x, gameObject->transform->GetPosition().y);
 
             if(type == "dynamic")
             {
@@ -45,20 +44,25 @@ class Rigidbody : public BehaviourScript
 
         void Update()
         {
-            velocity = Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity;
+            gameObject->transform->SetPosition(Vector2(body->GetPosition().x, body->GetPosition().y));
+            gameObject->transform->SetRotation(body->GetAngle());
+            SetVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity);
         }
 
-        void MidUpdate()
+        void OnTransformChange()
         {
-            body->SetTransform(b2Vec2(gameObject->transform->position.x, gameObject->transform->position.y), gameObject->transform->rotation);
-            body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+            body->SetTransform(b2Vec2(gameObject->transform->GetPosition().x, gameObject->transform->GetPosition().y), gameObject->transform->GetRotation());
         }
 
-        void LateUpdate()
+        Vector2 GetVelocity()
         {
-            gameObject->transform->position = Vector2(body->GetPosition().x, body->GetPosition().y);
-            gameObject->transform->rotation = body->GetAngle();
-            velocity = Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y);
+            return Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y);
+        }
+
+        Vector2 SetVelocity(Vector2 _vel)
+        {
+            body->SetLinearVelocity(b2Vec2(_vel.x, _vel.y));
+            return _vel;
         }
         
         void AddForce(Vector2 direction, float force)
