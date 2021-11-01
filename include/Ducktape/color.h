@@ -27,4 +27,13 @@ struct Color
 	}
 };
 
+void to_json(json& j, const Color& c)
+{
+    j = json{
+        { "red", c.red },
+        { "blue", c.blue },
+        { "green", c.green },
+    };
+}
+
 #endif

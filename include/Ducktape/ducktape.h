@@ -8,23 +8,27 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include <fstream>
 #include "include/box2d/include/box2d/box2d.h"
+#include "include/json/json.hpp"
+using json = nlohmann::json;
 
 namespace DT {
     #include "mathf.h"
     #include "vector2.h"
+    #include "dt_time.h"
+    #include "color.h"
+    #include "debug.h"
+    #include "projectsettings.h"
     #include "application.h"
     class GameObject;
-    #include "debug.h"
     #include "behaviourscript.h"
     #include "transform.h"
     #include "gameobject.h"
     #include "input.h"
     #include "camera.h"
     #include "physics.h"
-    #include "color.h"
     #include "renderer.h"
-    #include "dt_time.h"
     #include "spriterenderer.h"
     #include "rigidbody.h"
     #include "boxcollider.h"
@@ -65,8 +69,9 @@ namespace DT {
         return gameObjects[gameObjects.size()-1];
     }
 
-    void Initialize()
+    void Initialize(std::string _projectFilePath)
     {
+        ProjectSettings::Initialize(_projectFilePath);
         Physics::Initialize();
         Application::Initialize();
     }
@@ -90,7 +95,7 @@ namespace DT {
             Input::Update();
             DT::Time::Update();
 
-            Application::renderWindow.clear(sf::Color::Black);
+            Application::renderWindow.clear(ProjectSettings::sceneBackgroundColor.ToSFMLColor());
 
             // Start Draw
 
