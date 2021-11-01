@@ -4,8 +4,6 @@
 #define FATAL_ERROR 8
 
 #include <stdlib.h>
-#include <stdexcept>
-#include <format>
 
 class Debug
 {
@@ -23,8 +21,8 @@ class Debug
 
         static void LogFatalError(std::string str)
         {
-            std::string errMsg = std::format("\033[0;31m [FATAL ERR]: {} with error code {} \033[0m", str, FATAL_ERROR);
-            throw std::runtime_error(errMsg);
+            std::cout << "\033[0;31m [FATAL ERR] " << str << "\033[0m" << std::endl;
+            exit(FATAL_ERROR);
         }
 
         static void LogWarning(std::string str)
