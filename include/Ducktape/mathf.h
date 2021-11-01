@@ -9,6 +9,7 @@ struct Mathf
     static constexpr float NegativeInfinity = 1.17549e-038;
     static constexpr float PI = 3.14159265358979;
     static constexpr float Rad2Deg = 57.2957795131;
+    static constexpr float GoldenRatio = 1.61803398875;
 
     static float Abs(float val)
     {

@@ -48,6 +48,7 @@ namespace DT {
                 bs->OnTransformChange();
             }
         }
+        RecalculateLocalValues();
         return _pos;
     }
 
@@ -61,6 +62,7 @@ namespace DT {
                 bs->OnTransformChange();
             }
         }
+        RecalculateLocalValues();
         return _rot;
     }
 
@@ -74,6 +76,49 @@ namespace DT {
                 bs->OnTransformChange();
             }
         }
+        RecalculateLocalValues();
+        return _scl;
+    }
+
+    Vector2 Transform::SetLocalPosition(Vector2 _pos)
+    {
+        position = _pos;
+        for(BehaviourScript* bs:gameObject->components)
+        {
+            if(bs != nullptr)
+            {
+                bs->OnTransformChange();
+            }
+        }
+        RecalculateWorldValues();
+        return _pos;
+    }
+
+    float Transform::SetLocalRotation(float _rot)
+    {
+        rotation = _rot;
+        for(BehaviourScript* bs:gameObject->components)
+        {
+            if(bs != nullptr)
+            {
+                bs->OnTransformChange();
+            }
+        }
+        RecalculateWorldValues();
+        return _rot;
+    }
+
+    Vector2 Transform::SetLocalScale(Vector2 _scl)
+    {
+        scale = _scl;
+        for(BehaviourScript* bs:gameObject->components)
+        {
+            if(bs != nullptr)
+            {
+                bs->OnTransformChange();
+            }
+        }
+        RecalculateWorldValues();
         return _scl;
     }
 
