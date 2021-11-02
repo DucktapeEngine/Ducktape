@@ -17,7 +17,7 @@ class Rigidbody : public BehaviourScript
         void Start()
         {
             b2BodyDef bodyDef;
-            bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(&gameObject);
+            bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(gameObject);
             bodyDef.position.Set(gameObject->transform->GetPosition().x, gameObject->transform->GetPosition().y);
 
             if(type == "dynamic")

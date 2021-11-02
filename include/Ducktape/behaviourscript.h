@@ -1,5 +1,5 @@
-#ifndef BEHAVIOR_SCRIPT_H
-#define BEHAVIOR_SCRIPT_H
+#ifndef BEHAVIOUR_SCRIPT_H
+#define BEHAVIOUR_SCRIPT_H
 
 class BehaviourScript
 {
@@ -11,6 +11,8 @@ public:
     virtual void Start(){}
     virtual void Update(){}
     virtual void OnTransformChange(){}
+    virtual void OnCollisionEnter(Collision collider){}
+    virtual void OnCollisionExit(Collision collider){}
 
     virtual void Destroy()
     {

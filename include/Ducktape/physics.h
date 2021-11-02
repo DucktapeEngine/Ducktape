@@ -8,10 +8,12 @@ namespace Physics
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 	Vector2 globalGravity = Vector2(0.0f, 1.0f);
+	ContactListener contactListener;
 
 	void Initialize()
 	{
 		globalGravity = ProjectSettings::globalGravity;
+		physicsWorld.SetContactListener(&contactListener);
 	}
 };
 

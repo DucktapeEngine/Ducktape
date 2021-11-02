@@ -22,11 +22,13 @@ namespace DT {
     #include "projectsettings.h"
     #include "application.h"
     class GameObject;
+    #include "collision.h"
     #include "behaviourscript.h"
     #include "transform.h"
     #include "gameobject.h"
     #include "input.h"
     #include "camera.h"
+    #include "contactlistener.h"
     #include "physics.h"
     #include "renderer.h"
     #include "spriterenderer.h"
