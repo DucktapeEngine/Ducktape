@@ -15,6 +15,13 @@ namespace Physics
 		globalGravity = ProjectSettings::globalGravity;
 		physicsWorld.SetContactListener(&contactListener);
 	}
+
+	Collision Raycast(Vector2 _origin, Vector2 _direction)
+	{
+		Collision raycastCallback;
+		physicsWorld.RayCast(&raycastCallback, _origin.ToBox2DVector(), _direction.ToBox2DVector());
+		return raycastCallback;
+	}
 };
 
 #endif

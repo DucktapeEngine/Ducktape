@@ -1,14 +1,20 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
-struct Collision
+class Collision : public b2RayCastCallback
 {
+public:
 	Vector2 normal;
-	GameObject* object;
+	GameObject* body;
+	Vector2 point;
+	float distance;
 
-	Collision(GameObject* _object)
+	float ReportFixture(b2Fixture *_fixture, const b2Vec2 &_point, const b2Vec2 &_normal, float _fraction)
 	{
-		object = _object;
+		point = Vector2(_point.x, _point.y);
+		point = Vector2(_normal.x, _normal.y);
+		distance = _fraction;
+		return 0.0f;
 	}
 };
 

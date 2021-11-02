@@ -13,7 +13,9 @@ private:
 	    {
 	    	if(bs != nullptr)
 	    	{
-		    	bs->OnCollisionEnter(Collision(bodyB));
+	    		Collision collisionB;
+	    		collisionB.body = bodyB;
+		    	bs->OnCollisionEnter(collisionB);
 	    	}
 	    }
 
@@ -21,7 +23,9 @@ private:
 	    {
 	    	if(bs != nullptr)
 	    	{
-		    	bs->OnCollisionEnter(Collision(bodyA));
+	    		Collision collisionA;
+	    		collisionA.body = bodyA;
+		    	bs->OnCollisionEnter(collisionA);
 	    	}
 	    }
     }
@@ -36,7 +40,9 @@ private:
 	    {
 	    	if(bs != nullptr)
 	    	{
-		    	bs->OnCollisionExit(Collision(bodyB));
+	    		Collision collisionB;
+	    		collisionB.body = bodyB;
+		    	bs->OnCollisionExit(collisionB);
 	    	}
 	    }
 
@@ -44,7 +50,9 @@ private:
 	    {
 	    	if(bs != nullptr)
 	    	{
-		    	bs->OnCollisionExit(Collision(bodyA));
+	    		Collision collisionA;
+	    		collisionA.body = bodyA;
+		    	bs->OnCollisionExit(collisionA);
 	    	}
 	    }
     }
