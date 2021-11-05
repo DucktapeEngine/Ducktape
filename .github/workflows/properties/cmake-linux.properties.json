@@ -1,6 +1,0 @@
-{
-    "name": "CMake Build on Linux",
-    "description": "Build and test a CMake based project on Linux(Ubuntu)",
-    "iconName": "cmake",
-    "categories": ["Continuous integration", "C", "C++"]
-}
