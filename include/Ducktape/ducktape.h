@@ -10,8 +10,6 @@
 #include <vector>
 #include <fstream>
 #include "include/box2d/include/box2d/box2d.h"
-#include "include/json/json.hpp"
-using json = nlohmann::json;
 
 namespace DT {
     #include "mathf.h"
@@ -155,9 +153,8 @@ namespace DT {
         return gameObjects[gameObjects.size()-1];
     }
 
-    void Initialize(std::string _projectFilePath)
+    void Initialize()
     {
-        ProjectSettings::Initialize(_projectFilePath);
         Physics::Initialize();
         Application::Initialize();
     }

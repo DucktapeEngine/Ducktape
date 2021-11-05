@@ -93,7 +93,11 @@ void ExampleScene()
 int main()
 {
     // Initializing the Ducktape Engine
-    DT::Initialize("~Duckie/Programming/Ducktape/Workspace/Ducktape/examples/flappybird.json");
+    DT::ProjectSettings::windowTitle = "Flappy Bird";
+    DT::ProjectSettings::sceneBackgroundColor = Color(232, 69, 69);
+    DT::ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
+
+    DT::Initialize();
 
     /* Each function is considered a scene. 
     The list below will initiate a new scene in the order of which they're called. 
