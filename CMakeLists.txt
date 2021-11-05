@@ -13,8 +13,9 @@ set_target_properties(ducktape PROPERTIES
             CXX_EXTENSIONS OFF)
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/;${PROJECT_SOURCE_DIR}")
-target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/box2d/build/bin")
+target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/box2d/bin")
 
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include/SFML-linux-gcc/lib/cmake/)
+
 find_package(SFML 2.5.1 COMPONENTS graphics audio window network system CONFIG  REQUIRED)
 target_link_libraries(ducktape PRIVATE sfml-graphics sfml-window sfml-audio sfml-network sfml-system -lbox2d -lglad -lglfw -limgui -lsajson)
