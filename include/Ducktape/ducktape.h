@@ -35,8 +35,9 @@ namespace DT {
     #include "circlecollider.h"
     #include "edgecollider.h"
     #include "polygoncollider.h"
+    #include "scene.h"
     
-    std::vector<GameObject*> gameObjects;
+    Scene* currentScene = nullptr;
 
     Vector2 Transform::SetPosition(Vector2 _pos)
     {
@@ -124,11 +125,11 @@ namespace DT {
 
     GameObject* GameObject::Find(std::string _name)
     {
-        for(int i=0,n=gameObjects.size();i<n;i++)
+        for(int i=0,n=currentScene->gameObjects.size();i<n;i++)
         {
-            if(gameObjects[i]->name == _name)
+            if(currentScene->gameObjects[i]->name == _name)
             {
-                return gameObjects[i];
+                return currentScene->gameObjects[i];
             }
         }
         Debug::LogError("GameObject with name \"" + _name +"\" doesn't exist!");
@@ -137,20 +138,30 @@ namespace DT {
 
     GameObject* GameObject::Instantiate(std::string _name)
     {
-        gameObjects.push_back(new GameObject(_name));
-        return gameObjects[gameObjects.size()-1];
+        currentScene->gameObjects.push_back(new GameObject(_name));
+        return currentScene->gameObjects[currentScene->gameObjects.size()-1];
     }
 
     GameObject* GameObject::Instantiate(Vector2 pos, float rot, Vector2 scl)
     {
-        gameObjects.push_back(new GameObject(pos, rot, scl));
-        return gameObjects[gameObjects.size()-1];
+        currentScene->gameObjects.push_back(new GameObject(pos, rot, scl));
+        return currentScene->gameObjects[currentScene->gameObjects.size()-1];
     }
 
     GameObject* GameObject::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
     {
-        gameObjects.push_back(new GameObject(_name, pos, rot, scl));
-        return gameObjects[gameObjects.size()-1];
+        currentScene->gameObjects.push_back(new GameObject(_name, pos, rot, scl));
+        return currentScene->gameObjects[currentScene->gameObjects.size()-1];
+    }
+
+    void Scene::LoadScene(Scene* _scene)
+    {
+        if(currentScene != nullptr)
+        {
+            currentScene->Destroy();
+        }
+        currentScene = _scene;
+        currentScene->Initialize();
     }
 
     void Initialize()
@@ -161,7 +172,7 @@ namespace DT {
 
     void Update()
     {
-        for(GameObject* go:gameObjects)
+        for(GameObject* go:currentScene->gameObjects)
         {
             for(BehaviourScript* bs:go->components)
             {
@@ -182,7 +193,7 @@ namespace DT {
 
             // Start Draw
 
-            for(GameObject* go:gameObjects)
+            for(GameObject* go:currentScene->gameObjects)
             {
                 for(BehaviourScript* bs:go->components)
                 {

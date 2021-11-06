@@ -55,7 +55,15 @@ struct Mathf
 
     static float Clamp(float val, float min, float max)
     {
-        return std::clamp(val, min, max);
+        if(val < min)
+        {
+            return min;
+        }
+        else if(val > max)
+        {
+            return max;
+        }
+        return val;
     }
 
     static float Clamp01(float val)
@@ -91,7 +99,7 @@ struct Mathf
 
     static float Lerp(float val, float target, float interpolation)
     {
-        return std::lerp(val, target, interpolation);
+        return val + (target - val) * interpolation;
     }
 
     static float Max(float val, float val2)
