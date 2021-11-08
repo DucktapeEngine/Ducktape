@@ -9,6 +9,9 @@
 #include <cmath>
 #include <vector>
 #include <fstream>
+#include <thread>
+#include <chrono>
+using namespace std::chrono_literals;
 #include "include/box2d/include/box2d/box2d.h"
 
 namespace DT {
@@ -36,8 +39,10 @@ namespace DT {
     #include "edgecollider.h"
     #include "polygoncollider.h"
     #include "scene.h"
+    #include "random.h"
     
     Scene* currentScene = nullptr;
+    bool isRunning = false;
 
     Vector2 Transform::SetPosition(Vector2 _pos)
     {
@@ -164,24 +169,44 @@ namespace DT {
         currentScene->Initialize();
     }
 
-    void Initialize()
+    void FixedUpdateThread()
     {
-        Physics::Initialize();
-        Application::Initialize();
+        while(Application::isRunning)
+        {
+            for(int i=0;i<currentScene->gameObjects.size();i++)
+            {
+                for(int j=0;j<currentScene->gameObjects[i]->components.size();j++)
+                {
+                    if(currentScene->gameObjects[i]->components[j] != nullptr)
+                    {
+                        currentScene->gameObjects[i]->components[j]->FixedUpdate();
+                    }
+                }
+            }
+            std::this_thread::sleep_for(0.01666666666s);
+        }
     }
 
     void Update()
     {
-        for(GameObject* go:currentScene->gameObjects)
+        for(int i=0;i<currentScene->gameObjects.size();i++)
         {
-            for(BehaviourScript* bs:go->components)
+            for(int j=0;j<currentScene->gameObjects[i]->components.size();j++)
             {
-                if(bs != nullptr)
+                if(currentScene->gameObjects[i]->components[j] != nullptr)
                 {
-                    bs->Start();
+                    currentScene->gameObjects[i]->components[j]->Start();
+                    currentScene->gameObjects[i]->components[j]->started = true;
                 }
             }
         }
+
+        Physics::Initialize();
+        Application::Initialize();
+
+        Application::isRunning = true;
+
+        std::thread fixedUpdateThread(FixedUpdateThread);
 
         // run the program as long as the window is open
         while (Application::IsOpen())
@@ -191,15 +216,15 @@ namespace DT {
 
             Application::renderWindow.clear(ProjectSettings::sceneBackgroundColor.ToSFMLColor());
 
-            // Start Draw
+            // Start Drawing
 
-            for(GameObject* go:currentScene->gameObjects)
+            for(int i=0;i<currentScene->gameObjects.size();i++)
             {
-                for(BehaviourScript* bs:go->components)
+                for(int j=0;j<currentScene->gameObjects[i]->components.size();j++)
                 {
-                    if(bs != nullptr)
+                    if(currentScene->gameObjects[i]->components[j] != nullptr)
                     {
-                        bs->Update();
+                        currentScene->gameObjects[i]->components[j]->Update();
                     }
                 }
             }
@@ -210,6 +235,10 @@ namespace DT {
 
             Application::renderWindow.display();
         }
+
+        Application::isRunning = false;
+
+        fixedUpdateThread.join();
     }
 };
 

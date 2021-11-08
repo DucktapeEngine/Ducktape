@@ -13,12 +13,6 @@ public:
 
     void Update()
     {
-        if(Input::GetMouseButton(0))
-        {
-            gameObject->transform->SetPosition(Camera::ScreenToWorldPos(Input::mousePosition));
-            rb->SetVelocity(Vector2(0.0f, 0.0f));
-        }
-
         if(Input::GetKey(KeyCode::W))
         {
             rb->SetVelocity(Vector2(rb->GetVelocity().x, -20.0f));
@@ -36,61 +30,86 @@ public:
     }
 };
 
+class LevelGenerator : public BehaviourScript
+{
+public:
+    float timeBetweenBar = 2.0f;
+    float elapsedTime;
+    int count = 0;
+
+    GameObject* playerGO = nullptr;
+
+    void Start()
+    {
+        playerGO = GameObject::Find("Player");
+    }
+
+    void Update()
+    {
+        elapsedTime += Time::deltaTime;
+        if(elapsedTime >= timeBetweenBar)
+        {
+            elapsedTime = 1.0f;
+
+            // Creating a new bar
+
+            GameObject* bar = GameObject::Instantiate("Bar " + std::to_string(count));
+            bar->transform->SetPosition(Vector2(playerGO->transform->GetPosition().x + 10.0f, Random::Range(20.0f, 40.0f)));
+            bar->transform->SetScale(Vector2(3.0f, 10.0f));
+
+            SpriteRenderer* barSR = bar->AddComponent<SpriteRenderer>();
+
+            barSR->spritePath = "../examples/assets/square.png";
+            barSR->pixelPerUnit = 25;
+            barSR->color = Color(43, 46, 74, 255);
+
+            Rigidbody* barRB = bar->AddComponent<Rigidbody>();
+
+            barRB->type = "static";
+
+            BoxCollider* barBC = bar->AddComponent<BoxCollider>();
+
+            count++;
+        }
+    }
+};
+
 class ExampleScene : public Scene
 {
 public:
 
     void Initialize()
     {
-        int n = -1;
-        int m;
+        // Create player gameObject
+        GameObject* player = GameObject::Instantiate("Player", Vector2(1, 0), 0.0, Vector2(2, 2));
 
-        m = 0;
-        GameObject::Instantiate("Player", Vector2(1, 0), 0.0, Vector2(2, 2));
-        n++;
+        SpriteRenderer* playerSpriteRenderer = player->AddComponent<SpriteRenderer>();
+        playerSpriteRenderer->spritePath = "../examples/assets/circle.png";
+        playerSpriteRenderer->pixelPerUnit = 25;
+        playerSpriteRenderer->color = Color(43, 46, 74, 255);
 
-        gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
-        m++;
-        dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/circle.png";
-        dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 25;
-        dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(43, 46, 74, 255);
+        Rigidbody* playerRigidBody = player->AddComponent<Rigidbody>();
+        playerRigidBody->type = "dynamic";
+        playerRigidBody->linearDamping = 0.0f;
 
-        gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
-        m++;
-        dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "dynamic";
-        dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->linearDamping = 0.0f;
+        BoxCollider* playerBoxCollider = player->AddComponent<BoxCollider>();
+        playerBoxCollider->isTrigger = false;
+        playerBoxCollider->friction = 0.0f;
 
-        gameObjects[n]->AddComponent<BoxCollider>(new BoxCollider());
-        m++;
-        dynamic_cast<BoxCollider*>(gameObjects[n]->components[m])->isTrigger = false;
-        dynamic_cast<BoxCollider*>(gameObjects[n]->components[m])->friction = 0.0f;
+        player->AddComponent<PlayerController>();
 
-        gameObjects[n]->AddComponent<PlayerController>(new PlayerController());
-        m++;
+        // Create Camera gameObject
 
-        m = 0;
-        GameObject::Instantiate("Ground", Vector2(10, 20), 0.0, Vector2(2, 2));
-        n++;
+        GameObject* camera = GameObject::Instantiate("Camera", Vector2(-100, -100), 0.0, Vector2(1, 1));
+        
+        camera->AddComponent<Camera>();
+        camera->AddComponent<CameraController>();
 
-        gameObjects[n]->AddComponent<SpriteRenderer>(new SpriteRenderer());
-        m++;
-        dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->spritePath = "../examples/assets/square.png";
-        dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->pixelPerUnit = 25;
-        dynamic_cast<SpriteRenderer*>(gameObjects[n]->components[m])->color = Color(43, 46, 74, 255);
+        // Create levelGenerator gameObject
 
-        gameObjects[n]->AddComponent<Rigidbody>(new Rigidbody());
-        m++;
-        dynamic_cast<Rigidbody*>(gameObjects[n]->components[m])->type = "static";
+        GameObject* levelGenerator = GameObject::Instantiate("LevelGenerator");
 
-        gameObjects[n]->AddComponent<BoxCollider>(new BoxCollider());
-        m++;
-        dynamic_cast<BoxCollider*>(gameObjects[n]->components[m])->isTrigger = false;
-
-        m = 0;
-        GameObject::Instantiate("Camera", Vector2(-100, -100), 0.0, Vector2(1, 1));
-        n++;
-        gameObjects[n]->AddComponent<Camera>(new Camera());
-        gameObjects[n]->AddComponent<CameraController>(new CameraController());
+        levelGenerator->AddComponent<LevelGenerator>();
     }
 };
 
@@ -101,12 +120,6 @@ int main()
     DT::ProjectSettings::sceneBackgroundColor = Color(232, 69, 69);
     DT::ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
 
-    DT::Initialize();
-
-    /* Each function is considered a scene. 
-    The list below will initiate a new scene in the order of which they're called. 
-    Note that it is possible to initiate a scene from another scene.
-    Thus calling all of the scenes here is not important. */
     ExampleScene exampleScene;
     DT::Scene::LoadScene(&exampleScene);
 

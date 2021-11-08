@@ -23,7 +23,7 @@ class GameObject
             layer = 0;
             tag = "Default";
             name = "New GameObject";
-            transform = this->AddComponent<Transform>(new Transform());
+            transform = this->AddComponent<Transform>();
         }
 
         GameObject(std::string _name)
@@ -32,7 +32,7 @@ class GameObject
             layer = 0;
             tag = "Default";
             name = _name;
-            transform = this->AddComponent<Transform>(new Transform());
+            transform = this->AddComponent<Transform>();
         }
 
         GameObject(Vector2 pos, float rot, Vector2 scl)
@@ -41,7 +41,7 @@ class GameObject
             layer = 0;
             tag = "Default";
             name = "New GameObject";
-            transform = this->AddComponent<Transform>(new Transform());
+            transform = this->AddComponent<Transform>();
             transform->SetPosition(pos);
             transform->SetRotation(rot);
             transform->SetScale(scl);
@@ -53,18 +53,22 @@ class GameObject
             layer = 0;
             tag = "Default";
             name = _name;
-            transform = this->AddComponent<Transform>(new Transform());
+            transform = this->AddComponent<Transform>();
             transform->SetPosition(pos);
             transform->SetRotation(rot);
             transform->SetScale(scl);
         }
 
         template <typename T>
-        T* AddComponent(BehaviourScript* script)
+        T* AddComponent()
         {
-            this->components.push_back(script);
+            this->components.push_back(new T());
             int size = this->components.size()-1;
             this->components[size]->gameObject = this;
+            if(Application::isRunning == true)
+            {
+                this->components[size]->Start();
+            }
             return (T*)this->components[size];
         }
 

@@ -3,97 +3,102 @@
 
 class Rigidbody : public BehaviourScript
 {
-    public:
-        float gravityScale = 1.0;
-        std::string type;
-        bool isTrigger = false;
-        b2Body* body;
+public:
+    float gravityScale = 1.0;
+    std::string type;
+    bool isTrigger = false;
+    b2Body* body;
 
-        float linearDamping = 0.0f;
-        float angularDamping = 0.01f;
-        bool allowSleep = true;
-        bool continousCollision = false;
+    float linearDamping = 0.0f;
+    float angularDamping = 0.01f;
+    bool allowSleep = true;
+    bool continousCollision = false;
 
-        void Start()
+    void Start()
+    {
+        b2BodyDef bodyDef;
+        bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(gameObject);
+        bodyDef.position.Set(gameObject->transform->GetPosition().x, gameObject->transform->GetPosition().y);
+
+        if(type == "dynamic")
         {
-            b2BodyDef bodyDef;
-            bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(gameObject);
-            bodyDef.position.Set(gameObject->transform->GetPosition().x, gameObject->transform->GetPosition().y);
-
-            if(type == "dynamic")
-            {
-                bodyDef.type = b2_dynamicBody;
-            } 
-            else if(type == "kinematic")
-            {
-                bodyDef.type = b2_kinematicBody;
-            }
-            else if(type == "static")
-            {
-                bodyDef.type = b2_staticBody;
-            }
-            body = Physics::physicsWorld.CreateBody(&bodyDef);
-            
-            body->SetAwake(true);
-
-            body->SetLinearDamping(linearDamping);
-            body->SetAngularDamping(angularDamping);
-            body->SetSleepingAllowed(allowSleep);
-            body->SetBullet(continousCollision);
-        }
-
-        void Update()
+            bodyDef.type = b2_dynamicBody;
+        } 
+        else if(type == "kinematic")
         {
-            gameObject->transform->SetPosition(Vector2(body->GetPosition().x, body->GetPosition().y));
-            gameObject->transform->SetRotation(body->GetAngle());
-            SetVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity);
+            bodyDef.type = b2_kinematicBody;
         }
-
-        void OnTransformChange()
+        else if(type == "static")
         {
-            body->SetTransform(b2Vec2(gameObject->transform->GetPosition().x, gameObject->transform->GetPosition().y), gameObject->transform->GetRotation());
+            bodyDef.type = b2_staticBody;
         }
-
-        Vector2 GetVelocity()
-        {
-            return Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y);
-        }
-
-        Vector2 SetVelocity(Vector2 _vel)
-        {
-            body->SetLinearVelocity(b2Vec2(_vel.x, _vel.y));
-            return _vel;
-        }
+        body = Physics::physicsWorld.CreateBody(&bodyDef);
         
-        void AddForce(Vector2 direction, float force)
-        {
-            body->ApplyForceToCenter((direction * force).ToBox2DVector(), true);
-        }
+        body->SetAwake(true);
 
-        void AddForceAtPoint(Vector2 direction, float force, Vector2 point)
-        {
-            body->ApplyForce((direction * force).ToBox2DVector(), point.ToBox2DVector(), true);
-        }
+        body->SetLinearDamping(linearDamping);
+        body->SetAngularDamping(angularDamping);
+        body->SetSleepingAllowed(allowSleep);
+        body->SetBullet(continousCollision);
+    }
 
-        void AddTorque(float torque)
+    void Update()
+    {
+        if(body == nullptr)
         {
-            body->ApplyTorque(torque, true);
+            Debug::Log(gameObject->name);
+            // return;
         }
+        gameObject->transform->SetPosition(Vector2(body->GetPosition().x, body->GetPosition().y));
+        gameObject->transform->SetRotation(body->GetAngle());
+        SetVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity);
+    }
 
-        void Destroy()
+    void OnTransformChange()
+    {
+        body->SetTransform(b2Vec2(gameObject->transform->GetPosition().x, gameObject->transform->GetPosition().y), gameObject->transform->GetRotation());
+    }
+
+    Vector2 GetVelocity()
+    {
+        return Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y);
+    }
+
+    Vector2 SetVelocity(Vector2 _vel)
+    {
+        body->SetLinearVelocity(b2Vec2(_vel.x, _vel.y));
+        return _vel;
+    }
+    
+    void AddForce(Vector2 direction, float force)
+    {
+        body->ApplyForceToCenter((direction * force).ToBox2DVector(), true);
+    }
+
+    void AddForceAtPoint(Vector2 direction, float force, Vector2 point)
+    {
+        body->ApplyForce((direction * force).ToBox2DVector(), point.ToBox2DVector(), true);
+    }
+
+    void AddTorque(float torque)
+    {
+        body->ApplyTorque(torque, true);
+    }
+
+    void Destroy()
+    {
+        if(body != nullptr && !destroyed)
         {
-            if(body != nullptr && !destroyed)
-            {
-                Physics::physicsWorld.DestroyBody(body);
-                destroyed = true;
-                body = nullptr;
-            } 
-            else 
-            {
-                Debug::LogError("You cannot delete an already deleted body.");
-            }
-            delete this;
+            Physics::physicsWorld.DestroyBody(body);
+            destroyed = true;
+            body = nullptr;
+        } 
+        else 
+        {
+            Debug::LogError("You cannot delete an already deleted body.");
         }
+        delete this;
+    }
 };
 
 #endif

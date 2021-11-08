@@ -14,6 +14,11 @@ public:
     void Start()
     {
         rb = gameObject->GetComponent<Rigidbody>();
+        if(rb == nullptr)
+        {
+            Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Collider.");
+            return;
+        }
 
         b2PolygonShape collisionShape;
 
