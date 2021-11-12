@@ -100,7 +100,7 @@ public:
 
         // Create Camera gameObject
 
-        GameObject* camera = GameObject::Instantiate("Camera", Vector2(-100, -100), 0.0, Vector2(1, 1));
+        GameObject* camera = GameObject::Instantiate("Camera", Vector2(-10, -10), 0.0, Vector2(1, 1));
         
         camera->AddComponent<Camera>();
         camera->AddComponent<CameraController>();

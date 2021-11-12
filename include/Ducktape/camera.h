@@ -8,7 +8,9 @@ class Camera : public BehaviourScript
         
         void Update()
         {
-            Application::view.setCenter(Application::resolution.x/2 + gameObject->transform->GetPosition().x, Application::resolution.y/2 + gameObject->transform->GetPosition().y);
+            // Vector2 pos = WorldToScreenPos(gameObject->transform->GetPosition());
+            Vector2 pos = gameObject->transform->GetPosition();
+            Application::view.setCenter(Application::resolution.x/2 + pos.x, Application::resolution.y/2 + pos.y);
             Application::view.setRotation(gameObject->transform->GetRotation());
 
             Application::view.setSize(Application::resolution.x, Application::resolution.y);

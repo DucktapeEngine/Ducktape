@@ -36,6 +36,13 @@ struct Vector2
         return Vector2(x / val, y / val);
     }
 
+    Vector2& operator=(Vector2 vec)
+    {
+        x = vec.x;
+        y = vec.y;
+        return *this;
+    }
+
     bool operator==(Vector2 vec)
     {
         if(Mathf::Approximately(x, vec.x) && Mathf::Approximately(y, vec.y))
