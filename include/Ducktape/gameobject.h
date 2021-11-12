@@ -86,6 +86,22 @@ class GameObject
             return nullptr;
         }
 
+        template <typename T>
+        bool RemoveComponent()
+        {
+            int i=0;
+            for(auto script:this->components)
+            {
+                if(T *ptr = dynamic_cast<T *>(script))
+                {
+                    this->components.erase(this->components.begin()+i);
+                    return true;
+                }
+                i++;
+            }
+            return false;
+        }
+
         static GameObject* Find(std::string _name);
         static GameObject* Instantiate();
         static GameObject* Instantiate(std::string _name);
