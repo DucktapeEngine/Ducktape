@@ -179,5 +179,18 @@ struct Vector2
         return b2Vec2(x, y);
     }
 };
+     
+std::ostream &operator << (std::ostream &out, const Vector2 &vec)
+{
+    out << "Vector2(" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ")";
+    return out;
+}
+ 
+std::istream &operator >> (std::istream &in, Vector2 &vec)
+{
+    in >> vec.x;
+    in >> vec.y;
+    return in;
+}
 
 #endif

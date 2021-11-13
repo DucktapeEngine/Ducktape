@@ -3,8 +3,7 @@
 
 namespace Application 
 {
-	Vector2 resolution = Vector2(800, 500);
-	// The (WIDTH, HEIGHT) being 500 is temporary, the application should be running in full screen by default.
+	Vector2 resolution = Vector2(500, 500);
 	sf::View view = sf::View(sf::FloatRect(0.f, 0.f, resolution.x, resolution.y));
 	sf::RenderWindow renderWindow(sf::VideoMode(resolution.x, resolution.y), "Flappy Duck", sf::Style::Default);
 	bool isRunning = false;
@@ -20,6 +19,7 @@ namespace Application
 	    renderWindow.setVerticalSyncEnabled(true);
 	    renderWindow.setFramerateLimit(60);
 	    renderWindow.setView(view);
+	    SetResolution(ProjectSettings::resolution);
 	}
 
 	bool IsOpen()

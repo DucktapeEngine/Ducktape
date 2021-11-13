@@ -38,9 +38,9 @@ namespace Input
                     Application::renderWindow.close();
                     break;
 
-                case sf::Event::Resized:
-                    Application::SetResolution(Vector2(Application::renderWindow.getSize().x, Application::renderWindow.getSize().y));
-                    break;
+                // case sf::Event::Resized:
+                //     Application::SetResolution(Vector2(Application::renderWindow.getSize().x, Application::renderWindow.getSize().y));
+                //     break;
 
                 // we don't process other types of events
                 default:

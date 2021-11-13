@@ -24,9 +24,16 @@ public:
 class CameraController : public BehaviourScript
 {
 public:
+    GameObject* playerGO;
+
+    void Start()
+    {
+        playerGO = GameObject::Find("Player");
+    }
+
     void Update()
     {
-        gameObject->transform->SetPosition(gameObject->transform->GetPosition() + Vector2::Right() * 0.9f);
+        gameObject->transform->SetPosition(Vector2(playerGO->transform->GetPosition().x, 0.0f));
     }
 };
 
@@ -100,7 +107,7 @@ public:
 
         // Create Camera gameObject
 
-        GameObject* camera = GameObject::Instantiate("Camera", Vector2(-10, -10), 0.0, Vector2(1, 1));
+        GameObject* camera = GameObject::Instantiate("Camera", Vector2(0, 0), 0.0, Vector2(1, 1));
         
         camera->AddComponent<Camera>();
         camera->AddComponent<CameraController>();
@@ -117,6 +124,7 @@ int main()
 {
     // Initializing the Ducktape Engine
     DT::ProjectSettings::windowTitle = "Flappy Bird";
+    DT::ProjectSettings::resolution = Vector2(800.0f, 500.0f);
     DT::ProjectSettings::sceneBackgroundColor = Color(232, 69, 69);
     DT::ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
 

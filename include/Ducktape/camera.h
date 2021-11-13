@@ -8,13 +8,20 @@ class Camera : public BehaviourScript
         
         void Update()
         {
-            // Vector2 pos = WorldToScreenPos(gameObject->transform->GetPosition());
-            Vector2 pos = gameObject->transform->GetPosition();
-            Application::view.setCenter(Application::resolution.x/2 + pos.x, Application::resolution.y/2 + pos.y);
+            Vector2 pos = UnitToPixel(gameObject->transform->GetPosition());
+            Vector2 pos2 = Vector2(Application::resolution.x/4 + pos.x, Application::resolution.y/4 + pos.y);
+
+            Application::view.setCenter(pos2.x, pos2.y);
             Application::view.setRotation(gameObject->transform->GetRotation());
 
             Application::view.setSize(Application::resolution.x, Application::resolution.y);
+
             Application::view.zoom(size);
+        }
+
+        static Vector2 UnitToPixel(Vector2 pos)
+        {
+            return Vector2(pos.x*(PPU()/2), -pos.y*(PPU()/2));
         }
 
         static Vector2 ScreenToWorldPos(Vector2 pos)
