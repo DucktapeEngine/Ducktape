@@ -18,7 +18,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 set(CMAKE_BUILD_TYPE "Debug")
 
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/include/Ducktape/*.cpp" "${PROJECT_SOURCE_DIR}/include/Ducktape/*.h" "${PROJECT_SOURCE_DIR}/include/box2d/src/*.cpp")
+file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/include/*.cpp" "${PROJECT_SOURCE_DIR}/include/*.h" "${PROJECT_SOURCE_DIR}/external/box2d/src/*.cpp")
 
 add_executable(ducktape  ${source_list} ${PROJECT_SOURCE_DIR}/examples/flappybird.cpp)
 
@@ -29,18 +29,19 @@ set_target_properties(ducktape PROPERTIES
 set(CMAKE_CXX_FLAGS "-g -pthread")
 
 if (UNIX)
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/;${PROJECT_SOURCE_DIR};${PROJECT_SOURCE_DIR}/include/box2d/include/;${PROJECT_SOURCE_DIR}/include/box2d/src;${PROJECT_SOURCE_DIR}/include/SFML-linux-gcc/include")
+    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/;${PROJECT_SOURCE_DIR}/external/box2d/include/;${PROJECT_SOURCE_DIR}/external/box2d/src;${PROJECT_SOURCE_DIR};${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/include")
 
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/box2d/bin;${PROJECT_SOURCE_DIR}/include/SFML-linux-gcc/SFML-2.5.1/lib/;")
+    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/box2d/bin;${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/SFML-2.5.1/lib/;")
 endif (UNIX)
 
 if (WIN32)
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/;${PROJECT_SOURCE_DIR};${PROJECT_SOURCE_DIR}/include/box2d/include/;${PROJECT_SOURCE_DIR}/include/box2d/src;${PROJECT_SOURCE_DIR}/include/SFML-windows-gcc/SFML-2.5.1/include")
+    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/Ducktape/;${PROJECT_SOURCE_DIR}/external/box2d/include/;${PROJECT_SOURCE_DIR};${PROJECT_SOURCE_DIR}
+    /external/box2d/src;${PROJECT_SOURCE_DIR}/external/SFML-windows-gcc/SFML-2.5.1/include")
 
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/box2d/bin;${PROJECT_SOURCE_DIR}/include/SFML-linux-gcc/SFML-2.5.1/lib/;${PROJECT_SOURCE_DIR}/include/SFML-windows-gcc/SFML-2.5.1/lib")
+    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/box2d/bin;${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/SFML-2.5.1/lib/;${PROJECT_SOURCE_DIR}/external/SFML-windows-gcc/SFML-2.5.1/lib")
 endif (WIN32)
 
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/external/)
 
 find_package(SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 

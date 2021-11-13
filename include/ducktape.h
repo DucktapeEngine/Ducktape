@@ -12,7 +12,7 @@
 #include <thread>
 #include <chrono>
 using namespace std::chrono_literals;
-#include "include/box2d/include/box2d/box2d.h"
+#include "external/box2d/include/box2d/box2d.h"
 
 namespace DT {
     #include "mathf.h"
