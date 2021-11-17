@@ -12,7 +12,13 @@ public:
     }
 
     void Update()
-    {
+    {   
+        if(Input::GetMouseButton(0))
+        {
+            gameObject->transform->SetPosition(Camera::ScreenToWorldPos(Input::mousePosition));
+            rb->SetVelocity(Vector2(0.0f, 0.0f));
+        }
+
         if(Input::GetKey(KeyCode::W))
         {
             rb->SetVelocity(Vector2(rb->GetVelocity().x, -20.0f));
@@ -70,11 +76,22 @@ public:
             barSR->pixelPerUnit = 25;
             barSR->color = Color(43, 46, 74, 255);
 
+            barSR->Start();
+
             Rigidbody* barRB = bar->AddComponent<Rigidbody>();
 
             barRB->type = "static";
 
+            barRB->Start();
+
             BoxCollider* barBC = bar->AddComponent<BoxCollider>();
+
+            barBC->Start();
+
+            DistanceJoint* barDJ = bar->AddComponent<DistanceJoint>();
+            barDJ->connectedRigidbody = playerGO;
+
+            barDJ->Start();
 
             count++;
         }
@@ -124,7 +141,7 @@ int main()
 {
     // Initializing the Ducktape Engine
     DT::ProjectSettings::windowTitle = "Flappy Bird";
-    DT::ProjectSettings::resolution = Vector2(800.0f, 500.0f);
+    // DT::ProjectSettings::resolution = Vector2(800.0f, 500.0f);
     DT::ProjectSettings::sceneBackgroundColor = Color(232, 69, 69);
     DT::ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
 

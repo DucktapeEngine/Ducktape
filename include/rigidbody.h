@@ -44,11 +44,6 @@ public:
 
     void Update()
     {
-        if(body == nullptr)
-        {
-            Debug::Log(gameObject->name);
-            // return;
-        }
         gameObject->transform->SetPosition(Vector2(body->GetPosition().x, body->GetPosition().y));
         gameObject->transform->SetRotation(body->GetAngle());
         SetVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity);
@@ -70,14 +65,14 @@ public:
         return _vel;
     }
     
-    void AddForce(Vector2 direction, float force)
+    void AddForce(Vector2 direction)
     {
-        body->ApplyForceToCenter((direction * force).ToBox2DVector(), true);
+        body->ApplyForceToCenter(direction.ToBox2DVector(), true);
     }
 
-    void AddForceAtPoint(Vector2 direction, float force, Vector2 point)
+    void AddForceAtPoint(Vector2 direction, Vector2 point)
     {
-        body->ApplyForce((direction * force).ToBox2DVector(), point.ToBox2DVector(), true);
+        body->ApplyForce(direction.ToBox2DVector(), point.ToBox2DVector(), true);
     }
 
     void AddTorque(float torque)
@@ -85,10 +80,22 @@ public:
         body->ApplyTorque(torque, true);
     }
 
+    template <typename T>
+    void DestroyJoint()
+    {
+        T* component = gameObject->GetComponent<T>();
+        if(component != nullptr)
+        {
+            component->Destroy();
+        }
+    }
+
     void Destroy()
     {
         if(body != nullptr && !destroyed)
         {
+            DestroyJoint<DistanceJoint>();
+
             Physics::physicsWorld.DestroyBody(body);
             destroyed = true;
             body = nullptr;

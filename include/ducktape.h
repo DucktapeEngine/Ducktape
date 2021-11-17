@@ -33,6 +33,7 @@ namespace DT {
     #include "physics.h"
     #include "renderer.h"
     #include "spriterenderer.h"
+    class DistanceJoint;
     #include "rigidbody.h"
     #include "boxcollider.h"
     #include "circlecollider.h"
@@ -40,6 +41,7 @@ namespace DT {
     #include "polygoncollider.h"
     #include "scene.h"
     #include "random.h"
+    #include "distancejoint.h"
     
     Scene* currentScene = nullptr;
     bool isRunning = false;

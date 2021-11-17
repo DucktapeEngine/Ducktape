@@ -21,22 +21,22 @@ class Camera : public BehaviourScript
 
         static Vector2 UnitToPixel(Vector2 pos)
         {
-            return Vector2(pos.x*(PPU()/2), -pos.y*(PPU()/2));
+            return Vector2(pos.x*(PixelPerUnit()/2), -pos.y*(PixelPerUnit()/2));
         }
 
         static Vector2 ScreenToWorldPos(Vector2 pos)
         {
-            sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x/PPU(), pos.y/PPU()));
+            sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x/PixelPerUnit(), pos.y/PixelPerUnit()));
             return Vector2(vec.x, vec.y);
         }
 
         static Vector2 WorldToScreenPos(Vector2 pos)
         {
-            sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x*PPU(), pos.y*PPU()));
+            sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x*PixelPerUnit(), pos.y*PixelPerUnit()));
             return Vector2(vec.x, vec.y);
         }
 
-        static float PPU()
+        static float PixelPerUnit()
         {
             return 10.0;
         }

@@ -65,10 +65,6 @@ class GameObject
             this->components.push_back(new T());
             int size = this->components.size()-1;
             this->components[size]->gameObject = this;
-            if(Application::isRunning == true)
-            {
-                this->components[size]->Start();
-            }
             return (T*)this->components[size];
         }
 

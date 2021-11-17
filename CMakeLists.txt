@@ -1,4 +1,11 @@
-set(CMAKE_GENERATOR "Unix Makefiles")
+if (WIN32)
+    set(CMAKE_GENERATOR "Unix Makefiles")
+endif (WIN32)
+
+if (UNIX)
+    set(CMAKE_GENERATOR "MinGW Makefiles")
+endif (UNIX)
+
 cmake_minimum_required (VERSION 3.12)
 
 message (STATUS "Building Ducktape .. ")
