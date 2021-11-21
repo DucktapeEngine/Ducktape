@@ -1,9 +1,9 @@
 if (WIN32)
-    set(CMAKE_GENERATOR "Unix Makefiles")
+    set(CMAKE_GENERATOR "MinGW Makefiles")
 endif (WIN32)
 
 if (UNIX)
-    set(CMAKE_GENERATOR "MinGW Makefiles")
+    set(CMAKE_GENERATOR "Unix Makefiles")
 endif (UNIX)
 
 cmake_minimum_required (VERSION 3.12)

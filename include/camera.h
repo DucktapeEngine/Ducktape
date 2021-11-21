@@ -14,8 +14,6 @@ class Camera : public BehaviourScript
             Application::view.setCenter(pos2.x, pos2.y);
             Application::view.setRotation(gameObject->transform->GetRotation());
 
-            Application::view.setSize(Application::resolution.x, Application::resolution.y);
-
             Application::view.zoom(size);
         }
 
