@@ -1,7 +1,7 @@
 #ifndef SPRITE_RENDERER_H
 #define SPRITE_RENDERER_H
 
-class SpriteRenderer : public BehaviourScript
+class SpriteRenderer : public RenderScript
 {
     public:
         std::string spritePath;

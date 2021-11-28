@@ -1,7 +1,7 @@
 #ifndef POLYGONCOLLIDER_H
 #define POLYGONCOLLIDER_H
 
-class PolygonCollider : public BehaviourScript
+class PolygonCollider : public PhysicsScript
 {
 public:
     Rigidbody* rb;

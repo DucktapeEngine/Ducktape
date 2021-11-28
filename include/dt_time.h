@@ -1,7 +1,8 @@
 #ifndef TIME_H
 #define TIME_H
 
-namespace Time {
+namespace Time 
+{
 	float deltaTime;
 	sf::Clock clock;
     sf::Clock deltaClock;

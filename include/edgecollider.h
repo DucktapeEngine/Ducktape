@@ -1,7 +1,7 @@
 #ifndef EDGECOLLIDER_H
 #define EDGECOLLIDER_H
 
-class EdgeCollider : public BehaviourScript
+class EdgeCollider : public PhysicsScript
 {
 public:
     Rigidbody* rb;

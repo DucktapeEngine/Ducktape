@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-class Camera : public BehaviourScript
+class Camera : public RenderScript
 {
     public:
         float size = 1.0;

@@ -1,7 +1,7 @@
 #ifndef RIGIDBODY_H
 #define RIGIDBODY_H
 
-class Rigidbody : public BehaviourScript
+class Rigidbody : public BaseScript
 {
 public:
     float gravityScale = 1.0;
@@ -28,7 +28,7 @@ public:
         {
             bodyDef.type = b2_kinematicBody;
         }
-        else if(type == "static")
+        else
         {
             bodyDef.type = b2_staticBody;
         }
@@ -46,7 +46,7 @@ public:
     {
         gameObject->transform->SetPosition(Vector2(body->GetPosition().x, body->GetPosition().y));
         gameObject->transform->SetRotation(body->GetAngle());
-        SetVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity);
+        SetVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity * gravityScale);
     }
 
     void OnTransformChange()

@@ -1,7 +1,7 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-class Transform : public BehaviourScript
+class Transform : public BaseScript
 {
 private:
     Vector2 position = Vector2(0.0, 0.0);

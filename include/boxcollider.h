@@ -1,7 +1,7 @@
 #ifndef BOXCOLLIDER_H
 #define BOXCOLLIDER_H
 
-class BoxCollider : public BehaviourScript
+class BoxCollider : public PhysicsScript
 {
 public:
     Rigidbody* rb;

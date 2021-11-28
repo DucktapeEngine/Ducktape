@@ -1,7 +1,7 @@
 #ifndef CIRCLECOLLIDER_H
 #define CIRCLECOLLIDER_H
 
-class CircleCollider : public BehaviourScript
+class CircleCollider : public PhysicsScript
 {
 public:
     Rigidbody* rb;

@@ -1,7 +1,7 @@
-#include "ducktape.h"
+#include "../include/ducktape.h"
 using namespace DT;
 
-class PlayerController : public BehaviourScript
+class PlayerController : public GameScript
 {
 public:
     Rigidbody* rb;
@@ -27,7 +27,7 @@ public:
     }
 };
 
-class CameraController : public BehaviourScript
+class CameraController : public GameScript
 {
 public:
     GameObject* playerGO;
@@ -43,7 +43,7 @@ public:
     }
 };
 
-class LevelGenerator : public BehaviourScript
+class LevelGenerator : public GameScript
 {
 public:
     float timeBetweenBar = 2.0f;
@@ -88,11 +88,6 @@ public:
 
             barBC->Start();
 
-            DistanceJoint* barDJ = bar->AddComponent<DistanceJoint>();
-            barDJ->connectedRigidbody = playerGO;
-
-            barDJ->Start();
-
             count++;
         }
     }
@@ -120,6 +115,8 @@ public:
         playerBoxCollider->isTrigger = false;
         playerBoxCollider->friction = 0.0f;
 
+        DistanceJoint* playerDistanceJoint = player->AddComponent<DistanceJoint>();
+        
         player->AddComponent<PlayerController>();
 
         // Create Camera gameObject
@@ -134,19 +131,35 @@ public:
         GameObject* levelGenerator = GameObject::Instantiate("LevelGenerator");
 
         levelGenerator->AddComponent<LevelGenerator>();
+
+        // create test object
+
+        GameObject* anchor = GameObject::Instantiate("Anchor", Vector2(5, 0), 0.0, Vector2(2, 2));
+
+        SpriteRenderer* anchorSpriteRenderer = anchor->AddComponent<SpriteRenderer>();
+        anchorSpriteRenderer->spritePath = "../examples/assets/circle.png";
+        anchorSpriteRenderer->pixelPerUnit = 25;
+        anchorSpriteRenderer->color = Color(0, 0, 0, 255);
+
+        Rigidbody* anchorRigidBody = anchor->AddComponent<Rigidbody>();
+        anchorRigidBody->type = "dynamic";
+        anchorRigidBody->linearDamping = 0.0f;
+        anchorRigidBody->gravityScale = 1.0f;
+
+        playerDistanceJoint->connectedRigidbody = anchorRigidBody;
     }
 };
 
 int main()
 {
     // Initializing the Ducktape Engine
-    DT::ProjectSettings::windowTitle = "Flappy Bird";
-    // DT::ProjectSettings::resolution = Vector2(800.0f, 500.0f);
-    DT::ProjectSettings::sceneBackgroundColor = Color(232, 69, 69);
-    DT::ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
+    ProjectSettings::windowTitle = "Flappy Bird";
+    // ProjectSettings::resolution = Vector2(800.0f, 500.0f);
+    ProjectSettings::sceneBackgroundColor = Color(232, 69, 69);
+    ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
 
     ExampleScene exampleScene;
-    DT::Scene::LoadScene(&exampleScene);
+    Scene::LoadScene(&exampleScene);
 
     // This will take care of the rest of the Engine.
     DT::Update();

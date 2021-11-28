@@ -25,6 +25,7 @@ namespace DT {
     class GameObject;
     #include "collision.h"
     #include "behaviourscript.h"
+    #include "componentexecutionhandler.h"
     #include "transform.h"
     #include "gameobject.h"
     #include "input.h"
@@ -173,40 +174,18 @@ namespace DT {
 
     void FixedUpdateThread()
     {
-        while(Application::isRunning)
+        while(Application::IsOpen())
         {
-            for(int i=0;i<currentScene->gameObjects.size();i++)
-            {
-                for(int j=0;j<currentScene->gameObjects[i]->components.size();j++)
-                {
-                    if(currentScene->gameObjects[i]->components[j] != nullptr)
-                    {
-                        currentScene->gameObjects[i]->components[j]->FixedUpdate();
-                    }
-                }
-            }
+            ComponentExecutionHandler::FixedUpdate();
             std::this_thread::sleep_for(0.01666666666s);
         }
     }
 
     void Update()
     {
-        for(int i=0;i<currentScene->gameObjects.size();i++)
-        {
-            for(int j=0;j<currentScene->gameObjects[i]->components.size();j++)
-            {
-                if(currentScene->gameObjects[i]->components[j] != nullptr)
-                {
-                    currentScene->gameObjects[i]->components[j]->Start();
-                    currentScene->gameObjects[i]->components[j]->started = true;
-                }
-            }
-        }
-
+        ComponentExecutionHandler::Start();
         Physics::Initialize();
         Application::Initialize();
-
-        Application::isRunning = true;
 
         std::thread fixedUpdateThread(FixedUpdateThread);
 
@@ -220,16 +199,18 @@ namespace DT {
 
             // Start Drawing
 
-            for(int i=0;i<currentScene->gameObjects.size();i++)
-            {
-                for(int j=0;j<currentScene->gameObjects[i]->components.size();j++)
-                {
-                    if(currentScene->gameObjects[i]->components[j] != nullptr)
-                    {
-                        currentScene->gameObjects[i]->components[j]->Update();
-                    }
-                }
-            }
+            // for(int i=0;i<currentScene->gameObjects.size();i++)
+            // {
+            //     for(int j=0;j<currentScene->gameObjects[i]->components.size();j++)
+            //     {
+            //         if(currentScene->gameObjects[i]->components[j] != nullptr)
+            //         {
+            //             currentScene->gameObjects[i]->components[j]->Update();
+            //         }
+            //     }
+            // }
+
+            ComponentExecutionHandler::Update();
             
             Physics::physicsWorld.Step(Time::deltaTime, Physics::velocityIterations, Physics::positionIterations);
 
