@@ -43,6 +43,11 @@ namespace DT {
     #include "scene.h"
     #include "random.h"
     #include "distancejoint.h"
+    #include "revolutejoint.h"
+    #include "prismaticjoint.h"
+    #include "weldjoint.h"
+    #include "pulleyjoint.h"
+    #include "frictionjoint.h"
     
     Scene* currentScene = nullptr;
     bool isRunning = false;

@@ -114,8 +114,6 @@ public:
         BoxCollider* playerBoxCollider = player->AddComponent<BoxCollider>();
         playerBoxCollider->isTrigger = false;
         playerBoxCollider->friction = 0.0f;
-
-        DistanceJoint* playerDistanceJoint = player->AddComponent<DistanceJoint>();
         
         player->AddComponent<PlayerController>();
 
@@ -131,22 +129,6 @@ public:
         GameObject* levelGenerator = GameObject::Instantiate("LevelGenerator");
 
         levelGenerator->AddComponent<LevelGenerator>();
-
-        // create test object
-
-        GameObject* anchor = GameObject::Instantiate("Anchor", Vector2(5, 0), 0.0, Vector2(2, 2));
-
-        SpriteRenderer* anchorSpriteRenderer = anchor->AddComponent<SpriteRenderer>();
-        anchorSpriteRenderer->spritePath = "../examples/assets/circle.png";
-        anchorSpriteRenderer->pixelPerUnit = 25;
-        anchorSpriteRenderer->color = Color(0, 0, 0, 255);
-
-        Rigidbody* anchorRigidBody = anchor->AddComponent<Rigidbody>();
-        anchorRigidBody->type = "dynamic";
-        anchorRigidBody->linearDamping = 0.0f;
-        anchorRigidBody->gravityScale = 1.0f;
-
-        playerDistanceJoint->connectedRigidbody = anchorRigidBody;
     }
 };
 
