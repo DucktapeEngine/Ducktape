@@ -129,6 +129,9 @@ public:
         GameObject* levelGenerator = GameObject::Instantiate("LevelGenerator");
 
         levelGenerator->AddComponent<LevelGenerator>();
+
+        AudioSource* aud = levelGenerator->AddComponent<AudioSource>();
+        aud->Load("../examples/assets/sound.wav", false);
     }
 };
 

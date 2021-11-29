@@ -3,6 +3,7 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -48,6 +49,7 @@ namespace DT {
     #include "weldjoint.h"
     #include "pulleyjoint.h"
     #include "frictionjoint.h"
+    #include "audiosource.h"
     
     Scene* currentScene = nullptr;
     bool isRunning = false;
