@@ -1,13 +1,13 @@
-#ifndef PRISMATIC_JOINT_H
-#define PRISMATIC_JOINT_H
+#ifndef PRISMATICJOINT_H
+#define PRISMATICJOINT_H
 
-class PrismaticJoint : public PhysicsScript
+class PrismaticJoint2D : public PhysicsScript
 {
 public:
 	b2PrismaticJoint* joint;
-	Rigidbody* rb;
+	Rigidbody2D* rb;
 
-	Rigidbody* connectedRigidbody = nullptr;
+	Rigidbody2D* connectedRigidbody = nullptr;
 	float referenceAngle;
 	bool enableLimit;
 	float lowerTranslation;
@@ -20,7 +20,7 @@ public:
 
 	void Start()
 	{
-		rb = gameObject->GetComponent<Rigidbody>();
+		rb = gameObject->GetComponent<Rigidbody2D>();
 		if(rb == nullptr)
 		{
 			Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Joint to.");

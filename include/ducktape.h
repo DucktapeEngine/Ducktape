@@ -36,7 +36,12 @@ namespace DT {
     #include "physics.h"
     #include "renderer.h"
     #include "spriterenderer.h"
-    class DistanceJoint;
+    class RevoluteJoint2D;
+    class DistanceJoint2D;
+    class PrismaticJoint2D;
+    class WeldJoint2D;
+    class PulleyJoint2D;
+    class FrictionJoint2D;
     #include "rigidbody.h"
     #include "boxcollider.h"
     #include "circlecollider.h"
@@ -53,7 +58,6 @@ namespace DT {
     #include "audiosource.h"
     
     Scene* currentScene = nullptr;
-    bool isRunning = false;
 
     Vector2 Transform::SetPosition(Vector2 _pos)
     {
@@ -226,8 +230,6 @@ namespace DT {
 
             Application::renderWindow.display();
         }
-
-        Application::isRunning = false;
 
         fixedUpdateThread.join();
     }

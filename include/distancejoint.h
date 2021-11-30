@@ -1,13 +1,13 @@
-#ifndef DISTANCEJOINT_H
-#define DISTANCEJOINT_H
+#ifndef DISTANCEJOINT2D_H
+#define DISTANCEJOINT2D_H
 
-class DistanceJoint : public PhysicsScript
+class DistanceJoint2D : public PhysicsScript
 {
 public:
 	b2DistanceJoint* joint;
-	Rigidbody* rb;
+	Rigidbody2D* rb;
 
-	Rigidbody* connectedRigidbody = nullptr;
+	Rigidbody2D* connectedRigidbody = nullptr;
 	bool stillCollide = true;
 	float length = 2.0f;
 	float minLength = 1.0f;
@@ -19,7 +19,7 @@ public:
 
 	void Start()
 	{
-		rb = gameObject->GetComponent<Rigidbody>();
+		rb = gameObject->GetComponent<Rigidbody2D>();
 		if(rb == nullptr)
 		{
 			Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Joint to.");

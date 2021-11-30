@@ -1,10 +1,10 @@
-#ifndef POLYGONCOLLIDER_H
-#define POLYGONCOLLIDER_H
+#ifndef POLYGONCOLLIDER2D_H
+#define POLYGONCOLLIDER2D_H
 
-class PolygonCollider : public PhysicsScript
+class PolygonCollider2D : public PhysicsScript
 {
 public:
-    Rigidbody* rb;
+    Rigidbody2D* rb;
 
     std::vector<Vector2> points;
     float density = 1.0f;
@@ -13,7 +13,7 @@ public:
     
     void Start()
     {
-        rb = gameObject->GetComponent<Rigidbody>();
+        rb = gameObject->GetComponent<Rigidbody2D>();
         if(rb == nullptr)
         {
             Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Collider.");

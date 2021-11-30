@@ -1,10 +1,10 @@
-#ifndef EDGECOLLIDER_H
-#define EDGECOLLIDER_H
+#ifndef EDGECOLLIDER2D_H
+#define EDGECOLLIDER2D_H
 
-class EdgeCollider : public PhysicsScript
+class EdgeCollider2D : public PhysicsScript
 {
 public:
-    Rigidbody* rb;
+    Rigidbody2D* rb;
 
     std::vector<Vector2> points;
     float density = 1.0f;
@@ -13,7 +13,7 @@ public:
     
     void Start()
     {
-        rb = gameObject->GetComponent<Rigidbody>();
+        rb = gameObject->GetComponent<Rigidbody2D>();
         if(rb == nullptr)
         {
             Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Collider.");

@@ -1,10 +1,10 @@
-#ifndef CIRCLECOLLIDER_H
-#define CIRCLECOLLIDER_H
+#ifndef CIRCLECOLLIDER2D_H
+#define CIRCLECOLLIDER2D_H
 
-class CircleCollider : public PhysicsScript
+class CircleCollider2D : public PhysicsScript
 {
 public:
-    Rigidbody* rb;
+    Rigidbody2D* rb;
 
     float density = 1.0f;
     float friction = 0.3f;
@@ -13,7 +13,7 @@ public:
     
     void Start()
     {
-        rb = gameObject->GetComponent<Rigidbody>();
+        rb = gameObject->GetComponent<Rigidbody2D>();
         if(rb == nullptr)
         {
             Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Collider.");

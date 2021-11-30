@@ -1,13 +1,13 @@
-#ifndef WELD_JOINT_H
-#define WELD_JOINT_H
+#ifndef WELDJOINT_H
+#define WELDJOINT_H
 
-class WeldJoint : public PhysicsScript
+class WeldJoint2D : public PhysicsScript
 {
 public:
 	b2WeldJoint* joint;
-	Rigidbody* rb;
+	Rigidbody2D* rb;
 
-	Rigidbody* connectedRigidbody = nullptr;
+	Rigidbody2D* connectedRigidbody = nullptr;
 	float referenceAngle;
 	float stiffness;
 	float damping;
@@ -16,7 +16,7 @@ public:
 
 	void Start()
 	{
-		rb = gameObject->GetComponent<Rigidbody>();
+		rb = gameObject->GetComponent<Rigidbody2D>();
 		if(rb == nullptr)
 		{
 			Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Joint to.");

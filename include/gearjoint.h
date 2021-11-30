@@ -1,10 +1,10 @@
-#ifndef GEAR_JOINT_H
-#define GEAR_JOINT_H
+#ifndef GEARJOINT_H
+#define GEARJOINT_H
 
-class FrictionJoint : public PhysicsScript
+class GearJoint2D : public PhysicsScript
 {
 public:
-	b2FrictionJoint* joint;
+	b2GearJoint* joint;
 	Rigidbody* rb;
 
 	Rigidbody* connectedRigidbody = nullptr;
@@ -22,7 +22,7 @@ public:
 			return;
 		}
 		
-		b2FrictionJointDef jointDef;
+		b2GearJointDef jointDef;
 		jointDef.bodyA = rb->body;
 		jointDef.bodyB = connectedRigidbody->body;
 		jointDef.maxForce = maxForce;
@@ -30,7 +30,7 @@ public:
 		jointDef.localAnchorA = rootAnchorPos.ToBox2DVector();
 		jointDef.localAnchorB = connectedAnchorPos.ToBox2DVector();
 
-		joint = (b2FrictionJoint*)Physics::physicsWorld.CreateJoint(&jointDef);
+		joint = (b2GearJoint*)Physics::physicsWorld.CreateJoint(&jointDef);
 	}
 
 	void Destroy()

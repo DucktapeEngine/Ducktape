@@ -1,7 +1,7 @@
-#ifndef RIGIDBODY_H
-#define RIGIDBODY_H
+#ifndef RIGIDBODY2D_H
+#define RIGIDBODY2D_H
 
-class Rigidbody : public BaseScript
+class Rigidbody2D : public BaseScript
 {
 public:
     float gravityScale = 1.0;
@@ -94,7 +94,12 @@ public:
     {
         if(body != nullptr && !destroyed)
         {
-            DestroyJoint<DistanceJoint>();
+            DestroyJoint<RevoluteJoint2D>();
+            DestroyJoint<DistanceJoint2D>();
+            DestroyJoint<PrismaticJoint2D>();
+            DestroyJoint<WeldJoint2D>();
+            DestroyJoint<PulleyJoint2D>();
+            DestroyJoint<FrictionJoint2D>();
 
             Physics::physicsWorld.DestroyBody(body);
             destroyed = true;

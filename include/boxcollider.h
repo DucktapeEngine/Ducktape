@@ -1,10 +1,10 @@
-#ifndef BOXCOLLIDER_H
-#define BOXCOLLIDER_H
+#ifndef BOXCOLLIDER2D_H
+#define BOXCOLLIDER2D_H
 
-class BoxCollider : public PhysicsScript
+class BoxCollider2D : public PhysicsScript
 {
 public:
-    Rigidbody* rb;
+    Rigidbody2D* rb;
 
     Vector2 scale = Vector2(1.0f, 1.0f);
     float density = 1.0f;
@@ -13,7 +13,7 @@ public:
     
     void Start()
     {
-        rb = gameObject->GetComponent<Rigidbody>();
+        rb = gameObject->GetComponent<Rigidbody2D>();
         if(rb == nullptr)
         {
             Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Collider to.");

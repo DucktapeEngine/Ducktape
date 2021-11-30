@@ -1,13 +1,13 @@
-#ifndef FRICTION_JOINT_H
-#define FRICTION_JOINT_H
+#ifndef FRICTIONJOINT2D_H
+#define FRICTIONJOINT2D_H
 
-class FrictionJoint : public PhysicsScript
+class FrictionJoint2D : public PhysicsScript
 {
 public:
 	b2FrictionJoint* joint;
-	Rigidbody* rb;
+	Rigidbody2D* rb;
 
-	Rigidbody* connectedRigidbody = nullptr;
+	Rigidbody2D* connectedRigidbody = nullptr;
 	float maxForce;
 	float maxTorque;
 	Vector2 rootAnchorPos = Vector2(0.0f, 0.0f);
@@ -15,7 +15,7 @@ public:
 
 	void Start()
 	{
-		rb = gameObject->GetComponent<Rigidbody>();
+		rb = gameObject->GetComponent<Rigidbody2D>();
 		if(rb == nullptr)
 		{
 			Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Joint to.");

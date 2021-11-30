@@ -4,11 +4,11 @@ using namespace DT;
 class PlayerController : public GameScript
 {
 public:
-    Rigidbody* rb;
+    Rigidbody2D* rb;
 
     void Start()
     {
-        rb = gameObject->GetComponent<Rigidbody>();
+        rb = gameObject->GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -78,13 +78,13 @@ public:
 
             barSR->Start();
 
-            Rigidbody* barRB = bar->AddComponent<Rigidbody>();
+            Rigidbody2D* barRB = bar->AddComponent<Rigidbody2D>();
 
             barRB->type = "static";
 
             barRB->Start();
 
-            BoxCollider* barBC = bar->AddComponent<BoxCollider>();
+            BoxCollider2D* barBC = bar->AddComponent<BoxCollider2D>();
 
             barBC->Start();
 
@@ -107,13 +107,13 @@ public:
         playerSpriteRenderer->pixelPerUnit = 25;
         playerSpriteRenderer->color = Color(43, 46, 74, 255);
 
-        Rigidbody* playerRigidBody = player->AddComponent<Rigidbody>();
-        playerRigidBody->type = "dynamic";
-        playerRigidBody->linearDamping = 0.0f;
+        Rigidbody2D* playerRigidbody2D = player->AddComponent<Rigidbody2D>();
+        playerRigidbody2D->type = "dynamic";
+        playerRigidbody2D->linearDamping = 0.0f;
 
-        BoxCollider* playerBoxCollider = player->AddComponent<BoxCollider>();
-        playerBoxCollider->isTrigger = false;
-        playerBoxCollider->friction = 0.0f;
+        BoxCollider2D* playerBoxCollider2D = player->AddComponent<BoxCollider2D>();
+        playerBoxCollider2D->isTrigger = false;
+        playerBoxCollider2D->friction = 0.0f;
         
         player->AddComponent<PlayerController>();
 

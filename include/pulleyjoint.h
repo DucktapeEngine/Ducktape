@@ -1,13 +1,13 @@
-#ifndef PULLEY_JOINT_H
-#define PULLEY_JOINT_H
+#ifndef PULLEYJOINT_H
+#define PULLEYJOINT_H
 
-class PulleyJoint : public PhysicsScript
+class PulleyJoint2D : public PhysicsScript
 {
 public:
 	b2PulleyJoint* joint;
-	Rigidbody* rb;
+	Rigidbody2D* rb;
 
-	Rigidbody* connectedRigidbody = nullptr;
+	Rigidbody2D* connectedRigidbody = nullptr;
 	Vector2 groundAnchorA;
 	Vector2 groundAnchorB;
 	float lengthA;
@@ -18,7 +18,7 @@ public:
 
 	void Start()
 	{
-		rb = gameObject->GetComponent<Rigidbody>();
+		rb = gameObject->GetComponent<Rigidbody2D>();
 		if(rb == nullptr)
 		{
 			Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Joint to.");
