@@ -12,6 +12,7 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <algorithm>
 using namespace std::chrono_literals;
 #include "external/box2d/include/box2d/box2d.h"
 

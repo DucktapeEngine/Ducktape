@@ -20,6 +20,7 @@ namespace Application
 	    renderWindow.setVerticalSyncEnabled(true);
 	    renderWindow.setFramerateLimit(60);
 	    renderWindow.setView(view);
+	    renderWindow.setKeyRepeatEnabled(false);
 	    SetResolution(ProjectSettings::resolution);
 	}
 

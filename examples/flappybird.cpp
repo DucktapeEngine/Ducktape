@@ -19,7 +19,7 @@ public:
             rb->SetVelocity(Vector2(0.0f, 0.0f));
         }
 
-        if(Input::GetKey(KeyCode::W))
+        if(Input::GetKeyDown(KeyCode::W))
         {
             rb->SetVelocity(Vector2(rb->GetVelocity().x, -20.0f));
         }
