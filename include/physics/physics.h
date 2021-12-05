@@ -1,27 +1,24 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-namespace Physics
+#include "contactlistener.h"
+#include "../engine/projectsettings.h"
+
+namespace DT
 {
-	b2Vec2 b2Gravity(0.0, 0.0);
-	b2World physicsWorld(b2Vec2(0.0, 0.0));
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-	Vector2 globalGravity = Vector2(0.0f, 1.0f);
-	ContactListener contactListener;
-
-	void Initialize()
+	namespace Physics
 	{
-		globalGravity = ProjectSettings::globalGravity;
-		physicsWorld.SetContactListener(&contactListener);
-	}
+		extern b2Vec2 b2Gravity;
+		extern b2World physicsWorld;
+		extern int32 velocityIterations;
+		extern int32 positionIterations;
+		extern Vector2 globalGravity;
+		extern ContactListener contactListener;
 
-	Collision Raycast(Vector2 _origin, Vector2 _direction)
-	{
-		Collision raycastCallback;
-		physicsWorld.RayCast(&raycastCallback, _origin.ToBox2DVector(), _direction.ToBox2DVector());
-		return raycastCallback;
-	}
-};
+		void Initialize();
+
+		Collision Raycast(Vector2 _origin, Vector2 _direction);
+	};
+}
 
 #endif

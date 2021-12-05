@@ -1,79 +1,31 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include <SFML/Window.hpp>
+#include <vector>
+#include "vector2.h"
+#include "application.h"
+
 typedef sf::Keyboard::Key KeyCode;
 
-namespace Input
+namespace DT
 {
-    std::vector<KeyCode>keyUpList;
-    std::vector<KeyCode>keyDownList;
-    Vector2 mousePosition;
-
-    bool GetMouseButton(int num)
+    namespace Input
     {
-        if(num == 0 && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        {
-            return true;
-        }
-        else if(num == 2 && sf::Mouse::isButtonPressed(sf::Mouse::Right))
-        {
-            return true;
-        }
-        return false;
-    }
+        extern std::vector<KeyCode>keyUpList;
+        extern std::vector<KeyCode>keyDownList;
+        extern Vector2 mousePosition;
 
-    static bool GetKey(KeyCode k)
-    {
-        return sf::Keyboard::isKeyPressed(k);
-    }
+        bool GetMouseButton(int num);
 
-    static bool GetKeyUp(KeyCode k)
-    {
-        return (std::find(keyUpList.begin(), keyUpList.end(), k) != keyUpList.end());
-    }
+        bool GetKey(KeyCode k);
 
-    static bool GetKeyDown(KeyCode k)
-    {
-        return (std::find(keyDownList.begin(), keyDownList.end(), k) != keyDownList.end());
-    }
+        bool GetKeyUp(KeyCode k);
 
-    void Update()
-    {
-        keyUpList.clear();
-        keyDownList.clear();
+        bool GetKeyDown(KeyCode k);
 
-        std::vector<KeyCode>::iterator position;
-        sf::Event event;
-        while (Application::renderWindow.pollEvent(event))
-        {
-            switch (event.type)
-            {
-                // window closed
-                case sf::Event::Closed:
-                    Application::renderWindow.close();
-                    break;
-
-                // case sf::Event::Resized:
-                //     Application::SetResolution(Vector2(Application::renderWindow.getSize().x, Application::renderWindow.getSize().y));
-                //     break;
-
-                case sf::Event::KeyPressed:
-                    keyDownList.push_back(event.key.code);
-                    break;
-
-                case sf::Event::KeyReleased:
-                    keyUpList.push_back(event.key.code);
-                    break;
-
-                // we don't process other types of events
-                default:
-                    break;
-            }
-        }
-
-        mousePosition = Vector2(sf::Mouse::getPosition(Application::renderWindow).x, sf::Mouse::getPosition(Application::renderWindow).y);
-    }
-};
-
+        void Update();
+    };
+}
 
 #endif

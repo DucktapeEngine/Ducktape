@@ -1,19 +1,22 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-class Scene
+#include "vector2.h"
+#include <vector>
+
+namespace DT
 {
-public:
-	std::vector<GameObject*> gameObjects;
+	class GameObject;
 
-	virtual void Initialize(){}
-
-	void Destroy()
+	class Scene
 	{
-		gameObjects.clear();
-	}
+	public:
+		std::vector<GameObject*> gameObjects;
 
-	static void LoadScene(Scene* scene);
-};
+		virtual void Initialize(){}
+
+		void Destroy();
+	};
+}
 
 #endif

@@ -1,61 +1,35 @@
 #ifndef PRISMATICJOINT_H
 #define PRISMATICJOINT_H
 
-class PrismaticJoint2D : public PhysicsScript
+#include "../engine/scripts.h"
+#include "external/box2d/include/box2d/box2d.h"
+#include "rigidbody.h"
+#include "../engine/gameobject.h"
+#include "physics.h"
+
+namespace DT
 {
-public:
-	b2PrismaticJoint* joint;
-	Rigidbody2D* rb;
-
-	Rigidbody2D* connectedRigidbody = nullptr;
-	float referenceAngle;
-	bool enableLimit;
-	float lowerTranslation;
-	float upperTranslation;
-	bool enableMotor;
-	float motorSpeed;
-	float maxMotorForce;
-	Vector2 rootAnchorPos = Vector2(0.0f, 0.0f);
-	Vector2 connectedAnchorPos = Vector2(0.0f, 0.0f);
-
-	void Start()
+	class PrismaticJoint2D : public PhysicsScript
 	{
-		rb = gameObject->GetComponent<Rigidbody2D>();
-		if(rb == nullptr)
-		{
-			Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Joint to.");
-			return;
-		}
-		
-		b2PrismaticJointDef jointDef;
-		jointDef.bodyA = rb->body;
-		jointDef.bodyB = connectedRigidbody->body;
-		jointDef.referenceAngle = referenceAngle;
-		jointDef.enableLimit = enableLimit;
-		jointDef.lowerTranslation = lowerTranslation;
-		jointDef.upperTranslation = upperTranslation;
-		jointDef.enableMotor = enableMotor;
-		jointDef.motorSpeed = motorSpeed;
-		jointDef.maxMotorForce = maxMotorForce;
-		jointDef.localAnchorA = rootAnchorPos.ToBox2DVector();
-		jointDef.localAnchorB = connectedAnchorPos.ToBox2DVector();
+	public:
+		b2PrismaticJoint* joint;
+		Rigidbody2D* rb;
 
-		joint = (b2PrismaticJoint*)Physics::physicsWorld.CreateJoint(&jointDef);
-	}
+		Rigidbody2D* connectedRigidbody = nullptr;
+		float referenceAngle;
+		bool enableLimit;
+		float lowerTranslation;
+		float upperTranslation;
+		bool enableMotor;
+		float motorSpeed;
+		float maxMotorForce;
+		Vector2 rootAnchorPos = Vector2(0.0f, 0.0f);
+		Vector2 connectedAnchorPos = Vector2(0.0f, 0.0f);
 
-	void Destroy()
-    {
-		Physics::physicsWorld.DestroyJoint(joint);
-		if(!destroyed)
-        {
-            destroyed = true;
-        } 
-        else 
-        {
-            Debug::LogError("You cannot delete an already deleted body.");
-        }
-        delete this;
-    }
-};
+		void Start();
+
+		void Destroy();
+	};
+}
 
 #endif

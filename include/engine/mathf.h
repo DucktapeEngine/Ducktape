@@ -1,149 +1,64 @@
 #ifndef MATHF_H
 #define MATHF_H
 
-struct Mathf
+#include <cmath>
+
+namespace DT
 {
-    static constexpr float Deg2Rad = 0.01745329251;
-    static constexpr float Epsilon = 2.2204460492503130808472633361816E-16;
-    static constexpr float PositiveInfinity = 3.40282e+038;
-    static constexpr float NegativeInfinity = 1.17549e-038;
-    static constexpr float PI = 3.14159265358979;
-    static constexpr float Rad2Deg = 57.2957795131;
-    static constexpr float GoldenRatio = 1.61803398875;
-
-    static float Abs(float val)
+    namespace Mathf
     {
-        return abs(val);
-    }
+        extern float Deg2Rad;
+        extern float Epsilon;
+        extern float PositiveInfinity;
+        extern float NegativeInfinity;
+        extern float PI;
+        extern float Rad2Deg;
+        extern float GoldenRatio;
 
-    static float Acos(float val)
-    {
-        return std::acos(val);
-    }
+        float Abs(float val);
 
-    static bool Approximately(float val, float secondval)
-    {
-        if(Mathf::Abs(val - secondval) <= Mathf::Epsilon)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+        float Acos(float val);
 
-    static float Asin(float val)
-    {
-        return std::asin(val);
-    }
+        bool Approximately(float val, float secondval);
 
-    static float Atan(float val)
-    {
-        return std::atan(val);
-    }
+        float Asin(float val);
 
-    static float Atan2(float val, float val2)
-    {
-        return std::atan2(val, val2);
-    }
+        float Atan(float val);
 
-    static float Ceil(float val)
-    {
-        return ceil(val);
-    }
+        float Atan2(float val, float val2);
 
-    static float Clamp(float val, float min, float max)
-    {
-        if(val < min)
-        {
-            return min;
-        }
-        else if(val > max)
-        {
-            return max;
-        }
-        return val;
-    }
+        static float Ceil(float val);
 
-    static float Clamp01(float val)
-    {
-        return Mathf::Clamp(val, 0.0, 1.0);
-    }
+        float Clamp(float val, float min, float max);
 
-    static float Cos(float val)
-    {
-        return std::cos(val);
-    }
+        float Clamp01(float val);
 
-    static float DeltaAngle(float val, float val2)
-    {
-        float diff = ( (int)val2 - (int)val + 180 ) % 360 - 180;
-        return diff < -180 ? diff + 360 : diff;
-    }
+        float Cos(float val);
 
-    static float Exp(float val)
-    {
-        return std::exp(val);
-    }
+        float DeltaAngle(float val, float val2);
 
-    static float Floor(float val) 
-    {
-        return floor(val);
-    }
+        float Exp(float val);
 
-    static float Round(float val)
-    {
-        return round(val);
-    }
+        float Floor(float val);
 
-    static float Lerp(float val, float target, float interpolation)
-    {
-        return val + (target - val) * interpolation;
-    }
+        float Round(float val);
 
-    static float Max(float val, float val2)
-    {
-        return std::max(val, val2);
-    }
+        float Lerp(float val, float target, float interpolation);
 
-    static float Min(float val, float val2)
-    {
-        return std::min(val, val2);
-    }
+        float Max(float val, float val2);
 
-    static float MoveTowards(float val, float target, float delta)
-    {
-        if(val > target)
-        {
-            return Mathf::Clamp(val + delta, val, target);
-        }
-        else
-        {
-            return Mathf::Clamp(val - delta, target, val);
-        }
-    }
+        float Min(float val, float val2);
 
-    static float Pow(float val, float val2)
-    {
-        return std::pow(val, val2);
-    }
+        float MoveTowards(float val, float target, float delta);
 
-    static float Sin(float val)
-    {
-        return std::sin(val);
-    }
+        float Pow(float val, float val2);
 
-    static float Sqrt(float val)
-    {
-        return sqrt(val);
-    }
+        float Sin(float val);
 
-    static float Tan(float val)
-    {
-        return std::tan(val);
-    }
-};
+        float Sqrt(float val);
 
+        float Tan(float val);
+    };
+}
 
 #endif

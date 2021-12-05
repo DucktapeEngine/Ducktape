@@ -144,7 +144,7 @@ int main()
     ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
 
     ExampleScene exampleScene;
-    Scene::LoadScene(&exampleScene);
+    SceneManager::LoadScene(&exampleScene);
 
     // This will take care of the rest of the Engine.
     DT::Update();

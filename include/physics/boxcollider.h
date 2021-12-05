@@ -1,36 +1,24 @@
 #ifndef BOXCOLLIDER2D_H
 #define BOXCOLLIDER2D_H
 
-class BoxCollider2D : public PhysicsScript
+#include "../engine/gameobject.h"
+#include "../engine/scripts.h"
+#include "rigidbody.h"
+
+namespace DT
 {
-public:
-    Rigidbody2D* rb;
-
-    Vector2 scale = Vector2(1.0f, 1.0f);
-    float density = 1.0f;
-    float friction = 0.3f;
-    bool isTrigger = false;
-    
-    void Start()
+    class BoxCollider2D : public PhysicsScript
     {
-        rb = gameObject->GetComponent<Rigidbody2D>();
-        if(rb == nullptr)
-        {
-            Debug::LogError("The GameObject needs a Rigidbody component to be able to attach a Collider to.");
-            return;
-        }
+    public:
+        Rigidbody2D* rb;
 
-        b2PolygonShape collisionShape;
-        collisionShape.SetAsBox(scale.x * gameObject->transform->GetScale().x, scale.y * gameObject->transform->GetScale().y);
-
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &collisionShape;
-        fixtureDef.density = density;
-        fixtureDef.friction = friction;
-        fixtureDef.isSensor = isTrigger;
+        Vector2 scale = Vector2(1.0f, 1.0f);
+        float density = 1.0f;
+        float friction = 0.3f;
+        bool isTrigger = false;
         
-        rb->body->CreateFixture(&fixtureDef);
-    }
-};
+        void Start();
+    };
+}
 
 #endif

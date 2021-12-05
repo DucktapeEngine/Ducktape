@@ -1,44 +1,29 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-class Camera : public RenderScript
+#include "../engine/scripts.h"
+#include "../engine/vector2.h"
+#include "../engine/application.h"
+#include "../engine/gameobject.h"
+#include "../engine/transform.h"
+
+namespace DT
 {
+    class Camera : public RenderScript
+    {
     public:
         float size = 1.0;
         
-        void Update()
-        {
-            Vector2 pos = UnitToPixel(gameObject->transform->GetPosition());
-            Vector2 pos2 = Vector2(Application::resolution.x/4 + pos.x, Application::resolution.y/4 + pos.y);
+        void Update();
 
-            Application::view.setCenter(pos2.x, pos2.y);
-            Application::view.setRotation(gameObject->transform->GetRotation());
+        static Vector2 UnitToPixel(Vector2 pos);
 
-            Application::view.zoom(size);
-        }
+        static Vector2 ScreenToWorldPos(Vector2 pos);
 
-        static Vector2 UnitToPixel(Vector2 pos)
-        {
-            return Vector2(pos.x*(PixelPerUnit()/2), -pos.y*(PixelPerUnit()/2));
-        }
-
-        static Vector2 ScreenToWorldPos(Vector2 pos)
-        {
-            sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x/PixelPerUnit(), pos.y/PixelPerUnit()));
-            return Vector2(vec.x, vec.y);
-        }
-
-        static Vector2 WorldToScreenPos(Vector2 pos)
-        {
-            sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x*PixelPerUnit(), pos.y*PixelPerUnit()));
-            return Vector2(vec.x, vec.y);
-        }
-
-        static float PixelPerUnit()
-        {
-            return 10.0;
-        }
-};
-
+        static Vector2 WorldToScreenPos(Vector2 pos);
+        
+        static float PixelPerUnit();
+    };
+}
 
 #endif

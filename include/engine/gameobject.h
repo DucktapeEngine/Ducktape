@@ -1,63 +1,33 @@
-#ifndef GAME_OBJECT_H
-#define GAME_OBJECT_H
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
-#include <iostream>
+#include <string>
 #include <vector>
-
 #include "behaviourscript.h"
+#include "scenemanager.h"
+#include "transform.h"
 
-
-class GameObject
+namespace DT
 {
+    class Transform;
+
+    class GameObject
+    {
     public:
         bool isActive = true;
         int layer = 0;
+        Transform* transform;
         std::string name = "New GameObject";
         std::string tag = "Default";
-        Transform* transform;
         std::vector<BehaviourScript*> components;
 
-        GameObject()
-        {
-            isActive = true;
-            layer = 0;
-            tag = "Default";
-            name = "New GameObject";
-            transform = this->AddComponent<Transform>();
-        }
+        GameObject();
 
-        GameObject(std::string _name)
-        {
-            isActive = true;
-            layer = 0;
-            tag = "Default";
-            name = _name;
-            transform = this->AddComponent<Transform>();
-        }
+        GameObject(std::string _name);
 
-        GameObject(Vector2 pos, float rot, Vector2 scl)
-        {
-            isActive = true;
-            layer = 0;
-            tag = "Default";
-            name = "New GameObject";
-            transform = this->AddComponent<Transform>();
-            transform->SetPosition(pos);
-            transform->SetRotation(rot);
-            transform->SetScale(scl);
-        }
+        GameObject(Vector2 pos, float rot, Vector2 scl);
 
-        GameObject(std::string _name, Vector2 pos, float rot, Vector2 scl)
-        {
-            isActive = true;
-            layer = 0;
-            tag = "Default";
-            name = _name;
-            transform = this->AddComponent<Transform>();
-            transform->SetPosition(pos);
-            transform->SetRotation(rot);
-            transform->SetScale(scl);
-        }
+        GameObject(std::string _name, Vector2 pos, float rot, Vector2 scl);
 
         template <typename T>
         T* AddComponent()
@@ -103,7 +73,7 @@ class GameObject
         static GameObject* Instantiate(std::string _name);
         static GameObject* Instantiate(Vector2 pos, float rot, Vector2 scl);
         static GameObject* Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
-};
-
+    };
+}
 
 #endif

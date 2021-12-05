@@ -3,81 +3,41 @@
 
 #define FATAL_ERROR 8
 
-#include <stdlib.h>
+#include "vector2.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
-class Debug
+namespace DT
 {
-public:
-    // valing
-    static void Log(std::string val)
+    namespace Debug
     {
-        std::cout<<"\033[0;37m"<<val<<"\033[0m\n";
-    }
+        // valing
+        void Log(std::string val);
 
-    static void LogError(std::string val)
-    {
-        std::cout<<"\033[0;31m"<<val<<"\033[0m\n";
-    }
+        void LogError(std::string val);
 
-    static void LogFatalError(std::string val)
-    {
-        std::cout << "\033[0;31m [FATAL ERR] " << val << "\033[0m" << std::endl;
-        exit(FATAL_ERROR);
-    }
+        void LogFatalError(std::string val);
 
-    static void LogWarning(std::string val)
-    {
-        std::cout<<"\033[0;33m"<<val<<"\033[0m\n";
-    }
+        void LogWarning(std::string val);
 
-    static void LogSuccess(std::string val)
-    {
-        std::cout<<"\033[0;32m"<<val<<"\033[0m\n";
-    }
+        void LogSuccess(std::string val);
 
-    // float overload
+        // float overload
 
-    static void Log(float val)
-    {
-        std::cout<<"\033[0;37m"<<val<<"\033[0m\n";
-    }
+        void Log(float val);
 
-    static void LogError(float val)
-    {
-        std::cout<<"\033[0;31m"<<val<<"\033[0m\n";
-    }
+        void LogError(float val);
 
-    static void LogFatalError(float val)
-    {
-        std::cout << "\033[0;31m [FATAL ERR]" << val << "\033[0m" << std::endl;
-        exit(FATAL_ERROR);
-    }
+        void LogFatalError(float val);
 
-    static void LogWarning(float val)
-    {
-        std::cout<<"\033[0;33m"<<val<<"\033[0m\n";
-    }
+        void LogWarning(float val);
 
-    static void LogSuccess(float val)
-    {
-        std::cout<<"\033[0;32m"<<val<<"\033[0m\n";
-    }
+        void LogSuccess(float val);
 
-    static void DrawLine(Vector2 start, Vector2 end, sf::Color color)
-    {
-        // sf::Vertex line[] =
-        // {
-        //     sf::Vertex(Vector2::SFMLOriginToRelative(sf::Vector2f(start.x, start.y)), color),
-        //     sf::Vertex(Vector2::SFMLOriginToRelative(sf::Vector2f(end.x, end.y)), color)
-        // };
+        void DrawLine(Vector2 start, Vector2 end, sf::Color color);
 
-        // Application::renderWindow.draw(line, 2, sf::Lines);
-    }
-
-    static void DrawRay(Vector2 start, Vector2 dir, sf::Color color)
-    {
-        Debug::DrawLine(start, dir, color);
-    }
-};
+        void DrawRay(Vector2 start, Vector2 dir, sf::Color color);
+    };
+}
 
 #endif

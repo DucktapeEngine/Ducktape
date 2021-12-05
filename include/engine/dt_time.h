@@ -1,16 +1,18 @@
 #ifndef TIME_H
 #define TIME_H
 
-namespace Time 
-{
-	float deltaTime;
-	sf::Clock clock;
-    sf::Clock deltaClock;
+#include <SFML/Window.hpp>
 
-	void Update()
+namespace DT
+{
+	namespace Time 
 	{
-		Time::deltaTime = Time::deltaClock.restart().asSeconds();
-	}
-};
+		extern float deltaTime;
+		extern sf::Clock clock;
+	    extern sf::Clock deltaClock;
+
+		void Update();
+	};
+}
 
 #endif

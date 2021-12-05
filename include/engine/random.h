@@ -1,12 +1,13 @@
 #ifndef RANDOM_H
 #define RANDOM_H
 
-namespace Random
+#include <algorithm>
+
+namespace DT
 {
-	float Range(float min, float max)
+	namespace Random
 	{
-		int range = max - min + 1;
-		return (rand() % range + min);
+		float Range(float min, float max);
 	}
 }
 

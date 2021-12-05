@@ -1,31 +1,24 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-namespace Application 
+#include "vector2.h"
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include "projectsettings.h"
+
+namespace DT
 {
-	Vector2 resolution = Vector2(500, 500);
-	sf::View view = sf::View(sf::FloatRect(0.f, 0.f, resolution.x, resolution.y));
-	sf::RenderWindow renderWindow(sf::VideoMode(resolution.x, resolution.y), "Flappy Duck", sf::Style::Default);
-
-	void SetResolution(Vector2 _res)
+	namespace Application 
 	{
-		resolution = _res;
-		renderWindow.setSize(sf::Vector2u(resolution.x, resolution.y));
-        view.setSize(resolution.x, resolution.y);
-	}
+		extern Vector2 resolution;
+		extern sf::View view;
+		extern sf::RenderWindow renderWindow;
 
-	void Initialize()
-	{
-	    renderWindow.setVerticalSyncEnabled(true);
-	    renderWindow.setFramerateLimit(60);
-	    renderWindow.setView(view);
-	    renderWindow.setKeyRepeatEnabled(false);
-	    SetResolution(ProjectSettings::resolution);
-	}
+		void SetResolution(Vector2 _res);
 
-	bool IsOpen()
-	{
-	    return renderWindow.isOpen();
+		void Initialize();
+
+		bool IsOpen();
 	}
 }
 

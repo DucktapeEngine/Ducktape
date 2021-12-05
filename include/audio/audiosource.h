@@ -1,142 +1,43 @@
 #ifndef AUDIOSOURCE_H
 #define AUDIOSOURCE_H
 
-class AudioEffects
+#include "../engine/componentexecutionhandler.h"
+#include <vector>
+#include "../engine/scripts.h"
+#include <SFML/Audio.hpp>
+#include "audioeffects.h"
+#include "../engine/debug.h"
+
+namespace DT
 {
-public:
-    bool loop = false;
-    float pitch = 1.0f;
-    float volume = 100.0f;
-    float distance = 1.0f;
-    bool spatial = false;
-    Vector2 position = Vector2(0.0f, 0.0f);    
-};
-
-class AudioSource : public AudioScript
-{
-private:
-    bool isMusic = false;
-    std::string path;
-    sf::SoundBuffer buffer;
-    sf::Sound sound;
-    sf::Music music;
-
-    AudioEffects audioEffects;
-
-public:
-    void Load(std::string _path, bool _isMusic)
+    class AudioSource : public AudioScript
     {
-        path = _path;
-        isMusic = _isMusic;
-        if(isMusic)
-        {
-            if (!music.openFromFile(path))
-            {
-                Debug::LogError("The specified audio file: " + path + " could not be found.");
-                return;
-            }
-            music.play();
-        }
-        else
-        {
-            if(!buffer.loadFromFile(path))
-            {
-                Debug::LogError("The specified audio file: " + path + " could not be found.");
-                return;
-            }
+    private:
+        bool isMusic = false;
+        std::string path;
+        sf::SoundBuffer buffer;
+        sf::Sound sound;
+        sf::Music music;
 
-            sound.setBuffer(buffer);
-            sound.play();
-        }
-    }
+        AudioEffects audioEffects;
 
-    void Pause()
-    {
-        if(isMusic)
-        {
-            music.pause();
-        }
-        else
-        {
-            sound.pause();
-        }
-    }
+    public:
+        void Load(std::string _path, bool _isMusic);
 
-    void Play()
-    {
-        if(isMusic)
-        {
-            music.play();
-        }
-        else
-        {
-            sound.play();
-        }
-    }
+        void Pause();
 
-    void Stop()
-    {
-        if(isMusic)
-        {
-            music.stop();
-        }
-        else
-        {
-            sound.stop();
-        }
-    }
+        void Play();
 
-    void SetSeek(float sec)
-    {
-        if(isMusic)
-        {
-            music.setPlayingOffset(sf::seconds(sec));
-        }
-        else
-        {
-            sound.setPlayingOffset(sf::seconds(sec));
-        }
-    }
+        void Stop();
 
-    float GetSeek()
-    {
-        if(isMusic)
-        {
-            return music.getPlayingOffset().asSeconds();
-        }
-        else
-        {
-            return sound.getPlayingOffset().asSeconds();
-        }
-    }
+        void SetSeek(float sec);
 
-    AudioEffects GetAudioEffects()
-    {
-        return audioEffects;
-    }
+        float GetSeek();
 
-    void SetAudioEffects(AudioEffects _audioEffects)
-    {
-        audioEffects = _audioEffects;
-        if(isMusic)
-        {
-            music.setLoop(audioEffects.loop);
-            music.setPitch(audioEffects.pitch);
-            music.setVolume(audioEffects.volume);
-            music.setMinDistance(audioEffects.distance);
-            music.setRelativeToListener(audioEffects.spatial);
-            music.setPosition(sf::Vector3f(audioEffects.position.x, audioEffects.position.y, 0.0f));
-        }
-        else
-        {
-            sound.setLoop(audioEffects.loop);
-            sound.setPitch(audioEffects.pitch);
-            sound.setVolume(audioEffects.volume);
-            sound.setMinDistance(audioEffects.distance);
-            sound.setRelativeToListener(audioEffects.spatial);
-            sound.setPosition(sf::Vector3f(audioEffects.position.x, audioEffects.position.y, 0.0f));
-        }
-    }
-};
+        AudioEffects GetAudioEffects();
+
+        void SetAudioEffects(AudioEffects _audioEffects);
+    };
+}
 
 #endif

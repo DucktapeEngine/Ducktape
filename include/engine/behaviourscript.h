@@ -1,39 +1,35 @@
-#ifndef BEHAVIOUR_SCRIPT_H
-#define BEHAVIOUR_SCRIPT_H
+#ifndef BEHAVIOURSCRIPT_H
+#define BEHAVIOURSCRIPT_H
 
-class BehaviourScript
+#include "../physics/collision.h"
+#include "debug.h"
+
+namespace DT
 {
-public:
-    bool enabled = true;
-    GameObject* gameObject;
-    bool destroyed = false;
-    bool started = false;
+    class GameObject;
 
-    virtual void Start(){}
-    virtual void Update(){}
-    virtual void FixedUpdate(){}
-    virtual void OnTransformChange(){}
-    virtual void OnCollisionEnter(Collision collider){}
-    virtual void OnCollisionExit(Collision collider){}
-
-    virtual void Destroy()
+    class BehaviourScript
     {
-        delete this;
-    }
+    public:
+        bool enabled = true;
+        GameObject* gameObject;
+        bool destroyed = false;
+        bool started = false;
 
-    void Invoke(std::string methodName, float time)
-    {
-        Debug::LogWarning("Invoke not Implemented yet.");
-    }
+        virtual void Start(){}
+        virtual void Update(){}
+        virtual void FixedUpdate(){}
+        virtual void OnTransformChange(){}
+        void OnRBDestroy();
+        virtual void OnCollisionEnter(Collision collider){}
+        virtual void OnCollisionExit(Collision collider){}
 
-    bool operator==(BehaviourScript* script)
-    {
-        if(this == script)
-        {
-            return true;
-        }
-        return false;
-    }
-};
+        virtual void Destroy(){}
+
+        void Invoke(std::string methodName, float time);
+
+        bool operator==(BehaviourScript* script);
+    };
+}
 
 #endif

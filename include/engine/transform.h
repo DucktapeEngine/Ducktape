@@ -1,106 +1,58 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-class Transform : public BaseScript
+#include "scripts.h"
+#include "vector2.h"
+#include <vector>
+// #include "gameobject.h"
+
+namespace DT
 {
-private:
-    Vector2 position = Vector2(0.0, 0.0);
-    float rotation;
-    Vector2 scale = Vector2(1.0, 1.0);
-
-    Vector2 localPosition = Vector2(0.0, 0.0);
-    float localRotation;
-    Vector2 localScale = Vector2(1.0, 1.0);
-
-public:
-    Transform* parent = nullptr;
-    std::vector<Transform*> children;    
-
-    Vector2 SetPosition(Vector2 _pos);
-
-    Vector2 GetPosition()
+    class Transform : public BaseScript
     {
-        return position;
-    }
+    private:
+        Vector2 position = Vector2(0.0, 0.0);
+        float rotation;
+        Vector2 scale = Vector2(1.0, 1.0);
 
-    float SetRotation(float _rot);
+        Vector2 localPosition = Vector2(0.0, 0.0);
+        float localRotation;
+        Vector2 localScale = Vector2(1.0, 1.0);
 
-    float GetRotation()
-    {
-        return rotation;
-    }
+    public:
+        Transform* parent = nullptr;
+        std::vector<Transform*> children;    
 
-    Vector2 SetScale(Vector2 _scl);
+        Vector2 SetPosition(Vector2 _pos);
 
-    Vector2 GetScale()
-    {
-        return scale;
-    }
+        Vector2 GetPosition();
 
-    // local versions of each method
+        float SetRotation(float _rot);
 
-    Vector2 SetLocalPosition(Vector2 _pos);
+        float GetRotation();
 
-    Vector2 GetLocalPosition()
-    {
-        return localPosition;
-    }
+        Vector2 SetScale(Vector2 _scl);
 
-    float SetLocalRotation(float _rot);
+        Vector2 GetScale();
 
-    float GetLocalRotation()
-    {
-        return localRotation;
-    }
+        // local versions of each method
 
-    Vector2 SetLocalScale(Vector2 _scl);
+        Vector2 SetLocalPosition(Vector2 _pos);
 
-    Vector2 GetLocalScale()
-    {
-        return localScale;
-    }
+        Vector2 GetLocalPosition();
 
-    void RecalculateLocalValues()
-    {
-        Vector2 _pos;
-        float _rot;
-        Vector2 _scl;
+        float SetLocalRotation(float _rot);
 
-        Transform* currentParent = this->parent;
+        float GetLocalRotation();
 
-        while(currentParent != nullptr)
-        {
-            _pos = _pos + currentParent->GetLocalPosition();
-            _rot = _rot + currentParent->GetLocalRotation();
-            _scl = _scl + currentParent->GetLocalScale();
-            currentParent = currentParent->parent;
-        }
+        Vector2 SetLocalScale(Vector2 _scl);
 
-        localPosition = position - _pos;
-        localRotation = rotation - _rot;
-        localScale = scale - _scl;
-    }
+        Vector2 GetLocalScale();
 
-    void RecalculateWorldValues()
-    {
-        Vector2 _pos;
-        float _rot;
-        Vector2 _scl;
+        void RecalculateLocalValues();
 
-        Transform* currentParent;
-
-        while(currentParent != nullptr)
-        {
-            _pos = _pos + currentParent->GetLocalPosition();
-            _rot = _rot + currentParent->GetLocalRotation();
-            _scl = _scl + currentParent->GetLocalScale();
-            currentParent = currentParent->parent;
-        }
-
-        position = _pos;
-        rotation = _rot;
-        scale = _scl;
-    }
-};
+        void RecalculateWorldValues();
+    };
+}
 
 #endif

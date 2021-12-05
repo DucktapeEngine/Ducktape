@@ -8,7 +8,7 @@ endif (UNIX)
 
 cmake_minimum_required (VERSION 3.12)
 
-message (STATUS "Building Ducktape .. ")
+message (STATUS "Building Ducktape ...")
 project(Ducktape LANGUAGES CXX)
 set(executable_name "Ducktape")
 enable_language(C)
@@ -25,15 +25,15 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 set(CMAKE_BUILD_TYPE "Debug")
 
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/include/*.cpp" "${PROJECT_SOURCE_DIR}/include/*.h" "${PROJECT_SOURCE_DIR}/external/box2d/src/*.cpp")
+file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/include/**/*.cpp" "${PROJECT_SOURCE_DIR}/include/*.h" "${PROJECT_SOURCE_DIR}/include/*.cpp" "${PROJECT_SOURCE_DIR}/include/**/*.h")
 
-add_executable(ducktape  ${source_list} ${PROJECT_SOURCE_DIR}/examples/flappybird.cpp)
+add_executable(ducktape ${source_list} ${PROJECT_SOURCE_DIR}/examples/flappybird.cpp)
 
 set_target_properties(ducktape PROPERTIES
             CXX_STANDARD 20
             CXX_EXTENSIONS OFF)
 
-set(CMAKE_CXX_FLAGS "-g -pthread")
+set(CMAKE_CXX_FLAGS "-g -pthread -fPIC")
 
 if (UNIX)
     target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/;${PROJECT_SOURCE_DIR}/external/box2d/include/;${PROJECT_SOURCE_DIR}/external/box2d/src;${PROJECT_SOURCE_DIR};${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/include")
@@ -45,7 +45,7 @@ if (WIN32)
     target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/Ducktape/;${PROJECT_SOURCE_DIR}/external/box2d/include/;${PROJECT_SOURCE_DIR};${PROJECT_SOURCE_DIR}
     /external/box2d/src;${PROJECT_SOURCE_DIR}/external/SFML-windows-gcc/SFML-2.5.1/include")
 
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/box2d/bin;${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/SFML-2.5.1/lib/;${PROJECT_SOURCE_DIR}/external/SFML-windows-gcc/SFML-2.5.1/lib")
+    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/box2d/bin;${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/SFML-2.5.1/lib/;${PROJECT_SOURCE_DIR}/external/SFML-windows-gcc/SFML-2.5.1/lib;")
 endif (WIN32)
 
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/external/)
