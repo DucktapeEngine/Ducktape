@@ -1,4 +1,4 @@
-cd build
+cd bin
 cmake ..
 make
 ./ducktape

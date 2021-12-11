@@ -1,4 +1,4 @@
-#include "../include/ducktape.h"
+#include <Ducktape/ducktape.h>
 using namespace DT;
 
 class PlayerController : public GameScript
