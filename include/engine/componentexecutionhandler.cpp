@@ -33,3 +33,12 @@ void ComponentExecutionHandler::FixedUpdate()
 	for(int i=0;i<gameScript.size();i++){gameScript[i]->FixedUpdate();}
 	for(int i=0;i<renderScript.size();i++){renderScript[i]->FixedUpdate();}
 }
+
+void ComponentExecutionHandler::OnApplicationClose()
+{
+	for(int i=0;i<baseScript.size();i++){baseScript[i]->OnApplicationClose();}
+	for(int i=0;i<physicsScript.size();i++){physicsScript[i]->OnApplicationClose();}
+	for(int i=0;i<audioScript.size();i++){audioScript[i]->OnApplicationClose();}
+	for(int i=0;i<gameScript.size();i++){gameScript[i]->OnApplicationClose();}
+	for(int i=0;i<renderScript.size();i++){renderScript[i]->OnApplicationClose();}
+}

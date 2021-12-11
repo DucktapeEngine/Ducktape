@@ -114,3 +114,8 @@ void AudioSource::SetAudioEffects(AudioEffects _audioEffects)
         sound.setPosition(sf::Vector3f(audioEffects.position.x, audioEffects.position.y, 0.0f));
     }
 }
+
+void AudioSource::OnApplicationClose()
+{
+    Stop();
+}

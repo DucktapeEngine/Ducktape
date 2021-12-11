@@ -37,6 +37,8 @@ namespace DT
         AudioEffects GetAudioEffects();
 
         void SetAudioEffects(AudioEffects _audioEffects);
+
+        void OnApplicationClose();
     };
 }
 

@@ -20,11 +20,14 @@ namespace DT
         virtual void Update(){}
         virtual void FixedUpdate(){}
         virtual void OnTransformChange(){}
+
         void OnRBDestroy();
         virtual void OnCollisionEnter(Collision collider){}
         virtual void OnCollisionExit(Collision collider){}
 
         virtual void Destroy(){}
+
+        virtual void OnApplicationClose(){}
 
         void Invoke(std::string methodName, float time);
 

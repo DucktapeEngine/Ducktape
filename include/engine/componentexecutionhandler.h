@@ -17,6 +17,7 @@ namespace DT
 		void Start();
 		void Update();
 		void FixedUpdate();
+		void OnApplicationClose();
 	}
 }
 

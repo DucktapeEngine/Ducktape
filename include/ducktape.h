@@ -13,6 +13,7 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <utility>
 #include <algorithm>
 
 using namespace std::chrono_literals;
@@ -70,11 +71,12 @@ namespace DT
 #include "physics/frictionjoint.h"
 #include "audio/audioeffects.h"
 #include "audio/audiosource.h"
+#include "engine/optimization.h"
 
 namespace DT
 {
     void FixedUpdateThread();
-
+    
     void Update();
 }
 

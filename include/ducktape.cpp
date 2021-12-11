@@ -38,6 +38,7 @@ namespace DT
             Application::renderWindow.display();
         }
 
+        ComponentExecutionHandler::OnApplicationClose();
         fixedUpdateThread.join();
     }
 }
