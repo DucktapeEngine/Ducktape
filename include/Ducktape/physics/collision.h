@@ -1,7 +1,7 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
-#include "external/box2d/include/box2d/box2d.h"
+#include <box2d/box2d.h>
 #include "../engine/vector2.h"
 
 namespace DT

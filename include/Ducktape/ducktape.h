@@ -13,24 +13,37 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
-#include <utility>
 #include <algorithm>
 
 using namespace std::chrono_literals;
 
-#include "external/box2d/include/box2d/box2d.h"
+#include <box2d/box2d.h>
 
+#include "engine/mathf.h"
+#include "engine/vector2.h"
 #include "engine/dt_time.h"
+#include "engine/color.h"
+#include "engine/debug.h"
+#include "engine/projectsettings.h"
 #include "engine/application.h"
 
 namespace DT
 {
-    class GameObject;
+    class Entity;
 }
 
+#include "physics/collision.h"
+#include "engine/behaviourscript.h"
 #include "engine/componentexecutionhandler.h"
+#include "engine/transform.h"
+#include "engine/scenemanager.h"
+#include "engine/entity.h"
 #include "engine/input.h"
+#include "rendering/camera.h"
+#include "physics/contactlistener.h"
 #include "physics/physics.h"
+#include "rendering/renderer.h"
+#include "rendering/spriterenderer.h"
 
 namespace DT
 {
@@ -42,10 +55,26 @@ namespace DT
     class FrictionJoint2D;
 }
 
+#include "physics/rigidbody.h"
+#include "physics/boxcollider.h"
+#include "physics/circlecollider.h"
+#include "physics/edgecollider.h"
+#include "physics/polygoncollider.h"
+#include "engine/scene.h"
+#include "engine/random.h"
+#include "physics/distancejoint.h"
+#include "physics/revolutejoint.h"
+#include "physics/prismaticjoint.h"
+#include "physics/weldjoint.h"
+#include "physics/pulleyjoint.h"
+#include "physics/frictionjoint.h"
+#include "audio/audioeffects.h"
+#include "audio/audiosource.h"
+
 namespace DT
 {
     void FixedUpdateThread();
-    
+
     void Update();
 }
 

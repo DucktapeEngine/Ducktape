@@ -3,7 +3,7 @@
 
 #include <string>
 #include <SFML/Window.hpp>
-#include "external/box2d/include/box2d/box2d.h"
+#include <box2d/box2d.h>
 #include "mathf.h"
 #include <iostream>
 

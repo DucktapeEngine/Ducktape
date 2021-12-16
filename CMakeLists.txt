@@ -1,11 +1,3 @@
-if (WIN32)
-    set(CMAKE_GENERATOR "MinGW Makefiles")
-endif (WIN32)
-
-if (UNIX)
-    set(CMAKE_GENERATOR "Unix Makefiles")
-endif (UNIX)
-
 cmake_minimum_required (VERSION 3.12)
 
 message (STATUS "Building Ducktape ...")
@@ -13,27 +5,18 @@ project(ducktape LANGUAGES CXX)
 set(executable_name "Ducktape")
 enable_language(C)
 
-if (WIN32)
-    set(CMAKE_CXX_COMPILER "C:/MinGW/bin/g++.exe")
-endif (WIN32)
-
-if (UNIX)
-    set(CMAKE_CXX_COMPILER "/usr/bin/g++")
-endif (UNIX)
-
-set(CMAKE_CXX_COMPILER_ID "GNU")
-
 set(CMAKE_BUILD_TYPE "Debug")
 
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/Ducktape/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/Ducktape*.cpp")
+file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/Ducktape/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/Ducktape/*.cpp")
 
-file(GLOB_RECURSE header_list "${PROJECT_SOURCE_DIR}/include/Ducktape/**/*.h" "${PROJECT_SOURCE_DIR}/include/Ducktape*.h")
+file(GLOB_RECURSE header_list "${PROJECT_SOURCE_DIR}/include/Ducktape/**/*.h" "${PROJECT_SOURCE_DIR}/include/Ducktape/*.h")
 
 add_library(ducktape ${source_list} ${header_list})
 
 set_target_properties(ducktape PROPERTIES
-            CXX_STANDARD 20
-            CXX_EXTENSIONS OFF)
+    CXX_STANDARD 20
+    CXX_EXTENSIONS OFF
+)
 
 set(CMAKE_CXX_FLAGS "-g -pthread -fPIC")
 
@@ -41,23 +24,23 @@ target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Duckta
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/Ducktape;${PROJECT_SOURCE_DIR}/src/Ducktape/audio;${PROJECT_SOURCE_DIR}/src/Ducktape/engine;${PROJECT_SOURCE_DIR}/src/Ducktape/physics;${PROJECT_SOURCE_DIR}/src/Ducktape/rendering;")
 
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/box2d/include/;${PROJECT_SOURCE_DIR}/external/box2d/src;")
+target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/include/;${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/src;")
 
-target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/box2d/bin;")
+target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/bin;")
 
 if (UNIX)
-    target_include_directories(ducktape PUBLIC ";${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/include")
+    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/include")
 
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/SFML-linux-gcc/SFML-2.5.1/lib/;")
+    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib;")
 endif (UNIX)
 
 if (WIN32)
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/SFML-windows-gcc/SFML-2.5.1/include")
+    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/include")
 
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/external/SFML-windows-gcc/SFML-2.5.1/lib;")
+    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib;")
 endif (WIN32)
 
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/external/)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include/Ducktape/external/)
 
 find_package(SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 

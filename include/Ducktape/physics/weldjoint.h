@@ -2,7 +2,7 @@
 #define WELDJOINT2D_H
 
 #include "../engine/scripts.h"
-#include "external/box2d/include/box2d/box2d.h"
+#include <box2d/box2d.h>
 #include "rigidbody.h"
 #include "../engine/entity.h"
 #include "physics.h"

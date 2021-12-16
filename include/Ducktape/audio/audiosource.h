@@ -5,7 +5,7 @@
 #include <vector>
 #include "../engine/scripts.h"
 #include <SFML/Audio.hpp>
-#include "audio/audioeffects.h"
+#include "../audio/audioeffects.h"
 #include "../engine/debug.h"
 
 namespace DT
