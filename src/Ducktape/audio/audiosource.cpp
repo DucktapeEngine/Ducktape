@@ -87,31 +87,123 @@ float AudioSource::GetSeek()
     }
 }
 
-AudioEffects AudioSource::GetAudioEffects()
+void AudioSource::SetLoop(bool loop)
 {
-    return audioEffects;
-}
-
-void AudioSource::SetAudioEffects(AudioEffects _audioEffects)
-{
-    audioEffects = _audioEffects;
     if(isMusic)
     {
-        music.setLoop(audioEffects.loop);
-        music.setPitch(audioEffects.pitch);
-        music.setVolume(audioEffects.volume);
-        music.setMinDistance(audioEffects.distance);
-        music.setRelativeToListener(audioEffects.spatial);
-        music.setPosition(sf::Vector3f(audioEffects.position.x, audioEffects.position.y, 0.0f));
+        music.setLoop(loop);
     }
     else
     {
-        sound.setLoop(audioEffects.loop);
-        sound.setPitch(audioEffects.pitch);
-        sound.setVolume(audioEffects.volume);
-        sound.setMinDistance(audioEffects.distance);
-        sound.setRelativeToListener(audioEffects.spatial);
-        sound.setPosition(sf::Vector3f(audioEffects.position.x, audioEffects.position.y, 0.0f));
+        sound.setLoop(loop);
+    }
+}
+
+bool AudioSource::GetLoop()
+{
+    if(isMusic)
+    {
+        return music.getLoop();
+    }
+    else
+    {
+        return sound.getLoop();
+    }
+}
+
+void AudioSource::SetPitch(float pitch)
+{
+    if(isMusic)
+    {
+        music.setPitch(pitch);
+    }
+    else
+    {
+        sound.setPitch(pitch);
+    }
+}
+
+float AudioSource::GetPitch()
+{
+    if(isMusic)
+    {
+        return music.getPitch();
+    }
+    else
+    {
+        return sound.getPitch();
+    }
+}
+
+void AudioSource::SetVolume(float volume)
+{
+    if(isMusic)
+    {
+        music.setVolume(volume);
+    }
+    else
+    {
+        sound.setVolume(volume);
+    }
+}
+
+float AudioSource::GetVolume()
+{
+    if(isMusic)
+    {
+        return music.getVolume();
+    }
+    else
+    {
+        return sound.getVolume();
+    }
+}
+
+void AudioSource::SetDistance(float distance)
+{
+    if(isMusic)
+    {
+        music.setMinDistance(distance);
+    }
+    else
+    {
+        sound.setMinDistance(distance);
+    }
+}
+
+float AudioSource::GetDistance()
+{
+    if(isMusic)
+    {
+        return music.getMinDistance();
+    }
+    else
+    {
+        return sound.getMinDistance();
+    }
+}
+
+void AudioSource::SetSpatial(bool spatial)
+{
+    if(isMusic)
+    {
+        music.setRelativeToListener(spatial);
+    }
+    else
+    {
+        sound.setRelativeToListener(spatial);
+    }
+}
+
+bool AudioSource::GetSpatial()
+{
+    if(isMusic)
+    {
+        return music.isRelativeToListener();
+    }
+    else
+    {
+        return sound.isRelativeToListener();
     }
 }
 

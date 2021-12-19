@@ -5,7 +5,6 @@
 #include <vector>
 #include "../engine/scripts.h"
 #include <SFML/Audio.hpp>
-#include "../audio/audioeffects.h"
 #include "../engine/debug.h"
 
 namespace DT
@@ -19,24 +18,30 @@ namespace DT
         sf::Sound sound;
         sf::Music music;
 
-        AudioEffects audioEffects;
-
     public:
         void Load(std::string _path, bool _isMusic);
 
         void Pause();
-
         void Play();
-
         void Stop();
 
         void SetSeek(float sec);
-
         float GetSeek();
 
-        AudioEffects GetAudioEffects();
+        void SetLoop(bool loop);
+        bool GetLoop();
 
-        void SetAudioEffects(AudioEffects _audioEffects);
+        void SetPitch(float pitch);
+        float GetPitch();
+
+        void SetVolume(float volume);
+        float GetVolume();
+
+        void SetDistance(float distance);
+        float GetDistance();
+
+        void SetSpatial(bool spatial);
+        bool GetSpatial();
 
         void OnApplicationClose();
     };

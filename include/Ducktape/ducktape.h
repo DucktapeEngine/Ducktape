@@ -68,7 +68,6 @@ namespace DT
 #include "physics/weldjoint.h"
 #include "physics/pulleyjoint.h"
 #include "physics/frictionjoint.h"
-#include "audio/audioeffects.h"
 #include "audio/audiosource.h"
 
 namespace DT

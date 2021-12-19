@@ -1,6 +1,8 @@
-.vscode/
 bin/CMakeFiles
 bin/cmake_install.cmake
 bin/CMakeCache.txt
-Makefile
-libducktape.a
+bin/Makefile
+bin/libducktape.a
+
+examples/build
+examples/FlappyBird/build
