@@ -17,6 +17,7 @@ namespace DT
         void Update();
 
         static Vector2 UnitToPixel(Vector2 pos);
+        static Vector2 PixelToUnit(Vector2 pos);
 
         static Vector2 ScreenToWorldPos(Vector2 pos);
 

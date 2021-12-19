@@ -39,7 +39,7 @@ public:
 
     void Update()
     {
-        entity->transform->SetPosition(Vector2(playerGO->transform->GetPosition().x, 0.0f));
+        entity->transform->SetPosition(Vector2(playerGO->transform->GetPosition().x, 0.f));
     }
 };
 

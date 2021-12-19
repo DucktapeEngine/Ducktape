@@ -14,12 +14,19 @@ void Camera::Update()
 
 Vector2 Camera::UnitToPixel(Vector2 pos)
 {
-    return Vector2(pos.x*(PixelPerUnit()/2), -pos.y*(PixelPerUnit()/2));
+    return Vector2(pos.x*(PixelPerUnit()/2), pos.y*(PixelPerUnit()/2));
+}
+
+Vector2 Camera::PixelToUnit(Vector2 pos)
+{
+    return Vector2(pos.x/(PixelPerUnit()/2), pos.y/(PixelPerUnit()/2));
 }
 
 Vector2 Camera::ScreenToWorldPos(Vector2 pos)
 {
-    sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x/PixelPerUnit(), pos.y/PixelPerUnit()));
+    sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x, pos.y));
+    vec /= PixelPerUnit();
+    vec -= sf::Vector2f(12.5f, 12.5f);
     return Vector2(vec.x, vec.y);
 }
 
