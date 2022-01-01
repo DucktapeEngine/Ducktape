@@ -11,9 +11,17 @@ namespace DT
 {
     struct Vector2
     {
+        static const Vector2 ZERO;
+        static const Vector2 UP;
+        static const Vector2 DOWN;
+        static const Vector2 LEFT;
+        static const Vector2 RIGHT;
+        static const Vector2 ONE;
+        static const Vector2 NEGATIVE_INFINITY;
+        static const Vector2 POSITIVE_INFINITY;
+
         float x, y;
         Vector2();
-
         Vector2(float xpos, float ypos);
 
         Vector2 operator+(Vector2 vec2);
@@ -27,22 +35,6 @@ namespace DT
         Vector2& operator=(Vector2 vec);
 
         bool operator==(Vector2 vec);
-
-        static Vector2 Down();
-
-        static Vector2 Left();
-
-        static Vector2 NegativeInfinity();
-
-        static Vector2 One();
-
-        static Vector2 PositiveInfinity();
-
-        static Vector2 Right();
-
-        static Vector2 Up();
-
-        static Vector2 Zero();
 
         float Magnitude();
 

@@ -6,3 +6,6 @@ bin/libducktape.a
 
 examples/build
 examples/FlappyBird/build
+build/
+bin/
+.vscode/

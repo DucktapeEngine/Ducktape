@@ -6,6 +6,7 @@
 #include "vector2.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "color.h"
 
 namespace DT
 {
@@ -34,9 +35,9 @@ namespace DT
 
         void LogSuccess(float val);
 
-        void DrawLine(Vector2 start, Vector2 end, sf::Color color);
+        void DrawLine(Vector2 start, Vector2 end, Color color);
 
-        void DrawRay(Vector2 start, Vector2 dir, sf::Color color);
+        void DrawRay(Vector2 start, Vector2 dir, Color color);
     };
 }
 
