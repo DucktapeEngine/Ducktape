@@ -1,11 +1,37 @@
+/*
+MIT License
+
+Copyright (c) 2022 Ducktape
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 #ifndef Entity_H
 #define Entity_H
 
 #include <string>
 #include <vector>
-#include "behaviourscript.h"
-#include "scenemanager.h"
-#include "transform.h"
+#include <typeinfo>
+#include <Ducktape/engine/behaviourscript.h>
+#include <Ducktape/engine/scenemanager.h>
+#include <Ducktape/engine/transform.h>
+#include <Ducktape/engine/memory.h>
 
 namespace DT
 {
@@ -14,6 +40,7 @@ namespace DT
     class Entity
     {
     public:
+        bool isDestroyed = false;
         bool isActive = true;
         int layer = 0;
         Transform* transform;
@@ -35,6 +62,7 @@ namespace DT
             this->components.push_back(new T());
             int size = this->components.size()-1;
             this->components[size]->entity = this;
+            Memory::heapMemory.push_back(this->components[size]);
             return (T*)this->components[size];
         }
 
@@ -68,12 +96,21 @@ namespace DT
             return false;
         }
 
+        bool RemoveComponent(BehaviourScript* check);
+
         static Entity* Find(std::string _name);
         static Entity* Instantiate();
         static Entity* Instantiate(std::string _name);
         static Entity* Instantiate(Vector2 pos, float rot, Vector2 scl);
         static Entity* Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
     };
+
+    inline void BehaviourScript::Destroy()
+    {
+        this->OnDestroy();
+        entity->RemoveComponent(this);
+        this->isDestroyed = true;
+    }
 }
 
 #endif

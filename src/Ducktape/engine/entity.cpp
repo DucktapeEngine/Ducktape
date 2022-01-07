@@ -1,4 +1,28 @@
-#include "entity.h"
+/*
+MIT License
+
+Copyright (c) 2022 Ducktape
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+#include <Ducktape/engine/entity.h>
 using namespace DT;
 
 Entity::Entity()
@@ -7,7 +31,7 @@ Entity::Entity()
     layer = 0;
     tag = "Default";
     name = "New Entity";
-    transform = this->AddComponent<Transform>();
+    transform = AddComponent<Transform>();
 }
 
 Entity::Entity(std::string _name)
@@ -16,7 +40,7 @@ Entity::Entity(std::string _name)
     layer = 0;
     tag = "Default";
     name = _name;
-    transform = this->AddComponent<Transform>();
+    transform = AddComponent<Transform>();
 }
 
 Entity::Entity(Vector2 pos, float rot, Vector2 scl)
@@ -25,7 +49,7 @@ Entity::Entity(Vector2 pos, float rot, Vector2 scl)
     layer = 0;
     tag = "Default";
     name = "New Entity";
-    transform = this->AddComponent<Transform>();
+    transform = AddComponent<Transform>();
     transform->SetPosition(pos);
     transform->SetRotation(rot);
     transform->SetScale(scl);
@@ -37,10 +61,25 @@ Entity::Entity(std::string _name, Vector2 pos, float rot, Vector2 scl)
     layer = 0;
     tag = "Default";
     name = _name;
-    transform = this->AddComponent<Transform>();
+    transform = AddComponent<Transform>();
     transform->SetPosition(pos);
     transform->SetRotation(rot);
     transform->SetScale(scl);
+}
+
+bool Entity::RemoveComponent(BehaviourScript* check)
+{
+    int i=0;
+    for(auto script:this->components)
+    {
+        if(script == check)
+        {
+            this->components.erase(this->components.begin()+i);
+            return true;
+        }
+        i++;
+    }
+    return false;
 }
 
 Entity* Entity::Find(std::string _name)
@@ -72,130 +111,4 @@ Entity* Entity::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 s
 {
     SceneManager::currentScene->entities.push_back(new Entity(_name, pos, rot, scl));
     return SceneManager::currentScene->entities[SceneManager::currentScene->entities.size()-1];
-}
-
-void Transform::RecalculateLocalValues()
-{
-    Vector2 _pos;
-    float _rot;
-    Vector2 _scl;
-
-    Transform* currentParent = this->parent;
-
-    while(currentParent != nullptr)
-    {
-        _pos = _pos + currentParent->GetLocalPosition();
-        _rot = _rot + currentParent->GetLocalRotation();
-        _scl = _scl + currentParent->GetLocalScale();
-        currentParent = currentParent->parent;
-    }
-
-    localPosition = position - _pos;
-    localRotation = rotation - _rot;
-    localScale = scale - _scl;
-}
-
-void Transform::RecalculateWorldValues()
-{
-    Vector2 _pos;
-    float _rot;
-    Vector2 _scl;
-
-    Transform* currentParent;
-
-    while(currentParent != nullptr)
-    {
-        _pos = _pos + currentParent->GetLocalPosition();
-        _rot = _rot + currentParent->GetLocalRotation();
-        _scl = _scl + currentParent->GetLocalScale();
-        currentParent = currentParent->parent;
-    }
-
-    position = _pos;
-    rotation = _rot;
-    scale = _scl;
-}
-
-Vector2 Transform::SetPosition(Vector2 _pos)
-{
-    position = _pos;
-    for(BehaviourScript* bs:entity->components)
-    {
-        if(bs != nullptr)
-        {
-            bs->OnTransformChange();
-        }
-    }
-    RecalculateLocalValues();
-    return _pos;
-}
-
-float Transform::SetRotation(float _rot)
-{
-    rotation = _rot;
-    for(BehaviourScript* bs:entity->components)
-    {
-        if(bs != nullptr)
-        {
-            bs->OnTransformChange();
-        }
-    }
-    RecalculateLocalValues();
-    return _rot;
-}
-
-Vector2 Transform::SetScale(Vector2 _scl)
-{
-    scale = _scl;
-    for(BehaviourScript* bs:entity->components)
-    {
-        if(bs != nullptr)
-        {
-            bs->OnTransformChange();
-        }
-    }
-    RecalculateLocalValues();
-    return _scl;
-}
-
-Vector2 Transform::SetLocalPosition(Vector2 _pos)
-{
-    position = _pos;
-    for(BehaviourScript* bs:entity->components)
-    {
-        if(bs != nullptr)
-        {
-            bs->OnTransformChange();
-        }
-    }
-    RecalculateWorldValues();
-    return _pos;
-}
-
-float Transform::SetLocalRotation(float _rot)
-{
-    rotation = _rot;
-    for(BehaviourScript* bs:entity->components)
-    {
-        if(bs != nullptr)
-        {
-            bs->OnTransformChange();
-        }
-    }
-    RecalculateWorldValues();
-    return _rot;
-}
-
-Vector2 Transform::SetLocalScale(Vector2 _scl)
-{
-    scale = _scl;
-    for(BehaviourScript* bs:entity->components)
-    {
-        if(bs != nullptr)
-        {
-            bs->OnTransformChange();
-        }
-    }
-    RecalculateWorldValues();
-    return _scl;
 }

@@ -80,7 +80,7 @@ public:
 
             Rigidbody2D* barRB = bar->AddComponent<Rigidbody2D>();
 
-            barRB->type = "static";
+            barRB->SetType(BodyType::staticBody);
 
             barRB->Start();
 
@@ -108,12 +108,12 @@ public:
         playerSpriteRenderer->color = Color(43, 46, 74, 255);
 
         Rigidbody2D* playerRigidbody2D = player->AddComponent<Rigidbody2D>();
-        playerRigidbody2D->type = "dynamic";
-        playerRigidbody2D->linearDamping = 0.0f;
+        playerRigidbody2D->SetType(BodyType::dynamicBody);
+        playerRigidbody2D->SetDamping(0.0f);
 
         BoxCollider2D* playerBoxCollider2D = player->AddComponent<BoxCollider2D>();
-        playerBoxCollider2D->isTrigger = false;
-        playerBoxCollider2D->friction = 0.0f;
+        playerBoxCollider2D->SetIsTrigger(false);
+        playerBoxCollider2D->SetFriction(0.0f);
         
         player->AddComponent<PlayerController>();
 

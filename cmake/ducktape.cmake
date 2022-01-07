@@ -1,5 +1,7 @@
+cmake_minimum_required (VERSION 3.12)
+
 enable_language(C)
-set(CMAKE_CXX_FLAGS "-pthread -fPIC")
+set(CMAKE_CXX_FLAGS "-fPIC")
 
 set_target_properties(${PROJECT} PROPERTIES
     CXX_STANDARD 20
@@ -28,6 +30,16 @@ endif (WIN32)
 
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${DTROOT}/include/Ducktape/external/)
 
-find_package(SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
+if (UNIX)
+    find_package(SFML PATHS ${DTROOT}/include/Ducktape/external/SFML-linux-gcc/lib/cmake/SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 
-target_link_libraries(${PROJECT} PRIVATE ducktape sfml-graphics sfml-window sfml-audio sfml-network sfml-system box2d glad glfw imgui sajson)
+    target_link_libraries(${PROJECT} PRIVATE ${DTROOT}/include/Ducktape/external/box2d/bin/libbox2d.a)
+endif (UNIX)
+
+if (WIN32)
+    find_package(SFML PATHS ${DTROOT}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib/cmake/SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
+
+    target_link_libraries(${PROJECT} PRIVATE ${DTROOT}/include/Ducktape/external/box2d/bin/box2d.lib)
+endif (WIN32)
+
+target_link_libraries(${PROJECT} PRIVATE ducktape sfml-graphics sfml-window sfml-audio sfml-network sfml-system glad glfw imgui sajson)
