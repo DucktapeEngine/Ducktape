@@ -24,8 +24,8 @@ echo (You may enter a path to your compiler or just the compiler's command name 
 set /P compiler=""
 cls
 
-mkdir bin
+mkdir build
 cls
-cd bin
+cd build
 cmake -G "%generator%" -D CMAKE_CXX_COMPILER=%compiler% ..
 make
