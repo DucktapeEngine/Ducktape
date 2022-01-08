@@ -1,8 +1,4 @@
-bin/CMakeFiles
-bin/cmake_install.cmake
-bin/CMakeCache.txt
-bin/Makefile
-bin/libducktape.a
+build
 
 examples/build
 examples/FlappyBird/build
