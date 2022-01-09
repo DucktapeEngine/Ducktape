@@ -1,7 +1,7 @@
 <br><br><br>
 <p align="center">
     <a href="https://ducktapeengine.github.io/" target="_blank">
-        <img src="https://raw.githubusercontent.com/DucktapeEngine/Branding/main/banner-transparent.png" alt="logo" width="800px"/>
+        <img src="https://raw.githubusercontent.com/DucktapeEngine/Branding/main/banner-transparent.png" alt="logo" width="600px"/>
     </a>
 <p/>
 <h1 align="center">Convenience, that's Ducktape.</h1>
