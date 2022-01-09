@@ -8,7 +8,10 @@
 
 <p align="center">
     <a href="https://github.com/ducktapeengine/ducktape/blob/master/LICENSE" target="blank">
-    <img src="https://img.shields.io/github/license/ducktapeengine/ducktape?style=for-the-badge" alt="Ducktape licence" />
+    <img src="https://img.shields.io/github/license/ducktapeengine/ducktape?style=for-the-badge" alt="Ducktape license" />
+    </a>
+    <a href="https://dsc.gg/ducktape" target="blank">
+    <img src="https://shields.io/badge/831047342215659521?style=for-the-badge" alt="Ducktape Discord" />
     </a>
     <a href="https://github.com/ducktapeengine/ducktape/fork" target="blank">
     <img src="https://img.shields.io/github/forks/ducktapeengine/ducktape?style=for-the-badge" alt="Ducktape forks"/>
@@ -46,7 +49,65 @@ Here's some footage of how powerful the engine is:
     
 # 👏 Features
 ## ⚙️ Scene-Entity-Component system
-## 🖼️ Rendering engine
-## 🔊 Audio engine
-## ⚛️ Physics engine
+> footage coming soon
     
+## 🖼️ Rendering engine
+> footage coming soon
+
+## 🔊 Audio engine
+> footage coming soon
+
+## ⚛️ Physics engine
+> footage coming soon
+    
+# Get Started
+Interested in using the library? We have a [manual](https://ducktapeengine.github.io/manual) for how things work in Ducktape and how to use the library to create your own first game.
+    
+[![Manual](https://img.shields.io/badge/Get-Manual-%23FAD315?style=for-the-badge)](https://ducktapeengine.github.io/manual)
+    
+# 🖥️ How to set up `Ducktape` for development?
+You can compile and run Ducktape locally with a few easy steps.  
+Clone the repository using git:
+```
+git clone https://github.com/DucktapeEngine/Ducktape.git
+```
+Execute the build script (`build.bat` if you're on Windows, `build.sh` if you're on Linux):
+```
+cd Ducktape
+build.bat
+```
+Select the generator for CMake
+```
+Setting up Ducktape for compiling...
+Choose your generator:
+1) Borland Makefiles
+2) MSYS Makefiles
+3) MinGW Makefiles (Default for Windows)
+4) NMake Makefiles
+5) NMake Makefiles JOM
+6) Unix Makefiles (Default for Linux)
+7) Watcom WMake
+Enter your option (1,2,3,4,5,6,7):
+```
+Enter the path to your compiler (or the compiler command name if it's in your environment PATH variable):
+```
+Specify your compiler:
+(You may enter a path to your compiler or just the compiler's command name if th
+e compiler path is already in your PATH environment variable)
+```
+# 🔨 Build with:
+- [Box2D](https://github.com/erincatto/box2d) - a 2D physics engine for games
+- [SFML](https://github.com/SFML/SFML) - a Simple and Fast Multimedia Library
+    
+# License
+This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
+
+# 🤝 Contributing to `Ducktape`
+All contributions are welcome! Please help us to grow by contributing to the project.
+
+If you wish to contribute, you can work on any features/bugs [listed here](https://github.com/DucktapeEngine/Ducktape/issues) or create one on your own. After adding your code, please send us a Pull Request.
+
+> Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
+
+# 🫂 Support
+This project is relatively new to the open source community, and we hope to make a difference! So if you like this project, please consider supporting us by, simply starring the repository! It really helps.
