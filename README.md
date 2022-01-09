@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/github/license/ducktapeengine/ducktape?style=for-the-badge" alt="Ducktape license" />
     </a>
     <a href="https://dsc.gg/ducktape" target="blank">
-    <img src="https://shields.io/badge/831047342215659521?style=for-the-badge" alt="Ducktape Discord" />
+    <img src="https://img.shields.io/discord/831047342215659521?style=for-the-badge" alt="Ducktape Discord" />
     </a>
     <a href="https://github.com/ducktapeengine/ducktape/fork" target="blank">
     <img src="https://img.shields.io/github/forks/ducktapeengine/ducktape?style=for-the-badge" alt="Ducktape forks"/>
