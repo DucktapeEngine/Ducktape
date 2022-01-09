@@ -95,7 +95,7 @@ Specify your compiler:
 (You may enter a path to your compiler or just the compiler's command name if th
 e compiler path is already in your PATH environment variable)
 ```
-# 🔨 Build with:
+# 🔨 Built with:
 - [Box2D](https://github.com/erincatto/box2d) - a 2D physics engine for games
 - [SFML](https://github.com/SFML/SFML) - a Simple and Fast Multimedia Library
     
