@@ -35,12 +35,10 @@ e compiler path is already in your PATH environment variable)
 ```
 
 ## Naming scheme:
-```
 | Token | Naming Scheme |
 | ------------- | ------------- |
 | variables | camelCase |
 | functions | PascalCase |
 | classes | PascalCase |
 | namespaces | PascalCase |
-```
 > Note: Ducktape prefers to use classes over structs for consistency.
