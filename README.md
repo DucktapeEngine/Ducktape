@@ -1,7 +1,9 @@
-# Ducktape
-
-[![](https://img.shields.io/badge/Ducktape-Join-brightgreen?style=for-the-badge&logo=appveyor)](https://ducktapeengine.github.io/discord)
-![](https://img.shields.io/github/downloads/ducktapeengine/ducktape/total?style=for-the-badge) ![](https://img.shields.io/bitbucket/issues/DucktapEngine/Ducktape?style=for-the-badge)
+<p align="center">
+    <a href="https://ducktapeengine.github.io/" target="_blank">
+        <img src="https://raw.githubusercontent.com/DucktapeEngine/Branding/main/banner-transparent.png" alt="logo" height="400px"/>
+    </a>
+<p/>
+<h1 align="center">Convenience, that's Ducktape.</h1>
 
 Ducktape is an open source light weight 2d game engine that gives utmost priority to user convenience. It is written in c++ and uses SFML and Box2d for graphics and physics.
 **Note:** This project is under heavy development, thus it is not easy to build and export games made with Ducktape as of the time of writing.
