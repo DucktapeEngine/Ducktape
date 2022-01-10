@@ -1,10 +1,15 @@
 #include <Ducktape/ducktape.h>
 using namespace DT;
 
-class PlayerController : public GameScript
+class PlayerController : public BehaviourScript
 {
 public:
     Rigidbody2D* rb;
+
+    PlayerController(Entity* _entity)
+    {
+        entity = _entity;
+    }
 
     void Start()
     {
@@ -27,10 +32,15 @@ public:
     }
 };
 
-class CameraController : public GameScript
+class CameraController : public BehaviourScript
 {
 public:
     Entity* playerGO;
+
+    CameraController(Entity* _entity)
+    {
+        entity = _entity;
+    }
 
     void Start()
     {
@@ -43,7 +53,7 @@ public:
     }
 };
 
-class LevelGenerator : public GameScript
+class LevelGenerator : public BehaviourScript
 {
 public:
     float timeBetweenBar = 2.0f;
@@ -51,6 +61,11 @@ public:
     int count = 0;
 
     Entity* playerGO = nullptr;
+
+    LevelGenerator(Entity* _entity)
+    {
+        entity = _entity;
+    }
 
     void Start()
     {
@@ -129,9 +144,6 @@ public:
         Entity* levelGenerator = Entity::Instantiate("LevelGenerator");
 
         levelGenerator->AddComponent<LevelGenerator>();
-
-        AudioSource* aud = levelGenerator->AddComponent<AudioSource>();
-        aud->Load("../assets/sound.wav", false);
     }
 };
 

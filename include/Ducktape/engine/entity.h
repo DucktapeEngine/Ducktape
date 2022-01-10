@@ -59,11 +59,10 @@ namespace DT
         template <typename T>
         T* AddComponent()
         {
-            this->components.push_back(new T());
-            int size = this->components.size()-1;
-            this->components[size]->entity = this;
-            Memory::heapMemory.push_back(this->components[size]);
-            return (T*)this->components[size];
+            T* component = new T(this);
+            this->components.push_back(component);
+            Memory::heapMemory.push_back(component);
+            return component;
         }
 
         template <typename T>
@@ -76,7 +75,6 @@ namespace DT
                     return ptr;
                 }
             }
-            Debug::LogWarning(std::string("Component ") + typeid(T).name() + " not found!");
             return nullptr;
         }
 

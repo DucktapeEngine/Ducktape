@@ -1,3 +1,0 @@
-C:/Users/aryanbaburajan/Downloads/Duckie/Duckie/Programming/Ducktape/ducktape/examples/FlappyBird/bin/CMakeFiles/flappybird.dir
-C:/Users/aryanbaburajan/Downloads/Duckie/Duckie/Programming/Ducktape/ducktape/examples/FlappyBird/bin/CMakeFiles/edit_cache.dir
-C:/Users/aryanbaburajan/Downloads/Duckie/Duckie/Programming/Ducktape/ducktape/examples/FlappyBird/bin/CMakeFiles/rebuild_cache.dir

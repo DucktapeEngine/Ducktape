@@ -25,15 +25,14 @@ SOFTWARE.
 #ifndef AUDIOSOURCE_H
 #define AUDIOSOURCE_H
 
-#include <Ducktape/engine/componentexecutionhandler.h>
 #include <vector>
-#include <Ducktape/engine/scripts.h>
 #include <SFML/Audio.hpp>
 #include <Ducktape/engine/debug.h>
+#include <Ducktape/engine/behaviourscript.h>
 
 namespace DT
 {
-    class AudioSource : public AudioScript
+    class AudioSource : public BehaviourScript
     {
     private:
         bool isMusic = false;
@@ -43,6 +42,8 @@ namespace DT
         sf::Music music;
 
     public:
+        AudioSource(Entity* _entity);
+        
         void Load(std::string _path, bool _isMusic);
 
         void Pause();

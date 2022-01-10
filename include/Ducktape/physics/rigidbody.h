@@ -26,7 +26,7 @@ SOFTWARE.
 #define RIGIDBODY2D_H
 
 #include <box2d/box2d.h>
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/entity.h>
 #include <Ducktape/physics/physics.h>
 #include <Ducktape/engine/transform.h>
@@ -40,15 +40,15 @@ namespace DT
         dynamicBody
     };
 
-    class Rigidbody2D : public BaseScript
+    class Rigidbody2D : public BehaviourScript
     {
     private:
-        float gravityScale;
+        float gravityScale = 1.0f;
         
     public:
         b2Body* body;
 
-        Rigidbody2D();
+        Rigidbody2D(Entity* _entity);
 
         void Update();
 

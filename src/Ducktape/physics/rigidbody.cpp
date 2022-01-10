@@ -25,11 +25,11 @@ SOFTWARE.
 #include <Ducktape/physics/rigidbody.h>
 using namespace DT;
 
-Rigidbody2D::Rigidbody2D()
+Rigidbody2D::Rigidbody2D(Entity* _entity)
 {
+    entity = _entity;
     b2BodyDef bodyDef;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(entity);
-    bodyDef.position.Set(entity->transform->GetPosition().x, entity->transform->GetPosition().y);
 
     bodyDef.type = b2_dynamicBody;
     body = Physics::physicsWorld.CreateBody(&bodyDef);

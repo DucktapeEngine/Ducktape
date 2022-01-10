@@ -27,12 +27,12 @@ SOFTWARE.
 
 #include <box2d/box2d.h>
 #include <Ducktape/engine/entity.h>
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/physics/rigidbody.h>
 
 namespace DT
 {
-    class BoxCollider2D : public PhysicsScript
+    class BoxCollider2D : public BehaviourScript
     {
     private:
         Rigidbody2D* rb;
@@ -40,7 +40,7 @@ namespace DT
         Vector2 scale = Vector2(1.0f, 1.0f);
 
     public:
-        BoxCollider2D();
+        BoxCollider2D(Entity* _entity);
 
         void Update();
 

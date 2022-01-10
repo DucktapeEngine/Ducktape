@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\flappybird.dir/objects.a
-C:\MinGW\bin\ar.exe qc CMakeFiles\flappybird.dir/objects.a @CMakeFiles\flappybird.dir\objects1.rsp
-C:\MinGW\bin\g++.exe -fPIC -Wl,--whole-archive CMakeFiles\flappybird.dir/objects.a -Wl,--no-whole-archive -o flappybird.exe -Wl,--out-implib,libflappybird.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\flappybird.dir\linklibs.rsp

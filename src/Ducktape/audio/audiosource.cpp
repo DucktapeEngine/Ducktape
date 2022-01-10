@@ -25,6 +25,11 @@ SOFTWARE.
 #include <Ducktape/audio/audiosource.h>
 using namespace DT;
 
+AudioSource::AudioSource(Entity* _entity)
+{
+    entity = _entity;
+}
+
 void AudioSource::Load(std::string _path, bool _isMusic)
 {
     path = _path;

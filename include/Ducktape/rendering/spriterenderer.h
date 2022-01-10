@@ -27,19 +27,21 @@ SOFTWARE.
 
 #include <string>
 #include <Ducktape/engine/vector2.h>
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/color.h>
 #include <Ducktape/rendering/renderer.h>
 #include <Ducktape/rendering/camera.h>
 
 namespace DT
 {
-    class SpriteRenderer : public RenderScript
+    class SpriteRenderer : public BehaviourScript
     {
     public:
         std::string spritePath;
         int pixelPerUnit = 1;
         Color color = Color(255, 255, 255, 255);
+
+        SpriteRenderer(Entity* _entity);
         
         void Update();
     };

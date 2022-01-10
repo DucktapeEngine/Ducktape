@@ -10,7 +10,7 @@ set_target_properties(${PROJECT} PROPERTIES
 
 target_include_directories(${PROJECT} PUBLIC "${DTROOT}/include")
 
-target_link_directories(${PROJECT} PUBLIC "${DTROOT}/bin")
+target_link_directories(${PROJECT} PUBLIC "${DTROOT}/build")
 
 target_include_directories(${PROJECT} PUBLIC "${DTROOT}/include/Ducktape/external/box2d/include/;${DTROOT}/include/Ducktape/external/box2d/src;")
 
@@ -42,4 +42,4 @@ if (WIN32)
     target_link_libraries(${PROJECT} PRIVATE ${DTROOT}/include/Ducktape/external/box2d/bin/box2d.lib)
 endif (WIN32)
 
-target_link_libraries(${PROJECT} PRIVATE ducktape sfml-graphics sfml-window sfml-audio sfml-network sfml-system glad glfw imgui sajson)
+target_link_libraries(${PROJECT} PRIVATE ducktape sfml-graphics sfml-window sfml-audio sfml-network sfml-system box2d glad glfw imgui sajson)

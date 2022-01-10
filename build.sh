@@ -1,47 +1,49 @@
+#!/bin/bash
 clear
 echo Setting up Ducktape for compiling...
 echo Choose your generator:
-echo 1) Borland Makefiles
-echo 2) MSYS Makefiles
-echo 3) MinGW Makefiles (Default for Windows)
-echo 4) NMake Makefiles
-echo 5) NMake Makefiles JOM
-echo 6) Unix Makefiles (Default for Linux)
-echo 7) Watcom WMake
-set /P idx=Enter your option (1,2,3,4,5,6,7):
+echo 1\) Borland Makefiles
+echo 2\) MSYS Makefiles
+echo 3\) MinGW Makefiles \(Default for Windows\)
+echo 4\) NMake Makefiles
+echo 5\) NMake Makefiles JOM
+echo 6\) Unix Makefiles \(Default for Linux\)
+echo 7\) Watcom WMake
+echo -n Enter your option \(1,2,3,4,5,6,7\):
+set generator=None
 read idx
 if [ ${idx} = 1 ]
 then
-    generator="Borland Makefiles"
+	generator="Borland Makefiles"
 fi
 if [ ${idx} = 2 ]
 then
-    generator="MSYS Makefiles"
+	generator="MSYS Makefiles"
 fi
 if [ ${idx} = 3 ]
 then
-    generator="MinGW Makefiles"
+	generator="MinGW Makefiles"
 fi
 if [ ${idx} = 4 ]
 then
-    generator="NMake Makefiles"
+	generator="NMake Makefiles"
 fi
 if [ ${idx} = 5 ]
 then
-    generator="NMake Makefiles JOM"
+	generator="NMake Makefiles JOM"
 fi
 if [ ${idx} = 6 ]
 then
-    generator="Unix Makefiles"
+	generator="Unix Makefiles"
 fi
 if [ ${idx} = 7 ]
 then
-    generator="Watcom WMake"
+	generator="Watcom WMake"
 fi
 clear
 
 echo Specify your compiler:
-echo (You may enter a path to your compiler or just the compiler\'s command name if the compiler path is already in your PATH environment variable)
+echo \(You may enter a path to your compiler or just the compiler\'s command name if the compiler path is already in your PATH environment variable\)
 read compiler
 clear
 

@@ -25,6 +25,8 @@ SOFTWARE.
 #ifndef DUCKTAPE_H
 #define DUCKTAPE_H
 
+#include <box2d/box2d.h>
+
 #include "engine/mathf.h"
 #include "engine/vector2.h"
 #include "engine/dt_time.h"
@@ -40,7 +42,6 @@ namespace DT
 
 #include "physics/collision.h"
 #include "engine/behaviourscript.h"
-#include "engine/componentexecutionhandler.h"
 #include "engine/transform.h"
 #include "engine/scenemanager.h"
 #include "engine/entity.h"
@@ -69,6 +70,10 @@ namespace DT
 #include "physics/hingejoint.h"
 #include "physics/frictionjoint.h"
 #include "audio/audiosource.h"
-#include "engine/engine.h"
+
+namespace DT
+{
+    void Update();
+}
 
 #endif

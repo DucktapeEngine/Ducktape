@@ -27,7 +27,9 @@ using namespace DT;
 
 void Debug::Log(std::string val)
 {
+    #ifndef PRODUCTION
     std::cout<<"\033[0;37m"<<val<<"\033[0m\n";
+    #endif
 }
 
 void Debug::LogError(std::string val)
@@ -43,17 +45,23 @@ void Debug::LogFatalError(std::string val)
 
 void Debug::LogWarning(std::string val)
 {
+    #ifndef PRODUCTION
     std::cout<<"\033[0;33m"<<val<<"\033[0m\n";
+    #endif
 }
 
 void Debug::LogSuccess(std::string val)
 {
+    #ifndef PRODUCTION
     std::cout<<"\033[0;32m"<<val<<"\033[0m\n";
+    #endif
 }
 
 void Debug::Log(float val)
 {
+    #ifndef PRODUCTION
     std::cout<<"\033[0;37m"<<val<<"\033[0m\n";
+    #endif
 }
 
 void Debug::LogError(float val)
@@ -69,15 +77,19 @@ void Debug::LogFatalError(float val)
 
 void Debug::LogWarning(float val)
 {
+    #ifndef PRODUCTION
     std::cout<<"\033[0;33m"<<val<<"\033[0m\n";
+    #endif
 }
 
 void Debug::LogSuccess(float val)
 {
+    #ifndef PRODUCTION
     std::cout<<"\033[0;32m"<<val<<"\033[0m\n";
+    #endif
 }
 
-void Debug::DrawLine(Vector2 start, Vector2 end, sf::Color color)
+void Debug::DrawLine(Vector2 start, Vector2 end, Color color)
 {
     // sf::Vertex line[] =
     // {
@@ -88,7 +100,7 @@ void Debug::DrawLine(Vector2 start, Vector2 end, sf::Color color)
     // Application::renderWindow.draw(line, 2, sf::Lines);
 }
 
-void Debug::DrawRay(Vector2 start, Vector2 dir, sf::Color color)
+void Debug::DrawRay(Vector2 start, Vector2 dir, Color color)
 {
     Debug::DrawLine(start, dir, color);
 }

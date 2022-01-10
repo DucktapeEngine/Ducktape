@@ -73,50 +73,19 @@ bool Vector2::operator==(Vector2 vec)
     return false;
 }
 
-Vector2 Vector2::Down()
-{
-    return Vector2(0.0, -1.0);
-}
-
-Vector2 Vector2::Left()
-{
-    return Vector2(-1.0, 0.0);
-}
-
-Vector2 Vector2::NegativeInfinity()
-{
-    return Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
-}
-
-Vector2 Vector2::One()
-{
-    return Vector2(1.0, 1.0);
-}
-
-Vector2 Vector2::PositiveInfinity()
-{
-    return Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
-}
-
-Vector2 Vector2::Right()
-{
-    return Vector2(1.0, 0.0);
-}
-
-Vector2 Vector2::Up()
-{
-    return Vector2(0.0, 1.0);
-}
-
-Vector2 Vector2::Zero()
-{
-    return Vector2(0.0, 0.0);
-}
-
 float Vector2::Magnitude()
 {
     return Mathf::Sqrt((x * x) + (y * y));
 }
+
+const Vector2 Vector2::ZERO  = Vector2( 0.0f,  0.0f);
+const Vector2 Vector2::UP    = Vector2( 0.0f,  1.0f);
+const Vector2 Vector2::DOWN  = Vector2( 0.0f, -1.0f);
+const Vector2 Vector2::LEFT  = Vector2(-1.0f,  0.0f);
+const Vector2 Vector2::RIGHT = Vector2( 1.0f,  0.0f);
+const Vector2 Vector2::ONE   = Vector2( 1.0f,  1.0f);
+const Vector2 Vector2::NEGATIVE_INFINITY = Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
+const Vector2 Vector2::POSITIVE_INFINITY = Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
 
 Vector2 Vector2::Normalized()
 {

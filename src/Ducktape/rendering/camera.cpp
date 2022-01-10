@@ -25,6 +25,11 @@ SOFTWARE.
 #include <Ducktape/rendering/camera.h>
 using namespace DT;
 
+Camera::Camera(Entity* _entity)
+{
+    entity = _entity;
+}
+
 void Camera::Update()
 {
     Vector2 pos = UnitToPixel(entity->transform->GetPosition());

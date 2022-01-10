@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/application.h>
 #include <Ducktape/engine/entity.h>
@@ -33,10 +33,12 @@ SOFTWARE.
 
 namespace DT
 {
-    class Camera : public RenderScript
+    class Camera : public BehaviourScript
     {
     public:
         float size = 1.0;
+
+        Camera(Entity* _entity);
         
         void Update();
 

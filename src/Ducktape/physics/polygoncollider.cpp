@@ -25,8 +25,9 @@ SOFTWARE.
 #include <Ducktape/physics/polygoncollider.h>
 using namespace DT;
 
-PolygonCollider2D::PolygonCollider2D()
+PolygonCollider2D::PolygonCollider2D(Entity* _entity)
 {
+    entity = _entity;
     rb = entity->GetComponent<Rigidbody2D>();
     if(rb == nullptr)
     {

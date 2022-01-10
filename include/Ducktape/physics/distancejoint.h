@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef DISTANCEJOINT2D_H
 #define DISTANCEJOINT2D_H
 
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <box2d/box2d.h>
 #include <Ducktape/physics/rigidbody.h>
 #include <Ducktape/engine/entity.h>
@@ -33,7 +33,7 @@ SOFTWARE.
 
 namespace DT
 {
-	class DistanceJoint2D : public PhysicsScript
+	class DistanceJoint2D : public BehaviourScript
 	{
 	private:
 		b2DistanceJoint* joint;
@@ -41,7 +41,7 @@ namespace DT
 		Rigidbody2D* connectedRigidbody = nullptr;
 
 	public:
-		DistanceJoint2D();
+		DistanceJoint2D(Entity* _entity);
 		
 		void Update();
 		void OnDestroy();

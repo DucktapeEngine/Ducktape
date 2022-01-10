@@ -26,13 +26,13 @@ SOFTWARE.
 #define EDGECOLLIDER2D_H
 
 #include <box2d/box2d.h>
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/physics/rigidbody.h>
 #include <Ducktape/engine/entity.h>
 
 namespace DT
 {
-    class EdgeCollider2D : public PhysicsScript
+    class EdgeCollider2D : public BehaviourScript
     {
     private:
         Rigidbody2D* rb;
@@ -40,7 +40,7 @@ namespace DT
         std::vector<Vector2> points;
 
     public:
-        EdgeCollider2D();
+        EdgeCollider2D(Entity* _entity);
 
         void Update();
 

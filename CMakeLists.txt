@@ -18,7 +18,7 @@ set_target_properties(ducktape PROPERTIES
     CXX_EXTENSIONS OFF
 )
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -g -fPIC")
+set(CMAKE_CXX_FLAGS "-g -pthread -fPIC")
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/include/Ducktape;${PROJECT_SOURCE_DIR}/include/Ducktape/audio;${PROJECT_SOURCE_DIR}/include/Ducktape/engine;${PROJECT_SOURCE_DIR}/include/Ducktape/physics;${PROJECT_SOURCE_DIR}/include/Ducktape/rendering;")
 
@@ -27,6 +27,8 @@ target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/Ducktape;$
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/include/;${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/src;")
 
 target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/bin;")
+
+set(SFML_DIR ${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib/cmake/SFML)
 
 if (UNIX)
     target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/include")
@@ -42,16 +44,6 @@ endif (WIN32)
 
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include/Ducktape/external/)
 
-if (UNIX)
-    find_package(SFML PATHS ${CMAKE_CURRENT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/lib/cmake/SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
+find_package(SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 
-    target_link_libraries(ducktape PRIVATE ${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/bin/libbox2d.a)
-endif (UNIX)
-
-if (WIN32)
-    find_package(SFML PATHS ${CMAKE_CURRENT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib/cmake/SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
-
-    target_link_libraries(ducktape PRIVATE ${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/bin/box2d.lib)
-endif (WIN32)
-
-target_link_libraries(ducktape PRIVATE sfml-graphics sfml-window sfml-audio sfml-network sfml-system -lglad -lglfw -limgui -lsajson)
+target_link_libraries(ducktape PRIVATE sfml-graphics sfml-window sfml-audio sfml-network sfml-system -lbox2d -lglad -lglfw -limgui -lsajson)

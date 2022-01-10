@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef HINGEJOINT_H
 #define HINGEJOINT_H
 
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <box2d/box2d.h>
 #include <Ducktape/physics/rigidbody.h>
 #include <Ducktape/engine/entity.h>
@@ -33,7 +33,7 @@ SOFTWARE.
 
 namespace DT
 {
-	class HingeJoint2D : public PhysicsScript
+	class HingeJoint2D : public BehaviourScript
 	{
 	private:
 		b2RevoluteJoint* joint;
@@ -41,7 +41,7 @@ namespace DT
 		Rigidbody2D* connectedRigidbody = nullptr;
 
 	public:
-		HingeJoint2D();
+		HingeJoint2D(Entity* _entity);
 
 		void Update();
 		void OnDestroy();

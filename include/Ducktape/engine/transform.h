@@ -27,13 +27,13 @@ SOFTWARE.
 
 #include <vector>
 #include <box2d/box2d.h>
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/physics/rigidbody.h>
 
 namespace DT
 {
-    class Transform : public BaseScript
+    class Transform : public BehaviourScript
     {
     private:
         Vector2 position = Vector2(0.0, 0.0);
@@ -47,6 +47,8 @@ namespace DT
         void OnTransformChange();
 
     public:
+        Transform(Entity* _entity);
+
         Transform* parent = nullptr;
         std::vector<Transform*> children;    
 

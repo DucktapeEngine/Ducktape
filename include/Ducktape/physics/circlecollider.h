@@ -25,13 +25,13 @@ SOFTWARE.
 #ifndef CIRCLECOLLIDER2D_H
 #define CIRCLECOLLIDER2D_H
 
-#include <Ducktape/engine/scripts.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/physics/rigidbody.h>
 #include <Ducktape/engine/entity.h>
 
 namespace DT
 {
-    class CircleCollider2D : public PhysicsScript
+    class CircleCollider2D : public BehaviourScript
     {
     private:
         Rigidbody2D* rb;
@@ -39,7 +39,7 @@ namespace DT
         float radius = 1.0f;
 
     public:
-        CircleCollider2D();
+        CircleCollider2D(Entity* _entity);
 
         void Update();
 

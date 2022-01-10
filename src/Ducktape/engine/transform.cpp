@@ -25,6 +25,11 @@ SOFTWARE.
 #include <Ducktape/engine/transform.h>
 using namespace DT;
 
+Transform::Transform(Entity* _entity)
+{
+    entity = _entity;
+}
+
 void Transform::OnTransformChange()
 {
     Rigidbody2D* rb = entity->GetComponent<Rigidbody2D>();
