@@ -20,9 +20,7 @@ set_target_properties(ducktape PROPERTIES
 
 set(CMAKE_CXX_FLAGS "-g -pthread -fPIC")
 
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/include/Ducktape;${PROJECT_SOURCE_DIR}/include/Ducktape/audio;${PROJECT_SOURCE_DIR}/include/Ducktape/engine;${PROJECT_SOURCE_DIR}/include/Ducktape/physics;${PROJECT_SOURCE_DIR}/include/Ducktape/rendering;")
-
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/Ducktape;${PROJECT_SOURCE_DIR}/src/Ducktape/audio;${PROJECT_SOURCE_DIR}/src/Ducktape/engine;${PROJECT_SOURCE_DIR}/src/Ducktape/physics;${PROJECT_SOURCE_DIR}/src/Ducktape/rendering;")
+target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/src;")
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/include/;${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/src;")
 
@@ -31,9 +29,9 @@ target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/
 set(SFML_DIR ${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib/cmake/SFML)
 
 if (UNIX)
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/include")
+    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/include")
 
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib;")
+    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib;")
 endif (UNIX)
 
 if (WIN32)
