@@ -1,6 +1,15 @@
 cmake_minimum_required (VERSION 3.12)
 
-message (STATUS "Building Ducktape ...")
+message (STATUS "Building Ducktape")
+
+if (UNIX)
+    message (STATUS "Platform Detected: Linux")
+endif (UNIX)
+
+if (WIN32)
+    message (STATUS "Platform Detected: Windows")
+endif (WIN32)
+
 project(ducktape LANGUAGES CXX)
 set(executable_name "Ducktape")
 enable_language(C)
@@ -22,19 +31,20 @@ set(CMAKE_CXX_FLAGS "-g -pthread -fPIC")
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/src;")
 
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/include/;${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/src;")
-
-target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/bin;")
-
-set(SFML_DIR ${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib/cmake/SFML)
+target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/include")
+target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/bin")
 
 if (UNIX)
+    set(SFML_DIR ${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib/cmake/SFML)
+
     target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/include")
 
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib;")
+    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib")
 endif (UNIX)
 
 if (WIN32)
+    set(SFML_DIR ${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib/cmake/SFML)
+
     target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/include")
 
     target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib;")
@@ -44,4 +54,4 @@ set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include/D
 
 find_package(SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 
-target_link_libraries(ducktape PRIVATE sfml-graphics sfml-window sfml-audio sfml-network sfml-system -lbox2d -lglad -lglfw -limgui -lsajson)
+target_link_libraries(ducktape PRIVATE sfml-graphics sfml-window sfml-audio sfml-network sfml-system box2d)

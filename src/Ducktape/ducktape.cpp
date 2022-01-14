@@ -67,7 +67,7 @@ namespace DT
                 }
             }
             
-            Physics::physicsWorld.Step(Time::deltaTime, (int32)Physics::velocityIterations, (int32)Physics::positionIterations);
+            Physics::physicsWorld.Step(Time::deltaTime, Physics::velocityIterations, Physics::positionIterations);
 
             Application::renderWindow.setView(Application::view);
 
