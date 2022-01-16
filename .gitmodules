@@ -1,0 +1,6 @@
+[submodule "include/Ducktape/external/box2d"]
+	path = include/Ducktape/external/box2d
+	url = https://github.com/erincatto/box2d.git
+[submodule "include/Ducktape/external/SFML"]
+	path = include/Ducktape/external/SFML
+	url = https://github.com/SFML/SFML.git

@@ -22,23 +22,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#define _CRT_SECURE_NO_DEPRECATE
 #include <Ducktape/ducktape.h>
 
 namespace DT
-{    
+{
     void Update()
     {
-        if(SceneManager::currentScene == nullptr)
+        if (SceneManager::currentScene == nullptr)
         {
             // Handle "Hello Ducktape!" welcome screen here (soon).
             Debug::LogFatalError("!");
         }
 
-        for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
+        for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
         {
-            for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+            for (size_t j = 0; j < SceneManager::currentScene->entities[i]->components.size(); j++)
             {
-                if(SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
+                if (SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
                 {
                     SceneManager::currentScene->entities[i]->components[j]->Start();
                 }
@@ -56,17 +57,17 @@ namespace DT
 
             Application::renderWindow.clear(ProjectSettings::sceneBackgroundColor.ToSFMLColor());
 
-            for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
+            for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
             {
-                for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+                for (size_t j = 0; j < SceneManager::currentScene->entities[i]->components.size(); j++)
                 {
-                    if(SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
+                    if (SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
                     {
                         SceneManager::currentScene->entities[i]->components[j]->Update();
                     }
                 }
             }
-            
+
             Physics::physicsWorld.Step(Time::deltaTime, Physics::velocityIterations, Physics::positionIterations);
 
             Application::renderWindow.setView(Application::view);
@@ -74,11 +75,11 @@ namespace DT
             Application::renderWindow.display();
         }
 
-        for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
+        for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
         {
-            for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+            for (size_t j = 0; j < SceneManager::currentScene->entities[i]->components.size(); j++)
             {
-                if(SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
+                if (SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
                 {
                     SceneManager::currentScene->entities[i]->components[j]->OnApplicationClose();
                 }
