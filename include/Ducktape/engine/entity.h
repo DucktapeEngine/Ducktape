@@ -40,12 +40,11 @@ namespace DT
     class Entity
     {
     public:
-        bool isDestroyed = false;
-        bool isActive = true;
-        int layer = 0;
+        bool isEnabled = true;
         Transform* transform;
+        bool isDestroyed = false;
+
         std::string name = "New Entity";
-        std::string tag = "Default";
         std::vector<BehaviourScript*> components;
 
         Entity();
@@ -101,6 +100,10 @@ namespace DT
         static Entity* Instantiate(std::string _name);
         static Entity* Instantiate(Vector2 pos, float rot, Vector2 scl);
         static Entity* Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
+        
+        void Destroy();
+
+        void SetEnabled(bool flag);
     };
 
     inline void BehaviourScript::Destroy()

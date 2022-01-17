@@ -26,6 +26,7 @@ SOFTWARE.
 #define SCENEMANAGER_H
 
 #include <Ducktape/engine/scene.h>
+#include <Ducktape/engine/memory.h>
 
 namespace DT
 {
@@ -33,7 +34,18 @@ namespace DT
 	{
 	    extern Scene* currentScene;
 
-	    void LoadScene(Scene* scene);
+		template <typename T>
+		void LoadScene()
+		{
+			T* scene = new T();
+			Memory::heapMemory.push_back(scene);
+			if(currentScene != nullptr)
+			{
+				currentScene->Destroy();
+			}
+			currentScene = scene;
+			currentScene->Initialize();
+		}
 	}
 }
 

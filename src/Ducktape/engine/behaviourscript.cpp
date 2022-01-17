@@ -32,11 +32,15 @@ void BehaviourScript::Invoke(std::string methodName, float time)
     Debug::LogWarning("Invoke not Implemented yet.");
 }
 
-bool BehaviourScript::operator==(BehaviourScript* script)
+void BehaviourScript::SetEnabled(bool flag)
 {
-    if(this == script)
+    if(flag)
     {
-        return true;
+        this->OnEnable();
     }
-    return false;
+    else
+    {
+        this->OnDisable();
+    }
+    this->isEnabled = flag;
 }

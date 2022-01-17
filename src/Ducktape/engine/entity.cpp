@@ -27,27 +27,21 @@ using namespace DT;
 
 Entity::Entity()
 {
-    isActive = true;
-    layer = 0;
-    tag = "Default";
+    isEnabled = true;
     name = "New Entity";
     transform = AddComponent<Transform>();
 }
 
 Entity::Entity(std::string _name)
 {
-    isActive = true;
-    layer = 0;
-    tag = "Default";
+    isEnabled = true;
     name = _name;
     transform = AddComponent<Transform>();
 }
 
 Entity::Entity(Vector2 pos, float rot, Vector2 scl)
 {
-    isActive = true;
-    layer = 0;
-    tag = "Default";
+    isEnabled = true;
     name = "New Entity";
     transform = AddComponent<Transform>();
     transform->SetPosition(pos);
@@ -57,9 +51,7 @@ Entity::Entity(Vector2 pos, float rot, Vector2 scl)
 
 Entity::Entity(std::string _name, Vector2 pos, float rot, Vector2 scl)
 {
-    isActive = true;
-    layer = 0;
-    tag = "Default";
+    isEnabled = true;
     name = _name;
     transform = AddComponent<Transform>();
     transform->SetPosition(pos);
@@ -97,18 +89,42 @@ Entity* Entity::Find(std::string _name)
 
 Entity* Entity::Instantiate(std::string _name)
 {
-    SceneManager::currentScene->entities.push_back(new Entity(_name));
-    return SceneManager::currentScene->entities[SceneManager::currentScene->entities.size()-1];
+    Entity* ent = new Entity(_name);
+    SceneManager::currentScene->entities.push_back(ent);
+    Memory::heapMemory.push_back(ent);
+    return ent;
 }
 
 Entity* Entity::Instantiate(Vector2 pos, float rot, Vector2 scl)
 {
-    SceneManager::currentScene->entities.push_back(new Entity(pos, rot, scl));
-    return SceneManager::currentScene->entities[SceneManager::currentScene->entities.size()-1];
+    Entity* ent = new Entity(pos, rot, scl);
+    SceneManager::currentScene->entities.push_back(ent);
+    Memory::heapMemory.push_back(ent);
+    return ent;
 }
 
 Entity* Entity::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
 {
-    SceneManager::currentScene->entities.push_back(new Entity(_name, pos, rot, scl));
-    return SceneManager::currentScene->entities[SceneManager::currentScene->entities.size()-1];
+    Entity* ent = new Entity(_name, pos, rot, scl);
+    SceneManager::currentScene->entities.push_back(ent);
+    Memory::heapMemory.push_back(ent);
+    return ent;
+}
+
+void Entity::Destroy()
+{
+    this->isDestroyed = true;
+    for(size_t i=0, n=SceneManager::currentScene->entities.size();i<n;i++)
+    {
+        if(SceneManager::currentScene->entities[i] == this)
+        {
+            SceneManager::currentScene->entities.erase(SceneManager::currentScene->entities.begin() + i);
+            break;
+        }
+    }
+}
+
+void Entity::SetEnabled(bool flag)
+{
+    this->isEnabled = flag;
 }

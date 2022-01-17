@@ -218,6 +218,16 @@ void Rigidbody2D::ApplyAngularImpulse(float impulse)
     body->ApplyAngularImpulse(impulse, true);
 }
 
+void Rigidbody2D::OnEnable()
+{
+    body->SetEnabled(true);
+}
+
+void Rigidbody2D::OnDisable()
+{
+    body->SetEnabled(false);
+}
+
 void Rigidbody2D::Destroy()
 {
     Physics::physicsWorld.DestroyBody(body);

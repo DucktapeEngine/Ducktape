@@ -74,6 +74,8 @@ namespace DT
         void SetSleepingAllowed(bool flag);
         bool GetAwake();
         void SetAwake(bool flag);
+        void OnEnable();
+        void OnDisable();
         bool GetFixedRotation();
         void SetFixedRotation(bool flag);
         

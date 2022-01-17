@@ -46,9 +46,14 @@ namespace DT
         virtual void OnCollisionEnter(Collision collider){}
         virtual void OnCollisionExit(Collision collider){}
 
-        virtual void OnApplicationClose(){}
+        virtual void OnEnable(){}
+        virtual void OnDisable(){}
+        void SetEnabled(bool flag);
+
         virtual void OnDestroy(){}
         void Destroy();
+
+        virtual void OnApplicationClose(){}
 
         void Invoke(std::string methodName, float time);
 

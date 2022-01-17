@@ -25,22 +25,25 @@ SOFTWARE.
 #include <Ducktape/ducktape.h>
 
 namespace DT
-{    
+{
     void Update()
     {
         if(SceneManager::currentScene == nullptr)
         {
             // Handle "Hello Ducktape!" welcome screen here (soon).
-            Debug::LogFatalError("!");
+            Debug::LogFatalError("No scene made.");
         }
 
         for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
         {
-            for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+            if(SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
             {
-                if(SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
+                for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
                 {
-                    SceneManager::currentScene->entities[i]->components[j]->Start();
+                    if(SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
+                    {
+                        SceneManager::currentScene->entities[i]->components[j]->Start();
+                    }
                 }
             }
         }
@@ -58,11 +61,14 @@ namespace DT
 
             for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
             {
-                for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+                if(SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
                 {
-                    if(SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
+                    for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
                     {
-                        SceneManager::currentScene->entities[i]->components[j]->Update();
+                        if(SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
+                        {
+                            SceneManager::currentScene->entities[i]->components[j]->Update();
+                        }
                     }
                 }
             }
@@ -76,18 +82,16 @@ namespace DT
 
         for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
         {
-            for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+            if(SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
             {
-                if(SceneManager::currentScene->entities[i]->components[j] != nullptr && SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false)
+                for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
                 {
-                    SceneManager::currentScene->entities[i]->components[j]->OnApplicationClose();
+                    if(SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
+                    {
+                        SceneManager::currentScene->entities[i]->components[j]->OnApplicationClose();
+                    }
                 }
             }
         }
     }
-}
-
-void _imp__acrt_iob_func()
-{
-    return;
 }

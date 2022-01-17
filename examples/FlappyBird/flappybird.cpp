@@ -155,8 +155,7 @@ int main()
     ProjectSettings::sceneBackgroundColor = Color(232, 69, 69);
     ProjectSettings::globalGravity = Vector2(0.0f, 1.0f);
 
-    ExampleScene exampleScene;
-    SceneManager::LoadScene(&exampleScene);
+    SceneManager::LoadScene<ExampleScene>();
 
     // This will take care of the rest of the Engine.
     Update();
