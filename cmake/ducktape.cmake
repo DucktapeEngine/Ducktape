@@ -30,6 +30,8 @@ endif (WIN32)
 
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${DTROOT}/include/Ducktape/external/)
 
+set(SFML_STATIC_LIBRARIES TRUE)
+
 if (UNIX)
     find_package(SFML PATHS ${DTROOT}/include/Ducktape/external/SFML-linux-gcc/lib/cmake/SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 endif (UNIX)
@@ -38,4 +40,30 @@ if (WIN32)
     find_package(SFML PATHS ${DTROOT}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib/cmake/SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 endif (WIN32)
 
-target_link_libraries(${PROJECT} PRIVATE ducktape sfml-graphics sfml-window sfml-audio sfml-network sfml-system box2d)
+target_link_libraries(${PROJECT} PRIVATE 
+    ducktape
+    sfml-window
+    sfml-system
+    opengl32
+    winmm
+    gdi32
+    sfml-graphics
+    sfml-system
+    sfml-window
+    opengl32
+    freetype
+    sfml-audio
+    sfml-system
+    openal32
+    flac
+    vorbisenc
+    vorbisfile
+    vorbis
+    ogg
+    sfml-network
+    sfml-system
+    ws2_32
+    sfml-system
+    winmm
+    box2d
+)

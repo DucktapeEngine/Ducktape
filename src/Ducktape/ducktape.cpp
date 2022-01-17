@@ -86,3 +86,8 @@ namespace DT
         }
     }
 }
+
+void _imp__acrt_iob_func()
+{
+    return;
+}
