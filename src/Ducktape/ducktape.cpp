@@ -30,8 +30,9 @@ namespace DT
     {
         if(SceneManager::currentScene == nullptr)
         {
-            // Handle "Hello Ducktape!" welcome screen here (soon).
-            Debug::LogFatalError("No scene made.");
+            Debug::LogSuccess("Ducktape is ready to go!");
+            Debug::LogSuccess("Get Started: https://ducktapeengine.github.io/manual/intro");
+            return;
         }
 
         for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
