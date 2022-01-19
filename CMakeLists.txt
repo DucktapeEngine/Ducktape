@@ -11,7 +11,6 @@ if (WIN32)
 endif (WIN32)
 
 project(ducktape LANGUAGES CXX)
-set(executable_name "Ducktape")
 enable_language(C)
 
 set(CMAKE_BUILD_TYPE "Debug")
@@ -31,27 +30,18 @@ set(CMAKE_CXX_FLAGS "-g -pthread -fPIC")
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/src;")
 
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/include")
-target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/box2d/bin")
+target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/box2d/bin")
 
 if (UNIX)
-    set(SFML_DIR ${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib/cmake/SFML)
-
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/include")
-
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-linux-gcc/SFML-2.5.1/lib")
+    set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML-linux-gcc/SFML-2.5.1/lib/cmake/SFML)
 endif (UNIX)
 
 if (WIN32)
-    set(SFML_DIR ${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib/cmake/SFML)
-
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/include")
-
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include/Ducktape/external/SFML-windows-gcc/SFML-2.5.1/lib;")
+    set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML-windows-gcc/SFML-2.5.1/lib/cmake/SFML)
 endif (WIN32)
 
 set(SFML_STATIC_LIBRARIES TRUE)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include/Ducktape/external/)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/extern/)
 
 find_package(SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
 
@@ -62,12 +52,8 @@ target_link_libraries(ducktape PRIVATE
     winmm
     gdi32
     sfml-graphics
-    sfml-system
-    sfml-window
-    opengl32
     freetype
     sfml-audio
-    sfml-system
     openal32
     flac
     vorbisenc
@@ -75,9 +61,15 @@ target_link_libraries(ducktape PRIVATE
     vorbis
     ogg
     sfml-network
-    sfml-system
     ws2_32
-    sfml-system
-    winmm
     box2d
 )
+
+if(WIN32)
+    set(PROJECT_SRC_DIR ${PROJECT_SOURCE_DIR})
+    string(REPLACE "/" "\\" PROJECT_SRC_DIR ${PROJECT_SRC_DIR}) # replace / with \ for windows-like paths
+    add_custom_command(TARGET ducktape
+        POST_BUILD
+        COMMAND ${PROJECT_SRC_DIR}\\cmakeutils\\combine.bat
+    )
+endif()
