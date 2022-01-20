@@ -25,15 +25,15 @@ SOFTWARE.
 #include <Ducktape/rendering/spriterenderer.h>
 using namespace DT;
 
-SpriteRenderer::SpriteRenderer(Entity* _entity)
+SpriteRenderer::SpriteRenderer(Entity *_entity)
 {
     entity = _entity;
 }
 
-void SpriteRenderer::Update()
+void SpriteRenderer::tick()
 {
-    if(spritePath != "")
+    if (spritePath != "")
     {
-        Renderer::DrawSprite(spritePath, Camera::WorldToScreenPos(entity->transform->GetPosition()), entity->transform->GetRotation(), entity->transform->GetScale(), pixelPerUnit, color);
+        Renderer::drawSprite(spritePath, Camera::worldToScreenPos(entity->transform->getPosition()), entity->transform->getRotation(), entity->transform->getScale(), pixelPerUnit, color);
     }
 }

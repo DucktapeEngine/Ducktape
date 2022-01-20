@@ -29,7 +29,7 @@ SOFTWARE.
 
 namespace DT
 {
-	class Color 
+	class Color
 	{
 	public:
 		static const Color ALICE_BLUE;
@@ -179,14 +179,14 @@ namespace DT
 		static const Color WHITE_SMOKE;
 		static const Color YELLOW;
 		static const Color YELLOW_GREEN;
-		
+
 		int red = 0, blue = 0, green = 0, alpha = 255;
 
 		Color(int _red, int _blue, int _green);
 
 		Color(int _red, int _blue, int _green, int _alpha);
 
-		sf::Color ToSFMLColor();
+		operator sf::Color() const;
 	};
 }
 

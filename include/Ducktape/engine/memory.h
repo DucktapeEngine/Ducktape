@@ -32,7 +32,7 @@ namespace DT
 {
 	namespace Memory
 	{
-		extern std::vector<void*> heapMemory;
+		extern std::vector<void *> heapMemory;
 	}
 }
 

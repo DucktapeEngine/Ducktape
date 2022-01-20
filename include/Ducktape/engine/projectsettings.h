@@ -30,7 +30,7 @@ SOFTWARE.
 
 namespace DT
 {
-	namespace ProjectSettings 
+	namespace ProjectSettings
 	{
 		extern std::string windowTitle;
 		extern Color sceneBackgroundColor;

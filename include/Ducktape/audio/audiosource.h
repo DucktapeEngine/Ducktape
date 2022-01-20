@@ -25,51 +25,51 @@ SOFTWARE.
 #ifndef AUDIOSOURCE_H
 #define AUDIOSOURCE_H
 
-#include <vector>
-#include <SFML/Audio.hpp>
-#include <Ducktape/engine/debug.h>
 #include <Ducktape/engine/behaviourscript.h>
+#include <Ducktape/engine/debug.h>
+#include <SFML/Audio.hpp>
+#include <vector>
 
 namespace DT
 {
-    class AudioSource : public BehaviourScript
-    {
-    private:
-        bool isMusic = false;
-        std::string path;
-        sf::SoundBuffer buffer;
-        sf::Sound sound;
-        sf::Music music;
+	class AudioSource : public BehaviourScript
+	{
+	private:
+		bool isMusic = false;
+		std::string path;
+		sf::SoundBuffer buffer;
+		sf::Sound sound;
+		sf::Music music;
 
-    public:
-        AudioSource(Entity* _entity);
-        
-        void Load(std::string _path, bool _isMusic);
+	public:
+		AudioSource(Entity *_entity);
 
-        void Pause();
-        void Play();
-        void Stop();
+		void load(std::string _path, bool _isMusic);
 
-        void SetSeek(float sec);
-        float GetSeek();
+		void pause();
+		void play();
+		void stop();
 
-        void SetLoop(bool loop);
-        bool GetLoop();
+		void setSeek(float sec);
+		float getSeek();
 
-        void SetPitch(float pitch);
-        float GetPitch();
+		void setLoop(bool loop);
+		bool getLoop();
 
-        void SetVolume(float volume);
-        float GetVolume();
+		void setPitch(float pitch);
+		float getPitch();
 
-        void SetDistance(float distance);
-        float GetDistance();
+		void setVolume(float volume);
+		float getVolume();
 
-        void SetSpatial(bool spatial);
-        bool GetSpatial();
+		void setDistance(float distance);
+		float getDistance();
 
-        void OnApplicationClose();
-    };
+		void setSpatial(bool spatial);
+		bool getSpatial();
+
+		void onApplicationClose();
+	};
 }
 
 #endif

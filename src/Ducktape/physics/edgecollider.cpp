@@ -25,13 +25,13 @@ SOFTWARE.
 #include <Ducktape/physics/edgecollider.h>
 using namespace DT;
 
-EdgeCollider2D::EdgeCollider2D(Entity* _entity)
+EdgeCollider2D::EdgeCollider2D(Entity *_entity)
 {
     entity = _entity;
-    rb = entity->GetComponent<Rigidbody2D>();
-    if(rb == nullptr)
+    rb = entity->getComponent<Rigidbody2D>();
+    if (rb == nullptr)
     {
-        rb = entity->AddComponent<Rigidbody2D>();
+        rb = entity->addComponent<Rigidbody2D>();
     }
 
     b2ChainShape chainShape;
@@ -39,16 +39,16 @@ EdgeCollider2D::EdgeCollider2D(Entity* _entity)
 
     int size = points.size();
 
-    if(size > 2)
+    if (size > 2)
     {
-        if(size > 8)
+        if (size > 8)
         {
-            Debug::LogError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
+            Debug::logError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
-        b2Vec2 vertices[size];
-        for(int i=0,n=size;i<n;i++)
+        b2Vec2 vertices[size]; 
+        for (int i = 0, n = size; i < n; i++)
         {
             vertices[i].Set(points[i].x, points[i].y);
         }
@@ -56,14 +56,14 @@ EdgeCollider2D::EdgeCollider2D(Entity* _entity)
     }
     else
     {
-        if(size <= 0)
+        if (size <= 0)
         {
-            Debug::LogError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
+            Debug::logError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
         b2Vec2 vertices[size];
-        for(int i=0,n=size;i<n;i++)
+        for (int i = 0, n = size; i < n; i++)
         {
             vertices[i].Set(points[i].x, points[i].y);
         }
@@ -72,47 +72,47 @@ EdgeCollider2D::EdgeCollider2D(Entity* _entity)
     }
 
     b2FixtureDef fixtureDef;
-    if(points.size() > 2)
+    if (points.size() > 2)
     {
         fixtureDef.shape = &chainShape;
-    } 
+    }
     else
     {
         fixtureDef.shape = &edgeShape;
     }
-    
+
     rb->body->CreateFixture(&fixtureDef);
 }
 
-void EdgeCollider2D::Update()
+void EdgeCollider2D::tick()
 {
-    if(rb->isDestroyed)
+    if (rb->isDestroyed)
     {
-        Destroy();
+        destroy();
     }
 }
 
-std::vector<Vector2> EdgeCollider2D::GetPoints()
+std::vector<Vector2> EdgeCollider2D::getPoints()
 {
     return points;
 }
 
-float EdgeCollider2D::GetDensity()
+float EdgeCollider2D::getDensity()
 {
     return fixture->GetDensity();
 }
 
-float EdgeCollider2D::GetFriction()
+float EdgeCollider2D::getFriction()
 {
     return fixture->GetFriction();
 }
 
-bool EdgeCollider2D::GetIsTrigger()
+bool EdgeCollider2D::getIsTrigger()
 {
     return fixture->IsSensor();
 }
 
-void EdgeCollider2D::SetPoints(std::vector<Vector2> val)
+void EdgeCollider2D::setPoints(std::vector<Vector2> val)
 {
     points = val;
 
@@ -121,16 +121,16 @@ void EdgeCollider2D::SetPoints(std::vector<Vector2> val)
 
     int size = points.size();
 
-    if(size > 2)
+    if (size > 2)
     {
-        if(size > 8)
+        if (size > 8)
         {
-            Debug::LogError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
+            Debug::logError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
         b2Vec2 vertices[size];
-        for(int i=0,n=size;i<n;i++)
+        for (int i = 0, n = size; i < n; i++)
         {
             vertices[i].Set(points[i].x, points[i].y);
         }
@@ -138,14 +138,14 @@ void EdgeCollider2D::SetPoints(std::vector<Vector2> val)
     }
     else
     {
-        if(size <= 0)
+        if (size <= 0)
         {
-            Debug::LogError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
+            Debug::logError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
         b2Vec2 vertices[size];
-        for(int i=0,n=size;i<n;i++)
+        for (int i = 0, n = size; i < n; i++)
         {
             vertices[i].Set(points[i].x, points[i].y);
         }
@@ -154,29 +154,29 @@ void EdgeCollider2D::SetPoints(std::vector<Vector2> val)
     }
 
     b2FixtureDef fixtureDef;
-    if(points.size() > 2)
+    if (points.size() > 2)
     {
         fixtureDef.shape = &chainShape;
-    } 
+    }
     else
     {
         fixtureDef.shape = &edgeShape;
     }
-    
+
     rb->body->CreateFixture(&fixtureDef);
 }
 
-void EdgeCollider2D::SetDensity(float val)
+void EdgeCollider2D::setDensity(float val)
 {
     fixture->SetDensity(val);
 }
 
-void EdgeCollider2D::SetFriction(float val)
+void EdgeCollider2D::setFriction(float val)
 {
     fixture->SetFriction(val);
 }
 
-void EdgeCollider2D::SetIsTrigger(bool val)
+void EdgeCollider2D::setIsTrigger(bool val)
 {
     fixture->SetSensor(val);
 }

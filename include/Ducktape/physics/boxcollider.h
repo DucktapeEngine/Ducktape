@@ -35,23 +35,23 @@ namespace DT
     class BoxCollider2D : public BehaviourScript
     {
     private:
-        Rigidbody2D* rb;
-        b2Fixture* fixture;
+        Rigidbody2D *rb;
+        b2Fixture *fixture;
         Vector2 scale = Vector2(1.0f, 1.0f);
 
     public:
-        BoxCollider2D(Entity* _entity);
+        BoxCollider2D(Entity *_entity);
 
-        void Update();
+        void tick();
 
-        Vector2 GetScale();
-        float GetDensity();
-        float GetFriction();
-        bool GetIsTrigger();
-        void SetScale(Vector2 val);
-        void SetDensity(float val);
-        void SetFriction(float val);
-        void SetIsTrigger(bool val);
+        Vector2 getScale();
+        float getDensity();
+        float getFriction();
+        bool getIsTrigger();
+        void setScale(Vector2 val);
+        void setDensity(float val);
+        void setFriction(float val);
+        void setIsTrigger(bool val);
     };
 }
 

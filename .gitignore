@@ -1,6 +1,7 @@
 .vscode
 
 build
+docs/build
 
 examples/build
 examples/FlappyBird/build

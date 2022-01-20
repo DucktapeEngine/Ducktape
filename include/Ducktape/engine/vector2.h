@@ -44,7 +44,7 @@ namespace DT
         static const Vector2 ONE;
         static const Vector2 NEGATIVE_INFINITY;
         static const Vector2 POSITIVE_INFINITY;
-        
+
         float x, y;
         Vector2();
 
@@ -58,46 +58,40 @@ namespace DT
 
         Vector2 operator/(float val);
 
-        Vector2& operator=(Vector2 vec);
+        Vector2 &operator=(Vector2 vec);
 
         bool operator==(Vector2 vec);
 
-        float Magnitude();
+        float magnitude();
 
-        Vector2 Normalized();
+        Vector2 normalized();
 
-        float SqrMagnitude();
+        float sqrMagnitude();
 
-        bool Equals(Vector2 vec);
+        bool equals(Vector2 vec);
 
-        void Normalize();
+        void normalize();
 
-        void Set(Vector2 vec);
+        void set(Vector2 vec);
 
-        std::string ToString();
+        static float distance(Vector2 vec1, Vector2 vec2);
 
-        static float Distance(Vector2 vec1, Vector2 vec2);
+        static Vector2 lerp(Vector2 start, Vector2 end, float delta);
 
-        static Vector2 Lerp(Vector2 start, Vector2 end, float delta);
+        static Vector2 max(Vector2 vec1, Vector2 vec2);
 
-        static Vector2 Max(Vector2 vec1, Vector2 vec2);
+        static Vector2 min(Vector2 vec1, Vector2 vec2);
 
-        static Vector2 Min(Vector2 vec1, Vector2 vec2);
+        static Vector2 moveTowards(Vector2 vec1, Vector2 vec2, float delta);
 
-        static Vector2 MoveTowards(Vector2 vec1, Vector2 vec2, float delta);
+        static Vector2 perpendicularClockwise(Vector2 vec);
 
-        static Vector2 PerpendicularClockwise(Vector2 vec);
+        static Vector2 perpendicularCounterClockwise(Vector2 vec);
 
-        static Vector2 PerpendicularCounterClockwise(Vector2 vec);
-
-        sf::Vector2f ToSFMLVector();
-
-        b2Vec2 ToBox2DVector();
+        operator std::string() const;
+        operator sf::Vector2f() const;
+        operator b2Vec2() const;
     };
-
-    std::ostream &operator << (std::ostream &out, const Vector2 &vec);
-     
-    std::istream &operator >> (std::istream &in, Vector2 &vec);
 }
 
 #endif

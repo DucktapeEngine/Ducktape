@@ -25,4 +25,4 @@ SOFTWARE.
 #include <Ducktape/engine/scenemanager.h>
 using namespace DT;
 
-Scene* SceneManager::currentScene;
+Scene *SceneManager::currentScene;

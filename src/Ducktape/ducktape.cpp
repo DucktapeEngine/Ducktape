@@ -26,54 +26,54 @@ SOFTWARE.
 
 namespace DT
 {
-    void Update()
+    void update()
     {
-        if(SceneManager::currentScene == nullptr)
+        if (SceneManager::currentScene == nullptr)
         {
-            Debug::LogSuccess("Ducktape is ready to go!");
-            Debug::LogSuccess("Get Started: https://ducktapeengine.github.io/manual/intro");
+            Debug::logSuccess("Ducktape is ready to go!");
+            Debug::logSuccess("Get Started: https://ducktapeengine.github.io/manual/intro");
             return;
         }
 
-        for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
+        for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
         {
-            if(SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
+            if (SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
             {
-                for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+                for (size_t j = 0; j < SceneManager::currentScene->entities[i]->components.size(); j++)
                 {
-                    if(SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
+                    if (SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
                     {
-                        SceneManager::currentScene->entities[i]->components[j]->Start();
+                        SceneManager::currentScene->entities[i]->components[j]->init();
                     }
                 }
             }
         }
 
-        Physics::Initialize();
-        Application::Initialize();
+        Physics::initialize();
+        Application::initialize();
 
         // run the program as long as the window is open
-        while (Application::IsOpen())
+        while (Application::isOpen())
         {
-            Input::Update();
-            Time::Update();
+            Input::update();
+            Time::update();
 
-            Application::renderWindow.clear(ProjectSettings::sceneBackgroundColor.ToSFMLColor());
+            Application::renderWindow.clear((sf::Color)ProjectSettings::sceneBackgroundColor);
 
-            for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
+            for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
             {
-                if(SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
+                if (SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
                 {
-                    for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+                    for (size_t j = 0; j < SceneManager::currentScene->entities[i]->components.size(); j++)
                     {
-                        if(SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
+                        if (SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
                         {
-                            SceneManager::currentScene->entities[i]->components[j]->Update();
+                            SceneManager::currentScene->entities[i]->components[j]->tick();
                         }
                     }
                 }
             }
-            
+
             Physics::physicsWorld.Step(Time::deltaTime, Physics::velocityIterations, Physics::positionIterations);
 
             Application::renderWindow.setView(Application::view);
@@ -81,15 +81,15 @@ namespace DT
             Application::renderWindow.display();
         }
 
-        for(size_t i=0;i<SceneManager::currentScene->entities.size();i++)
+        for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
         {
-            if(SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
+            if (SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
             {
-                for(size_t j=0;j<SceneManager::currentScene->entities[i]->components.size();j++)
+                for (size_t j = 0; j < SceneManager::currentScene->entities[i]->components.size(); j++)
                 {
-                    if(SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
+                    if (SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
                     {
-                        SceneManager::currentScene->entities[i]->components[j]->OnApplicationClose();
+                        SceneManager::currentScene->entities[i]->components[j]->onApplicationClose();
                     }
                 }
             }

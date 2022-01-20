@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/engine/random.h>
 using namespace DT;
 
-float Random::Range(float min, float max)
+float Random::range(float min, float max)
 {
 	int range = max - min + 1;
 	return (rand() % range + min);

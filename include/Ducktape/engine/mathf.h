@@ -40,49 +40,47 @@ namespace DT
         extern float Rad2Deg;
         extern float GoldenRatio;
 
-        float Abs(float val);
+        float abs(float val);
 
-        float Acos(float val);
+        float acos(float val);
 
-        bool Approximately(float val, float secondval);
+        bool approximately(float val, float secondval);
 
-        float Asin(float val);
+        float asin(float val);
 
-        float Atan(float val);
+        float atan(float val);
 
-        float Atan2(float val, float val2);
+        float atan2(float val, float val2);
 
-        static float Ceil(float val);
+        float ceil(float val);
 
-        float Clamp(float val, float min, float max);
+        float clamp(float val, float min, float max);
 
-        float Clamp01(float val);
+        float cos(float val);
 
-        float Cos(float val);
+        float deltaAngle(float val, float val2);
 
-        float DeltaAngle(float val, float val2);
+        float exp(float val);
 
-        float Exp(float val);
+        float floor(float val);
 
-        float Floor(float val);
+        float round(float val);
 
-        float Round(float val);
+        float lerp(float val, float target, float interpolation);
 
-        float Lerp(float val, float target, float interpolation);
+        float max(float val, float val2);
 
-        float Max(float val, float val2);
+        float min(float val, float val2);
 
-        float Min(float val, float val2);
+        float moveTowards(float val, float target, float delta);
 
-        float MoveTowards(float val, float target, float delta);
+        float pow(float val, float val2);
 
-        float Pow(float val, float val2);
+        float sin(float val);
 
-        float Sin(float val);
+        float sqrt(float val);
 
-        float Sqrt(float val);
-
-        float Tan(float val);
+        float tan(float val);
     };
 }
 

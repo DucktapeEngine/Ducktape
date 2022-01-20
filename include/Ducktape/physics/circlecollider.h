@@ -34,23 +34,23 @@ namespace DT
     class CircleCollider2D : public BehaviourScript
     {
     private:
-        Rigidbody2D* rb;
-        b2Fixture* fixture;
+        Rigidbody2D *rb;
+        b2Fixture *fixture;
         float radius = 1.0f;
 
     public:
-        CircleCollider2D(Entity* _entity);
+        CircleCollider2D(Entity *_entity);
 
-        void Update();
+        void tick();
 
-        float GetRadius();
-        float GetDensity();
-        float GetFriction();
-        bool GetIsTrigger();
-        void SetRadius(float val);
-        void SetDensity(float val);
-        void SetFriction(float val);
-        void SetIsTrigger(bool val);
+        float getRadius();
+        float getDensity();
+        float getFriction();
+        bool getIsTrigger();
+        void setRadius(float val);
+        void setDensity(float val);
+        void setFriction(float val);
+        void setIsTrigger(bool val);
     };
 }
 

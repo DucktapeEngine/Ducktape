@@ -29,13 +29,13 @@ SOFTWARE.
 
 namespace DT
 {
-	namespace Time 
+	namespace Time
 	{
 		extern float deltaTime;
 		extern sf::Clock clock;
-	    extern sf::Clock deltaClock;
+		extern sf::Clock deltaClock;
 
-		void Update();
+		void update();
 	};
 }
 

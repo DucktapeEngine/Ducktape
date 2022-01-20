@@ -32,19 +32,19 @@ namespace DT
 {
 	namespace SceneManager
 	{
-	    extern Scene* currentScene;
+		extern Scene *currentScene;
 
 		template <typename T>
-		void LoadScene()
+		void loadScene()
 		{
-			T* scene = new T();
+			T *scene = new T();
 			Memory::heapMemory.push_back(scene);
-			if(currentScene != nullptr)
+			if (currentScene != nullptr)
 			{
-				currentScene->Destroy();
+				currentScene->destroy();
 			}
 			currentScene = scene;
-			currentScene->Initialize();
+			currentScene->initialize();
 		}
 	}
 }

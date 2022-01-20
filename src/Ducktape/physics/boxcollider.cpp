@@ -25,77 +25,77 @@ SOFTWARE.
 #include <Ducktape/physics/boxcollider.h>
 using namespace DT;
 
-BoxCollider2D::BoxCollider2D(Entity* _entity)
+BoxCollider2D::BoxCollider2D(Entity *_entity)
 {
     entity = _entity;
-    rb = entity->GetComponent<Rigidbody2D>();
-    if(rb == nullptr)
+    rb = entity->getComponent<Rigidbody2D>();
+    if (rb == nullptr)
     {
-        rb = entity->AddComponent<Rigidbody2D>();
+        rb = entity->addComponent<Rigidbody2D>();
     }
-    
+
     b2PolygonShape collisionShape;
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &collisionShape;
     fixture = rb->body->CreateFixture(&fixtureDef);
 }
 
-void BoxCollider2D::Update()
+void BoxCollider2D::tick()
 {
-    if(rb->isDestroyed)
+    if (rb->isDestroyed)
     {
-        Destroy();
+        destroy();
     }
 }
 
-Vector2 BoxCollider2D::GetScale()
+Vector2 BoxCollider2D::getScale()
 {
     return scale;
 }
 
-float BoxCollider2D::GetDensity()
+float BoxCollider2D::getDensity()
 {
     return fixture->GetDensity();
 }
 
-float BoxCollider2D::GetFriction()
+float BoxCollider2D::getFriction()
 {
     return fixture->GetFriction();
 }
 
-bool BoxCollider2D::GetIsTrigger()
+bool BoxCollider2D::getIsTrigger()
 {
     return fixture->IsSensor();
 }
 
-void BoxCollider2D::SetScale(Vector2 val)
+void BoxCollider2D::setScale(Vector2 val)
 {
     scale = val;
 
     b2PolygonShape collisionShape;
-    collisionShape.SetAsBox(GetScale().x * entity->transform->GetScale().x, GetScale().y * entity->transform->GetScale().y);
+    collisionShape.SetAsBox(getScale().x * entity->transform->getScale().x, getScale().y * entity->transform->getScale().y);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &collisionShape;
-    fixtureDef.density = GetDensity();
-    fixtureDef.friction = GetFriction();
-    fixtureDef.isSensor = GetIsTrigger();
+    fixtureDef.density = getDensity();
+    fixtureDef.friction = getFriction();
+    fixtureDef.isSensor = getIsTrigger();
 
     rb->body->DestroyFixture(fixture);
     fixture = rb->body->CreateFixture(&fixtureDef);
 }
 
-void BoxCollider2D::SetDensity(float val)
+void BoxCollider2D::setDensity(float val)
 {
     fixture->SetDensity(val);
 }
 
-void BoxCollider2D::SetFriction(float val)
+void BoxCollider2D::setFriction(float val)
 {
     fixture->SetFriction(val);
 }
 
-void BoxCollider2D::SetIsTrigger(bool val)
+void BoxCollider2D::setIsTrigger(bool val)
 {
     fixture->SetSensor(val);
 }

@@ -36,19 +36,19 @@ namespace DT
 {
     namespace Input
     {
-        extern std::vector<KeyCode>keyUpList;
-        extern std::vector<KeyCode>keyDownList;
+        extern std::vector<KeyCode> keyUpList;
+        extern std::vector<KeyCode> keyDownList;
         extern Vector2 mousePosition;
 
-        bool GetMouseButton(int num);
+        bool getMouseButton(int num);
 
-        bool GetKey(KeyCode k);
+        bool getKey(KeyCode k);
 
-        bool GetKeyUp(KeyCode k);
+        bool getKeyUp(KeyCode k);
 
-        bool GetKeyDown(KeyCode k);
+        bool getKeyDown(KeyCode k);
 
-        void Update();
+        void update();
     };
 }
 

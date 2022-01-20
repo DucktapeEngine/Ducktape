@@ -32,7 +32,10 @@ SOFTWARE.
 
 namespace DT
 {
-	namespace Application 
+	/**
+	 * @brief Namespace for dealing with the application.
+	 */
+	namespace Application
 	{
 		/*
 		Not really private, it's just for preventing users from 
@@ -46,12 +49,11 @@ namespace DT
 		extern sf::View view;
 		extern sf::RenderWindow renderWindow;
 
-		void SetResolution(Vector2 _res);
-		Vector2 GetResolution();
+		void setResolution(Vector2 _res);
+		Vector2 getResolution();
 
-		void Initialize();
-
-		bool IsOpen();
+		void initialize();
+		bool isOpen();
 	}
 }
 

@@ -29,28 +29,28 @@ Vector2 Application::Private::resolution = Vector2(500, 500);
 sf::View Application::view = sf::View(sf::FloatRect(0.f, 0.f, Private::resolution.x, Private::resolution.y));
 sf::RenderWindow Application::renderWindow(sf::VideoMode(Private::resolution.x, Private::resolution.y), "Flappy Duck", sf::Style::Default);
 
-void Application::SetResolution(Vector2 _res)
+void Application::setResolution(Vector2 _res)
 {
-	Private::resolution = _res;
-	renderWindow.setSize(sf::Vector2u(Private::resolution.x, Private::resolution.y));
+    Private::resolution = _res;
+    renderWindow.setSize(sf::Vector2u(Private::resolution.x, Private::resolution.y));
     view.setSize(Private::resolution.x, Private::resolution.y);
 }
 
-Vector2 Application::GetResolution()
+Vector2 Application::getResolution()
 {
     return Application::Private::resolution;
 }
 
-void Application::Initialize()
+void Application::initialize()
 {
     renderWindow.setVerticalSyncEnabled(true);
     renderWindow.setFramerateLimit(60);
     renderWindow.setView(view);
     renderWindow.setKeyRepeatEnabled(false);
-    SetResolution(ProjectSettings::initialResolution);
+    setResolution(ProjectSettings::initialResolution);
 }
 
-bool Application::IsOpen()
+bool Application::isOpen()
 {
     return renderWindow.isOpen();
 }

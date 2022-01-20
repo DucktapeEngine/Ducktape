@@ -44,49 +44,58 @@ namespace DT
     {
     private:
         float gravityScale = 1.0f;
-        
+
     public:
-        b2Body* body;
+        b2Body *body;
 
-        Rigidbody2D(Entity* _entity);
+        Rigidbody2D(Entity *_entity);
 
-        void Update();
+        void tick();
 
-        Vector2 GetVelocity();
-        void SetVelocity(Vector2 val);
-        float GetAngularVelocity();
-        void SetAngularVelocity(float val);
-        float GetMass();
-        void SetMass(float mass);
-        void SetCenterOfMass(Vector2 center);
-        float GetInertia();
-        float GetDamping();
-        void SetDamping(float damping);
-        float GetAngularDamping();
-        void SetAngularDamping(float damping);
-        float GetGravityScale();
-        void SetGravityScale(float scale);
-        BodyType GetType();
-        void SetType(BodyType type);
-        bool GetContinous();
-        void SetContinous(bool flag);
-        bool GetSleepingAllowed();
-        void SetSleepingAllowed(bool flag);
-        bool GetAwake();
-        void SetAwake(bool flag);
-        void OnEnable();
-        void OnDisable();
-        bool GetFixedRotation();
-        void SetFixedRotation(bool flag);
-        
-        void ApplyForce(Vector2 force);
-        void ApplyForceAtPoint(Vector2 force, Vector2 point);
-        void ApplyTorque(float torque);
-        void ApplyLinearImpulse(Vector2 impulse);
-        void ApplyLinearImpulseAtPoint(Vector2 impulse, Vector2 point);
-        void ApplyAngularImpulse(float impulse);
+        Vector2 getVelocity();
+        void setVelocity(Vector2 val);
+        float getAngularVelocity();
+        void setAngularVelocity(float val);
+        float getMass();
+        void setMass(float mass);
+        void setCenterOfMass(Vector2 center);
+        float getInertia();
+        float getDamping();
+        void setDamping(float damping);
+        float getAngularDamping();
+        void setAngularDamping(float damping);
+        float getGravityScale();
+        void setGravityScale(float scale);
+        BodyType getType();
+        void setType(BodyType type);
+        bool getContinous();
+        void setContinous(bool flag);
+        bool getSleepingAllowed();
+        void setSleepingAllowed(bool flag);
+        bool getAwake();
+        void setAwake(bool flag);
 
-        void Destroy();
+        void OnEnable()
+        {
+            body->SetEnabled(true);
+        }
+
+        void OnDisable()
+        {
+            body->SetEnabled(false);
+        }
+
+        bool getFixedRotation();
+        void setFixedRotation(bool flag);
+
+        void applyForce(Vector2 force);
+        void applyForceAtPoint(Vector2 force, Vector2 point);
+        void applyTorque(float torque);
+        void applyLinearImpulse(Vector2 impulse);
+        void applyLinearImpulseAtPoint(Vector2 impulse, Vector2 point);
+        void applyAngularImpulse(float impulse);
+
+        void onDestroy();
     };
 }
 

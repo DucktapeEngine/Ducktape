@@ -35,11 +35,11 @@ namespace DT
 	class Scene
 	{
 	public:
-		std::vector<Entity*> entities;
+		std::vector<Entity *> entities;
 
-		virtual void Initialize(){}
+		virtual void initialize() {}
 
-		void Destroy();
+		void destroy();
 	};
 }
 

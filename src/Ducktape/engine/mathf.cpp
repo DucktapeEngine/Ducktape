@@ -33,19 +33,19 @@ float Mathf::PI = 3.14159265358979;
 float Mathf::Rad2Deg = 57.2957795131;
 float Mathf::GoldenRatio = 1.61803398875;
 
-float Mathf::Abs(float val)
+float Mathf::abs(float val)
 {
     return std::abs(val);
 }
 
-float Mathf::Acos(float val)
+float Mathf::acos(float val)
 {
     return std::acos(val);
 }
 
-bool Mathf::Approximately(float val, float secondval)
+bool Mathf::approximately(float val, float secondval)
 {
-    if(Mathf::Abs(val - secondval) <= Mathf::Epsilon)
+    if (Mathf::abs(val - secondval) <= Mathf::Epsilon)
     {
         return true;
     }
@@ -55,113 +55,108 @@ bool Mathf::Approximately(float val, float secondval)
     }
 }
 
-float Mathf::Asin(float val)
+float Mathf::asin(float val)
 {
     return std::asin(val);
 }
 
-float Mathf::Atan(float val)
+float Mathf::atan(float val)
 {
     return std::atan(val);
 }
 
-float Mathf::Atan2(float val, float val2)
+float Mathf::atan2(float val, float val2)
 {
     return std::atan2(val, val2);
 }
 
-float Mathf::Ceil(float val)
+float Mathf::ceil(float val)
 {
     return ceil(val);
 }
 
-float Mathf::Clamp(float val, float min, float max)
+float Mathf::clamp(float val, float min, float max)
 {
-    if(val < min)
+    if (val < min)
     {
         return min;
     }
-    else if(val > max)
+    else if (val > max)
     {
         return max;
     }
     return val;
 }
 
-float Mathf::Clamp01(float val)
-{
-    return Mathf::Clamp(val, 0.0, 1.0);
-}
-
-float Mathf::Cos(float val)
+float Mathf::cos(float val)
 {
     return std::cos(val);
 }
 
-float Mathf::DeltaAngle(float val, float val2)
+float Mathf::deltaAngle(float val, float val2)
 {
-    float diff = ( (int)val2 - (int)val + 180 ) % 360 - 180;
+    float diff = ((int)val2 - (int)val + 180) % 360 - 180;
     return diff < -180 ? diff + 360 : diff;
 }
 
-float Mathf::Exp(float val)
+float Mathf::exp(float val)
 {
     return std::exp(val);
 }
 
-float Mathf::Floor(float val) 
+float Mathf::floor(float val)
 {
     return floor(val);
 }
 
-float Mathf::Round(float val)
+float Mathf::round(float val)
 {
     return round(val);
 }
 
-float Mathf::Lerp(float val, float target, float interpolation)
+float Mathf::lerp(float val, float target, float interpolation)
 {
     return val + (target - val) * interpolation;
 }
 
-float Mathf::Max(float val, float val2)
+float Mathf::max(float val, float val2)
 {
     return std::max(val, val2);
 }
 
-float Mathf::Min(float val, float val2)
+float Mathf::min(float val, float val2)
 {
     return std::min(val, val2);
 }
 
-float Mathf::MoveTowards(float val, float target, float delta)
+float Mathf::moveTowards(float val, float target, float delta)
 {
-    if(val > target)
+    if (val > target)
     {
-        return Mathf::Clamp(val + delta, val, target);
+        return Mathf::clamp(val + delta, val, target);
     }
     else
     {
-        return Mathf::Clamp(val - delta, target, val);
+        return Mathf::clamp(val - delta, target, val);
     }
 }
 
-float Mathf::Pow(float val, float val2)
+float Mathf::pow(float val, float val2)
 {
     return std::pow(val, val2);
 }
 
-float Mathf::Sin(float val)
+float Mathf::sin(float val)
 {
     return std::sin(val);
 }
 
-float Mathf::Sqrt(float val)
+float Mathf::sqrt(float val)
 {
     return sqrt(val);
 }
 
-float Mathf::Tan(float val)
+float Mathf::tan(float val)
 {
     return std::tan(val);
 }

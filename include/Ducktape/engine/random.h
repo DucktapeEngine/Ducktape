@@ -31,7 +31,7 @@ namespace DT
 {
 	namespace Random
 	{
-		float Range(float min, float max);
+		float range(float min, float max);
 	}
 }
 

@@ -44,43 +44,43 @@ namespace DT
         float localRotation;
         Vector2 localScale = Vector2(1.0, 1.0);
 
-        void OnTransformChange();
+        void onTransformChange();
 
     public:
-        Transform(Entity* _entity);
+        Transform(Entity *_entity);
 
-        Transform* parent = nullptr;
-        std::vector<Transform*> children;    
+        Transform *parent = nullptr;
+        std::vector<Transform *> children;
 
-        Vector2 SetPosition(Vector2 _pos);
+        Vector2 setPosition(Vector2 _pos);
 
-        Vector2 GetPosition();
+        Vector2 getPosition();
 
-        float SetRotation(float _rot);
+        float setRotation(float _rot);
 
-        float GetRotation();
+        float getRotation();
 
-        Vector2 SetScale(Vector2 _scl);
+        Vector2 setScale(Vector2 _scl);
 
-        Vector2 GetScale();
+        Vector2 getScale();
 
         // local versions of each method
 
-        Vector2 SetLocalPosition(Vector2 _pos);
+        Vector2 setLocalPosition(Vector2 _pos);
 
-        Vector2 GetLocalPosition();
+        Vector2 getLocalPosition();
 
-        float SetLocalRotation(float _rot);
+        float setLocalRotation(float _rot);
 
-        float GetLocalRotation();
+        float getLocalRotation();
 
-        Vector2 SetLocalScale(Vector2 _scl);
+        Vector2 setLocalScale(Vector2 _scl);
 
-        Vector2 GetLocalScale();
+        Vector2 getLocalScale();
 
-        void RecalculateLocalValues();
+        void recalculateLocalValues();
 
-        void RecalculateWorldValues();
+        void recalculateWorldValues();
     };
 }
 

@@ -29,44 +29,44 @@ Entity::Entity()
 {
     isEnabled = true;
     name = "New Entity";
-    transform = AddComponent<Transform>();
+    transform = addComponent<Transform>();
 }
 
 Entity::Entity(std::string _name)
 {
     isEnabled = true;
     name = _name;
-    transform = AddComponent<Transform>();
+    transform = addComponent<Transform>();
 }
 
 Entity::Entity(Vector2 pos, float rot, Vector2 scl)
 {
     isEnabled = true;
     name = "New Entity";
-    transform = AddComponent<Transform>();
-    transform->SetPosition(pos);
-    transform->SetRotation(rot);
-    transform->SetScale(scl);
+    transform = addComponent<Transform>();
+    transform->setPosition(pos);
+    transform->setRotation(rot);
+    transform->setScale(scl);
 }
 
 Entity::Entity(std::string _name, Vector2 pos, float rot, Vector2 scl)
 {
     isEnabled = true;
     name = _name;
-    transform = AddComponent<Transform>();
-    transform->SetPosition(pos);
-    transform->SetRotation(rot);
-    transform->SetScale(scl);
+    transform = addComponent<Transform>();
+    transform->setPosition(pos);
+    transform->setRotation(rot);
+    transform->setScale(scl);
 }
 
-bool Entity::RemoveComponent(BehaviourScript* check)
+bool Entity::removeComponent(BehaviourScript *check)
 {
-    int i=0;
-    for(auto script:this->components)
+    int i = 0;
+    for (auto script : this->components)
     {
-        if(script == check)
+        if (script == check)
         {
-            this->components.erase(this->components.begin()+i);
+            this->components.erase(this->components.begin() + i);
             return true;
         }
         i++;
@@ -74,49 +74,49 @@ bool Entity::RemoveComponent(BehaviourScript* check)
     return false;
 }
 
-Entity* Entity::Find(std::string _name)
+Entity *Entity::find(std::string _name)
 {
-    for(int i=0,n=SceneManager::currentScene->entities.size();i<n;i++)
+    for (int i = 0, n = SceneManager::currentScene->entities.size(); i < n; i++)
     {
-        if(SceneManager::currentScene->entities[i]->name == _name)
+        if (SceneManager::currentScene->entities[i]->name == _name)
         {
             return SceneManager::currentScene->entities[i];
         }
     }
-    Debug::LogError("Entity with name \"" + _name +"\" doesn't exist!");
+    Debug::logError("Entity with name \"" + _name + "\" doesn't exist!");
     return nullptr;
 }
 
-Entity* Entity::Instantiate(std::string _name)
+Entity *Entity::instantiate(std::string _name)
 {
-    Entity* ent = new Entity(_name);
+    Entity *ent = new Entity(_name);
     SceneManager::currentScene->entities.push_back(ent);
     Memory::heapMemory.push_back(ent);
     return ent;
 }
 
-Entity* Entity::Instantiate(Vector2 pos, float rot, Vector2 scl)
+Entity *Entity::instantiate(Vector2 pos, float rot, Vector2 scl)
 {
-    Entity* ent = new Entity(pos, rot, scl);
+    Entity *ent = new Entity(pos, rot, scl);
     SceneManager::currentScene->entities.push_back(ent);
     Memory::heapMemory.push_back(ent);
     return ent;
 }
 
-Entity* Entity::Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
+Entity *Entity::instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
 {
-    Entity* ent = new Entity(_name, pos, rot, scl);
+    Entity *ent = new Entity(_name, pos, rot, scl);
     SceneManager::currentScene->entities.push_back(ent);
     Memory::heapMemory.push_back(ent);
     return ent;
 }
 
-void Entity::Destroy()
+void Entity::destroy()
 {
     this->isDestroyed = true;
-    for(size_t i=0, n=SceneManager::currentScene->entities.size();i<n;i++)
+    for (size_t i = 0, n = SceneManager::currentScene->entities.size(); i < n; i++)
     {
-        if(SceneManager::currentScene->entities[i] == this)
+        if (SceneManager::currentScene->entities[i] == this)
         {
             SceneManager::currentScene->entities.erase(SceneManager::currentScene->entities.begin() + i);
             break;
@@ -124,7 +124,7 @@ void Entity::Destroy()
     }
 }
 
-void Entity::SetEnabled(bool flag)
+void Entity::setEnabled(bool flag)
 {
     this->isEnabled = flag;
 }

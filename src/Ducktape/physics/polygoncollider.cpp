@@ -25,27 +25,27 @@ SOFTWARE.
 #include <Ducktape/physics/polygoncollider.h>
 using namespace DT;
 
-PolygonCollider2D::PolygonCollider2D(Entity* _entity)
+PolygonCollider2D::PolygonCollider2D(Entity *_entity)
 {
     entity = _entity;
-    rb = entity->GetComponent<Rigidbody2D>();
-    if(rb == nullptr)
+    rb = entity->getComponent<Rigidbody2D>();
+    if (rb == nullptr)
     {
-        rb = entity->AddComponent<Rigidbody2D>();
+        rb = entity->addComponent<Rigidbody2D>();
     }
 
     b2PolygonShape collisionShape;
 
     int size = points.size();
 
-    if(size < 3 || size > 8)
+    if (size < 3 || size > 8)
     {
-        Debug::LogError("The number of vertices in a polygonCollider must be >= 3 and <= 8, the number of vertices chosen is " + std::to_string(size));
+        Debug::logError("The number of vertices in a polygonCollider must be >= 3 and <= 8, the number of vertices chosen is " + std::to_string(size));
         return;
     }
 
     b2Vec2 vertices[size];
-    for(int i=0,n=size;i<n;i++)
+    for (int i = 0, n = size; i < n; i++)
     {
         vertices[i].Set(points[i].x, points[i].y);
     }
@@ -57,35 +57,35 @@ PolygonCollider2D::PolygonCollider2D(Entity* _entity)
     rb->body->CreateFixture(&fixtureDef);
 }
 
-void PolygonCollider2D::Update()
+void PolygonCollider2D::tick()
 {
-    if(rb->isDestroyed)
+    if (rb->isDestroyed)
     {
-        Destroy();
+        destroy();
     }
 }
 
-std::vector<Vector2> PolygonCollider2D::GetPoints()
+std::vector<Vector2> PolygonCollider2D::getPoints()
 {
     return points;
 }
 
-float PolygonCollider2D::GetDensity()
+float PolygonCollider2D::getDensity()
 {
     return fixture->GetDensity();
 }
 
-float PolygonCollider2D::GetFriction()
+float PolygonCollider2D::getFriction()
 {
     return fixture->GetFriction();
 }
 
-bool PolygonCollider2D::GetIsTrigger()
+bool PolygonCollider2D::getIsTrigger()
 {
     return fixture->IsSensor();
 }
 
-void PolygonCollider2D::SetPoints(std::vector<Vector2> val)
+void PolygonCollider2D::setPoints(std::vector<Vector2> val)
 {
     points = val;
 
@@ -94,16 +94,16 @@ void PolygonCollider2D::SetPoints(std::vector<Vector2> val)
 
     int size = points.size();
 
-    if(size > 2)
+    if (size > 2)
     {
-        if(size > 8)
+        if (size > 8)
         {
-            Debug::LogError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
+            Debug::logError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
         b2Vec2 vertices[size];
-        for(int i=0,n=size;i<n;i++)
+        for (int i = 0, n = size; i < n; i++)
         {
             vertices[i].Set(points[i].x, points[i].y);
         }
@@ -111,14 +111,14 @@ void PolygonCollider2D::SetPoints(std::vector<Vector2> val)
     }
     else
     {
-        if(size <= 0)
+        if (size <= 0)
         {
-            Debug::LogError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
+            Debug::logError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
         b2Vec2 vertices[size];
-        for(int i=0,n=size;i<n;i++)
+        for (int i = 0, n = size; i < n; i++)
         {
             vertices[i].Set(points[i].x, points[i].y);
         }
@@ -127,29 +127,29 @@ void PolygonCollider2D::SetPoints(std::vector<Vector2> val)
     }
 
     b2FixtureDef fixtureDef;
-    if(points.size() > 2)
+    if (points.size() > 2)
     {
         fixtureDef.shape = &chainShape;
-    } 
+    }
     else
     {
         fixtureDef.shape = &edgeShape;
     }
-    
+
     rb->body->CreateFixture(&fixtureDef);
 }
 
-void PolygonCollider2D::SetDensity(float val)
+void PolygonCollider2D::setDensity(float val)
 {
     fixture->SetDensity(val);
 }
 
-void PolygonCollider2D::SetFriction(float val)
+void PolygonCollider2D::setFriction(float val)
 {
     fixture->SetFriction(val);
 }
 
-void PolygonCollider2D::SetIsTrigger(bool val)
+void PolygonCollider2D::setIsTrigger(bool val)
 {
     fixture->SetSensor(val);
 }

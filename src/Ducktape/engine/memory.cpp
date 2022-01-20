@@ -25,4 +25,4 @@ SOFTWARE.
 #include <Ducktape/engine/memory.h>
 using namespace DT;
 
-std::vector<void*> Memory::heapMemory = {};
+std::vector<void *> Memory::heapMemory = {};

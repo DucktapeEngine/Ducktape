@@ -41,11 +41,6 @@ Color::Color(int _red, int _blue, int _green, int _alpha)
 	alpha = _alpha;
 }
 
-sf::Color Color::ToSFMLColor()
-{
-	return sf::Color(red, blue, green, alpha);
-}
-
 const Color Color::ALICE_BLUE = Color(240, 248, 255);
 const Color Color::ANTIQUE_WHITE = Color(250, 235, 215);
 const Color Color::AQUA = Color(0, 255, 255);
@@ -193,3 +188,8 @@ const Color Color::WHITE = Color(255, 255, 255);
 const Color Color::WHITE_SMOKE = Color(245, 245, 245);
 const Color Color::YELLOW = Color(255, 255, 0);
 const Color Color::YELLOW_GREEN = Color(154, 205, 50);
+
+Color::operator sf::Color() const
+{
+	return sf::Color(red, green, blue, alpha);
+}

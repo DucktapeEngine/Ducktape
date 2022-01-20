@@ -36,7 +36,7 @@ namespace DT
 	{
 	public:
 		Vector2 normal;
-		Entity* body;
+		Entity *body;
 		Vector2 point;
 		float distance;
 

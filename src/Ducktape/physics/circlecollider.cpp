@@ -25,13 +25,13 @@ SOFTWARE.
 #include <Ducktape/physics/circlecollider.h>
 using namespace DT;
 
-CircleCollider2D::CircleCollider2D(Entity* _entity)
+CircleCollider2D::CircleCollider2D(Entity *_entity)
 {
     entity = _entity;
-    rb = entity->GetComponent<Rigidbody2D>();
-    if(rb == nullptr)
+    rb = entity->getComponent<Rigidbody2D>();
+    if (rb == nullptr)
     {
-        rb = entity->AddComponent<Rigidbody2D>();
+        rb = entity->addComponent<Rigidbody2D>();
     }
 
     b2CircleShape circleShape;
@@ -43,64 +43,64 @@ CircleCollider2D::CircleCollider2D(Entity* _entity)
     fixture = rb->body->CreateFixture(&fixtureDef);
 }
 
-void CircleCollider2D::Update()
+void CircleCollider2D::tick()
 {
-    if(rb->isDestroyed)
+    if (rb->isDestroyed)
     {
-        Destroy();
+        destroy();
     }
 }
 
-float CircleCollider2D::GetRadius()
+float CircleCollider2D::getRadius()
 {
     return radius;
 }
 
-float CircleCollider2D::GetDensity()
+float CircleCollider2D::getDensity()
 {
     return fixture->GetDensity();
 }
 
-float CircleCollider2D::GetFriction()
+float CircleCollider2D::getFriction()
 {
     return fixture->GetFriction();
 }
 
-bool CircleCollider2D::GetIsTrigger()
+bool CircleCollider2D::getIsTrigger()
 {
     return fixture->IsSensor();
 }
 
-void CircleCollider2D::SetRadius(float val)
+void CircleCollider2D::setRadius(float val)
 {
     radius = val;
-    
+
     b2CircleShape circleShape;
 
     circleShape.m_p.Set(0.0f, 0.0f);
-    circleShape.m_radius = GetRadius();
+    circleShape.m_radius = getRadius();
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &circleShape;
-    fixtureDef.density = GetDensity();
-    fixtureDef.friction = GetFriction();
-    fixtureDef.isSensor = GetIsTrigger();
+    fixtureDef.density = getDensity();
+    fixtureDef.friction = getFriction();
+    fixtureDef.isSensor = getIsTrigger();
 
     rb->body->DestroyFixture(fixture);
     fixture = rb->body->CreateFixture(&fixtureDef);
 }
 
-void CircleCollider2D::SetDensity(float val)
+void CircleCollider2D::setDensity(float val)
 {
     fixture->SetDensity(val);
 }
 
-void CircleCollider2D::SetFriction(float val)
+void CircleCollider2D::setFriction(float val)
 {
     fixture->SetFriction(val);
 }
 
-void CircleCollider2D::SetIsTrigger(bool val)
+void CircleCollider2D::setIsTrigger(bool val)
 {
     fixture->SetSensor(val);
 }

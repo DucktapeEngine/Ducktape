@@ -36,31 +36,31 @@ namespace DT
 	class DistanceJoint2D : public BehaviourScript
 	{
 	private:
-		b2DistanceJoint* joint;
-		Rigidbody2D* rb;
-		Rigidbody2D* connectedRigidbody = nullptr;
+		b2DistanceJoint *joint;
+		Rigidbody2D *rb;
+		Rigidbody2D *connectedRigidbody = nullptr;
 
 	public:
-		DistanceJoint2D(Entity* _entity);
-		
-		void Update();
-		void OnDestroy();
+		DistanceJoint2D(Entity *_entity);
 
-		Vector2 GetAnchorA();
-		Vector2 GetAnchorB();
-		Rigidbody2D* GetConnectedRigidbody();
-		void SetConnectedRigidbody(Rigidbody2D* rb);
-		float GetLength();
-		void SetLength(float length);
-		float GetMinLength();
-		void SetMinLength(float minLength);
-		float GetMaxLength();
-		void SetMaxLength(float maxLength);
-		float GetCurrentLength();
-		float GetStiffness();
-		void SetStiffness(float stiffness);
-		float GetDamping();
-		void SetDamping(float damping);
+		void tick();
+		void onDestroy();
+
+		Vector2 getAnchorA();
+		Vector2 getAnchorB();
+		Rigidbody2D *getConnectedRigidbody();
+		void setConnectedRigidbody(Rigidbody2D *rb);
+		float getLength();
+		void setLength(float length);
+		float getMinLength();
+		void setMinLength(float minLength);
+		float getMaxLength();
+		void setMaxLength(float maxLength);
+		float getCurrentLength();
+		float getStiffness();
+		void setStiffness(float stiffness);
+		float getDamping();
+		void setDamping(float damping);
 	};
 }
 

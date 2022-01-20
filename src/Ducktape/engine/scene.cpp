@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/engine/scene.h>
 using namespace DT;
 
-void Scene::Destroy()
+void Scene::destroy()
 {
 	entities.clear();
 }

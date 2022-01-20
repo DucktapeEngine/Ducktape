@@ -37,31 +37,31 @@ namespace DT
     namespace Debug
     {
         // valing
-        void Log(std::string val);
+        void log(std::string val);
 
-        void LogError(std::string val);
+        void logError(std::string val);
 
-        void LogFatalError(std::string val);
+        void logFatalError(std::string val);
 
-        void LogWarning(std::string val);
+        void logWarning(std::string val);
 
-        void LogSuccess(std::string val);
+        void logSuccess(std::string val);
 
         // float overload
 
-        void Log(float val);
+        void log(float val);
 
-        void LogError(float val);
+        void logError(float val);
 
-        void LogFatalError(float val);
+        void logFatalError(float val);
 
-        void LogWarning(float val);
+        void logWarning(float val);
 
-        void LogSuccess(float val);
+        void logSuccess(float val);
 
-        void DrawLine(Vector2 start, Vector2 end, Color color);
+        void drawLine(Vector2 start, Vector2 end, Color color);
 
-        void DrawRay(Vector2 start, Vector2 dir, Color color);
+        void drawRay(Vector2 start, Vector2 dir, float length, Color color);
     };
 }
 

@@ -40,9 +40,9 @@ namespace DT
 		extern Vector2 globalGravity;
 		// extern ContactListener contactListener;
 
-		void Initialize();
+		void initialize();
 
-		Collision Raycast(Vector2 _origin, Vector2 _direction);
+		Collision raycast(Vector2 _origin, Vector2 _direction);
 	};
 }
 

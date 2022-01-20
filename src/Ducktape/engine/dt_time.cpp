@@ -29,7 +29,7 @@ float Time::deltaTime;
 sf::Clock Time::clock;
 sf::Clock Time::deltaClock;
 
-void Time::Update()
+void Time::update()
 {
 	Time::deltaTime = Time::deltaClock.restart().asSeconds();
 }

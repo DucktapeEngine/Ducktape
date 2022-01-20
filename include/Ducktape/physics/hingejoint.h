@@ -36,35 +36,35 @@ namespace DT
 	class HingeJoint2D : public BehaviourScript
 	{
 	private:
-		b2RevoluteJoint* joint;
-		Rigidbody2D* rb;
-		Rigidbody2D* connectedRigidbody = nullptr;
+		b2RevoluteJoint *joint;
+		Rigidbody2D *rb;
+		Rigidbody2D *connectedRigidbody = nullptr;
 
 	public:
-		HingeJoint2D(Entity* _entity);
+		HingeJoint2D(Entity *_entity);
 
-		void Update();
-		void OnDestroy();
+		void tick();
+		void onDestroy();
 
-		Vector2 GetAnchorA();
-		Vector2 GetAnchorB();
-		Rigidbody2D* GetConnectedRigidbody();
-		void SetConnectedRigidbody(Rigidbody2D* rb);
-		float GetReferenceAngle();
-		float GetJointAngle();
-		float GetJointSpeed();
-		bool GetLimitEnabled();
-		void SetLimitEnabled(bool flag);
-		float GetLowerLimit();
-		float GetUpperLimit();
-		void SetLowerLimit(float val);
-		void SetHigherLimit(float val);
-		bool GetMotorEnabled();
-		void SetMotorEnabled(bool flag);
-		void SetMotorSpeed(float speed);
-		float GetMotorSpeed();
-		void SetMaxMotorTorque(float torque);
-		float GetMaxMotorTorque();
+		Vector2 getAnchorA();
+		Vector2 getAnchorB();
+		Rigidbody2D *getConnectedRigidbody();
+		void setConnectedRigidbody(Rigidbody2D *rb);
+		float getReferenceAngle();
+		float getJointAngle();
+		float getJointSpeed();
+		bool getLimitEnabled();
+		void setLimitEnabled(bool flag);
+		float getLowerLimit();
+		float getUpperLimit();
+		void setLowerLimit(float val);
+		void setHigherLimit(float val);
+		bool getMotorEnabled();
+		void setMotorEnabled(bool flag);
+		void setMotorSpeed(float speed);
+		float getMotorSpeed();
+		void setMaxMotorTorque(float torque);
+		float getMaxMotorTorque();
 	};
 }
 

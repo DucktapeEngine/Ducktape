@@ -37,27 +37,27 @@ namespace DT
     {
     public:
         bool isEnabled = true;
-        Entity* entity;
+        Entity *entity;
         bool isDestroyed = false;
 
-        virtual void Start(){}
-        virtual void Update(){}
+        virtual void init() {}
+        virtual void tick() {}
 
-        virtual void OnCollisionEnter(Collision collider){}
-        virtual void OnCollisionExit(Collision collider){}
+        virtual void onCollisionEnter(Collision collider) {}
+        virtual void onCollisionExit(Collision collider) {}
 
-        virtual void OnEnable(){}
-        virtual void OnDisable(){}
-        void SetEnabled(bool flag);
+        virtual void onEnable() {}
+        virtual void onDisable() {}
+        void setEnabled(bool flag);
 
-        virtual void OnDestroy(){}
-        void Destroy();
+        virtual void onDestroy() {}
+        void destroy();
 
-        virtual void OnApplicationClose(){}
+        virtual void onApplicationClose() {}
 
-        void Invoke(std::string methodName, float time);
+        void invoke(std::string methodName, float time);
 
-        bool operator==(BehaviourScript* script);
+        bool operator==(BehaviourScript *script);
     };
 }
 

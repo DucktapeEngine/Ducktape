@@ -73,7 +73,7 @@ namespace DT
 
 namespace DT
 {
-    void Update();
+    void update();
 }
 
 #endif

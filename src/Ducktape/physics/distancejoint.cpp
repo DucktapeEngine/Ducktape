@@ -25,50 +25,50 @@ SOFTWARE.
 #include <Ducktape/physics/distancejoint.h>
 using namespace DT;
 
-DistanceJoint2D::DistanceJoint2D(Entity* _entity)
+DistanceJoint2D::DistanceJoint2D(Entity *_entity)
 {
-    entity = _entity;
-    rb = entity->GetComponent<Rigidbody2D>();
-	if(rb == nullptr)
+	entity = _entity;
+	rb = entity->getComponent<Rigidbody2D>();
+	if (rb == nullptr)
 	{
-		rb = entity->AddComponent<Rigidbody2D>();
+		rb = entity->addComponent<Rigidbody2D>();
 	}
-	
+
 	b2DistanceJointDef jointDef;
 	jointDef.bodyA = rb->body;
 
-	joint = (b2DistanceJoint*)Physics::physicsWorld.CreateJoint(&jointDef);
+	joint = (b2DistanceJoint *)Physics::physicsWorld.CreateJoint(&jointDef);
 }
 
-void DistanceJoint2D::Update()
+void DistanceJoint2D::tick()
 {
-	if(rb->isDestroyed)
+	if (rb->isDestroyed)
 	{
-		Destroy();
+		destroy();
 	}
 }
 
-void DistanceJoint2D::OnDestroy()
+void DistanceJoint2D::onDestroy()
 {
 	Physics::physicsWorld.DestroyJoint(joint);
 }
 
-Vector2 DistanceJoint2D::GetAnchorA()
+Vector2 DistanceJoint2D::getAnchorA()
 {
 	return Vector2(joint->GetLocalAnchorA().x, joint->GetLocalAnchorA().y);
 }
 
-Vector2 DistanceJoint2D::GetAnchorB()
+Vector2 DistanceJoint2D::getAnchorB()
 {
 	return Vector2(joint->GetLocalAnchorB().x, joint->GetLocalAnchorB().y);
 }
 
-Rigidbody2D* DistanceJoint2D::GetConnectedRigidbody()
+Rigidbody2D *DistanceJoint2D::getConnectedRigidbody()
 {
 	return connectedRigidbody;
 }
 
-void DistanceJoint2D::SetConnectedRigidbody(Rigidbody2D* rgb)
+void DistanceJoint2D::setConnectedRigidbody(Rigidbody2D *rgb)
 {
 	connectedRigidbody = rb;
 	b2DistanceJointDef jointDef;
@@ -76,60 +76,60 @@ void DistanceJoint2D::SetConnectedRigidbody(Rigidbody2D* rgb)
 	jointDef.bodyB = rgb->body;
 
 	Physics::physicsWorld.DestroyJoint(joint);
-	joint = (b2DistanceJoint*)Physics::physicsWorld.CreateJoint(&jointDef);
+	joint = (b2DistanceJoint *)Physics::physicsWorld.CreateJoint(&jointDef);
 }
 
-float DistanceJoint2D::GetLength()
+float DistanceJoint2D::getLength()
 {
 	return joint->GetLength();
 }
 
-void DistanceJoint2D::SetLength(float length)
+void DistanceJoint2D::setLength(float length)
 {
 	joint->SetLength(length);
 }
 
-float DistanceJoint2D::GetMinLength()
+float DistanceJoint2D::getMinLength()
 {
 	return joint->GetMinLength();
 }
 
-void DistanceJoint2D::SetMinLength(float minLength)
+void DistanceJoint2D::setMinLength(float minLength)
 {
 	joint->SetMinLength(minLength);
 }
 
-float DistanceJoint2D::GetMaxLength()
+float DistanceJoint2D::getMaxLength()
 {
 	return joint->GetMaxLength();
 }
 
-void DistanceJoint2D::SetMaxLength(float maxLength)
+void DistanceJoint2D::setMaxLength(float maxLength)
 {
 	joint->SetMaxLength(maxLength);
 }
 
-float DistanceJoint2D::GetCurrentLength()
+float DistanceJoint2D::getCurrentLength()
 {
 	return joint->GetCurrentLength();
 }
 
-float DistanceJoint2D::GetStiffness()
+float DistanceJoint2D::getStiffness()
 {
 	return joint->GetStiffness();
 }
 
-void DistanceJoint2D::SetStiffness(float stiffness)
+void DistanceJoint2D::setStiffness(float stiffness)
 {
 	joint->SetStiffness(stiffness);
 }
 
-float DistanceJoint2D::GetDamping()
+float DistanceJoint2D::getDamping()
 {
 	return joint->GetDamping();
 }
 
-void DistanceJoint2D::SetDamping(float damping)
+void DistanceJoint2D::setDamping(float damping)
 {
 	joint->SetDamping(damping);
 }

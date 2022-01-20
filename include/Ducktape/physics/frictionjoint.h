@@ -36,24 +36,24 @@ namespace DT
 	class FrictionJoint2D : public BehaviourScript
 	{
 	private:
-		b2FrictionJoint* joint;
-		Rigidbody2D* rb;
-		Rigidbody2D* connectedRigidbody = nullptr;
+		b2FrictionJoint *joint;
+		Rigidbody2D *rb;
+		Rigidbody2D *connectedRigidbody = nullptr;
 
 	public:
-		FrictionJoint2D(Entity* _entity);
+		FrictionJoint2D(Entity *_entity);
 
-		void Update();
-		void OnDestroy();
+		void tick();
+		void onDestroy();
 
-		Vector2 GetAnchorA();
-		Vector2 GetAnchorB();
-		Rigidbody2D* GetConnectedRigidbody();
-		void SetConnectedRigidbody(Rigidbody2D* rb);
-		float GetMaxForce();
-		void SetMaxForce(float force);
-		float GetMaxTorque();
-		void SetMaxTorque(float torque);
+		Vector2 getAnchorA();
+		Vector2 getAnchorB();
+		Rigidbody2D *getConnectedRigidbody();
+		void setConnectedRigidbody(Rigidbody2D *rb);
+		float getMaxForce();
+		void setMaxForce(float force);
+		float getMaxTorque();
+		void setMaxTorque(float torque);
 	};
 }
 

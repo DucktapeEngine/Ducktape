@@ -41,11 +41,11 @@ namespace DT
     {
     public:
         bool isEnabled = true;
-        Transform* transform;
+        Transform *transform;
         bool isDestroyed = false;
 
         std::string name = "New Entity";
-        std::vector<BehaviourScript*> components;
+        std::vector<BehaviourScript *> components;
 
         Entity();
 
@@ -56,20 +56,20 @@ namespace DT
         Entity(std::string _name, Vector2 pos, float rot, Vector2 scl);
 
         template <typename T>
-        T* AddComponent()
+        T *addComponent()
         {
-            T* component = new T(this);
+            T *component = new T(this);
             this->components.push_back(component);
             Memory::heapMemory.push_back(component);
             return component;
         }
 
         template <typename T>
-        T* GetComponent()
+        T *getComponent()
         {
-            for(auto script:this->components) 
+            for (auto script : this->components)
             {
-                if(T *ptr = dynamic_cast<T *>(script)) 
+                if (T *ptr = dynamic_cast<T *>(script))
                 {
                     return ptr;
                 }
@@ -78,14 +78,14 @@ namespace DT
         }
 
         template <typename T>
-        bool RemoveComponent()
+        bool removeComponent()
         {
-            int i=0;
-            for(auto script:this->components)
+            int i = 0;
+            for (auto script : this->components)
             {
-                if(T *ptr = dynamic_cast<T *>(script))
+                if (T *ptr = dynamic_cast<T *>(script))
                 {
-                    this->components.erase(this->components.begin()+i);
+                    this->components.erase(this->components.begin() + i);
                     return true;
                 }
                 i++;
@@ -93,23 +93,23 @@ namespace DT
             return false;
         }
 
-        bool RemoveComponent(BehaviourScript* check);
+        bool removeComponent(BehaviourScript *check);
 
-        static Entity* Find(std::string _name);
-        static Entity* Instantiate();
-        static Entity* Instantiate(std::string _name);
-        static Entity* Instantiate(Vector2 pos, float rot, Vector2 scl);
-        static Entity* Instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
-        
-        void Destroy();
+        static Entity *find(std::string _name);
+        static Entity *instantiate();
+        static Entity *instantiate(std::string _name);
+        static Entity *instantiate(Vector2 pos, float rot, Vector2 scl);
+        static Entity *instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl);
 
-        void SetEnabled(bool flag);
+        void destroy();
+
+        void setEnabled(bool flag);
     };
 
-    inline void BehaviourScript::Destroy()
+    inline void BehaviourScript::destroy()
     {
-        this->OnDestroy();
-        entity->RemoveComponent(this);
+        this->onDestroy();
+        entity->removeComponent(this);
         this->isDestroyed = true;
     }
 }

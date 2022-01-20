@@ -38,9 +38,9 @@ namespace DT
     {
         extern std::vector<std::pair<std::string, sf::Texture>> textureCache;
 
-        int LoadTextureFromCache(std::string _path);
+        int loadTextureFromCache(std::string _path);
 
-        void DrawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color _color);
+        void drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color _color);
     };
 }
 

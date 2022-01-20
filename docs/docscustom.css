@@ -1,0 +1,6 @@
+@media (prefers-color-scheme: dark) {
+    html:not(.light-mode) {
+        --primary-color: #FED900;
+        --side-nav-arrow-hover-opacity: 1;
+    }
+}

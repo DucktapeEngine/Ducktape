@@ -3,6 +3,6 @@ using namespace DT;
 
 int main()
 {
-    Update();
+    update();
     return 0;
 }

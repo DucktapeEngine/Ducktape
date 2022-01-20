@@ -25,65 +25,65 @@ SOFTWARE.
 #include <Ducktape/engine/transform.h>
 using namespace DT;
 
-Transform::Transform(Entity* _entity)
+Transform::Transform(Entity *_entity)
 {
     entity = _entity;
 }
 
-void Transform::OnTransformChange()
+void Transform::onTransformChange()
 {
-    Rigidbody2D* rb = entity->GetComponent<Rigidbody2D>();
-    if(rb != nullptr)
+    Rigidbody2D *rb = entity->getComponent<Rigidbody2D>();
+    if (rb != nullptr)
     {
-        rb->body->SetTransform(entity->transform->GetPosition().ToBox2DVector(), entity->transform->GetRotation());
+        rb->body->SetTransform((b2Vec2)entity->transform->getPosition(), entity->transform->getRotation());
     }
 }
 
-Vector2 Transform::GetPosition()
+Vector2 Transform::getPosition()
 {
     return position;
 }
 
-float Transform::GetRotation()
+float Transform::getRotation()
 {
     return rotation;
 }
 
-Vector2 Transform::GetScale()
+Vector2 Transform::getScale()
 {
     return scale;
 }
 
 // local versions of each method
 
-Vector2 Transform::GetLocalPosition()
+Vector2 Transform::getLocalPosition()
 {
     return localPosition;
 }
 
-float Transform::GetLocalRotation()
+float Transform::getLocalRotation()
 {
     return localRotation;
 }
 
-Vector2 Transform::GetLocalScale()
+Vector2 Transform::getLocalScale()
 {
     return localScale;
 }
 
-void Transform::RecalculateLocalValues()
+void Transform::recalculateLocalValues()
 {
     Vector2 _pos;
     float _rot;
     Vector2 _scl;
 
-    Transform* currentParent = this->parent;
+    Transform *currentParent = this->parent;
 
-    while(currentParent != nullptr)
+    while (currentParent != nullptr)
     {
-        _pos = _pos + currentParent->GetLocalPosition();
-        _rot = _rot + currentParent->GetLocalRotation();
-        _scl = _scl + currentParent->GetLocalScale();
+        _pos = _pos + currentParent->getLocalPosition();
+        _rot = _rot + currentParent->getLocalRotation();
+        _scl = _scl + currentParent->getLocalScale();
         currentParent = currentParent->parent;
     }
 
@@ -92,19 +92,19 @@ void Transform::RecalculateLocalValues()
     localScale = scale - _scl;
 }
 
-void Transform::RecalculateWorldValues()
+void Transform::recalculateWorldValues()
 {
     Vector2 _pos;
     float _rot;
     Vector2 _scl;
 
-    Transform* currentParent;
+    Transform *currentParent;
 
-    while(currentParent != nullptr)
+    while (currentParent != nullptr)
     {
-        _pos = _pos + currentParent->GetLocalPosition();
-        _rot = _rot + currentParent->GetLocalRotation();
-        _scl = _scl + currentParent->GetLocalScale();
+        _pos = _pos + currentParent->getLocalPosition();
+        _rot = _rot + currentParent->getLocalRotation();
+        _scl = _scl + currentParent->getLocalScale();
         currentParent = currentParent->parent;
     }
 
@@ -113,50 +113,50 @@ void Transform::RecalculateWorldValues()
     scale = _scl;
 }
 
-Vector2 Transform::SetPosition(Vector2 _pos)
+Vector2 Transform::setPosition(Vector2 _pos)
 {
     position = _pos;
-    OnTransformChange();
-    RecalculateLocalValues();
+    onTransformChange();
+    recalculateLocalValues();
     return _pos;
 }
 
-float Transform::SetRotation(float _rot)
+float Transform::setRotation(float _rot)
 {
     rotation = _rot;
-    OnTransformChange();
-    RecalculateLocalValues();
+    onTransformChange();
+    recalculateLocalValues();
     return _rot;
 }
 
-Vector2 Transform::SetScale(Vector2 _scl)
+Vector2 Transform::setScale(Vector2 _scl)
 {
     scale = _scl;
-    OnTransformChange();
-    RecalculateLocalValues();
+    onTransformChange();
+    recalculateLocalValues();
     return _scl;
 }
 
-Vector2 Transform::SetLocalPosition(Vector2 _pos)
+Vector2 Transform::setLocalPosition(Vector2 _pos)
 {
     position = _pos;
-    OnTransformChange();
-    RecalculateWorldValues();
+    onTransformChange();
+    recalculateWorldValues();
     return _pos;
 }
 
-float Transform::SetLocalRotation(float _rot)
+float Transform::setLocalRotation(float _rot)
 {
     rotation = _rot;
-    OnTransformChange();
-    RecalculateWorldValues();
+    onTransformChange();
+    recalculateWorldValues();
     return _rot;
 }
 
-Vector2 Transform::SetLocalScale(Vector2 _scl)
+Vector2 Transform::setLocalScale(Vector2 _scl)
 {
     scale = _scl;
-    OnTransformChange();
-    RecalculateWorldValues();
+    onTransformChange();
+    recalculateWorldValues();
     return _scl;
 }

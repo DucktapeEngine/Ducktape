@@ -25,55 +25,55 @@ SOFTWARE.
 #include <Ducktape/physics/contactlistener.h>
 using namespace DT;
 
-void ContactListener::BeginContact(b2Contact* contact)
+void ContactListener::BeginContact(b2Contact *contact)
 {
-	Entity* bodyA = reinterpret_cast<Entity*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-    Entity* bodyB = reinterpret_cast<Entity*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+	Entity *bodyA = reinterpret_cast<Entity *>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+	Entity *bodyB = reinterpret_cast<Entity *>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
 
-    for(BehaviourScript* bs:bodyA->components)
-    {
-    	if(bs != nullptr)
-    	{
-    		Collision collisionB;
-    		collisionB.body = bodyB;
-	    	bs->OnCollisionEnter(collisionB);
-    	}
-    }
+	for (BehaviourScript *bs : bodyA->components)
+	{
+		if (bs != nullptr)
+		{
+			Collision collisionB;
+			collisionB.body = bodyB;
+			bs->onCollisionEnter(collisionB);
+		}
+	}
 
-    for(BehaviourScript* bs:bodyB->components)
-    {
-    	if(bs != nullptr)
-    	{
-    		Collision collisionA;
-    		collisionA.body = bodyA;
-	    	bs->OnCollisionEnter(collisionA);
-    	}
-    }
+	for (BehaviourScript *bs : bodyB->components)
+	{
+		if (bs != nullptr)
+		{
+			Collision collisionA;
+			collisionA.body = bodyA;
+			bs->onCollisionEnter(collisionA);
+		}
+	}
 }
 
-void ContactListener::EndContact(b2Contact* contact)
+void ContactListener::EndContact(b2Contact *contact)
 {
 
-	Entity* bodyA = reinterpret_cast<Entity*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-    Entity* bodyB = reinterpret_cast<Entity*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+	Entity *bodyA = reinterpret_cast<Entity *>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+	Entity *bodyB = reinterpret_cast<Entity *>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
 
-    for(BehaviourScript* bs:bodyA->components)
-    {
-    	if(bs != nullptr)
-    	{
-    		Collision collisionB;
-    		collisionB.body = bodyB;
-	    	bs->OnCollisionExit(collisionB);
-    	}
-    }
+	for (BehaviourScript *bs : bodyA->components)
+	{
+		if (bs != nullptr)
+		{
+			Collision collisionB;
+			collisionB.body = bodyB;
+			bs->onCollisionExit(collisionB);
+		}
+	}
 
-    for(BehaviourScript* bs:bodyB->components)
-    {
-    	if(bs != nullptr)
-    	{
-    		Collision collisionA;
-    		collisionA.body = bodyA;
-	    	bs->OnCollisionExit(collisionA);
-    	}
-    }
+	for (BehaviourScript *bs : bodyB->components)
+	{
+		if (bs != nullptr)
+		{
+			Collision collisionA;
+			collisionA.body = bodyA;
+			bs->onCollisionExit(collisionA);
+		}
+	}
 }

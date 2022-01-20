@@ -25,32 +25,32 @@ SOFTWARE.
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <Ducktape/engine/behaviourscript.h>
-#include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/application.h>
+#include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/entity.h>
 #include <Ducktape/engine/transform.h>
+#include <Ducktape/engine/vector2.h>
 
 namespace DT
 {
-    class Camera : public BehaviourScript
-    {
-    public:
-        float size = 1.0;
+  class Camera : public BehaviourScript
+  {
+  public:
+    float size = 1.0;
 
-        Camera(Entity* _entity);
-        
-        void Update();
+    Camera(Entity *_entity);
 
-        static Vector2 UnitToPixel(Vector2 pos);
-        static Vector2 PixelToUnit(Vector2 pos);
+    void tick();
 
-        static Vector2 ScreenToWorldPos(Vector2 pos);
+    static Vector2 unitToPixel(Vector2 pos);
+    static Vector2 pixelToUnit(Vector2 pos);
 
-        static Vector2 WorldToScreenPos(Vector2 pos);
-        
-        static float PixelPerUnit();
-    };
-}
+    static Vector2 screenToWorldPos(Vector2 pos);
+
+    static Vector2 worldToScreenPos(Vector2 pos);
+
+    static float pixelPerUnit();
+  };
+} // namespace DT
 
 #endif

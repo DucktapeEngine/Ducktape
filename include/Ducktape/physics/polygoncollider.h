@@ -35,23 +35,23 @@ namespace DT
     class PolygonCollider2D : public BehaviourScript
     {
     private:
-        Rigidbody2D* rb;
-        b2Fixture* fixture;
+        Rigidbody2D *rb;
+        b2Fixture *fixture;
         std::vector<Vector2> points;
 
     public:
-        PolygonCollider2D(Entity* _entity);
+        PolygonCollider2D(Entity *_entity);
 
-        void Update();
+        void tick();
 
-        std::vector<Vector2> GetPoints();
-        float GetDensity();
-        float GetFriction();
-        bool GetIsTrigger();
-        void SetPoints(std::vector<Vector2> points);
-        void SetDensity(float val);
-        void SetFriction(float val);
-        void SetIsTrigger(bool val);
+        std::vector<Vector2> getPoints();
+        float getDensity();
+        float getFriction();
+        bool getIsTrigger();
+        void setPoints(std::vector<Vector2> points);
+        void setDensity(float val);
+        void setFriction(float val);
+        void setIsTrigger(bool val);
     };
 }
 
