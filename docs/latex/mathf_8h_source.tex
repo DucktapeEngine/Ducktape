@@ -1,0 +1,93 @@
+\hypertarget{mathf_8h_source}{}\doxysection{mathf.\+h}
+\label{mathf_8h_source}\index{Ducktape/include/Ducktape/engine/mathf.h@{Ducktape/include/Ducktape/engine/mathf.h}}
+\mbox{\hyperlink{mathf_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef MATHF\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define MATHF\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{32 \{}
+\DoxyCodeLine{33     \textcolor{keyword}{namespace }Mathf}
+\DoxyCodeLine{34     \{}
+\DoxyCodeLine{35         \textcolor{keyword}{extern} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a76459146314d3cacdb21c511b497ecd3}{Deg2Rad}};}
+\DoxyCodeLine{36         \textcolor{keyword}{extern} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a7153ad450586fd21810bdfb80368c1a8}{Epsilon}};}
+\DoxyCodeLine{37         \textcolor{keyword}{extern} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aa4071a18fcce34dbc2baa39bd51b8fb8}{PositiveInfinity}};}
+\DoxyCodeLine{38         \textcolor{keyword}{extern} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a356aa3e432d3237a09c88ac25190286d}{NegativeInfinity}};}
+\DoxyCodeLine{39         \textcolor{keyword}{extern} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a6e4a67421ea63c3530af9ed05c66de80}{PI}};}
+\DoxyCodeLine{40         \textcolor{keyword}{extern} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aded605614145be02d3252b016ed6d028}{Rad2Deg}};}
+\DoxyCodeLine{41         \textcolor{keyword}{extern} \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a61ed37ef4645fe6169851397c24d3abb}{GoldenRatio}};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a5caecec5b717ed67763235166b8d000c}{abs}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_acfd558700e135691dc0e145ae612c0c5}{acos}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespace_d_t_1_1_mathf_ad771a34c81bcf7b410d55ee6081a3f3d}{approximately}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} secondval);}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aebaad9fcb067e821e03b6072cad48f0a}{asin}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a607fd27af2f0d13124b769ea90f2e911}{atan}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aa332e4f174fa87913f81d3681a589976}{atan2}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} val2);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a8d6f6f2f9b53d4d8621360e09c90906b}{ceil}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_ae4fd8377c89aa9bc19d87889ea6c954c}{clamp}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a3506c246ced009dd2c0821af6ec5b199}{min}}, \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aafe4e85bbc6f96e07c7ab6afe4aef33d}{max}});}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a2767a8e69de09e111249709119f7f74a}{cos}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_ad1cfda99a8640dbb569d966bd2cb20a8}{deltaAngle}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} val2);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a890c3c52dda6b69788c89ea09eba689f}{exp}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_ac0a286def43300172439984c2fda21fb}{floor}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a915212c5d2717760e38d0da1ea60164d}{round}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aff3a0c00b8810d114e6e3a46aaeac1cd}{lerp}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} target, \textcolor{keywordtype}{float} interpolation);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aafe4e85bbc6f96e07c7ab6afe4aef33d}{max}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} val2);}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a3506c246ced009dd2c0821af6ec5b199}{min}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} val2);}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a346ce7126af708c808cfb18d01358730}{moveTowards}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} target, \textcolor{keywordtype}{float} delta);}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a940e9bb3fbc95c51f5121abb32427a04}{pow}}(\textcolor{keywordtype}{float} val, \textcolor{keywordtype}{float} val2);}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a718088caa02182062e7b2718219e55d5}{sin}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_aab6376ba2a12397e96fc0be08ce301ed}{sqrt}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83         \textcolor{keywordtype}{float} \mbox{\hyperlink{namespace_d_t_1_1_mathf_a7123591a65ca4ca4e0fcc7397883a0c7}{tan}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{84     \};}
+\DoxyCodeLine{85 \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,300 @@
+\hypertarget{class_d_t_1_1_audio_source}{}\doxysection{DT\+::Audio\+Source Class Reference}
+\label{class_d_t_1_1_audio_source}\index{DT::AudioSource@{DT::AudioSource}}
+
+
+Component for playing Audio.  
+
+
+
+
+{\ttfamily \#include $<$audiosource.\+h$>$}
+
+
+
+Inherits \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{DT\+::\+Behaviour\+Script}}.
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_ac0fe6aeae0ea72fd7f19761f9efe5375}{load\+Sound}} (std\+::string load\+Path)
+\begin{DoxyCompactList}\small\item\em Play a sound from a specified path. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_abf4e26963822d4bb13e98c5662d35f3e}{load\+Music}} (std\+::string load\+Path)
+\begin{DoxyCompactList}\small\item\em Play a music from a specified path. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_ac6e335c512ea35c5c5f1a8cbf0acfcba}{pause}} ()
+\begin{DoxyCompactList}\small\item\em Pause the currently playing sound. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_a70c1208a517869e0cdcff7eaed1f7f12}{play}} ()
+\begin{DoxyCompactList}\small\item\em Continue playing the currently paused sound. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_a320ea7238e35e42982513e0e9b263a53}{stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop the currently playing sound. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_ae5c0698320ce6611858e64f13bc61cce}{set\+Seek}} (float seconds)
+\begin{DoxyCompactList}\small\item\em Set the seek to/\+Move to a specific time (denoted in seconds). \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_t_1_1_audio_source_aa791ec7840c243e5761bf6e5e9608e09}{get\+Seek}} ()
+\begin{DoxyCompactList}\small\item\em Get the time the seek/player is currently on (denoted in seconds). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_a0a301a01b353a1c3adb4d9889ebaa0da}{set\+Loop}} (bool loop)
+\begin{DoxyCompactList}\small\item\em Set if the sound must loop or not once it ends. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_t_1_1_audio_source_a639c0aa5ea931c218b1f6f5e414bfd58}{get\+Loop}} ()
+\begin{DoxyCompactList}\small\item\em Get if the sound is set to loop or not once it ends. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_af379bc51d2b60bbc1d908e5cad449abe}{set\+Pitch}} (float pitch)
+\begin{DoxyCompactList}\small\item\em Set the pitch of the sound. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_t_1_1_audio_source_ae9a3cca87c2c9a35510679723eb27d23}{get\+Pitch}} ()
+\begin{DoxyCompactList}\small\item\em Get the pitch of the sound. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_ac16ea411df4ace6cdbda8d14d7d2a090}{set\+Volume}} (float volume)
+\begin{DoxyCompactList}\small\item\em Set the volume of the sound. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_t_1_1_audio_source_a7c39b0ff541ae2a233430a19e11760b1}{get\+Volume}} ()
+\begin{DoxyCompactList}\small\item\em Get the volume of the sound. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_a6be177d7a1b9a4b662cd4d571550d1f7}{set\+Distance}} (float distance)
+\begin{DoxyCompactList}\small\item\em Set the distance the sound must be played from, if spatial audio is enabled using Audio\+Source\+::set\+Spatial(true). \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_t_1_1_audio_source_ab29ff74eefe8ed593f03b7712f663809}{get\+Distance}} ()
+\begin{DoxyCompactList}\small\item\em Get the distance the sound must be played from, if spatial audio is enabled using Audio\+Source\+::set\+Spatial(true). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_audio_source_a958d5d2e48f2420388365e34a62dd8d6}{set\+Spatial}} (bool spatial)
+\begin{DoxyCompactList}\small\item\em Set if the sound is spatial or not. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_t_1_1_audio_source_aada7cd8363afb73827e5906389889185}{get\+Spatial}} ()
+\begin{DoxyCompactList}\small\item\em Get if the sound is spatial or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Component for playing Audio. 
+
+Attaching this component to an entity lets you play audio. Use the \mbox{\hyperlink{class_d_t_1_1_audio_source_ac0fe6aeae0ea72fd7f19761f9efe5375}{Audio\+Source\+::load\+Sound()}} / \mbox{\hyperlink{class_d_t_1_1_audio_source_abf4e26963822d4bb13e98c5662d35f3e}{Audio\+Source\+::load\+Music()}} methods to load sound/music from a specified path, and the \mbox{\hyperlink{class_d_t_1_1_audio_source_a70c1208a517869e0cdcff7eaed1f7f12}{Audio\+Source\+::play()}}, \mbox{\hyperlink{class_d_t_1_1_audio_source_a320ea7238e35e42982513e0e9b263a53}{Audio\+Source\+::stop()}}, \mbox{\hyperlink{class_d_t_1_1_audio_source_ac6e335c512ea35c5c5f1a8cbf0acfcba}{Audio\+Source\+::pause()}} functions to control the playback of the audio. Ducktape supports the .wav, .ogg, .flac audio formats. Due to licensing issues, .mp3 is not supported as of now.
+
+Usage can be found in the Manual\+: \href{https://ducktapeengine.github.io/manual/audio.html}{\texttt{ https\+://ducktapeengine.\+github.\+io/manual/audio.\+html}} 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_ab29ff74eefe8ed593f03b7712f663809}\label{class_d_t_1_1_audio_source_ab29ff74eefe8ed593f03b7712f663809}} 
+\index{DT::AudioSource@{DT::AudioSource}!getDistance@{getDistance}}
+\index{getDistance@{getDistance}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{getDistance()}{getDistance()}}
+{\footnotesize\ttfamily float DT\+::\+Audio\+Source\+::get\+Distance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the distance the sound must be played from, if spatial audio is enabled using Audio\+Source\+::set\+Spatial(true). 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily float} The distance the sound must be played from. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_a639c0aa5ea931c218b1f6f5e414bfd58}\label{class_d_t_1_1_audio_source_a639c0aa5ea931c218b1f6f5e414bfd58}} 
+\index{DT::AudioSource@{DT::AudioSource}!getLoop@{getLoop}}
+\index{getLoop@{getLoop}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{getLoop()}{getLoop()}}
+{\footnotesize\ttfamily bool DT\+::\+Audio\+Source\+::get\+Loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get if the sound is set to loop or not once it ends. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily bool} If the sound is set to loop or not once it ends. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_ae9a3cca87c2c9a35510679723eb27d23}\label{class_d_t_1_1_audio_source_ae9a3cca87c2c9a35510679723eb27d23}} 
+\index{DT::AudioSource@{DT::AudioSource}!getPitch@{getPitch}}
+\index{getPitch@{getPitch}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{getPitch()}{getPitch()}}
+{\footnotesize\ttfamily float DT\+::\+Audio\+Source\+::get\+Pitch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the pitch of the sound. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily float} The pitch of the sound. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_aa791ec7840c243e5761bf6e5e9608e09}\label{class_d_t_1_1_audio_source_aa791ec7840c243e5761bf6e5e9608e09}} 
+\index{DT::AudioSource@{DT::AudioSource}!getSeek@{getSeek}}
+\index{getSeek@{getSeek}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{getSeek()}{getSeek()}}
+{\footnotesize\ttfamily float DT\+::\+Audio\+Source\+::get\+Seek (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the time the seek/player is currently on (denoted in seconds). 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily float} The time the seek/player is currently on (denoted in seconds). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_aada7cd8363afb73827e5906389889185}\label{class_d_t_1_1_audio_source_aada7cd8363afb73827e5906389889185}} 
+\index{DT::AudioSource@{DT::AudioSource}!getSpatial@{getSpatial}}
+\index{getSpatial@{getSpatial}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{getSpatial()}{getSpatial()}}
+{\footnotesize\ttfamily bool DT\+::\+Audio\+Source\+::get\+Spatial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get if the sound is spatial or not. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily bool} If the sound is spatial or not. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_a7c39b0ff541ae2a233430a19e11760b1}\label{class_d_t_1_1_audio_source_a7c39b0ff541ae2a233430a19e11760b1}} 
+\index{DT::AudioSource@{DT::AudioSource}!getVolume@{getVolume}}
+\index{getVolume@{getVolume}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{getVolume()}{getVolume()}}
+{\footnotesize\ttfamily float DT\+::\+Audio\+Source\+::get\+Volume (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the volume of the sound. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily float} The volume of the sound. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_abf4e26963822d4bb13e98c5662d35f3e}\label{class_d_t_1_1_audio_source_abf4e26963822d4bb13e98c5662d35f3e}} 
+\index{DT::AudioSource@{DT::AudioSource}!loadMusic@{loadMusic}}
+\index{loadMusic@{loadMusic}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{loadMusic()}{loadMusic()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::load\+Music (\begin{DoxyParamCaption}\item[{std\+::string}]{load\+Path }\end{DoxyParamCaption})}
+
+
+
+Play a music from a specified path. 
+
+Use this method to load and play a music from a specified path. Unlike \mbox{\hyperlink{class_d_t_1_1_audio_source_ac0fe6aeae0ea72fd7f19761f9efe5375}{Audio\+Source\+::load\+Sound()}} It doesn\textquotesingle{}t load all the audio data into memory, instead it streams it on the fly from the source file. It is typically used to play compressed music that lasts several minutes, and would otherwise take many seconds to load and eat hundreds of MB in memory.
+
+
+\begin{DoxyParams}{Parameters}
+{\em load\+Path} & Path to the audio file to load. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_ac0fe6aeae0ea72fd7f19761f9efe5375}\label{class_d_t_1_1_audio_source_ac0fe6aeae0ea72fd7f19761f9efe5375}} 
+\index{DT::AudioSource@{DT::AudioSource}!loadSound@{loadSound}}
+\index{loadSound@{loadSound}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{loadSound()}{loadSound()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::load\+Sound (\begin{DoxyParamCaption}\item[{std\+::string}]{load\+Path }\end{DoxyParamCaption})}
+
+
+
+Play a sound from a specified path. 
+
+Use this method to load and play a sound from a specified path. It should be used for small sounds that can fit in memory and should suffer no lag when they are played. Examples are gun shots, foot steps, etc.
+
+
+\begin{DoxyParams}{Parameters}
+{\em load\+Path} & Path to the audio file to load. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_ac6e335c512ea35c5c5f1a8cbf0acfcba}\label{class_d_t_1_1_audio_source_ac6e335c512ea35c5c5f1a8cbf0acfcba}} 
+\index{DT::AudioSource@{DT::AudioSource}!pause@{pause}}
+\index{pause@{pause}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{pause()}{pause()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::pause (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Pause the currently playing sound. 
+
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_a70c1208a517869e0cdcff7eaed1f7f12}\label{class_d_t_1_1_audio_source_a70c1208a517869e0cdcff7eaed1f7f12}} 
+\index{DT::AudioSource@{DT::AudioSource}!play@{play}}
+\index{play@{play}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{play()}{play()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::play (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Continue playing the currently paused sound. 
+
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_a6be177d7a1b9a4b662cd4d571550d1f7}\label{class_d_t_1_1_audio_source_a6be177d7a1b9a4b662cd4d571550d1f7}} 
+\index{DT::AudioSource@{DT::AudioSource}!setDistance@{setDistance}}
+\index{setDistance@{setDistance}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{setDistance()}{setDistance()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::set\+Distance (\begin{DoxyParamCaption}\item[{float}]{distance }\end{DoxyParamCaption})}
+
+
+
+Set the distance the sound must be played from, if spatial audio is enabled using Audio\+Source\+::set\+Spatial(true). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & The distance the sound must be played from. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_a0a301a01b353a1c3adb4d9889ebaa0da}\label{class_d_t_1_1_audio_source_a0a301a01b353a1c3adb4d9889ebaa0da}} 
+\index{DT::AudioSource@{DT::AudioSource}!setLoop@{setLoop}}
+\index{setLoop@{setLoop}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{setLoop()}{setLoop()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::set\+Loop (\begin{DoxyParamCaption}\item[{bool}]{loop }\end{DoxyParamCaption})}
+
+
+
+Set if the sound must loop or not once it ends. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loop} & If the sound must loop or not once it ends. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_af379bc51d2b60bbc1d908e5cad449abe}\label{class_d_t_1_1_audio_source_af379bc51d2b60bbc1d908e5cad449abe}} 
+\index{DT::AudioSource@{DT::AudioSource}!setPitch@{setPitch}}
+\index{setPitch@{setPitch}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{setPitch()}{setPitch()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::set\+Pitch (\begin{DoxyParamCaption}\item[{float}]{pitch }\end{DoxyParamCaption})}
+
+
+
+Set the pitch of the sound. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pitch} & The pitch of the sound. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_ae5c0698320ce6611858e64f13bc61cce}\label{class_d_t_1_1_audio_source_ae5c0698320ce6611858e64f13bc61cce}} 
+\index{DT::AudioSource@{DT::AudioSource}!setSeek@{setSeek}}
+\index{setSeek@{setSeek}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{setSeek()}{setSeek()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::set\+Seek (\begin{DoxyParamCaption}\item[{float}]{seconds }\end{DoxyParamCaption})}
+
+
+
+Set the seek to/\+Move to a specific time (denoted in seconds). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em seconds} & The number of seconds to seek to. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_a958d5d2e48f2420388365e34a62dd8d6}\label{class_d_t_1_1_audio_source_a958d5d2e48f2420388365e34a62dd8d6}} 
+\index{DT::AudioSource@{DT::AudioSource}!setSpatial@{setSpatial}}
+\index{setSpatial@{setSpatial}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{setSpatial()}{setSpatial()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::set\+Spatial (\begin{DoxyParamCaption}\item[{bool}]{spatial }\end{DoxyParamCaption})}
+
+
+
+Set if the sound is spatial or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spatial} & If the sound is spatial or not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_ac16ea411df4ace6cdbda8d14d7d2a090}\label{class_d_t_1_1_audio_source_ac16ea411df4ace6cdbda8d14d7d2a090}} 
+\index{DT::AudioSource@{DT::AudioSource}!setVolume@{setVolume}}
+\index{setVolume@{setVolume}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{setVolume()}{setVolume()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::set\+Volume (\begin{DoxyParamCaption}\item[{float}]{volume }\end{DoxyParamCaption})}
+
+
+
+Set the volume of the sound. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em volume} & The volume of the sound. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_t_1_1_audio_source_a320ea7238e35e42982513e0e9b263a53}\label{class_d_t_1_1_audio_source_a320ea7238e35e42982513e0e9b263a53}} 
+\index{DT::AudioSource@{DT::AudioSource}!stop@{stop}}
+\index{stop@{stop}!DT::AudioSource@{DT::AudioSource}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void DT\+::\+Audio\+Source\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stop the currently playing sound. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Ducktape/include/\+Ducktape/audio/\mbox{\hyperlink{audiosource_8h}{audiosource.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,94 @@
+\hypertarget{class_d_t_1_1_camera}{}\doxysection{DT\+::Camera Class Reference}
+\label{class_d_t_1_1_camera}\index{DT::Camera@{DT::Camera}}
+
+
+{\ttfamily \#include $<$camera.\+h$>$}
+
+
+
+Inherits \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{DT\+::\+Behaviour\+Script}}.
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_camera_a53a5374a323e7539dcd1de13884c4a3b}{tick}} ()
+\begin{DoxyCompactList}\small\item\em Called on every frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_camera_af3ddd8c166700b319c88d99c36a363a1}{unit\+To\+Pixel}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos)
+\item 
+static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_camera_a753ec84181f64701145c78dba5f0d008}{pixel\+To\+Unit}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos)
+\item 
+static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_camera_a87710ecf8915bb7a3e617a8c4628ea88}{screen\+To\+World\+Pos}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos)
+\item 
+static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_camera_aed6e470c3bb30d92625ae4ca89cf56b3}{world\+To\+Screen\+Pos}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos)
+\item 
+static float \mbox{\hyperlink{class_d_t_1_1_camera_af24896fa1aece395119ff89fbe5767f5}{pixel\+Per\+Unit}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_camera_a2f88a5e6cb4d5efa09f1d362ff92a99a}{size}} = 1.\+0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_camera_af24896fa1aece395119ff89fbe5767f5}\label{class_d_t_1_1_camera_af24896fa1aece395119ff89fbe5767f5}} 
+\index{DT::Camera@{DT::Camera}!pixelPerUnit@{pixelPerUnit}}
+\index{pixelPerUnit@{pixelPerUnit}!DT::Camera@{DT::Camera}}
+\doxysubsubsection{\texorpdfstring{pixelPerUnit()}{pixelPerUnit()}}
+{\footnotesize\ttfamily static float DT\+::\+Camera\+::pixel\+Per\+Unit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_d_t_1_1_camera_a753ec84181f64701145c78dba5f0d008}\label{class_d_t_1_1_camera_a753ec84181f64701145c78dba5f0d008}} 
+\index{DT::Camera@{DT::Camera}!pixelToUnit@{pixelToUnit}}
+\index{pixelToUnit@{pixelToUnit}!DT::Camera@{DT::Camera}}
+\doxysubsubsection{\texorpdfstring{pixelToUnit()}{pixelToUnit()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Camera\+::pixel\+To\+Unit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_d_t_1_1_camera_a87710ecf8915bb7a3e617a8c4628ea88}\label{class_d_t_1_1_camera_a87710ecf8915bb7a3e617a8c4628ea88}} 
+\index{DT::Camera@{DT::Camera}!screenToWorldPos@{screenToWorldPos}}
+\index{screenToWorldPos@{screenToWorldPos}!DT::Camera@{DT::Camera}}
+\doxysubsubsection{\texorpdfstring{screenToWorldPos()}{screenToWorldPos()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Camera\+::screen\+To\+World\+Pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_d_t_1_1_camera_a53a5374a323e7539dcd1de13884c4a3b}\label{class_d_t_1_1_camera_a53a5374a323e7539dcd1de13884c4a3b}} 
+\index{DT::Camera@{DT::Camera}!tick@{tick}}
+\index{tick@{tick}!DT::Camera@{DT::Camera}}
+\doxysubsubsection{\texorpdfstring{tick()}{tick()}}
+{\footnotesize\ttfamily void DT\+::\+Camera\+::tick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Called on every frame. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_d_t_1_1_behaviour_script_a63b3755a94f4c1d88269a7dcc0921c0a}{DT\+::\+Behaviour\+Script}}.
+
+\mbox{\Hypertarget{class_d_t_1_1_camera_af3ddd8c166700b319c88d99c36a363a1}\label{class_d_t_1_1_camera_af3ddd8c166700b319c88d99c36a363a1}} 
+\index{DT::Camera@{DT::Camera}!unitToPixel@{unitToPixel}}
+\index{unitToPixel@{unitToPixel}!DT::Camera@{DT::Camera}}
+\doxysubsubsection{\texorpdfstring{unitToPixel()}{unitToPixel()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Camera\+::unit\+To\+Pixel (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_d_t_1_1_camera_aed6e470c3bb30d92625ae4ca89cf56b3}\label{class_d_t_1_1_camera_aed6e470c3bb30d92625ae4ca89cf56b3}} 
+\index{DT::Camera@{DT::Camera}!worldToScreenPos@{worldToScreenPos}}
+\index{worldToScreenPos@{worldToScreenPos}!DT::Camera@{DT::Camera}}
+\doxysubsubsection{\texorpdfstring{worldToScreenPos()}{worldToScreenPos()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Camera\+::world\+To\+Screen\+Pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_camera_a2f88a5e6cb4d5efa09f1d362ff92a99a}\label{class_d_t_1_1_camera_a2f88a5e6cb4d5efa09f1d362ff92a99a}} 
+\index{DT::Camera@{DT::Camera}!size@{size}}
+\index{size@{size}!DT::Camera@{DT::Camera}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily float DT\+::\+Camera\+::size = 1.\+0}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Ducktape/include/\+Ducktape/rendering/\mbox{\hyperlink{camera_8h}{camera.\+h}}\end{DoxyCompactItemize}

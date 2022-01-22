@@ -1,0 +1,108 @@
+\hypertarget{rigidbody_8h_source}{}\doxysection{rigidbody.\+h}
+\label{rigidbody_8h_source}\index{Ducktape/include/Ducktape/physics/rigidbody.h@{Ducktape/include/Ducktape/physics/rigidbody.h}}
+\mbox{\hyperlink{rigidbody_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef RIGIDBODY2D\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define RIGIDBODY2D\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <box2d/box2d.h>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{behaviourscript_8h}{Ducktape/engine/behaviourscript.h}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{entity_8h}{Ducktape/engine/entity.h}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physics_8h}{Ducktape/physics/physics.h}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{transform_8h}{Ducktape/engine/transform.h}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{35 \{}
+\DoxyCodeLine{36     \textcolor{keyword}{enum} \mbox{\hyperlink{namespace_d_t_a3f92a9bc073971c162a8e4ea394443ca}{BodyType}}}
+\DoxyCodeLine{37     \{}
+\DoxyCodeLine{38         \mbox{\hyperlink{namespace_d_t_a3f92a9bc073971c162a8e4ea394443caaff1036486a57fe5c8edfbc1ddfa49257}{staticBody}} = 0,}
+\DoxyCodeLine{39         \mbox{\hyperlink{namespace_d_t_a3f92a9bc073971c162a8e4ea394443caa09ef40075177c9f852ed9088cd69e2cd}{kinematicBody}},}
+\DoxyCodeLine{40         \mbox{\hyperlink{namespace_d_t_a3f92a9bc073971c162a8e4ea394443caa78e75a1e8601b91488bdb438f524fb96}{dynamicBody}}}
+\DoxyCodeLine{41     \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keyword}{class }\mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{BehaviourScript}}}
+\DoxyCodeLine{44     \{}
+\DoxyCodeLine{45     \textcolor{keyword}{private}:}
+\DoxyCodeLine{46         \textcolor{keywordtype}{float} gravityScale = 1.0f;}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keyword}{public}:}
+\DoxyCodeLine{49         b2Body *\mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_af1bd2dd529e854c1ca1c4ddaef1c75bf}{body}};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51         \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_af2a74716da03473835536fb7354d7095}{Rigidbody2D}}();}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a8a3e471b3d83deb869d8430f0a0a4191}{tick}}();}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55         \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a6337535191c5df854b36c6876c7f2290}{getVelocity}}();}
+\DoxyCodeLine{56         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a19d11e546a1ee2723a9f2fca03335aee}{setVelocity}}(\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} val);}
+\DoxyCodeLine{57         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a443934986be9c3c0142e91fb372fe2be}{getAngularVelocity}}();}
+\DoxyCodeLine{58         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_aa86320098e08e281cdea34a3ab2f69f3}{setAngularVelocity}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{59         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a70e5f2efa4d11bdbd77bbc8d756ad31b}{getMass}}();}
+\DoxyCodeLine{60         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_ac7e0fd5c13d0fecf76d28fed034dd63a}{setMass}}(\textcolor{keywordtype}{float} mass);}
+\DoxyCodeLine{61         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a9ad00bb6fbb3ea84f89f4e8636d41546}{setCenterOfMass}}(\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} center);}
+\DoxyCodeLine{62         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_ad41fb0ad987cb396ff260fea16750d7b}{getInertia}}();}
+\DoxyCodeLine{63         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_ac836c4ccfb1577f5f27b0a67da2ab7fa}{getDamping}}();}
+\DoxyCodeLine{64         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a1609526b5b6b228f7b78ca670f85ce55}{setDamping}}(\textcolor{keywordtype}{float} damping);}
+\DoxyCodeLine{65         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_abc1ecdfa4204589f7d9eba9cc4401b6d}{getAngularDamping}}();}
+\DoxyCodeLine{66         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a722d91dd798e1b7da97d947e90984f4f}{setAngularDamping}}(\textcolor{keywordtype}{float} damping);}
+\DoxyCodeLine{67         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a047702191c7c79daa4e642653b60561d}{getGravityScale}}();}
+\DoxyCodeLine{68         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a59d9fd397e14d5b3aa762388638b09ee}{setGravityScale}}(\textcolor{keywordtype}{float} scale);}
+\DoxyCodeLine{69         \mbox{\hyperlink{namespace_d_t_a3f92a9bc073971c162a8e4ea394443ca}{BodyType}} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_ab78c5e359729e97f5622f17c71a595f5}{getType}}();}
+\DoxyCodeLine{70         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_adfa83ec1a1d6e0cb7115f822515e32cf}{setType}}(\mbox{\hyperlink{namespace_d_t_a3f92a9bc073971c162a8e4ea394443ca}{BodyType}} type);}
+\DoxyCodeLine{71         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a940a298dd838dadda73686eac8775e34}{getContinous}}();}
+\DoxyCodeLine{72         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a457396be222fccbe19640ff2e90f910a}{setContinous}}(\textcolor{keywordtype}{bool} flag);}
+\DoxyCodeLine{73         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a0b37140107fa512e07ba964de82b6229}{getSleepingAllowed}}();}
+\DoxyCodeLine{74         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a699bccd1a4ae014529c897615f6ee600}{setSleepingAllowed}}(\textcolor{keywordtype}{bool} flag);}
+\DoxyCodeLine{75         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_aa5bf3dbae0b715578dfb746cb9d9cad8}{getAwake}}();}
+\DoxyCodeLine{76         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_ac516bc890baec36927b374d559339bb7}{setAwake}}(\textcolor{keywordtype}{bool} flag);}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a4a06f9e30cb88fe4011e6730daeebb08}{OnEnable}}()}
+\DoxyCodeLine{79         \{}
+\DoxyCodeLine{80             \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_af1bd2dd529e854c1ca1c4ddaef1c75bf}{body}}-\/>SetEnabled(\textcolor{keyword}{true});}
+\DoxyCodeLine{81         \}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a3338f1bbd34463b8e74ab6b7917e3ee8}{OnDisable}}()}
+\DoxyCodeLine{84         \{}
+\DoxyCodeLine{85             \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_af1bd2dd529e854c1ca1c4ddaef1c75bf}{body}}-\/>SetEnabled(\textcolor{keyword}{false});}
+\DoxyCodeLine{86         \}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_adb36d93126310e46e07c4a96241f934c}{getFixedRotation}}();}
+\DoxyCodeLine{89         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_aec1f6c9961c7156e9f9c077a95b11f1d}{setFixedRotation}}(\textcolor{keywordtype}{bool} flag);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a25c98db6d878e1b6a59c74a2bbde7201}{applyForce}}(\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} force);}
+\DoxyCodeLine{92         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a7d224f40a97ab7c86ac75d92690a4564}{applyForceAtPoint}}(\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} force, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} point);}
+\DoxyCodeLine{93         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_aad64f7f906082810d15381616e5ba6e0}{applyTorque}}(\textcolor{keywordtype}{float} torque);}
+\DoxyCodeLine{94         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a4ffeaa785bd2713795cc4d61002dfe9f}{applyLinearImpulse}}(\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} impulse);}
+\DoxyCodeLine{95         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_af970ac43b3763f6535c5e1f7f5930c09}{applyLinearImpulseAtPoint}}(\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} impulse, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} point);}
+\DoxyCodeLine{96         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_ac9b43c3c242ee16843ff3e53fce4b267}{applyAngularImpulse}}(\textcolor{keywordtype}{float} impulse);}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d_a20c2fa7b1e40e7c700a5b854c12c5168}{onDestroy}}();}
+\DoxyCodeLine{99     \};}
+\DoxyCodeLine{100 \}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,77 @@
+\hypertarget{hingejoint_8h_source}{}\doxysection{hingejoint.\+h}
+\label{hingejoint_8h_source}\index{Ducktape/include/Ducktape/physics/hingejoint.h@{Ducktape/include/Ducktape/physics/hingejoint.h}}
+\mbox{\hyperlink{hingejoint_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef HINGEJOINT\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define HINGEJOINT\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{behaviourscript_8h}{Ducktape/engine/behaviourscript.h}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <box2d/box2d.h>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rigidbody_8h}{Ducktape/physics/rigidbody.h}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{entity_8h}{Ducktape/engine/entity.h}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physics_8h}{Ducktape/physics/physics.h}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{35 \{}
+\DoxyCodeLine{36     \textcolor{keyword}{class }\mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d}{HingeJoint2D}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{BehaviourScript}}}
+\DoxyCodeLine{37     \{}
+\DoxyCodeLine{38     \textcolor{keyword}{private}:}
+\DoxyCodeLine{39         b2RevoluteJoint *joint;}
+\DoxyCodeLine{40         \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} *rb;}
+\DoxyCodeLine{41         \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} *connectedRigidbody = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keyword}{public}:}
+\DoxyCodeLine{44         \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a8e04fb71fab0f9ee9ae74caa887c6f57}{HingeJoint2D}}();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a168c5113c299b95329d01bd1d62bedc7}{tick}}();}
+\DoxyCodeLine{47         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_ad24e064807895bcf8058c2d43de3c48f}{onDestroy}}();}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a2d1993568812e2f730aaef15f3364875}{getAnchorA}}();}
+\DoxyCodeLine{50         \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a354256c92ffc6d7d5456b2209c38a682}{getAnchorB}}();}
+\DoxyCodeLine{51         \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} *\mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a91d7a459fd32c020a7670a60d68f9764}{getConnectedRigidbody}}();}
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a9804a7bc0bc90eaf34acf658c05f80d7}{setConnectedRigidbody}}(\mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} *rb);}
+\DoxyCodeLine{53         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a91ea74580dd4749f87600d3aae33ba1a}{getReferenceAngle}}();}
+\DoxyCodeLine{54         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a156e44fda67059e0af12f5d25c465042}{getJointAngle}}();}
+\DoxyCodeLine{55         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a2edd5cd3ac03b2693e10b8e3b45fd51f}{getJointSpeed}}();}
+\DoxyCodeLine{56         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a3dd38714b5052d48577bb7c5c833b4aa}{getLimitEnabled}}();}
+\DoxyCodeLine{57         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_abc3dcb2c66cac806a4bdc9c55ee91128}{setLimitEnabled}}(\textcolor{keywordtype}{bool} flag);}
+\DoxyCodeLine{58         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a76b648392ee95a78e87b2ebaca886f47}{getLowerLimit}}();}
+\DoxyCodeLine{59         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_ab968f8f09c471301d2cc2f0cbb55214e}{getUpperLimit}}();}
+\DoxyCodeLine{60         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a16f2f07e62b568a6414eafae200770c6}{setLowerLimit}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{61         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a68c5da6178a9f20ff18d75459456b548}{setHigherLimit}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{62         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a16fe92f5ebbfc74079aefc2fe060f5fb}{getMotorEnabled}}();}
+\DoxyCodeLine{63         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_ab87306dbd5b4972141377f1d685f0465}{setMotorEnabled}}(\textcolor{keywordtype}{bool} flag);}
+\DoxyCodeLine{64         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a6e386e6912a17e5f27b831e274850627}{setMotorSpeed}}(\textcolor{keywordtype}{float} speed);}
+\DoxyCodeLine{65         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a7b624849b60912d4d72f15e4fb1a4e8c}{getMotorSpeed}}();}
+\DoxyCodeLine{66         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a3b5771904b4076bf1145f15d335cfb43}{setMaxMotorTorque}}(\textcolor{keywordtype}{float} torque);}
+\DoxyCodeLine{67         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a1a7bb85dfaf88a872586a2beadadbdf9}{getMaxMotorTorque}}();}
+\DoxyCodeLine{68     \};}
+\DoxyCodeLine{69 \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

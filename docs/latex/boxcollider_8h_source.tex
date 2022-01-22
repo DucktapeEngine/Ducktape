@@ -1,0 +1,64 @@
+\hypertarget{boxcollider_8h_source}{}\doxysection{boxcollider.\+h}
+\label{boxcollider_8h_source}\index{Ducktape/include/Ducktape/physics/boxcollider.h@{Ducktape/include/Ducktape/physics/boxcollider.h}}
+\mbox{\hyperlink{boxcollider_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef BOXCOLLIDER2D\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define BOXCOLLIDER2D\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <box2d/box2d.h>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{entity_8h}{Ducktape/engine/entity.h}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{behaviourscript_8h}{Ducktape/engine/behaviourscript.h}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rigidbody_8h}{Ducktape/physics/rigidbody.h}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{34 \{}
+\DoxyCodeLine{35     \textcolor{keyword}{class }\mbox{\hyperlink{class_d_t_1_1_box_collider2_d}{BoxCollider2D}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{BehaviourScript}}}
+\DoxyCodeLine{36     \{}
+\DoxyCodeLine{37     \textcolor{keyword}{private}:}
+\DoxyCodeLine{38         \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} *rb;}
+\DoxyCodeLine{39         b2Fixture *fixture;}
+\DoxyCodeLine{40         \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} scale = \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}(1.0f, 1.0f);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keyword}{public}:}
+\DoxyCodeLine{43         \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_a48f77d8e965dab15c9444b8cbf097f58}{BoxCollider2D}}();}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_a3e056888b07f44fe4366dfec25effb94}{tick}}();}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_a2dcb099b20dd8ca1f495897a7f6e234e}{getScale}}();}
+\DoxyCodeLine{48         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_a8e627f11d15752015665a4c3b52f5a58}{getDensity}}();}
+\DoxyCodeLine{49         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_af2b9cc9569d46b7b4bb7714d4947fcc0}{getFriction}}();}
+\DoxyCodeLine{50         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_af86ccb061145bf343325e1d800090f62}{getIsTrigger}}();}
+\DoxyCodeLine{51         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_a8e7e447fa1e24fadde5e852044b04d33}{setScale}}(\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} val);}
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_a6e4610deb284f985f85172c02eeb5e22}{setDensity}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{53         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_a2c2eb9fdd05fa938ea183409287d19d4}{setFriction}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{54         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_box_collider2_d_af49c08f5695eec4337c7c090f856992f}{setIsTrigger}}(\textcolor{keywordtype}{bool} val);}
+\DoxyCodeLine{55     \};}
+\DoxyCodeLine{56 \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

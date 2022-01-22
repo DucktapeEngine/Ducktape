@@ -1,0 +1,89 @@
+\hypertarget{audiosource_8h_source}{}\doxysection{audiosource.\+h}
+\label{audiosource_8h_source}\index{Ducktape/include/Ducktape/audio/audiosource.h@{Ducktape/include/Ducktape/audio/audiosource.h}}
+\mbox{\hyperlink{audiosource_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef AUDIOSOURCE\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define AUDIOSOURCE\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{behaviourscript_8h}{Ducktape/engine/behaviourscript.h}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{debug_8h}{Ducktape/engine/debug.h}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <SFML/Audio.hpp>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{34 \{}
+\DoxyCodeLine{47     \textcolor{keyword}{class }\mbox{\hyperlink{class_d_t_1_1_audio_source}{AudioSource}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{BehaviourScript}}}
+\DoxyCodeLine{48     \{}
+\DoxyCodeLine{49     \textcolor{keyword}{private}:}
+\DoxyCodeLine{50         \textcolor{keywordtype}{bool} isMusic = \textcolor{keyword}{false};}
+\DoxyCodeLine{51         std::string path;}
+\DoxyCodeLine{52         sf::SoundBuffer buffer;}
+\DoxyCodeLine{53         sf::Sound sound;}
+\DoxyCodeLine{54         sf::Music music;}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keyword}{public}:}
+\DoxyCodeLine{66         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_ac0fe6aeae0ea72fd7f19761f9efe5375}{loadSound}}(std::string loadPath);}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{78         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_abf4e26963822d4bb13e98c5662d35f3e}{loadMusic}}(std::string loadPath);}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{83         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_ac6e335c512ea35c5c5f1a8cbf0acfcba}{pause}}();}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{88         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_a70c1208a517869e0cdcff7eaed1f7f12}{play}}();}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{93         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_a320ea7238e35e42982513e0e9b263a53}{stop}}();}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{100         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_ae5c0698320ce6611858e64f13bc61cce}{setSeek}}(\textcolor{keywordtype}{float} seconds);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{107         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_audio_source_aa791ec7840c243e5761bf6e5e9608e09}{getSeek}}();}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{114         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_a0a301a01b353a1c3adb4d9889ebaa0da}{setLoop}}(\textcolor{keywordtype}{bool} loop);}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{121         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_audio_source_a639c0aa5ea931c218b1f6f5e414bfd58}{getLoop}}();}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{128         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_af379bc51d2b60bbc1d908e5cad449abe}{setPitch}}(\textcolor{keywordtype}{float} pitch);}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{135         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_audio_source_ae9a3cca87c2c9a35510679723eb27d23}{getPitch}}();}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{142         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_ac16ea411df4ace6cdbda8d14d7d2a090}{setVolume}}(\textcolor{keywordtype}{float} volume);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{149         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_audio_source_a7c39b0ff541ae2a233430a19e11760b1}{getVolume}}();}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{157         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_a6be177d7a1b9a4b662cd4d571550d1f7}{setDistance}}(\textcolor{keywordtype}{float} distance);}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{165         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_audio_source_ab29ff74eefe8ed593f03b7712f663809}{getDistance}}();}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{172         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_audio_source_a958d5d2e48f2420388365e34a62dd8d6}{setSpatial}}(\textcolor{keywordtype}{bool} spatial);}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{179         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_audio_source_aada7cd8363afb73827e5906389889185}{getSpatial}}();}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{184         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_behaviour_script_a49ab19ee2b75b23c783b11af47a78289}{onApplicationClose}}();}
+\DoxyCodeLine{188     \};}
+\DoxyCodeLine{189 \}}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

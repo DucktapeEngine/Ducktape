@@ -1,0 +1,63 @@
+\hypertarget{circlecollider_8h_source}{}\doxysection{circlecollider.\+h}
+\label{circlecollider_8h_source}\index{Ducktape/include/Ducktape/physics/circlecollider.h@{Ducktape/include/Ducktape/physics/circlecollider.h}}
+\mbox{\hyperlink{circlecollider_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef CIRCLECOLLIDER2D\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define CIRCLECOLLIDER2D\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{behaviourscript_8h}{Ducktape/engine/behaviourscript.h}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rigidbody_8h}{Ducktape/physics/rigidbody.h}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{entity_8h}{Ducktape/engine/entity.h}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{33 \{}
+\DoxyCodeLine{34     \textcolor{keyword}{class }\mbox{\hyperlink{class_d_t_1_1_circle_collider2_d}{CircleCollider2D}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{BehaviourScript}}}
+\DoxyCodeLine{35     \{}
+\DoxyCodeLine{36     \textcolor{keyword}{private}:}
+\DoxyCodeLine{37         \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} *rb;}
+\DoxyCodeLine{38         b2Fixture *fixture;}
+\DoxyCodeLine{39         \textcolor{keywordtype}{float} radius = 1.0f;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keyword}{public}:}
+\DoxyCodeLine{42         \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_a10a96d4e0dc8229adfa47b4506e199a6}{CircleCollider2D}}();}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_a28538abc65b1d3cc8444212498c1b412}{tick}}();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_a3482d78e0538411fedd80ef157cb484d}{getRadius}}();}
+\DoxyCodeLine{47         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_a429e8f6eaa0b11f6b4a58c84f282cf86}{getDensity}}();}
+\DoxyCodeLine{48         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_af31f17e1a2512b6a0bd124537afca48c}{getFriction}}();}
+\DoxyCodeLine{49         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_ad6f20cd70ed6079071c026b3e8515655}{getIsTrigger}}();}
+\DoxyCodeLine{50         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_acbba4d23760ad6167ec3ca9afa66a0b6}{setRadius}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{51         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_a7a84820ed4a12bee6a137e4d804d02de}{setDensity}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_af848fbd92f2604be59bff29821eb83d2}{setFriction}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{53         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_circle_collider2_d_a119122e78a6f1ecca3b8821a05739f45}{setIsTrigger}}(\textcolor{keywordtype}{bool} val);}
+\DoxyCodeLine{54     \};}
+\DoxyCodeLine{55 \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

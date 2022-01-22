@@ -1,0 +1,64 @@
+\hypertarget{polygoncollider_8h_source}{}\doxysection{polygoncollider.\+h}
+\label{polygoncollider_8h_source}\index{Ducktape/include/Ducktape/physics/polygoncollider.h@{Ducktape/include/Ducktape/physics/polygoncollider.h}}
+\mbox{\hyperlink{polygoncollider_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef POLYGONCOLLIDER2D\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define POLYGONCOLLIDER2D\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <box2d/box2d.h>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{behaviourscript_8h}{Ducktape/engine/behaviourscript.h}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rigidbody_8h}{Ducktape/physics/rigidbody.h}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{entity_8h}{Ducktape/engine/entity.h}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{34 \{}
+\DoxyCodeLine{35     \textcolor{keyword}{class }\mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d}{PolygonCollider2D}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{BehaviourScript}}}
+\DoxyCodeLine{36     \{}
+\DoxyCodeLine{37     \textcolor{keyword}{private}:}
+\DoxyCodeLine{38         \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} *rb;}
+\DoxyCodeLine{39         b2Fixture *fixture;}
+\DoxyCodeLine{40         std::vector<Vector2> points;}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keyword}{public}:}
+\DoxyCodeLine{43         \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_a52d93febc20c30da7575213598588c13}{PolygonCollider2D}}();}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_a725b74af87f2dd68304d9510e7f5dcab}{tick}}();}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         std::vector<Vector2> \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_a471f98a2585a85c46a149d737ffb120b}{getPoints}}();}
+\DoxyCodeLine{48         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_a7f768b05aa16b336a3738f065343a667}{getDensity}}();}
+\DoxyCodeLine{49         \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_aaad519a092977fb80d69aa6409a802e6}{getFriction}}();}
+\DoxyCodeLine{50         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_abe39a3e74ca1aed963e458f9cbe3f6df}{getIsTrigger}}();}
+\DoxyCodeLine{51         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_a7154bb5c07433bf44a1b5cfa863fce32}{setPoints}}(std::vector<Vector2> points);}
+\DoxyCodeLine{52         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_a915aef732be86716d825a1141072e40b}{setDensity}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{53         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_a1e734741268678e9ac5f8feeb4ff93b4}{setFriction}}(\textcolor{keywordtype}{float} val);}
+\DoxyCodeLine{54         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_t_1_1_polygon_collider2_d_af269f69b52dba4bde506a33535595a65}{setIsTrigger}}(\textcolor{keywordtype}{bool} val);}
+\DoxyCodeLine{55     \};}
+\DoxyCodeLine{56 \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

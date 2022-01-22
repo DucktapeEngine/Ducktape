@@ -1,0 +1,85 @@
+\hypertarget{ducktape_8h_source}{}\doxysection{ducktape.\+h}
+\label{ducktape_8h_source}\index{Ducktape/include/Ducktape/ducktape.h@{Ducktape/include/Ducktape/ducktape.h}}
+\mbox{\hyperlink{ducktape_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{MIT License}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{Copyright (c) 2022 Ducktape}}
+\DoxyCodeLine{5 \textcolor{comment}{}}
+\DoxyCodeLine{6 \textcolor{comment}{Permission is hereby granted, free of charge, to any person obtaining a copy}}
+\DoxyCodeLine{7 \textcolor{comment}{of this software and associated documentation files (the "{}Software"{}), to deal}}
+\DoxyCodeLine{8 \textcolor{comment}{in the Software without restriction, including without limitation the rights}}
+\DoxyCodeLine{9 \textcolor{comment}{to use, copy, modify, merge, publish, distribute, sublicense, and/or sell}}
+\DoxyCodeLine{10 \textcolor{comment}{copies of the Software, and to permit persons to whom the Software is}}
+\DoxyCodeLine{11 \textcolor{comment}{furnished to do so, subject to the following conditions:}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{The above copyright notice and this permission notice shall be included in all}}
+\DoxyCodeLine{14 \textcolor{comment}{copies or substantial portions of the Software.}}
+\DoxyCodeLine{15 \textcolor{comment}{}}
+\DoxyCodeLine{16 \textcolor{comment}{THE SOFTWARE IS PROVIDED "{}AS IS"{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR}}
+\DoxyCodeLine{17 \textcolor{comment}{IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,}}
+\DoxyCodeLine{18 \textcolor{comment}{FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE}}
+\DoxyCodeLine{19 \textcolor{comment}{AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER}}
+\DoxyCodeLine{20 \textcolor{comment}{LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,}}
+\DoxyCodeLine{21 \textcolor{comment}{OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE}}
+\DoxyCodeLine{22 \textcolor{comment}{SOFTWARE.}}
+\DoxyCodeLine{23 \textcolor{comment}{*/}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef DUCKTAPE\_H}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define DUCKTAPE\_H}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <box2d/box2d.h>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mathf_8h}{engine/mathf.h}}"{}}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{vector2_8h}{engine/vector2.h}}"{}}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{dt__time_8h}{engine/dt\_time.h}}"{}}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{color_8h}{engine/color.h}}"{}}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{debug_8h}{engine/debug.h}}"{}}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{projectsettings_8h}{engine/projectsettings.h}}"{}}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{application_8h}{engine/application.h}}"{}}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{39 \{}
+\DoxyCodeLine{40     \textcolor{keyword}{class }Entity;}
+\DoxyCodeLine{41 \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{collision_8h}{physics/collision.h}}"{}}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{behaviourscript_8h}{engine/behaviourscript.h}}"{}}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{transform_8h}{engine/transform.h}}"{}}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{scenemanager_8h}{engine/scenemanager.h}}"{}}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{entity_8h}{engine/entity.h}}"{}}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{input_8h}{engine/input.h}}"{}}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{camera_8h}{rendering/camera.h}}"{}}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{contactlistener_8h}{physics/contactlistener.h}}"{}}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{physics_8h}{physics/physics.h}}"{}}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{renderer_8h}{rendering/renderer.h}}"{}}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spriterenderer_8h}{rendering/spriterenderer.h}}"{}}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{56 \{}
+\DoxyCodeLine{57     \textcolor{keyword}{class }RevoluteJoint2D;}
+\DoxyCodeLine{58     \textcolor{keyword}{class }DistanceJoint2D;}
+\DoxyCodeLine{59     \textcolor{keyword}{class }FrictionJoint2D;}
+\DoxyCodeLine{60 \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{rigidbody_8h}{physics/rigidbody.h}}"{}}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{boxcollider_8h}{physics/boxcollider.h}}"{}}}
+\DoxyCodeLine{64 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{circlecollider_8h}{physics/circlecollider.h}}"{}}}
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{edgecollider_8h}{physics/edgecollider.h}}"{}}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{polygoncollider_8h}{physics/polygoncollider.h}}"{}}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{scene_8h}{engine/scene.h}}"{}}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{random_8h}{engine/random.h}}"{}}}
+\DoxyCodeLine{69 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{distancejoint_8h}{physics/distancejoint.h}}"{}}}
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{hingejoint_8h}{physics/hingejoint.h}}"{}}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{frictionjoint_8h}{physics/frictionjoint.h}}"{}}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{audiosource_8h}{audio/audiosource.h}}"{}}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_d_t}{DT}}}
+\DoxyCodeLine{75 \{}
+\DoxyCodeLine{76     \textcolor{keywordtype}{void} \mbox{\hyperlink{namespace_d_t_ab6d0ef5811c77d4762bdeadbf6bc3030}{update}}();}
+\DoxyCodeLine{77 \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

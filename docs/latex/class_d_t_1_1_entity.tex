@@ -1,0 +1,352 @@
+\hypertarget{class_d_t_1_1_entity}{}\doxysection{DT\+::Entity Class Reference}
+\label{class_d_t_1_1_entity}\index{DT::Entity@{DT::Entity}}
+
+
+Base class for all entities.  
+
+
+
+
+{\ttfamily \#include $<$entity.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_t_1_1_entity_a8db7a946125709197417262ec903d6bd}{Entity}} ()
+\item 
+\mbox{\hyperlink{class_d_t_1_1_entity_a96d32b3bea1b7d809ad3defc183dcee5}{Entity}} (std\+::string entity\+Name)
+\item 
+\mbox{\hyperlink{class_d_t_1_1_entity_a8c9cf9bd390cbd0b24d14c6697c974df}{Entity}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos, float rot, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} scl)
+\item 
+\mbox{\hyperlink{class_d_t_1_1_entity_a6c3bcf5598df2f146b7cb94be94cda99}{Entity}} (std\+::string entity\+Name, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos, float rot, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} scl)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_ad206780612ac5d5633210b3afdb9ca4d}{add\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Adds a component to the entity. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_ad4c9d5be4edf4ef096afc5a5b2021a0b}{get\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Gets a component from the entity. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{class_d_t_1_1_entity_a4eed72f85f4ece4e0c5f9db3195f3c3b}{remove\+Component}} ()
+\begin{DoxyCompactList}\small\item\em Removes a component from the entity. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_t_1_1_entity_a35211213efbb9f9298fd179aa985b643}{remove\+Component}} (\mbox{\hyperlink{class_d_t_1_1_behaviour_script}{Behaviour\+Script}} $\ast$check)
+\begin{DoxyCompactList}\small\item\em Remove a component using a pointer to the component. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_entity_a46c9d7b8fa78bcae078422c5eeb0ab77}{destroy}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the entity. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_entity_a55677a22623026a811d974b2d36cd8ac}{set\+Enabled}} (bool \mbox{\hyperlink{class_d_t_1_1_entity_a2bf61795e41a3f2481809bf35ba10c33}{is\+Enabled}})
+\begin{DoxyCompactList}\small\item\em Enable/\+Disable the entity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_a1af63f82d408712e3c4ea7180a09c07d}{find}} (std\+::string entity\+Name)
+\begin{DoxyCompactList}\small\item\em Finds an \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} in the current scene by name. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_a599ee16d939efad56db652551aa13519}{instantiate}} ()
+\begin{DoxyCompactList}\small\item\em Creates a new entity in the current scene. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_a4f4545eebbbb67199caee839eec246aa}{instantiate}} (std\+::string entity\+Name)
+\begin{DoxyCompactList}\small\item\em Creates a new entity in the current scene. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_a90e8caf00ee8d7908af81a37e994c233}{instantiate}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos, float rot, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} scl)
+\begin{DoxyCompactList}\small\item\em Creates a new entity in the current scene. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_ab3f130943f5d67f85487cbc532fa0f03}{instantiate}} (std\+::string entity\+Name, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} pos, float rot, \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} scl)
+\begin{DoxyCompactList}\small\item\em Creates a new entity in the current scene. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_d_t_1_1_entity_a2bf61795e41a3f2481809bf35ba10c33}{is\+Enabled}} = true
+\begin{DoxyCompactList}\small\item\em If the entity is enabled or not. You may disable an entity to stop the components on it from being executed using \mbox{\hyperlink{class_d_t_1_1_entity_a55677a22623026a811d974b2d36cd8ac}{Entity\+::set\+Enabled()}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_d_t_1_1_transform}{Transform}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_a35f5ec6c8babd17c51fc9b7a63c19740}{transform}}
+\begin{DoxyCompactList}\small\item\em The transform component attached to this entity. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_t_1_1_entity_a9583fe40b481ea001652bf157a2b1085}{is\+Destroyed}} = false
+\begin{DoxyCompactList}\small\item\em If the entity has been destroyed or not. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_d_t_1_1_entity_a1332c32707addb122db805c20245f4b1}{name}} = \char`\"{}New \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}}\char`\"{}
+\begin{DoxyCompactList}\small\item\em The name of the entity. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{Behaviour\+Script}} $\ast$ $>$ \mbox{\hyperlink{class_d_t_1_1_entity_a2efcb7938a27a43a0438bfb2bc9c9886}{components}}
+\begin{DoxyCompactList}\small\item\em The list of components attached to this entity. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_d_t_1_1_scene}{Scene}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_entity_ae27cb20aeeb4352d128a552c4703da4b}{scene}}
+\begin{DoxyCompactList}\small\item\em The scene that this entity belongs to. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all entities. 
+
+An entity is a game object in the game world. You may attach or remove components to an entity to alter its behaviour. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a8db7a946125709197417262ec903d6bd}\label{class_d_t_1_1_entity_a8db7a946125709197417262ec903d6bd}} 
+\index{DT::Entity@{DT::Entity}!Entity@{Entity}}
+\index{Entity@{Entity}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{Entity()}{Entity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily DT\+::\+Entity\+::\+Entity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a96d32b3bea1b7d809ad3defc183dcee5}\label{class_d_t_1_1_entity_a96d32b3bea1b7d809ad3defc183dcee5}} 
+\index{DT::Entity@{DT::Entity}!Entity@{Entity}}
+\index{Entity@{Entity}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{Entity()}{Entity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily DT\+::\+Entity\+::\+Entity (\begin{DoxyParamCaption}\item[{std\+::string}]{entity\+Name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a8c9cf9bd390cbd0b24d14c6697c974df}\label{class_d_t_1_1_entity_a8c9cf9bd390cbd0b24d14c6697c974df}} 
+\index{DT::Entity@{DT::Entity}!Entity@{Entity}}
+\index{Entity@{Entity}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{Entity()}{Entity()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily DT\+::\+Entity\+::\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos,  }\item[{float}]{rot,  }\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{scl }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a6c3bcf5598df2f146b7cb94be94cda99}\label{class_d_t_1_1_entity_a6c3bcf5598df2f146b7cb94be94cda99}} 
+\index{DT::Entity@{DT::Entity}!Entity@{Entity}}
+\index{Entity@{Entity}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{Entity()}{Entity()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily DT\+::\+Entity\+::\+Entity (\begin{DoxyParamCaption}\item[{std\+::string}]{entity\+Name,  }\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos,  }\item[{float}]{rot,  }\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{scl }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_entity_ad206780612ac5d5633210b3afdb9ca4d}\label{class_d_t_1_1_entity_ad206780612ac5d5633210b3afdb9ca4d}} 
+\index{DT::Entity@{DT::Entity}!addComponent@{addComponent}}
+\index{addComponent@{addComponent}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{addComponent()}{addComponent()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ DT\+::\+Entity\+::add\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a component to the entity. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of component to add. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+T$\ast$ Pointer to the component that was added. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a46c9d7b8fa78bcae078422c5eeb0ab77}\label{class_d_t_1_1_entity_a46c9d7b8fa78bcae078422c5eeb0ab77}} 
+\index{DT::Entity@{DT::Entity}!destroy@{destroy}}
+\index{destroy@{destroy}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily void DT\+::\+Entity\+::destroy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy the entity. 
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a1af63f82d408712e3c4ea7180a09c07d}\label{class_d_t_1_1_entity_a1af63f82d408712e3c4ea7180a09c07d}} 
+\index{DT::Entity@{DT::Entity}!find@{find}}
+\index{find@{find}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ DT\+::\+Entity\+::find (\begin{DoxyParamCaption}\item[{std\+::string}]{entity\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Finds an \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} in the current scene by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily Entity$\ast$} Pointer to the entity that was found, nullptr if no entity was found. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_ad4c9d5be4edf4ef096afc5a5b2021a0b}\label{class_d_t_1_1_entity_ad4c9d5be4edf4ef096afc5a5b2021a0b}} 
+\index{DT::Entity@{DT::Entity}!getComponent@{getComponent}}
+\index{getComponent@{getComponent}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{getComponent()}{getComponent()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ DT\+::\+Entity\+::get\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets a component from the entity. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of component to get. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+T$\ast$ Pointer to the component that was found, if component is not attached to entity, nullptr is returned. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a599ee16d939efad56db652551aa13519}\label{class_d_t_1_1_entity_a599ee16d939efad56db652551aa13519}} 
+\index{DT::Entity@{DT::Entity}!instantiate@{instantiate}}
+\index{instantiate@{instantiate}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{instantiate()}{instantiate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ DT\+::\+Entity\+::instantiate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new entity in the current scene. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily Entity$\ast$} Pointer to the entity that was created. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a4f4545eebbbb67199caee839eec246aa}\label{class_d_t_1_1_entity_a4f4545eebbbb67199caee839eec246aa}} 
+\index{DT::Entity@{DT::Entity}!instantiate@{instantiate}}
+\index{instantiate@{instantiate}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{instantiate()}{instantiate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ DT\+::\+Entity\+::instantiate (\begin{DoxyParamCaption}\item[{std\+::string}]{entity\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new entity in the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity\+Name} & The name of the entity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily Entity$\ast$} Pointer to the entity that was created. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_ab3f130943f5d67f85487cbc532fa0f03}\label{class_d_t_1_1_entity_ab3f130943f5d67f85487cbc532fa0f03}} 
+\index{DT::Entity@{DT::Entity}!instantiate@{instantiate}}
+\index{instantiate@{instantiate}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{instantiate()}{instantiate()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ DT\+::\+Entity\+::instantiate (\begin{DoxyParamCaption}\item[{std\+::string}]{entity\+Name,  }\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos,  }\item[{float}]{rot,  }\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{scl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new entity in the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity\+Name} & The name of the entity. \\
+\hline
+{\em pos} & Position of the entity. \\
+\hline
+{\em rot} & Rotation of the entity. \\
+\hline
+{\em scl} & Scale of the entity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily Entity$\ast$} Pointer to the entity that was created. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a90e8caf00ee8d7908af81a37e994c233}\label{class_d_t_1_1_entity_a90e8caf00ee8d7908af81a37e994c233}} 
+\index{DT::Entity@{DT::Entity}!instantiate@{instantiate}}
+\index{instantiate@{instantiate}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{instantiate()}{instantiate()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}} $\ast$ DT\+::\+Entity\+::instantiate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{pos,  }\item[{float}]{rot,  }\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{scl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a new entity in the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & Position of the entity. \\
+\hline
+{\em rot} & Rotation of the entity. \\
+\hline
+{\em scl} & Scale of the entity. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily Entity$\ast$} Pointer to the entity that was created. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a4eed72f85f4ece4e0c5f9db3195f3c3b}\label{class_d_t_1_1_entity_a4eed72f85f4ece4e0c5f9db3195f3c3b}} 
+\index{DT::Entity@{DT::Entity}!removeComponent@{removeComponent}}
+\index{removeComponent@{removeComponent}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{removeComponent()}{removeComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool DT\+::\+Entity\+::remove\+Component (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Removes a component from the entity. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of component to remove. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+If the component was successfully removed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a35211213efbb9f9298fd179aa985b643}\label{class_d_t_1_1_entity_a35211213efbb9f9298fd179aa985b643}} 
+\index{DT::Entity@{DT::Entity}!removeComponent@{removeComponent}}
+\index{removeComponent@{removeComponent}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{removeComponent()}{removeComponent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool DT\+::\+Entity\+::remove\+Component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_behaviour_script}{Behaviour\+Script}} $\ast$}]{check }\end{DoxyParamCaption})}
+
+
+
+Remove a component using a pointer to the component. 
+
+Could be used to remove a specific component from the entity, if multiple components of the same type are attached to the entity. \mbox{\Hypertarget{class_d_t_1_1_entity_a55677a22623026a811d974b2d36cd8ac}\label{class_d_t_1_1_entity_a55677a22623026a811d974b2d36cd8ac}} 
+\index{DT::Entity@{DT::Entity}!setEnabled@{setEnabled}}
+\index{setEnabled@{setEnabled}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{setEnabled()}{setEnabled()}}
+{\footnotesize\ttfamily void DT\+::\+Entity\+::set\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{is\+Enabled }\end{DoxyParamCaption})}
+
+
+
+Enable/\+Disable the entity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+Enabled} & If the entity should be enabled or not. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_entity_a2efcb7938a27a43a0438bfb2bc9c9886}\label{class_d_t_1_1_entity_a2efcb7938a27a43a0438bfb2bc9c9886}} 
+\index{DT::Entity@{DT::Entity}!components@{components}}
+\index{components@{components}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{components}{components}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_d_t_1_1_behaviour_script}{Behaviour\+Script}} $\ast$$>$ DT\+::\+Entity\+::components}
+
+
+
+The list of components attached to this entity. 
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a9583fe40b481ea001652bf157a2b1085}\label{class_d_t_1_1_entity_a9583fe40b481ea001652bf157a2b1085}} 
+\index{DT::Entity@{DT::Entity}!isDestroyed@{isDestroyed}}
+\index{isDestroyed@{isDestroyed}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{isDestroyed}{isDestroyed}}
+{\footnotesize\ttfamily bool DT\+::\+Entity\+::is\+Destroyed = false}
+
+
+
+If the entity has been destroyed or not. 
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a2bf61795e41a3f2481809bf35ba10c33}\label{class_d_t_1_1_entity_a2bf61795e41a3f2481809bf35ba10c33}} 
+\index{DT::Entity@{DT::Entity}!isEnabled@{isEnabled}}
+\index{isEnabled@{isEnabled}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{isEnabled}{isEnabled}}
+{\footnotesize\ttfamily bool DT\+::\+Entity\+::is\+Enabled = true}
+
+
+
+If the entity is enabled or not. You may disable an entity to stop the components on it from being executed using \mbox{\hyperlink{class_d_t_1_1_entity_a55677a22623026a811d974b2d36cd8ac}{Entity\+::set\+Enabled()}}. 
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a1332c32707addb122db805c20245f4b1}\label{class_d_t_1_1_entity_a1332c32707addb122db805c20245f4b1}} 
+\index{DT::Entity@{DT::Entity}!name@{name}}
+\index{name@{name}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily std\+::string DT\+::\+Entity\+::name = \char`\"{}New \mbox{\hyperlink{class_d_t_1_1_entity}{Entity}}\char`\"{}}
+
+
+
+The name of the entity. 
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_ae27cb20aeeb4352d128a552c4703da4b}\label{class_d_t_1_1_entity_ae27cb20aeeb4352d128a552c4703da4b}} 
+\index{DT::Entity@{DT::Entity}!scene@{scene}}
+\index{scene@{scene}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{scene}{scene}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_scene}{Scene}}$\ast$ DT\+::\+Entity\+::scene}
+
+
+
+The scene that this entity belongs to. 
+
+\mbox{\Hypertarget{class_d_t_1_1_entity_a35f5ec6c8babd17c51fc9b7a63c19740}\label{class_d_t_1_1_entity_a35f5ec6c8babd17c51fc9b7a63c19740}} 
+\index{DT::Entity@{DT::Entity}!transform@{transform}}
+\index{transform@{transform}!DT::Entity@{DT::Entity}}
+\doxysubsubsection{\texorpdfstring{transform}{transform}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_transform}{Transform}}$\ast$ DT\+::\+Entity\+::transform}
+
+
+
+The transform component attached to this entity. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Ducktape/include/\+Ducktape/engine/\mbox{\hyperlink{entity_8h}{entity.\+h}}\end{DoxyCompactItemize}

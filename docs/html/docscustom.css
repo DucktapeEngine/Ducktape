@@ -1,0 +1,27 @@
+@media (prefers-color-scheme: dark) {
+    html:not(.light-mode) {
+        --primary-color: #FED900;
+        --side-nav-arrow-hover-opacity: 1;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #FED900; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #FF6C52; 
+}

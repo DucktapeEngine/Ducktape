@@ -1,0 +1,217 @@
+\hypertarget{class_d_t_1_1_hinge_joint2_d}{}\doxysection{DT\+::Hinge\+Joint2D Class Reference}
+\label{class_d_t_1_1_hinge_joint2_d}\index{DT::HingeJoint2D@{DT::HingeJoint2D}}
+
+
+{\ttfamily \#include $<$hingejoint.\+h$>$}
+
+
+
+Inherits \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{DT\+::\+Behaviour\+Script}}.
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a8e04fb71fab0f9ee9ae74caa887c6f57}{Hinge\+Joint2D}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a168c5113c299b95329d01bd1d62bedc7}{tick}} ()
+\begin{DoxyCompactList}\small\item\em Called on every frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_ad24e064807895bcf8058c2d43de3c48f}{on\+Destroy}} ()
+\begin{DoxyCompactList}\small\item\em Triggered when this component is destroyed using \mbox{\hyperlink{class_d_t_1_1_behaviour_script_ade4458a0c0566b402347017ee7825730}{Behaviour\+Script\+::destroy()}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a2d1993568812e2f730aaef15f3364875}{get\+AnchorA}} ()
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a354256c92ffc6d7d5456b2209c38a682}{get\+AnchorB}} ()
+\item 
+\mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a91d7a459fd32c020a7670a60d68f9764}{get\+Connected\+Rigidbody}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a9804a7bc0bc90eaf34acf658c05f80d7}{set\+Connected\+Rigidbody}} (\mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} $\ast$rb)
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a91ea74580dd4749f87600d3aae33ba1a}{get\+Reference\+Angle}} ()
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a156e44fda67059e0af12f5d25c465042}{get\+Joint\+Angle}} ()
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a2edd5cd3ac03b2693e10b8e3b45fd51f}{get\+Joint\+Speed}} ()
+\item 
+bool \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a3dd38714b5052d48577bb7c5c833b4aa}{get\+Limit\+Enabled}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_abc3dcb2c66cac806a4bdc9c55ee91128}{set\+Limit\+Enabled}} (bool flag)
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a76b648392ee95a78e87b2ebaca886f47}{get\+Lower\+Limit}} ()
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_ab968f8f09c471301d2cc2f0cbb55214e}{get\+Upper\+Limit}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a16f2f07e62b568a6414eafae200770c6}{set\+Lower\+Limit}} (float val)
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a68c5da6178a9f20ff18d75459456b548}{set\+Higher\+Limit}} (float val)
+\item 
+bool \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a16fe92f5ebbfc74079aefc2fe060f5fb}{get\+Motor\+Enabled}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_ab87306dbd5b4972141377f1d685f0465}{set\+Motor\+Enabled}} (bool flag)
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a6e386e6912a17e5f27b831e274850627}{set\+Motor\+Speed}} (float speed)
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a7b624849b60912d4d72f15e4fb1a4e8c}{get\+Motor\+Speed}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a3b5771904b4076bf1145f15d335cfb43}{set\+Max\+Motor\+Torque}} (float torque)
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_hinge_joint2_d_a1a7bb85dfaf88a872586a2beadadbdf9}{get\+Max\+Motor\+Torque}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a8e04fb71fab0f9ee9ae74caa887c6f57}\label{class_d_t_1_1_hinge_joint2_d_a8e04fb71fab0f9ee9ae74caa887c6f57}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!HingeJoint2D@{HingeJoint2D}}
+\index{HingeJoint2D@{HingeJoint2D}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{HingeJoint2D()}{HingeJoint2D()}}
+{\footnotesize\ttfamily DT\+::\+Hinge\+Joint2\+D\+::\+Hinge\+Joint2D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a2d1993568812e2f730aaef15f3364875}\label{class_d_t_1_1_hinge_joint2_d_a2d1993568812e2f730aaef15f3364875}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getAnchorA@{getAnchorA}}
+\index{getAnchorA@{getAnchorA}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getAnchorA()}{getAnchorA()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Hinge\+Joint2\+D\+::get\+AnchorA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a354256c92ffc6d7d5456b2209c38a682}\label{class_d_t_1_1_hinge_joint2_d_a354256c92ffc6d7d5456b2209c38a682}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getAnchorB@{getAnchorB}}
+\index{getAnchorB@{getAnchorB}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getAnchorB()}{getAnchorB()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Hinge\+Joint2\+D\+::get\+AnchorB (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a91d7a459fd32c020a7670a60d68f9764}\label{class_d_t_1_1_hinge_joint2_d_a91d7a459fd32c020a7670a60d68f9764}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getConnectedRigidbody@{getConnectedRigidbody}}
+\index{getConnectedRigidbody@{getConnectedRigidbody}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getConnectedRigidbody()}{getConnectedRigidbody()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} $\ast$ DT\+::\+Hinge\+Joint2\+D\+::get\+Connected\+Rigidbody (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a156e44fda67059e0af12f5d25c465042}\label{class_d_t_1_1_hinge_joint2_d_a156e44fda67059e0af12f5d25c465042}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getJointAngle@{getJointAngle}}
+\index{getJointAngle@{getJointAngle}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getJointAngle()}{getJointAngle()}}
+{\footnotesize\ttfamily float DT\+::\+Hinge\+Joint2\+D\+::get\+Joint\+Angle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a2edd5cd3ac03b2693e10b8e3b45fd51f}\label{class_d_t_1_1_hinge_joint2_d_a2edd5cd3ac03b2693e10b8e3b45fd51f}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getJointSpeed@{getJointSpeed}}
+\index{getJointSpeed@{getJointSpeed}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getJointSpeed()}{getJointSpeed()}}
+{\footnotesize\ttfamily float DT\+::\+Hinge\+Joint2\+D\+::get\+Joint\+Speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a3dd38714b5052d48577bb7c5c833b4aa}\label{class_d_t_1_1_hinge_joint2_d_a3dd38714b5052d48577bb7c5c833b4aa}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getLimitEnabled@{getLimitEnabled}}
+\index{getLimitEnabled@{getLimitEnabled}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getLimitEnabled()}{getLimitEnabled()}}
+{\footnotesize\ttfamily bool DT\+::\+Hinge\+Joint2\+D\+::get\+Limit\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a76b648392ee95a78e87b2ebaca886f47}\label{class_d_t_1_1_hinge_joint2_d_a76b648392ee95a78e87b2ebaca886f47}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getLowerLimit@{getLowerLimit}}
+\index{getLowerLimit@{getLowerLimit}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getLowerLimit()}{getLowerLimit()}}
+{\footnotesize\ttfamily float DT\+::\+Hinge\+Joint2\+D\+::get\+Lower\+Limit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a1a7bb85dfaf88a872586a2beadadbdf9}\label{class_d_t_1_1_hinge_joint2_d_a1a7bb85dfaf88a872586a2beadadbdf9}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getMaxMotorTorque@{getMaxMotorTorque}}
+\index{getMaxMotorTorque@{getMaxMotorTorque}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getMaxMotorTorque()}{getMaxMotorTorque()}}
+{\footnotesize\ttfamily float DT\+::\+Hinge\+Joint2\+D\+::get\+Max\+Motor\+Torque (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a16fe92f5ebbfc74079aefc2fe060f5fb}\label{class_d_t_1_1_hinge_joint2_d_a16fe92f5ebbfc74079aefc2fe060f5fb}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getMotorEnabled@{getMotorEnabled}}
+\index{getMotorEnabled@{getMotorEnabled}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getMotorEnabled()}{getMotorEnabled()}}
+{\footnotesize\ttfamily bool DT\+::\+Hinge\+Joint2\+D\+::get\+Motor\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a7b624849b60912d4d72f15e4fb1a4e8c}\label{class_d_t_1_1_hinge_joint2_d_a7b624849b60912d4d72f15e4fb1a4e8c}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getMotorSpeed@{getMotorSpeed}}
+\index{getMotorSpeed@{getMotorSpeed}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getMotorSpeed()}{getMotorSpeed()}}
+{\footnotesize\ttfamily float DT\+::\+Hinge\+Joint2\+D\+::get\+Motor\+Speed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a91ea74580dd4749f87600d3aae33ba1a}\label{class_d_t_1_1_hinge_joint2_d_a91ea74580dd4749f87600d3aae33ba1a}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getReferenceAngle@{getReferenceAngle}}
+\index{getReferenceAngle@{getReferenceAngle}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getReferenceAngle()}{getReferenceAngle()}}
+{\footnotesize\ttfamily float DT\+::\+Hinge\+Joint2\+D\+::get\+Reference\+Angle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_ab968f8f09c471301d2cc2f0cbb55214e}\label{class_d_t_1_1_hinge_joint2_d_ab968f8f09c471301d2cc2f0cbb55214e}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!getUpperLimit@{getUpperLimit}}
+\index{getUpperLimit@{getUpperLimit}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{getUpperLimit()}{getUpperLimit()}}
+{\footnotesize\ttfamily float DT\+::\+Hinge\+Joint2\+D\+::get\+Upper\+Limit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_ad24e064807895bcf8058c2d43de3c48f}\label{class_d_t_1_1_hinge_joint2_d_ad24e064807895bcf8058c2d43de3c48f}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!onDestroy@{onDestroy}}
+\index{onDestroy@{onDestroy}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{onDestroy()}{onDestroy()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::on\+Destroy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Triggered when this component is destroyed using \mbox{\hyperlink{class_d_t_1_1_behaviour_script_ade4458a0c0566b402347017ee7825730}{Behaviour\+Script\+::destroy()}}. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_d_t_1_1_behaviour_script_aef50797aafee2a3f08de8e9dc59ad37f}{DT\+::\+Behaviour\+Script}}.
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a9804a7bc0bc90eaf34acf658c05f80d7}\label{class_d_t_1_1_hinge_joint2_d_a9804a7bc0bc90eaf34acf658c05f80d7}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!setConnectedRigidbody@{setConnectedRigidbody}}
+\index{setConnectedRigidbody@{setConnectedRigidbody}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{setConnectedRigidbody()}{setConnectedRigidbody()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::set\+Connected\+Rigidbody (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_rigidbody2_d}{Rigidbody2D}} $\ast$}]{rb }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a68c5da6178a9f20ff18d75459456b548}\label{class_d_t_1_1_hinge_joint2_d_a68c5da6178a9f20ff18d75459456b548}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!setHigherLimit@{setHigherLimit}}
+\index{setHigherLimit@{setHigherLimit}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{setHigherLimit()}{setHigherLimit()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::set\+Higher\+Limit (\begin{DoxyParamCaption}\item[{float}]{val }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_abc3dcb2c66cac806a4bdc9c55ee91128}\label{class_d_t_1_1_hinge_joint2_d_abc3dcb2c66cac806a4bdc9c55ee91128}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!setLimitEnabled@{setLimitEnabled}}
+\index{setLimitEnabled@{setLimitEnabled}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{setLimitEnabled()}{setLimitEnabled()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::set\+Limit\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{flag }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a16f2f07e62b568a6414eafae200770c6}\label{class_d_t_1_1_hinge_joint2_d_a16f2f07e62b568a6414eafae200770c6}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!setLowerLimit@{setLowerLimit}}
+\index{setLowerLimit@{setLowerLimit}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{setLowerLimit()}{setLowerLimit()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::set\+Lower\+Limit (\begin{DoxyParamCaption}\item[{float}]{val }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a3b5771904b4076bf1145f15d335cfb43}\label{class_d_t_1_1_hinge_joint2_d_a3b5771904b4076bf1145f15d335cfb43}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!setMaxMotorTorque@{setMaxMotorTorque}}
+\index{setMaxMotorTorque@{setMaxMotorTorque}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{setMaxMotorTorque()}{setMaxMotorTorque()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::set\+Max\+Motor\+Torque (\begin{DoxyParamCaption}\item[{float}]{torque }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_ab87306dbd5b4972141377f1d685f0465}\label{class_d_t_1_1_hinge_joint2_d_ab87306dbd5b4972141377f1d685f0465}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!setMotorEnabled@{setMotorEnabled}}
+\index{setMotorEnabled@{setMotorEnabled}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{setMotorEnabled()}{setMotorEnabled()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::set\+Motor\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{flag }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a6e386e6912a17e5f27b831e274850627}\label{class_d_t_1_1_hinge_joint2_d_a6e386e6912a17e5f27b831e274850627}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!setMotorSpeed@{setMotorSpeed}}
+\index{setMotorSpeed@{setMotorSpeed}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{setMotorSpeed()}{setMotorSpeed()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::set\+Motor\+Speed (\begin{DoxyParamCaption}\item[{float}]{speed }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_hinge_joint2_d_a168c5113c299b95329d01bd1d62bedc7}\label{class_d_t_1_1_hinge_joint2_d_a168c5113c299b95329d01bd1d62bedc7}} 
+\index{DT::HingeJoint2D@{DT::HingeJoint2D}!tick@{tick}}
+\index{tick@{tick}!DT::HingeJoint2D@{DT::HingeJoint2D}}
+\doxysubsubsection{\texorpdfstring{tick()}{tick()}}
+{\footnotesize\ttfamily void DT\+::\+Hinge\+Joint2\+D\+::tick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Called on every frame. 
+
+
+
+Reimplemented from \mbox{\hyperlink{class_d_t_1_1_behaviour_script_a63b3755a94f4c1d88269a7dcc0921c0a}{DT\+::\+Behaviour\+Script}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Ducktape/include/\+Ducktape/physics/\mbox{\hyperlink{hingejoint_8h}{hingejoint.\+h}}\end{DoxyCompactItemize}

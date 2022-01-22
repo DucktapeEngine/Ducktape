@@ -1,0 +1,155 @@
+\hypertarget{class_d_t_1_1_transform}{}\doxysection{DT\+::Transform Class Reference}
+\label{class_d_t_1_1_transform}\index{DT::Transform@{DT::Transform}}
+
+
+{\ttfamily \#include $<$transform.\+h$>$}
+
+
+
+Inherits \mbox{\hyperlink{class_d_t_1_1_behaviour_script}{DT\+::\+Behaviour\+Script}}.
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_a6d2ebb04f0642178dcbebca27d8d0d86}{set\+Position}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \+\_\+pos)
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_a25c370710bc40f72e181e84bca8132b2}{get\+Position}} ()
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_transform_a286d87ad0a2ef294be47d0149d85808b}{set\+Rotation}} (float \+\_\+rot)
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_transform_a5abeb1ff2da5dc4a3517715b85881f7c}{get\+Rotation}} ()
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_a1864541edf1a16a653adabc860960fa4}{set\+Scale}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \+\_\+scl)
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_af582a129cef9423a64b068925d385308}{get\+Scale}} ()
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_a57cfa7d5604e91e1940257b472745cb8}{set\+Local\+Position}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \+\_\+pos)
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_a14c0d3fe7576d4b63d305b396caa88ba}{get\+Local\+Position}} ()
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_transform_ac2602b337862644ce17a0124f2d31715}{set\+Local\+Rotation}} (float \+\_\+rot)
+\item 
+float \mbox{\hyperlink{class_d_t_1_1_transform_aa6083168f78aa3a708e910f729c88e6c}{get\+Local\+Rotation}} ()
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_a02892571b634a15fc7d6d6c12c7dc2cb}{set\+Local\+Scale}} (\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \+\_\+scl)
+\item 
+\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} \mbox{\hyperlink{class_d_t_1_1_transform_a0aed044ecfebd84ec3a4a43d4ea6faa7}{get\+Local\+Scale}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_transform_a29e7af31510ebf4f47fdafce83f4f3fa}{recalculate\+Local\+Values}} ()
+\item 
+void \mbox{\hyperlink{class_d_t_1_1_transform_af66746d24114e26c3ba697a83360f3ab}{recalculate\+World\+Values}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_t_1_1_transform}{Transform}} $\ast$ \mbox{\hyperlink{class_d_t_1_1_transform_a5cefda0110d926e5859dfb464d18488f}{parent}} = nullptr
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_d_t_1_1_transform}{Transform}} $\ast$ $>$ \mbox{\hyperlink{class_d_t_1_1_transform_a7133bdff7e0623c4ec5fe74bff51e1d8}{children}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_transform_a14c0d3fe7576d4b63d305b396caa88ba}\label{class_d_t_1_1_transform_a14c0d3fe7576d4b63d305b396caa88ba}} 
+\index{DT::Transform@{DT::Transform}!getLocalPosition@{getLocalPosition}}
+\index{getLocalPosition@{getLocalPosition}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{getLocalPosition()}{getLocalPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::get\+Local\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_aa6083168f78aa3a708e910f729c88e6c}\label{class_d_t_1_1_transform_aa6083168f78aa3a708e910f729c88e6c}} 
+\index{DT::Transform@{DT::Transform}!getLocalRotation@{getLocalRotation}}
+\index{getLocalRotation@{getLocalRotation}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{getLocalRotation()}{getLocalRotation()}}
+{\footnotesize\ttfamily float DT\+::\+Transform\+::get\+Local\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a0aed044ecfebd84ec3a4a43d4ea6faa7}\label{class_d_t_1_1_transform_a0aed044ecfebd84ec3a4a43d4ea6faa7}} 
+\index{DT::Transform@{DT::Transform}!getLocalScale@{getLocalScale}}
+\index{getLocalScale@{getLocalScale}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{getLocalScale()}{getLocalScale()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::get\+Local\+Scale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a25c370710bc40f72e181e84bca8132b2}\label{class_d_t_1_1_transform_a25c370710bc40f72e181e84bca8132b2}} 
+\index{DT::Transform@{DT::Transform}!getPosition@{getPosition}}
+\index{getPosition@{getPosition}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{getPosition()}{getPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a5abeb1ff2da5dc4a3517715b85881f7c}\label{class_d_t_1_1_transform_a5abeb1ff2da5dc4a3517715b85881f7c}} 
+\index{DT::Transform@{DT::Transform}!getRotation@{getRotation}}
+\index{getRotation@{getRotation}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{getRotation()}{getRotation()}}
+{\footnotesize\ttfamily float DT\+::\+Transform\+::get\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_af582a129cef9423a64b068925d385308}\label{class_d_t_1_1_transform_af582a129cef9423a64b068925d385308}} 
+\index{DT::Transform@{DT::Transform}!getScale@{getScale}}
+\index{getScale@{getScale}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{getScale()}{getScale()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::get\+Scale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a29e7af31510ebf4f47fdafce83f4f3fa}\label{class_d_t_1_1_transform_a29e7af31510ebf4f47fdafce83f4f3fa}} 
+\index{DT::Transform@{DT::Transform}!recalculateLocalValues@{recalculateLocalValues}}
+\index{recalculateLocalValues@{recalculateLocalValues}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{recalculateLocalValues()}{recalculateLocalValues()}}
+{\footnotesize\ttfamily void DT\+::\+Transform\+::recalculate\+Local\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_af66746d24114e26c3ba697a83360f3ab}\label{class_d_t_1_1_transform_af66746d24114e26c3ba697a83360f3ab}} 
+\index{DT::Transform@{DT::Transform}!recalculateWorldValues@{recalculateWorldValues}}
+\index{recalculateWorldValues@{recalculateWorldValues}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{recalculateWorldValues()}{recalculateWorldValues()}}
+{\footnotesize\ttfamily void DT\+::\+Transform\+::recalculate\+World\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a57cfa7d5604e91e1940257b472745cb8}\label{class_d_t_1_1_transform_a57cfa7d5604e91e1940257b472745cb8}} 
+\index{DT::Transform@{DT::Transform}!setLocalPosition@{setLocalPosition}}
+\index{setLocalPosition@{setLocalPosition}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{setLocalPosition()}{setLocalPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::set\+Local\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{\+\_\+pos }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_ac2602b337862644ce17a0124f2d31715}\label{class_d_t_1_1_transform_ac2602b337862644ce17a0124f2d31715}} 
+\index{DT::Transform@{DT::Transform}!setLocalRotation@{setLocalRotation}}
+\index{setLocalRotation@{setLocalRotation}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{setLocalRotation()}{setLocalRotation()}}
+{\footnotesize\ttfamily float DT\+::\+Transform\+::set\+Local\+Rotation (\begin{DoxyParamCaption}\item[{float}]{\+\_\+rot }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a02892571b634a15fc7d6d6c12c7dc2cb}\label{class_d_t_1_1_transform_a02892571b634a15fc7d6d6c12c7dc2cb}} 
+\index{DT::Transform@{DT::Transform}!setLocalScale@{setLocalScale}}
+\index{setLocalScale@{setLocalScale}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{setLocalScale()}{setLocalScale()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::set\+Local\+Scale (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{\+\_\+scl }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a6d2ebb04f0642178dcbebca27d8d0d86}\label{class_d_t_1_1_transform_a6d2ebb04f0642178dcbebca27d8d0d86}} 
+\index{DT::Transform@{DT::Transform}!setPosition@{setPosition}}
+\index{setPosition@{setPosition}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{setPosition()}{setPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::set\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{\+\_\+pos }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a286d87ad0a2ef294be47d0149d85808b}\label{class_d_t_1_1_transform_a286d87ad0a2ef294be47d0149d85808b}} 
+\index{DT::Transform@{DT::Transform}!setRotation@{setRotation}}
+\index{setRotation@{setRotation}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{setRotation()}{setRotation()}}
+{\footnotesize\ttfamily float DT\+::\+Transform\+::set\+Rotation (\begin{DoxyParamCaption}\item[{float}]{\+\_\+rot }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a1864541edf1a16a653adabc860960fa4}\label{class_d_t_1_1_transform_a1864541edf1a16a653adabc860960fa4}} 
+\index{DT::Transform@{DT::Transform}!setScale@{setScale}}
+\index{setScale@{setScale}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{setScale()}{setScale()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}} DT\+::\+Transform\+::set\+Scale (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_t_1_1_vector2}{Vector2}}}]{\+\_\+scl }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_d_t_1_1_transform_a7133bdff7e0623c4ec5fe74bff51e1d8}\label{class_d_t_1_1_transform_a7133bdff7e0623c4ec5fe74bff51e1d8}} 
+\index{DT::Transform@{DT::Transform}!children@{children}}
+\index{children@{children}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{children}{children}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_d_t_1_1_transform}{Transform}} $\ast$$>$ DT\+::\+Transform\+::children}
+
+\mbox{\Hypertarget{class_d_t_1_1_transform_a5cefda0110d926e5859dfb464d18488f}\label{class_d_t_1_1_transform_a5cefda0110d926e5859dfb464d18488f}} 
+\index{DT::Transform@{DT::Transform}!parent@{parent}}
+\index{parent@{parent}!DT::Transform@{DT::Transform}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_t_1_1_transform}{Transform}}$\ast$ DT\+::\+Transform\+::parent = nullptr}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Ducktape/include/\+Ducktape/engine/\mbox{\hyperlink{transform_8h}{transform.\+h}}\end{DoxyCompactItemize}
