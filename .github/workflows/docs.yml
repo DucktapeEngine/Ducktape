@@ -13,6 +13,6 @@ jobs:
       - name: Deply documentation
         uses: mattnotmitt/doxygen-action@v1.9.2
         with:
-          working-directory: 'docs/build'
-          doxyfile-path: 'docs/Doxyfile'
+          working-directory: './docs/build'
+          doxyfile-path: './docs/Doxyfile'
         
