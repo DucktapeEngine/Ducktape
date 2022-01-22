@@ -40,7 +40,7 @@ namespace DT
         std::vector<Vector2> points;
 
     public:
-        PolygonCollider2D(Entity *_entity);
+        PolygonCollider2D();
 
         void tick();
 

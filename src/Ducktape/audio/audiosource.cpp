@@ -25,15 +25,36 @@ SOFTWARE.
 #include <Ducktape/audio/audiosource.h>
 using namespace DT;
 
-AudioSource::AudioSource(Entity *_entity)
+void AudioSource::loadSound(std::string loadPath)
 {
-    entity = _entity;
+    path = loadPath;
+    isMusic = false;
+    if (isMusic)
+    {
+        if (!music.openFromFile(path))
+        {
+            Debug::logError("The specified audio file: " + path + " could not be found.");
+            return;
+        }
+        music.play();
+    }
+    else
+    {
+        if (!buffer.loadFromFile(path))
+        {
+            Debug::logError("The specified audio file: " + path + " could not be found.");
+            return;
+        }
+
+        sound.setBuffer(buffer);
+        sound.play();
+    }
 }
 
-void AudioSource::load(std::string _path, bool _isMusic)
+void AudioSource::loadMusic(std::string loadPath)
 {
-    path = _path;
-    isMusic = _isMusic;
+    path = loadPath;
+    isMusic = true;
     if (isMusic)
     {
         if (!music.openFromFile(path))
@@ -92,15 +113,15 @@ void AudioSource::stop()
     }
 }
 
-void AudioSource::setSeek(float sec)
+void AudioSource::setSeek(float seconds)
 {
     if (isMusic)
     {
-        music.setPlayingOffset(sf::seconds(sec));
+        music.setPlayingOffset(sf::seconds(seconds));
     }
     else
     {
-        sound.setPlayingOffset(sf::seconds(sec));
+        sound.setPlayingOffset(sf::seconds(seconds));
     }
 }
 

@@ -47,8 +47,6 @@ namespace DT
         void onTransformChange();
 
     public:
-        Transform(Entity *_entity);
-
         Transform *parent = nullptr;
         std::vector<Transform *> children;
 

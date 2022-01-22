@@ -32,10 +32,10 @@ Entity::Entity()
     transform = addComponent<Transform>();
 }
 
-Entity::Entity(std::string _name)
+Entity::Entity(std::string entityName)
 {
     isEnabled = true;
-    name = _name;
+    name = entityName;
     transform = addComponent<Transform>();
 }
 
@@ -49,10 +49,10 @@ Entity::Entity(Vector2 pos, float rot, Vector2 scl)
     transform->setScale(scl);
 }
 
-Entity::Entity(std::string _name, Vector2 pos, float rot, Vector2 scl)
+Entity::Entity(std::string entityName, Vector2 pos, float rot, Vector2 scl)
 {
     isEnabled = true;
-    name = _name;
+    name = entityName;
     transform = addComponent<Transform>();
     transform->setPosition(pos);
     transform->setRotation(rot);
@@ -74,22 +74,22 @@ bool Entity::removeComponent(BehaviourScript *check)
     return false;
 }
 
-Entity *Entity::find(std::string _name)
+Entity *Entity::find(std::string entityName)
 {
     for (int i = 0, n = SceneManager::currentScene->entities.size(); i < n; i++)
     {
-        if (SceneManager::currentScene->entities[i]->name == _name)
+        if (SceneManager::currentScene->entities[i]->name == entityName)
         {
             return SceneManager::currentScene->entities[i];
         }
     }
-    Debug::logError("Entity with name \"" + _name + "\" doesn't exist!");
+    Debug::logError("Entity with name \"" + entityName + "\" doesn't exist!");
     return nullptr;
 }
 
-Entity *Entity::instantiate(std::string _name)
+Entity *Entity::instantiate(std::string entityName)
 {
-    Entity *ent = new Entity(_name);
+    Entity *ent = new Entity(entityName);
     SceneManager::currentScene->entities.push_back(ent);
     Memory::heapMemory.push_back(ent);
     return ent;
@@ -103,9 +103,9 @@ Entity *Entity::instantiate(Vector2 pos, float rot, Vector2 scl)
     return ent;
 }
 
-Entity *Entity::instantiate(std::string _name, Vector2 pos, float rot, Vector2 scl)
+Entity *Entity::instantiate(std::string entityName, Vector2 pos, float rot, Vector2 scl)
 {
-    Entity *ent = new Entity(_name, pos, rot, scl);
+    Entity *ent = new Entity(entityName, pos, rot, scl);
     SceneManager::currentScene->entities.push_back(ent);
     Memory::heapMemory.push_back(ent);
     return ent;
@@ -124,7 +124,7 @@ void Entity::destroy()
     }
 }
 
-void Entity::setEnabled(bool flag)
+void Entity::setEnabled(bool isEnabled)
 {
-    this->isEnabled = flag;
+    this->isEnabled = isEnabled;
 }

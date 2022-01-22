@@ -25,11 +25,6 @@ SOFTWARE.
 #include <Ducktape/rendering/spriterenderer.h>
 using namespace DT;
 
-SpriteRenderer::SpriteRenderer(Entity *_entity)
-{
-    entity = _entity;
-}
-
 void SpriteRenderer::tick()
 {
     if (spritePath != "")

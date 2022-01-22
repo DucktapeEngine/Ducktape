@@ -27,14 +27,9 @@ using namespace DT;
 
 // Definition for BehaviourScript::Destroy is in entity.h to avoid recursive dependency issues.
 
-void BehaviourScript::invoke(std::string methodName, float time)
+void BehaviourScript::setEnabled(bool enabled)
 {
-    Debug::logWarning("Invoke not Implemented yet.");
-}
-
-void BehaviourScript::setEnabled(bool flag)
-{
-    if (flag)
+    if (enabled)
     {
         this->onEnable();
     }
@@ -42,5 +37,5 @@ void BehaviourScript::setEnabled(bool flag)
     {
         this->onDisable();
     }
-    this->isEnabled = flag;
+    this->isEnabled = enabled;
 }

@@ -40,7 +40,7 @@ namespace DT
         std::vector<Vector2> points;
 
     public:
-        EdgeCollider2D(Entity *_entity);
+        EdgeCollider2D();
 
         void tick();
 

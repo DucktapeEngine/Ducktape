@@ -25,9 +25,8 @@ SOFTWARE.
 #include <Ducktape/physics/distancejoint.h>
 using namespace DT;
 
-DistanceJoint2D::DistanceJoint2D(Entity *_entity)
+DistanceJoint2D::DistanceJoint2D()
 {
-	entity = _entity;
 	rb = entity->getComponent<Rigidbody2D>();
 	if (rb == nullptr)
 	{

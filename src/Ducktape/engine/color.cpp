@@ -25,20 +25,20 @@ SOFTWARE.
 #include <Ducktape/engine/color.h>
 using namespace DT;
 
-Color::Color(int _red, int _blue, int _green)
+Color::Color(int r, int g, int b)
 {
-	red = _red;
-	blue = _blue;
-	green = _green;
+	red = r;
+	blue = b;
+	green = g;
 	alpha = 255;
 }
 
-Color::Color(int _red, int _blue, int _green, int _alpha)
+Color::Color(int r, int g, int b, int a)
 {
-	red = _red;
-	blue = _blue;
-	green = _green;
-	alpha = _alpha;
+	red = r;
+	blue = b;
+	green = g;
+	alpha = a;
 }
 
 const Color Color::ALICE_BLUE = Color(240, 248, 255);

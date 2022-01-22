@@ -25,9 +25,8 @@ SOFTWARE.
 #include <Ducktape/physics/circlecollider.h>
 using namespace DT;
 
-CircleCollider2D::CircleCollider2D(Entity *_entity)
+CircleCollider2D::CircleCollider2D()
 {
-    entity = _entity;
     rb = entity->getComponent<Rigidbody2D>();
     if (rb == nullptr)
     {

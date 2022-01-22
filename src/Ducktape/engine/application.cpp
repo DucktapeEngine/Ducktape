@@ -29,9 +29,9 @@ Vector2 Application::Private::resolution = Vector2(500, 500);
 sf::View Application::view = sf::View(sf::FloatRect(0.f, 0.f, Private::resolution.x, Private::resolution.y));
 sf::RenderWindow Application::renderWindow(sf::VideoMode(Private::resolution.x, Private::resolution.y), "Flappy Duck", sf::Style::Default);
 
-void Application::setResolution(Vector2 _res)
+void Application::setResolution(Vector2 resolution)
 {
-    Private::resolution = _res;
+    Private::resolution = resolution;
     renderWindow.setSize(sf::Vector2u(Private::resolution.x, Private::resolution.y));
     view.setSize(Private::resolution.x, Private::resolution.y);
 }

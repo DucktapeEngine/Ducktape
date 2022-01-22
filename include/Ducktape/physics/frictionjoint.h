@@ -41,7 +41,7 @@ namespace DT
 		Rigidbody2D *connectedRigidbody = nullptr;
 
 	public:
-		FrictionJoint2D(Entity *_entity);
+		FrictionJoint2D();
 
 		void tick();
 		void onDestroy();

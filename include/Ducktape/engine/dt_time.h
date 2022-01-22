@@ -29,12 +29,21 @@ SOFTWARE.
 
 namespace DT
 {
+	/**
+	 * @brief Functions and properties related to Time.
+	 */
 	namespace Time
 	{
+		/**
+		 * @brief Time passed since the last frame in seconds.
+		 */
 		extern float deltaTime;
 		extern sf::Clock clock;
 		extern sf::Clock deltaClock;
 
+		/**
+		 * @brief Calculate time related properties such as deltaTime.
+		 */
 		void update();
 	};
 }

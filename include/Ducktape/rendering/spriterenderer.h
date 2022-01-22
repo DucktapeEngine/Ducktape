@@ -41,8 +41,6 @@ namespace DT
         int pixelPerUnit = 1;
         Color color = Color(255, 255, 255, 255);
 
-        SpriteRenderer(Entity *_entity);
-
         void tick();
     };
 }

@@ -34,30 +34,67 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief Debugging functions.
+     */
     namespace Debug
     {
-        // valing
-        void log(std::string val);
+        /**
+         * @brief Prints a message to the console.
+         * @param message The message to print.
+         */
+        template <typename T>               
+        void log(T message)
+        {
+        #ifndef PRODUCTION
+            std::cout << message << "\n";
+        #endif
+        }
 
-        void logError(std::string val);
+        /**
+         * @brief Prints an error to the console in red.
+         * @param message The message to print.
+         */
+        template <typename T>               
+        void logError(T message)
+        {
+            std::cout << "\033[0;31m" << message << "\033[0m\n";
+        }
 
-        void logFatalError(std::string val);
+        /**
+         * @brief Prints a warning to the console in red and aborts the program.
+         * @param message The message to print.
+         */
+        template <typename T>       
+        void logFatalError(T message)
+        {
+            std::cout << "\033[0;31m [FATAL ERR] " << message << "\033[0m" << std::endl;
+            exit(FATAL_ERROR);
+        }
 
-        void logWarning(std::string val);
+        /**
+         * @brief Prints a warning to the console in yellow.
+         * @param message The message to print.
+         */
+        template <typename T>       
+        void logWarning(T message)
+        {
+        #ifndef PRODUCTION
+            std::cout << "\033[0;33m" << message << "\033[0m\n";
+        #endif
+        }
 
-        void logSuccess(std::string val);
-
-        // float overload
-
-        void log(float val);
-
-        void logError(float val);
-
-        void logFatalError(float val);
-
-        void logWarning(float val);
-
-        void logSuccess(float val);
+        /**
+         * @brief Prints a message to the console in green.
+         * @param message The message to print.
+         */
+        template <typename T>       
+        void logSuccess(T message)
+        {
+        #ifndef PRODUCTION
+            std::cout << "\033[0;32m" << message << "\033[0m\n";
+        #endif
+        }
 
         void drawLine(Vector2 start, Vector2 end, Color color);
 

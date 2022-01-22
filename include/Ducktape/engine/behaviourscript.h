@@ -33,31 +33,86 @@ namespace DT
 {
     class Entity;
 
+    /**
+     * @brief Base class for components that are to be attached to entities.
+     * 
+     * You may add a component to an entity by calling Entity::AddComponent<type>() 
+     * where type is the class of the component.
+     */
     class BehaviourScript
     {
     public:
+        /**
+         * @brief If the component is enabled or not. You may enable/disable components
+         * using the BehaviourScript::setEnabled() method.
+         */
         bool isEnabled = true;
+
+        /**
+         * @brief The entity this component is attached to.
+         */
         Entity *entity;
+
+        /**
+         * @brief If the component has been destroyed yet using BehaviourScript::destroy();
+         */
         bool isDestroyed = false;
 
+        /**
+         * @brief Called at the start of the project.
+         */
         virtual void init() {}
+
+        /**
+         * @brief Called on every frame.
+         */
         virtual void tick() {}
 
+        /**
+         * @brief Triggered when the Rigidbody attached to this component enters a collision.
+         * 
+         * @param collider Collider containing information about the collision.
+         */
         virtual void onCollisionEnter(Collision collider) {}
+
+        /**
+         * @brief Triggered when the Rigidbody attached to this component exits a collision.
+         * 
+         * @param collider Collider containing information about the collision.
+         */
         virtual void onCollisionExit(Collision collider) {}
 
+        /**
+         * @brief Triggered when this component is enabled using BehaviourScript::setEnabled().
+         */
         virtual void onEnable() {}
-        virtual void onDisable() {}
-        void setEnabled(bool flag);
 
+        /**
+         * @brief Triggered when this component is disabled using BehaviourScript::setEnabled().
+         */
+        virtual void onDisable() {}
+
+        /**
+         * @brief Enable/Disable this component.
+         * 
+         * @param enabled If the component should be enabled or not.
+         */
+        void setEnabled(bool enabled);
+
+        /**
+         * @brief Triggered when this component is destroyed using BehaviourScript::destroy().
+         */
         virtual void onDestroy() {}
+
+        /**
+         * @brief Destroy this component.
+         */
         void destroy();
 
+        /**
+         * @brief Triggered when application is closed.
+         */
         virtual void onApplicationClose() {}
-
-        void invoke(std::string methodName, float time);
-
-        bool operator==(BehaviourScript *script);
     };
 }
 

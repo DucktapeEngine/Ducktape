@@ -41,7 +41,7 @@ namespace DT
 		Rigidbody2D *connectedRigidbody = nullptr;
 
 	public:
-		DistanceJoint2D(Entity *_entity);
+		DistanceJoint2D();
 
 		void tick();
 		void onDestroy();

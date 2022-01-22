@@ -38,8 +38,6 @@ namespace DT
   public:
     float size = 1.0;
 
-    Camera(Entity *_entity);
-
     void tick();
 
     static Vector2 unitToPixel(Vector2 pos);

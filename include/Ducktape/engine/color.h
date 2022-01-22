@@ -29,6 +29,10 @@ SOFTWARE.
 
 namespace DT
 {
+	/**
+	 * @brief A color class for storing colors in (r, g, b, a) format.
+	 * 146 static colors are available premade for easy access.
+	 */
 	class Color
 	{
 	public:
@@ -182,9 +186,9 @@ namespace DT
 
 		int red = 0, blue = 0, green = 0, alpha = 255;
 
-		Color(int _red, int _blue, int _green);
+		Color(int r, int b, int g);
 
-		Color(int _red, int _blue, int _green, int _alpha);
+		Color(int r, int b, int g, int a);
 
 		operator sf::Color() const;
 	};

@@ -48,7 +48,7 @@ namespace DT
     public:
         b2Body *body;
 
-        Rigidbody2D(Entity *_entity);
+        Rigidbody2D();
 
         void tick();
 

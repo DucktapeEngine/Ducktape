@@ -37,22 +37,46 @@ namespace DT
 	 */
 	namespace Application
 	{
-		/*
-		Not really private, it's just for preventing users from 
-		having direct access to these variables.
-		*/
+		/**
+		 * @cond section label="No need to confuse users with this."
+		 * Not really private, it's just for preventing users from 
+		 * having direct access to these variables.
+		 */
 		namespace Private
 		{
 			extern Vector2 resolution;
 		}
+		/**
+		 * @endcond
+		 */
 
 		extern sf::View view;
 		extern sf::RenderWindow renderWindow;
 
-		void setResolution(Vector2 _res);
+		/**
+		 * @brief Set the application's resolution.
+		 * 
+		 * @param resolution The new resolution.
+		 */
+		void setResolution(Vector2 resolution);
+
+		/**
+		 * @brief Get the application's current resolution.
+		 * 
+		 * @return The application's current resolution.
+		 */
 		Vector2 getResolution();
 
+		/**
+		 * @brief Initialize the application.
+		 */
 		void initialize();
+
+		/**
+		 * @brief Check if the application is still open.
+		 * 
+		 * @return True if the application is still open, false otherwise.
+		 */
 		bool isOpen();
 	}
 }

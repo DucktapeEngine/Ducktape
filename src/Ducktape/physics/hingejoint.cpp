@@ -25,9 +25,8 @@ SOFTWARE.
 #include <Ducktape/physics/hingejoint.h>
 using namespace DT;
 
-HingeJoint2D::HingeJoint2D(Entity *_entity)
+HingeJoint2D::HingeJoint2D()
 {
-	entity = _entity;
 	rb = entity->getComponent<Rigidbody2D>();
 	if (rb == nullptr)
 	{
