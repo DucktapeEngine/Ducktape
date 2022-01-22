@@ -10,8 +10,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: DenverCoder1/doxygen-github-pages-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: docs/build/html
+      - uses: mattnotmitt/doxygen-action@v1.9.2
+      - with:
+          working-directory: 'docs/build'
+          doxyfile-path: 'docs/Doxyfile'
+        
