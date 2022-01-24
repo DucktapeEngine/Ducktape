@@ -52,7 +52,7 @@ namespace DT
          * @param path The path to the texture. 
          * @return int The index of the texture in the cache.
          */
-        int loadTextureFromCache(std::string _path);
+        int loadTextureFromCache(std::string path);
 
         /**
          * @brief Draw a sprite to the screen.
@@ -64,7 +64,7 @@ namespace DT
          * @param pixelPerUnit The pixels per unit to use to draw the sprite.
          * @param color The color of the images.
          */
-        void drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color _color);
+        void drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color color);
     };
 }
 

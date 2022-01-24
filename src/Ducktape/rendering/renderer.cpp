@@ -27,12 +27,12 @@ using namespace DT;
 
 std::vector<std::pair<std::string, sf::Texture>> Renderer::textureCache;
 
-int Renderer::loadTextureFromCache(std::string _path)
+int Renderer::loadTextureFromCache(std::string path)
 {
     int idx = -1;
     for (int i = 0, n = textureCache.size(); i < n; i++)
     {
-        if (textureCache[i].first == _path)
+        if (textureCache[i].first == path)
         {
             idx = i;
             break;
@@ -42,17 +42,17 @@ int Renderer::loadTextureFromCache(std::string _path)
     if (idx == -1)
     {
         sf::Texture texture;
-        if (!texture.loadFromFile(_path))
+        if (!texture.loadFromFile(path))
         {
             return -1;
         }
-        textureCache.push_back({_path, texture});
+        textureCache.push_back({path, texture});
         idx = textureCache.size() - 1;
     }
     return idx;
 }
 
-void Renderer::drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color _color)
+void Renderer::drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color color)
 {
     int idx = loadTextureFromCache(path);
     if (idx == -1)
@@ -72,7 +72,7 @@ void Renderer::drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl,
     sprite.setScale((sf::Vector2f)(scl / pixelPerUnit));
     sprite.setOrigin(sf::Vector2f(texture.getSize().x / 2, texture.getSize().y / 2));
 
-    sprite.setColor((sf::Color)_color);
+    sprite.setColor((sf::Color)color);
 
     Application::renderWindow.draw(sprite);
 }

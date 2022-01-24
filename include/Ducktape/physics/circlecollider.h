@@ -73,26 +73,26 @@ namespace DT
         bool getIsTrigger();
 
         /**
-         * @brief Get the offset of the collider.
-         * @return Vector2 The offset of the collider.
+         * @brief Set the radius of the collider.
+         * @param val The radius of the collider.
          */
         void setRadius(float val);
         
         /**
          * @brief Set the density of the collider.
-         * @param float The density of the collider.
+         * @param val The density of the collider.
          */
         void setDensity(float val);
 
         /**
          * @brief Set the friction of the collider.
-         * @param float The friction of the collider.
+         * @param val The friction of the collider.
          */
         void setFriction(float val);
 
         /**
          * @brief Set if the collider is a trigger or not.
-         * @param bool If the collider is a trigger or not.
+         * @param val If the collider is a trigger or not.
          */
         void setIsTrigger(bool val);
     };

@@ -122,7 +122,7 @@ namespace DT
          * @brief Get the interpolated float result between the two vectors.
          * 
          * @param start Initial vector.
-         * @param end Target vector.
+         * @param target Target vector.
          * @param delta Interpolation value.
          * @return Vector2 Interpolated vector.
          */

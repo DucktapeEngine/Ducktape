@@ -53,7 +53,7 @@ namespace DT
 		 * 
 		 * @return Collision Info about the collision that was hit by the raycast.
 		 */
-		Collision raycast(Vector2 _origin, Vector2 _direction);
+		Collision raycast(Vector2 origin, Vector2 direction);
 	};
 }
 

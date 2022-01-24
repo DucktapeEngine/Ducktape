@@ -105,7 +105,7 @@ namespace DT
         /**
          * @brief Set the mass of the rigidbody.
          * 
-         * @param float The mass of the rigidbody.
+         * @param mass The mass of the rigidbody.
          */
         void setMass(float mass);
 
@@ -147,7 +147,7 @@ namespace DT
         /**
          * @brief Set the angular damping of the rigidbody.
          * 
-         * @param angularDamping The angular damping of the rigidbody.
+         * @param damping The angular damping of the rigidbody.
          */
         void setAngularDamping(float damping);
 
@@ -161,7 +161,7 @@ namespace DT
         /**
          * @brief Set the gravity scale of the rigidbody.
          * 
-         * @param gravityScale The gravity scale of the rigidbody.
+         * @param scale The gravity scale of the rigidbody.
          */
         void setGravityScale(float scale);
 
@@ -189,7 +189,7 @@ namespace DT
         /**
          * @brief Set if the body's collision is set to be continous.
          * 
-         * @param continous If the body's collision is set to be continous.
+         * @param flag If the body's collision is set to be continous.
          */
         void setContinous(bool flag);
 
@@ -257,7 +257,7 @@ namespace DT
          * @brief Apply a force to the rigidbody at a given position.
          * 
          * @param force The force to apply.
-         * @param position The position to apply the force at.
+         * @param point The position to apply the force at.
          */
         void applyForceAtPoint(Vector2 force, Vector2 point);
 
@@ -279,7 +279,7 @@ namespace DT
          * @brief Apply a impulse to the rigidbody at a given position.
          * 
          * @param impulse The impulse to apply.
-         * @param position The position to apply the impulse at.
+         * @param point The position to apply the impulse at.
          */
         void applyImpulseAtPoint(Vector2 impulse, Vector2 point);
 

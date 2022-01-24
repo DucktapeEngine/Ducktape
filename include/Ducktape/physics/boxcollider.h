@@ -75,25 +75,25 @@ namespace DT
 
         /**
          * @brief Set the scale of the collider.
-         * @param Vector2 The scale of the collider.
+         * @param val The scale of the collider.
          */
         void setScale(Vector2 val);
 
         /**
          * @brief Set the density of the collider.
-         * @param float The density of the collider.
+         * @param val The density of the collider.
          */
         void setDensity(float val);
 
         /**
          * @brief Set the friction of the collider.
-         * @param float The friction of the collider.
+         * @param val The friction of the collider.
          */
         void setFriction(float val);
 
         /**
          * @brief Set if the collider is a trigger or not.
-         * @param bool If the collider is a trigger or not.
+         * @param val If the collider is a trigger or not.
          */
         void setIsTrigger(bool val);
     };

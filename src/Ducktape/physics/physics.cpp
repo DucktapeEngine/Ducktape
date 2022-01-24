@@ -38,9 +38,9 @@ void Physics::initialize()
 	// physicsWorld.SetContactListener(&contactListener);
 }
 
-Collision Physics::raycast(Vector2 _origin, Vector2 _direction)
+Collision Physics::raycast(Vector2 origin, Vector2 direction)
 {
 	Collision raycastCallback;
-	physicsWorld.RayCast(&raycastCallback, (b2Vec2)_origin, (b2Vec2)_direction);
+	physicsWorld.RayCast(&raycastCallback, (b2Vec2)origin, (b2Vec2)direction);
 	return raycastCallback;
 }

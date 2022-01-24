@@ -83,9 +83,9 @@ float FrictionJoint2D::getMaxForce()
 	return joint->GetMaxForce();
 }
 
-void FrictionJoint2D::setMaxForce(float force)
+void FrictionJoint2D::setMaxForce(float maxForce)
 {
-	return joint->SetMaxForce(force);
+	return joint->SetMaxForce(maxForce);
 }
 
 float FrictionJoint2D::getMaxTorque()
@@ -93,7 +93,7 @@ float FrictionJoint2D::getMaxTorque()
 	return joint->GetMaxTorque();
 }
 
-void FrictionJoint2D::setMaxTorque(float torque)
+void FrictionJoint2D::setMaxTorque(float maxTorque)
 {
-	return joint->SetMaxTorque(torque);
+	return joint->SetMaxTorque(maxTorque);
 }

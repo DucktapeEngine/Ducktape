@@ -161,7 +161,7 @@ namespace DT
 		/**
 		 * @brief Get the motor speed.
 		 * 
-		 * @return float The motor speed.
+		 * @param speed The motor speed.
 		 */
 		void setMotorSpeed(float speed);
 

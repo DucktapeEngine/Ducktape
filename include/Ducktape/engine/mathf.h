@@ -96,9 +96,12 @@ namespace DT
         float ceil(float value);
 
         /**
-         * @brief Returns the closest integer to the given number.
-         * @param value The number to get the closest integer of.
-         * @return The closest integer to the given number.
+         * @brief Returns an integer that is value clamped between the given min and max.
+         * 
+         * @param value The value to clamp.
+         * @param min The minimum value to clamp to.
+         * @param max The maximum value to clamp to.
+         * @return The clamped value.
          */
         float clamp(float value, float min, float max);
 
@@ -110,9 +113,10 @@ namespace DT
         float cos(float value);
 
         /**
-         * @brief Returns the hyperbolic cosine of the given number.
-         * @param value The number to get the hyperbolic cosine of.
-         * @return The hyperbolic cosine of the given number.
+         * @brief Returns the shortest difference between two given angles given in degrees.
+         * @param value The first angle in degrees.
+         * @param value2 The second angle in degrees.
+         * @return The shortest difference between two given angles given in degrees.
          */
         float deltaAngle(float value, float value2);
 

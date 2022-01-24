@@ -86,7 +86,7 @@ namespace DT
 		 * 
 		 * @param maxForce The max force of the joint
 		 */
-		void setMaxForce(float force);
+		void setMaxForce(float maxForce);
 
 		/**
 		 * @brief Get the max torque of the joint
@@ -100,7 +100,7 @@ namespace DT
 		 * 
 		 * @param maxTorque The max torque of the joint
 		 */
-		void setMaxTorque(float torque);
+		void setMaxTorque(float maxTorque);
 	};
 }
 

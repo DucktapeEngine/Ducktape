@@ -155,7 +155,7 @@ namespace DT
         /**
          * @brief Finds an Entity in the current scene by name.
          * 
-         * @param _name 
+         * @param entityName 
          * @return `Entity*` Pointer to the entity that was found, nullptr if no entity was found.
          */
         static Entity *find(std::string entityName);

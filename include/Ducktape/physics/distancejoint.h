@@ -98,7 +98,7 @@ namespace DT
 		/**
 		 * @brief Set the minimum length of the joint
 		 * 
-		 * @param length The minimum length of the joint
+		 * @param minLength The minimum length of the joint
 		 */
 		void setMinLength(float minLength);
 
@@ -112,7 +112,7 @@ namespace DT
 		/**
 		 * @brief Set the maximum length of the joint
 		 * 
-		 * @param length The maximum length of the joint
+		 * @param maxLength The maximum length of the joint
 		 */
 		void setMaxLength(float maxLength);
 

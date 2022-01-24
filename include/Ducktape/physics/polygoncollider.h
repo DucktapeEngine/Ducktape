@@ -71,25 +71,25 @@ namespace DT
 
         /**
          * @brief Set the points of the collider.
-         * @return std::vector<Vector2> The points of the collider.
+         * @param points The points of the collider.
          */
         void setPoints(std::vector<Vector2> points);
         
         /**
          * @brief Set the density of the collider.
-         * @param float The density of the collider.
+         * @param val The density of the collider.
          */
         void setDensity(float val);
 
         /**
          * @brief Set the friction of the collider.
-         * @param float The friction of the collider.
+         * @param val The friction of the collider.
          */
         void setFriction(float val);
 
         /**
          * @brief Set if the collider is a trigger or not.
-         * @param bool If the collider is a trigger or not.
+         * @param val If the collider is a trigger or not.
          */
         void setIsTrigger(bool val);
     };

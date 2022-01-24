@@ -76,7 +76,7 @@ namespace DT
          * 
          * @param newRotation New rotation of the transform.
          */
-        void setRotation(float newPosition);
+        void setRotation(float newRotation);
 
         /**
          * @brief Get the rotation of the transform.
@@ -102,7 +102,7 @@ namespace DT
         /**
          * @brief Set the local position of the transform.
          * 
-         * @param newPosition New local position of the transform.
+         * @param newLocalPosition New local position of the transform.
          */
         void setLocalPosition(Vector2 newLocalPosition);
 
@@ -116,7 +116,7 @@ namespace DT
         /**
          * @brief Set the local rotation of the transform.
          * 
-         * @param newRotation New local rotation of the transform.
+         * @param newLocalRotation New local rotation of the transform.
          */
         void setLocalRotation(float newLocalRotation);
 
@@ -130,7 +130,7 @@ namespace DT
         /**
          * @brief Set the local scale of the transform.
          * 
-         * @param newScale New local scale of the transform.
+         * @param newLocalScale New local scale of the transform.
          */
         void setLocalScale(Vector2 newLocalScale);
 
