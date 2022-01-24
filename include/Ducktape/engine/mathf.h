@@ -30,6 +30,10 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief A namespace to hold all math related properties and functions that 
+     * can be used to perform math operations.
+     */
     namespace Mathf
     {
         extern float Deg2Rad;
@@ -40,47 +44,167 @@ namespace DT
         extern float Rad2Deg;
         extern float GoldenRatio;
 
-        float abs(float val);
+        /**
+         * @brief Returns the absolute valueue of the given number.
+         * @param value The number to get the absolute valueue of.
+         * @return The absolute valueue of the given number.
+         */
+        float abs(float value);
 
-        float acos(float val);
+        /**
+         * @brief Returns the arc cosine of the given number.
+         * @param value The number to get the arc cosine of.
+         * @return The arc cosine of the given number.
+         */
+        float acos(float value);
 
-        bool approximately(float val, float secondval);
+        /**
+         * @brief Returns true if the given valueues are approximately equal.
+         * @param value The first valueue to compare.
+         * @param value2 The second valueue to compare.
+         * @return True if the given valueues are approximately equal.
+         */
+        bool approximately(float value, float value2);
 
-        float asin(float val);
+        /**
+         * @brief Returns the arc sine of the given number.
+         * @param value The number to get the arc sine of.
+         * @return The arc sine of the given number.
+         */
+        float asin(float value);
 
-        float atan(float val);
+        /**
+         * @brief Returns the arc tangent of the given number.
+         * @param value The number to get the arc tangent of.
+         * @return The arc tangent of the given number.
+         */
+        float atan(float value);
 
-        float atan2(float val, float val2);
+        /**
+         * @brief Returns the arc tangent of the given number.
+         * @param value The numerator of the arc tangent.
+         * @param value2 The denominator of the arc tangent.
+         * @return The arc tangent of the given number.
+         */
+        float atan2(float value, float value2);
 
-        float ceil(float val);
+        /**
+         * @brief Returns the ceiling of the given number.
+         * @param value The number to get the ceiling of.
+         * @return The ceiling of the given number.
+         */
+        float ceil(float value);
 
-        float clamp(float val, float min, float max);
+        /**
+         * @brief Returns the closest integer to the given number.
+         * @param value The number to get the closest integer of.
+         * @return The closest integer to the given number.
+         */
+        float clamp(float value, float min, float max);
 
-        float cos(float val);
+        /**
+         * @brief Returns the cosine of the given number.
+         * @param value The number to get the cosine of.
+         * @return The cosine of the given number.
+         */
+        float cos(float value);
 
-        float deltaAngle(float val, float val2);
+        /**
+         * @brief Returns the hyperbolic cosine of the given number.
+         * @param value The number to get the hyperbolic cosine of.
+         * @return The hyperbolic cosine of the given number.
+         */
+        float deltaAngle(float value, float value2);
 
-        float exp(float val);
+        /**
+         * @brief Returns the hyperbolic cosine of the given number.
+         * @param value The number to get the hyperbolic cosine of.
+         * @return The hyperbolic cosine of the given number.
+         */
+        float exp(float value);
 
-        float floor(float val);
+        /**
+         * @brief Returns the floor of the given number.
+         * @param value The number to get the floor of.
+         * @return The floor of the given number.
+         */
+        float floor(float value);
 
-        float round(float val);
+        /**
+         * @brief Returns the round of the given number.
+         * @param value The number to get the hyperbolic cosine of.
+         * @return The round of the given number.
+         */
+        float round(float value);
 
-        float lerp(float val, float target, float interpolation);
+        /**
+         * @brief Get the interpolated float result between the two float values.
+         * 
+         * @param value Initial value.
+         * @param target Target value.
+         * @param interpolation Interpolation value.
+         * @return The interpolated float result between the two float values. 
+         */
+        float lerp(float value, float target, float interpolation);
 
-        float max(float val, float val2);
+        /**
+         * @brief Get the maximum of the two float values.
+         * 
+         * @param value The first float value.
+         * @param value2 The second float value.
+         * @return float The maximum of the two float values.
+         */
+        float max(float value, float value2);
 
-        float min(float val, float val2);
+        /**
+         * @brief Get the minimum of the two float values.
+         * 
+         * @param value The first float value.
+         * @param value2 The second float value.
+         * @return float The minimum of the two float values.
+         */
+        float min(float value, float value2);
 
-        float moveTowards(float val, float target, float delta);
+        /**
+         * @brief Moves value towards target.
+         * 
+         * @param value The current value.
+         * @param target The target value.
+         * @param delta The amount to move.
+         * @return float The moved value.
+         */
+        float moveTowards(float value, float target, float delta);
 
-        float pow(float val, float val2);
+        /**
+         * @brief Returns value raised to the power of value2.
+         * 
+         * @param value The base value.
+         * @param value2 The exponent value.
+         * @return float The value raised to the power of value2.
+         */
+        float pow(float value, float value2);
 
-        float sin(float val);
+        /**
+         * @brief Returns the sine of the given number.
+         * @param value The number to get the sine of.
+         * @return The sine of the given number.
+         */
+        float sin(float value);
 
-        float sqrt(float val);
+        /**
+         * @brief Returns the square root of the given number.
+         * @param value The number to get the square root of.
+         * @return The square root of the given number.
+         */
+        float sqrt(float value);
 
-        float tan(float val);
+        /**
+         * @brief Returns the tangent of the given number.
+         * 
+         * @param value The number to get the tangent of.
+         * @return float The tangent of the given number.
+         */
+        float tan(float value);
     };
 }
 

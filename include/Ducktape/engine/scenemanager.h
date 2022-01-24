@@ -30,10 +30,20 @@ SOFTWARE.
 
 namespace DT
 {
+	/**
+	 * @brief Namespace for scene management.
+	 */
 	namespace SceneManager
 	{
+		/**
+		 * @brief Currently loaded scene.
+		 */
 		extern Scene *currentScene;
 
+		/**
+		 * @brief Loads a scene.
+		 * @param scene Scene to load.
+		 */
 		template <typename T>
 		void loadScene()
 		{

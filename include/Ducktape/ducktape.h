@@ -25,6 +25,10 @@ SOFTWARE.
 #ifndef DUCKTAPE_H
 #define DUCKTAPE_H
 
+/**
+ * @brief Including all the ducktape headers.
+ */
+
 #include <box2d/box2d.h>
 
 #include "engine/mathf.h"
@@ -71,9 +75,12 @@ namespace DT
 #include "physics/frictionjoint.h"
 #include "audio/audiosource.h"
 
+/**
+ * @brief Namespace to hold all Ducktape namespaces, classes, functions.
+ */
 namespace DT
 {
-    void update();
+    void init();
 }
 
 #endif

@@ -36,18 +36,50 @@ namespace DT
   class Camera : public BehaviourScript
   {
   public:
+    /**
+     * @brief The size of the camera view.
+     *
+     */
     float size = 1.0;
 
     void tick();
 
+    /**
+     * @brief Convert pixel coordinates to metre coordinates.
+     * 
+     * @param pos The pixel coordinate to convert.
+     * @return Vector2 The converted metre coordinates.
+     */
     static Vector2 unitToPixel(Vector2 pos);
+
+    /**
+     * @brief Convert metre coordinates to pixel coordinates.
+     * 
+     * @param pos The coordinate to convert.
+     * @return Vector2 The converted pixel coordinates.
+     */
     static Vector2 pixelToUnit(Vector2 pos);
 
+    /**
+     * @brief Convert screen coordinates to world coordinates.
+     * 
+     * @param pos The screen coordinate to convert.
+     * @return Vector2 The converted world coordinates.
+     */
     static Vector2 screenToWorldPos(Vector2 pos);
 
+    /**
+     * @brief Convert world coordinates to screen coordinates.
+     * 
+     * @param pos The world coordinate to convert.
+     * @return Vector2 The converted screen coordinates.
+     */
     static Vector2 worldToScreenPos(Vector2 pos);
 
-    static float pixelPerUnit();
+    /**
+     * @brief The pixel per unit of the camera.
+     */
+    static const float pixelPerUnit;
   };
 } // namespace DT
 

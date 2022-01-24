@@ -40,8 +40,19 @@ namespace DT
 		extern Vector2 globalGravity;
 		// extern ContactListener contactListener;
 
+		/**
+		 * @brief Initialize the physics world.
+		 */
 		void initialize();
 
+		/**
+		 * @brief Send a raycast from a point origin to a direction.
+		 * 
+		 * @param origin The origin of the raycast.
+		 * @param direction The direction of the raycast.
+		 * 
+		 * @return Collision Info about the collision that was hit by the raycast.
+		 */
 		Collision raycast(Vector2 _origin, Vector2 _direction);
 	};
 }

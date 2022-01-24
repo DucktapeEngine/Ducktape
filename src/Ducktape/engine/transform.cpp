@@ -108,50 +108,44 @@ void Transform::recalculateWorldValues()
     scale = _scl;
 }
 
-Vector2 Transform::setPosition(Vector2 _pos)
+void Transform::setPosition(Vector2 newPosition)
 {
-    position = _pos;
+    position = newPosition;
     onTransformChange();
     recalculateLocalValues();
-    return _pos;
 }
 
-float Transform::setRotation(float _rot)
+void Transform::setRotation(float newRotation)
 {
-    rotation = _rot;
+    rotation = newRotation;
     onTransformChange();
     recalculateLocalValues();
-    return _rot;
 }
 
-Vector2 Transform::setScale(Vector2 _scl)
+void Transform::setScale(Vector2 newScale)
 {
-    scale = _scl;
+    scale = newScale;
     onTransformChange();
     recalculateLocalValues();
-    return _scl;
 }
 
-Vector2 Transform::setLocalPosition(Vector2 _pos)
+void Transform::setLocalPosition(Vector2 newLocalPosition)
 {
-    position = _pos;
+    position = newLocalPosition;
     onTransformChange();
     recalculateWorldValues();
-    return _pos;
 }
 
-float Transform::setLocalRotation(float _rot)
+void Transform::setLocalRotation(float newLocalRotation)
 {
-    rotation = _rot;
+    rotation = newLocalRotation;
     onTransformChange();
     recalculateWorldValues();
-    return _rot;
 }
 
-Vector2 Transform::setLocalScale(Vector2 _scl)
+void Transform::setLocalScale(Vector2 newLocalScale)
 {
-    scale = _scl;
+    scale = newLocalScale;
     onTransformChange();
     recalculateWorldValues();
-    return _scl;
 }

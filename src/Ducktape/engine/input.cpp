@@ -29,32 +29,32 @@ std::vector<KeyCode> Input::keyUpList;
 std::vector<KeyCode> Input::keyDownList;
 Vector2 Input::mousePosition;
 
-bool Input::getMouseButton(int num)
+bool Input::getMouseButton(int mouseButton)
 {
-    if (num == 0 && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (mouseButton == 0 && sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         return true;
     }
-    else if (num == 2 && sf::Mouse::isButtonPressed(sf::Mouse::Right))
+    else if (mouseButton == 1 && sf::Mouse::isButtonPressed(sf::Mouse::Right))
     {
         return true;
     }
     return false;
 }
 
-bool Input::getKey(KeyCode k)
+bool Input::getKey(KeyCode key)
 {
-    return sf::Keyboard::isKeyPressed(k);
+    return sf::Keyboard::isKeyPressed(key);
 }
 
-bool Input::getKeyUp(KeyCode k)
+bool Input::getKeyUp(KeyCode key)
 {
-    return (std::find(keyUpList.begin(), keyUpList.end(), k) != keyUpList.end());
+    return (std::find(keyUpList.begin(), keyUpList.end(), key) != keyUpList.end());
 }
 
-bool Input::getKeyDown(KeyCode k)
+bool Input::getKeyDown(KeyCode key)
 {
-    return (std::find(keyDownList.begin(), keyDownList.end(), k) != keyDownList.end());
+    return (std::find(keyDownList.begin(), keyDownList.end(), key) != keyDownList.end());
 }
 
 void Input::update()
@@ -73,9 +73,9 @@ void Input::update()
             Application::renderWindow.close();
             break;
 
-            // case sf::Event::Resized:
-            //     Application::SetResolution(Vector2(Application::renderWindow.getSize().x, Application::renderWindow.getSize().y));
-            //     break;
+        case sf::Event::Resized:
+            Application::setResolution(Vector2(Application::renderWindow.getSize().x, Application::renderWindow.getSize().y));
+            break;
 
         case sf::Event::KeyPressed:
             keyDownList.push_back(event.key.code);

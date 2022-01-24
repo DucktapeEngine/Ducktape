@@ -38,29 +38,26 @@ void Camera::tick()
 
 Vector2 Camera::unitToPixel(Vector2 pos)
 {
-    return Vector2(pos.x * (pixelPerUnit() / 2), pos.y * (pixelPerUnit() / 2));
+    return Vector2(pos.x * (pixelPerUnit / 2), pos.y * (pixelPerUnit / 2));
 }
 
 Vector2 Camera::pixelToUnit(Vector2 pos)
 {
-    return Vector2(pos.x / (pixelPerUnit() / 2), pos.y / (pixelPerUnit() / 2));
+    return Vector2(pos.x / (pixelPerUnit / 2), pos.y / (pixelPerUnit / 2));
 }
 
 Vector2 Camera::screenToWorldPos(Vector2 pos)
 {
     sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x, pos.y));
-    vec /= pixelPerUnit();
+    vec /= pixelPerUnit;
     vec -= sf::Vector2f(12.5f, 12.5f);
     return Vector2(vec.x, vec.y);
 }
 
 Vector2 Camera::worldToScreenPos(Vector2 pos)
 {
-    sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x * pixelPerUnit(), pos.y * pixelPerUnit()));
+    sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x * pixelPerUnit, pos.y * pixelPerUnit));
     return Vector2(vec.x, vec.y);
 }
 
-float Camera::pixelPerUnit()
-{
-    return 10.0;
-}
+const float Camera::pixelPerUnit = 10.0f;

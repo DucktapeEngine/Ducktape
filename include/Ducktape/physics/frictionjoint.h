@@ -46,13 +46,60 @@ namespace DT
 		void tick();
 		void onDestroy();
 
+		/**
+		 * @brief Get the Anchor A position of the joint
+		 * 
+		 * @return Vector2 The Anchor A position of the joint
+		 */
 		Vector2 getAnchorA();
+
+		/**
+		 * @brief Get the Anchor B position of the joint
+		 * 
+		 * @return Vector2 The Anchor B position of the joint
+		 */
 		Vector2 getAnchorB();
+
+		/**
+		 * @brief Get the rigidbody connected to the joint
+		 * 
+		 * @return Rigidbody2D* The rigidbody connected to the joint
+		 */
 		Rigidbody2D *getConnectedRigidbody();
+
+		/**
+		 * @brief Set the connected rigidbody of the joint
+		 * 
+		 * @param rb The rigidbody to connect to the joint
+		 */
 		void setConnectedRigidbody(Rigidbody2D *rb);
+
+		/**
+		 * @brief Get the max force of the joint
+		 * 
+		 * @return float The max force of the joint
+		 */
 		float getMaxForce();
+
+		/**
+		 * @brief Set the max force of the joint
+		 * 
+		 * @param maxForce The max force of the joint
+		 */
 		void setMaxForce(float force);
+
+		/**
+		 * @brief Get the max torque of the joint
+		 * 
+		 * @return float The max torque of the joint
+		 */
 		float getMaxTorque();
+
+		/**
+		 * @brief Set the max torque of the joint
+		 * 
+		 * @param maxTorque The max torque of the joint
+		 */
 		void setMaxTorque(float torque);
 	};
 }

@@ -98,35 +98,14 @@ float Vector2::sqrMagnitude()
     return (x * x) + (y * y);
 }
 
-bool Vector2::equals(Vector2 vec)
-{
-    if (x == vec.x && y == vec.y)
-    {
-        return true;
-    }
-    return false;
-}
-
-void Vector2::normalize()
-{
-    x = normalized().x;
-    y = normalized().y;
-}
-
-void Vector2::set(Vector2 vec)
-{
-    x = vec.x;
-    y = vec.y;
-}
-
 float Vector2::distance(Vector2 vec1, Vector2 vec2)
 {
     return (vec2 - vec1).magnitude();
 }
 
-Vector2 Vector2::lerp(Vector2 start, Vector2 end, float delta)
+Vector2 Vector2::lerp(Vector2 start, Vector2 target, float delta)
 {
-    return Vector2(Mathf::lerp(start.x, end.x, delta), Mathf::lerp(start.y, end.y, delta));
+    return Vector2(Mathf::lerp(start.x, target.x, delta), Mathf::lerp(start.y, target.y, delta));
 }
 
 Vector2 Vector2::max(Vector2 vec1, Vector2 vec2)
@@ -139,19 +118,9 @@ Vector2 Vector2::min(Vector2 vec1, Vector2 vec2)
     return Vector2(Mathf::min(vec1.x, vec2.x), Mathf::min(vec1.y, vec2.y));
 }
 
-Vector2 Vector2::moveTowards(Vector2 vec1, Vector2 vec2, float delta)
+Vector2 Vector2::moveTowards(Vector2 value, Vector2 target, float delta)
 {
-    return Vector2(Mathf::moveTowards(vec1.x, vec2.x, delta), Mathf::moveTowards(vec1.y, vec2.y, delta));
-}
-
-Vector2 Vector2::perpendicularClockwise(Vector2 vec)
-{
-    return Vector2(vec.y, -vec.x);
-}
-
-Vector2 Vector2::perpendicularCounterClockwise(Vector2 vec)
-{
-    return Vector2(-vec.y, vec.x);
+    return Vector2(Mathf::moveTowards(value.x, target.x, delta), Mathf::moveTowards(value.y, target.y, delta));
 }
 
 std::ostream &operator<<(std::ostream &out, const Vector2 &vec)

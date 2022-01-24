@@ -28,7 +28,6 @@ using namespace DT;
 float Collision::ReportFixture(b2Fixture *_fixture, const b2Vec2 &_point, const b2Vec2 &_normal, float _fraction)
 {
 	point = Vector2(_point.x, _point.y);
-	point = Vector2(_normal.x, _normal.y);
-	distance = _fraction;
-	return 0.0f;
+	normal = Vector2(_normal.x, _normal.y);
+	return _fraction;
 }

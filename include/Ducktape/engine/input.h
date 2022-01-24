@@ -34,20 +34,65 @@ typedef sf::Keyboard::Key KeyCode;
 
 namespace DT
 {
+    /**
+     * @brief A namespace to hold all input related properties and functions that 
+     * can be used to detect key presses, key releases, mouse presses, mouse releases, 
+     * mouse position, etc.
+     */
     namespace Input
     {
+        /**
+         * @brief List of keys that were released this frame.
+         */
         extern std::vector<KeyCode> keyUpList;
+
+        /**
+         * @brief List of keys that were pressed this frame.
+         */
         extern std::vector<KeyCode> keyDownList;
+
+        /**
+         * @brief The current mouse position.
+         */
         extern Vector2 mousePosition;
 
-        bool getMouseButton(int num);
+        /**
+         * @brief Get if a mouse button is pressed. 0 = left, 1 = right.
+         * 
+         * @param mouseButton The mouse button to check.
+         * @return true/false based on if the mouse button is pressed or not. 
+         */
+        bool getMouseButton(int mouseButton);
 
-        bool getKey(KeyCode k);
+        /**
+         * @brief Get if a key is currently being held down.
+         * 
+         * @param key The key to check. 
+         * @return true/false based on if the key is being held down or not.
+         */
+        bool getKey(KeyCode key);
 
-        bool getKeyUp(KeyCode k);
+        /**
+         * @brief Get if a key was released this frame.
+         * 
+         * @param key The key to check.
+         * @return true/false based on if the key was released this frame or not.
+         */
+        bool getKeyUp(KeyCode key);
 
-        bool getKeyDown(KeyCode k);
+        /**
+         * @brief Get if a key was pressed this frame.
+         * 
+         * @param key The key to check.
+         * @return true/false based on if the key was pressed this frame or not.
+         */
+        bool getKeyDown(KeyCode key);
 
+        /**
+         * @brief Calculate all of the input-related properties. This function is also
+         * responsible for the window being responsive (not get the error "Application
+         * is not responding"). Thus, it needs to be called every frame by the engine.
+         */
         void update();
     };
 }

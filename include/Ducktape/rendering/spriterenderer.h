@@ -34,11 +34,25 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief Component to render sprites to the screen.
+     */
     class SpriteRenderer : public BehaviourScript
     {
     public:
+        /**
+         * @brief Path to the sprite to be rendered.
+         */
         std::string spritePath;
+
+        /**
+         * @brief The pixel per unit to be used to draw the sprite.
+         */
         int pixelPerUnit = 1;
+
+        /**
+         * @brief The color of the sprite.
+         */
         Color color = Color(255, 255, 255, 255);
 
         void tick();

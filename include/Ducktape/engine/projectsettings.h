@@ -30,11 +30,30 @@ SOFTWARE.
 
 namespace DT
 {
+	/**
+	 * @brief A namespace to hold all project related properties that can be 
+	 * modified by the user.
+	 */
 	namespace ProjectSettings
 	{
+		/**
+		 * @brief The title of the window.
+		 */
 		extern std::string windowTitle;
+
+		/**
+		 * @brief The background color to be used by the whole project.
+		 */
 		extern Color sceneBackgroundColor;
+
+		/**
+		 * @brief The gravity all Rigidbodies will be affected by.
+		 */
 		extern Vector2 globalGravity;
+
+		/**
+		 * @brief The initial size of the window.
+		 */
 		extern Vector2 initialResolution;
 	}
 }

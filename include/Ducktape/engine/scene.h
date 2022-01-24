@@ -32,13 +32,26 @@ namespace DT
 {
 	class Entity;
 
+	/**
+	 * @brief Scene system for Ducktape. This class can be used to create and manage entities
+	 * in different scenes.
+	 */
 	class Scene
 	{
 	public:
+		/**
+		 * @brief List of entities the scene contains.
+		 */
 		std::vector<Entity *> entities;
 
+		/**
+		 * @brief Called by the Scene Manager when the scene is loaded.
+		 */
 		virtual void initialize() {}
 
+		/**
+		 * @brief Called by the Scene Manager when another scene is loaded.
+		 */
 		void destroy();
 	};
 }

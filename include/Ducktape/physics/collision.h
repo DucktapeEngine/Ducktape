@@ -35,10 +35,20 @@ namespace DT
 	class Collision : public b2RayCastCallback
 	{
 	public:
+		/**
+		 * @brief The direction the collision is pointing towards.
+		 */
 		Vector2 normal;
-		Entity *body;
+
+		/**
+		 * @brief The point of collision.
+		 */
 		Vector2 point;
-		float distance;
+
+		/**
+		 * @brief The body that was collided with.
+		 */
+		Entity *body;
 
 		float ReportFixture(b2Fixture *_fixture, const b2Vec2 &_point, const b2Vec2 &_normal, float _fraction);
 	};

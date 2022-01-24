@@ -37,6 +37,10 @@ namespace DT
     private:
         Rigidbody2D *rb;
         b2Fixture *fixture;
+        
+        /**
+         * @brief The width and height of the box collider.
+         */
         Vector2 scale = Vector2(1.0f, 1.0f);
 
     public:
@@ -44,13 +48,53 @@ namespace DT
 
         void tick();
 
+        /**
+         * @brief Get the scale of the collider.
+         * @return Vector2 The scale of the collider.
+         */
         Vector2 getScale();
+        
+        /**
+         * @brief Get the density of the collider.
+         * @return float The density of the collider.
+         */
         float getDensity();
+
+        /**
+         * @brief Get the friction of the collider.
+         * @return float The friction of the collider.
+         */
         float getFriction();
+
+        /**
+         * @brief Get if the collider is a trigger or not.
+         * 
+         * @return bool If the collider is a trigger or not.
+         */
         bool getIsTrigger();
+
+        /**
+         * @brief Set the scale of the collider.
+         * @param Vector2 The scale of the collider.
+         */
         void setScale(Vector2 val);
+
+        /**
+         * @brief Set the density of the collider.
+         * @param float The density of the collider.
+         */
         void setDensity(float val);
+
+        /**
+         * @brief Set the friction of the collider.
+         * @param float The friction of the collider.
+         */
         void setFriction(float val);
+
+        /**
+         * @brief Set if the collider is a trigger or not.
+         * @param bool If the collider is a trigger or not.
+         */
         void setIsTrigger(bool val);
     };
 }

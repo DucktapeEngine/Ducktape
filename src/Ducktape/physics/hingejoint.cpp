@@ -110,7 +110,7 @@ void HingeJoint2D::setLowerLimit(float val)
 	joint->SetLimits(val, getUpperLimit());
 }
 
-void HingeJoint2D::setHigherLimit(float val)
+void HingeJoint2D::setUpperLimit(float val)
 {
 	joint->SetLimits(getLowerLimit(), val);
 }

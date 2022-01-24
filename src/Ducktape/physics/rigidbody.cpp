@@ -202,12 +202,12 @@ void Rigidbody2D::applyTorque(float torque)
     body->ApplyTorque(torque, true);
 }
 
-void Rigidbody2D::applyLinearImpulse(Vector2 impulse)
+void Rigidbody2D::applyImpulse(Vector2 impulse)
 {
     body->ApplyLinearImpulseToCenter((b2Vec2)impulse, true);
 }
 
-void Rigidbody2D::applyLinearImpulseAtPoint(Vector2 impulse, Vector2 point)
+void Rigidbody2D::applyImpulseAtPoint(Vector2 impulse, Vector2 point)
 {
     body->ApplyLinearImpulse((b2Vec2)impulse, (b2Vec2)point, true);
 }

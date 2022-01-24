@@ -26,7 +26,7 @@ SOFTWARE.
 
 namespace DT
 {
-    void update()
+    void init()
     {
         if (SceneManager::currentScene == nullptr)
         {

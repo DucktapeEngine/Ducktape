@@ -29,8 +29,17 @@ SOFTWARE.
 
 namespace DT
 {
+	/**
+	 * @brief A namespace for functions that can be used to generate random values.
+	 */
 	namespace Random
 	{
+		/**
+		 * @brief Generates a random float between the given min and max values.
+		 * @param min The minimum value to generate.
+		 * @param max The maximum value to generate.
+		 * @return A random float between the given min and max values.
+		 */
 		float range(float min, float max);
 	}
 }

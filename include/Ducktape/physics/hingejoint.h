@@ -46,24 +46,137 @@ namespace DT
 		void tick();
 		void onDestroy();
 
+		/**
+		 * @brief Get the Anchor A position of the joint.
+		 * 
+		 * @return Vector2 The Anchor A position of the joint.
+		 */
 		Vector2 getAnchorA();
+
+		/**
+		 * @brief Get the Anchor B position of the joint.
+		 * 
+		 * @return Vector2 The Anchor B position of the joint.
+		 */
 		Vector2 getAnchorB();
+
+		/**
+		 * @brief Get the rigidbody connected to the joint.
+		 * 
+		 * @return Rigidbody2D* The rigidbody connected to the joint.
+		 */
 		Rigidbody2D *getConnectedRigidbody();
+
+		/**
+		 * @brief Set the connected rigidbody of the joint.
+		 * 
+		 * @param rb The rigidbody to connect to the joint.
+		 */
 		void setConnectedRigidbody(Rigidbody2D *rb);
+
+		/**
+		 * @brief Get the reference angle of the joint.
+		 * 
+		 * @return float The reference angle of the joint.
+		 */
 		float getReferenceAngle();
+
+		/**
+		 * @brief Get the joint angle.
+		 * 
+		 * @return float The joint angle.
+		 */
 		float getJointAngle();
+
+		/**
+		 * @brief Get the joint speed.
+		 * 
+		 * @return float The joint speed.
+		 */
 		float getJointSpeed();
+
+		/**
+		 * @brief Get if limit is enabled.
+		 * 
+		 * @return bool If limit is enabled.
+		 */
 		bool getLimitEnabled();
+
+		/**
+		 * @brief Set if limit is enabled.
+		 * 
+		 * @param flag If limit is enabled.
+		 */
 		void setLimitEnabled(bool flag);
+
+		/**
+		 * @brief Get the lower limit.
+		 * 
+		 * @return float The lower limit.
+		 */
 		float getLowerLimit();
+
+		/**
+		 * @brief Get the upper limit.
+		 * 
+		 * @param limit The upper limit.
+		 */
 		float getUpperLimit();
+
+		/**
+		 * @brief Set the lower limit.
+		 * 
+		 * @param val The lower limit.
+		 */
 		void setLowerLimit(float val);
-		void setHigherLimit(float val);
+
+		/**
+		 * @brief Set the upper limit.
+		 * 
+		 * @param val The upper limit.
+		 */
+		void setUpperLimit(float val);
+
+		/**
+		 * @brief Get if motor is enabled.
+		 * 
+		 * @return bool If motor is enabled.
+		 */
 		bool getMotorEnabled();
+
+		/**
+		 * @brief Set if motor is enabled.
+		 * 
+		 * @param flag If motor is enabled.
+		 */
 		void setMotorEnabled(bool flag);
-		void setMotorSpeed(float speed);
+
+		/**
+		 * @brief Get the motor speed.
+		 * 
+		 * @return float The motor speed.
+		 */
 		float getMotorSpeed();
+
+		/**
+		 * @brief Get the motor speed.
+		 * 
+		 * @return float The motor speed.
+		 */
+		void setMotorSpeed(float speed);
+
+		/**
+		 * @brief Set the max motor torque.
+		 * 
+		 * @param torque The max motor torque.
+		 */
 		void setMaxMotorTorque(float torque);
+
+		/**
+		 * @brief Get the max motor torque.
+		 * 
+		 * @return float The max motor torque.
+		 */
 		float getMaxMotorTorque();
 	};
 }

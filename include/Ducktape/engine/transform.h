@@ -47,37 +47,108 @@ namespace DT
         void onTransformChange();
 
     public:
+        /**
+         * @brief Parent of the current transform.
+         */
         Transform *parent = nullptr;
+
+        /**
+         * @brief Children of the current transform.
+         */
         std::vector<Transform *> children;
 
-        Vector2 setPosition(Vector2 _pos);
+        /**
+         * @brief Set the position of the transform.
+         * 
+         * @param newPosition New position of the transform. 
+         */
+        void setPosition(Vector2 newPosition);
 
+        /**
+         * @brief Get the position of the transform.
+         * 
+         * @return Vector2 Position of the transform.
+         */
         Vector2 getPosition();
 
-        float setRotation(float _rot);
+        /**
+         * @brief Set the rotation of the transform.
+         * 
+         * @param newRotation New rotation of the transform.
+         */
+        void setRotation(float newPosition);
 
+        /**
+         * @brief Get the rotation of the transform.
+         * 
+         * @return float Rotation of the transform.
+         */
         float getRotation();
 
-        Vector2 setScale(Vector2 _scl);
+        /**
+         * @brief Set the scale of the transform.
+         * 
+         * @param newScale New scale of the transform.
+         */
+        void setScale(Vector2 newScale);
 
+        /**
+         * @brief Get the scale of the transform.
+         * 
+         * @return Vector2 Scale of the transform.
+         */
         Vector2 getScale();
 
-        // local versions of each method
+        /**
+         * @brief Set the local position of the transform.
+         * 
+         * @param newPosition New local position of the transform.
+         */
+        void setLocalPosition(Vector2 newLocalPosition);
 
-        Vector2 setLocalPosition(Vector2 _pos);
-
+        /**
+         * @brief Get the local position of the transform.
+         * 
+         * @return Vector2 Local position of the transform.
+         */
         Vector2 getLocalPosition();
 
-        float setLocalRotation(float _rot);
+        /**
+         * @brief Set the local rotation of the transform.
+         * 
+         * @param newRotation New local rotation of the transform.
+         */
+        void setLocalRotation(float newLocalRotation);
 
+        /**
+         * @brief Get the local rotation of the transform.
+         * 
+         * @return float Local rotation of the transform.
+         */
         float getLocalRotation();
 
-        Vector2 setLocalScale(Vector2 _scl);
+        /**
+         * @brief Set the local scale of the transform.
+         * 
+         * @param newScale New local scale of the transform.
+         */
+        void setLocalScale(Vector2 newLocalScale);
 
+        /**
+         * @brief Get the local scale of the transform.
+         * 
+         * @return Vector2 Local scale of the transform.
+         */
         Vector2 getLocalScale();
 
+        /**
+         * @brief Recalculate the local position, rotation, and scale.
+         */
         void recalculateLocalValues();
 
+        /**
+         * @brief Recalculate the world position, rotation, and scale.
+         */
         void recalculateWorldValues();
     };
 }

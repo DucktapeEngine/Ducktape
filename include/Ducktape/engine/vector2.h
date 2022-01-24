@@ -36,57 +36,125 @@ namespace DT
     class Vector2
     {
     public:
+        /**
+         * @brief Short form for Vector2(0.0f, 0.0f).
+         */
         static const Vector2 ZERO;
+
+        /**
+         * @brief Short form for Vector2(0.0f, 1.0f).
+         */
         static const Vector2 UP;
+
+        /**
+         * @brief Short form for Vector2(0.0f, -1.0f).
+         */
         static const Vector2 DOWN;
+
+        /**
+         * @brief Short form for Vector2(-1.0f, 0.0f).
+         */
         static const Vector2 LEFT;
+
+        /**
+         * @brief Short form for Vector2(1.0f, 0.0f).
+         */
         static const Vector2 RIGHT;
+
+        /**
+         * @brief Short form for Vector2(1.0f, 1.0f).
+         */
         static const Vector2 ONE;
+
+        /**
+         * @brief Short form for Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity).
+         */
         static const Vector2 NEGATIVE_INFINITY;
+
+        /**
+         * @brief Short form for Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity).
+         */
         static const Vector2 POSITIVE_INFINITY;
 
         float x, y;
-        Vector2();
 
+        Vector2();
         Vector2(float xpos, float ypos);
 
         Vector2 operator+(Vector2 vec2);
-
         Vector2 operator-(Vector2 vec2);
-
         Vector2 operator*(float val);
-
         Vector2 operator/(float val);
-
         Vector2 &operator=(Vector2 vec);
-
         bool operator==(Vector2 vec);
 
+        /**
+         * @brief Returns the magntiude of the vector.
+         * 
+         * @return float Magnitude of the vector.
+         */
         float magnitude();
 
+        /**
+         * @brief Returns the normalized vector.
+         * 
+         * @return float Normalized vector.
+         */
         Vector2 normalized();
 
+        /**
+         * @brief Returns the squared magnitude of the vector.
+         * 
+         * @return float The squared magnitude of the vector.
+         */
         float sqrMagnitude();
 
-        bool equals(Vector2 vec);
-
-        void normalize();
-
-        void set(Vector2 vec);
-
+        /**
+         * @brief Distance between two vectors.
+         * 
+         * @param vec1 First vector.
+         * @param vec2 Second vector.
+         * @return float Distance between the two vectors.
+         */
         static float distance(Vector2 vec1, Vector2 vec2);
 
-        static Vector2 lerp(Vector2 start, Vector2 end, float delta);
+        /**
+         * @brief Get the interpolated float result between the two vectors.
+         * 
+         * @param start Initial vector.
+         * @param end Target vector.
+         * @param delta Interpolation value.
+         * @return Vector2 Interpolated vector.
+         */
+        static Vector2 lerp(Vector2 start, Vector2 target, float delta);
 
+        /**
+         * @brief Get the maxiumum of the two vectors.
+         * 
+         * @param vec1 First vector.
+         * @param vec2 Second vector.
+         * @return Vector2 Maximum vector.
+         */
         static Vector2 max(Vector2 vec1, Vector2 vec2);
 
+        /**
+         * @brief Get the minimum of the two vectors.
+         * 
+         * @param vec1 First vector.
+         * @param vec2 Second vector.
+         * @return Vector2 Minimum vector.
+         */
         static Vector2 min(Vector2 vec1, Vector2 vec2);
 
-        static Vector2 moveTowards(Vector2 vec1, Vector2 vec2, float delta);
-
-        static Vector2 perpendicularClockwise(Vector2 vec);
-
-        static Vector2 perpendicularCounterClockwise(Vector2 vec);
+         /**
+         * @brief Moves value towards target.
+         * 
+         * @param value The current value.
+         * @param target The target value.
+         * @param delta The amount to move.
+         * @return float The moved value.
+         */
+        static Vector2 moveTowards(Vector2 value, Vector2 target, float delta);
 
         operator std::string() const;
         operator sf::Vector2f() const;

@@ -46,20 +46,109 @@ namespace DT
 		void tick();
 		void onDestroy();
 
+		/**
+		 * @brief Get the Anchor A position of the joint
+		 * 
+		 * @return Vector2 The Anchor A position of the joint
+		 */
 		Vector2 getAnchorA();
+
+		/**
+		 * @brief Get the Anchor B position of the joint
+		 * 
+		 * @return Vector2 The Anchor B position of the joint
+		 */
 		Vector2 getAnchorB();
+		
+		/**
+		 * @brief Get the rigidbody connected to the joint
+		 * 
+		 * @return Rigidbody2D* The rigidbody connected to the joint
+		 */
 		Rigidbody2D *getConnectedRigidbody();
+
+		/**
+		 * @brief Set the connected rigidbody of the joint
+		 * 
+		 * @param rb The rigidbody to connect to the joint
+		 */
 		void setConnectedRigidbody(Rigidbody2D *rb);
+
+		/**
+		 * @brief Get the length of the joint
+		 * 
+		 * @return float The length of the joint
+		 */
 		float getLength();
+
+		/**
+		 * @brief Set the length of the joint
+		 * 
+		 * @param length The length of the joint
+		 */
 		void setLength(float length);
+
+		/**
+		 * @brief Get the minimum length of the joint
+		 * 
+		 * @return float The minimum length of the joint
+		 */
 		float getMinLength();
+
+		/**
+		 * @brief Set the minimum length of the joint
+		 * 
+		 * @param length The minimum length of the joint
+		 */
 		void setMinLength(float minLength);
+
+		/**
+		 * @brief Get the maximum length of the joint
+		 * 
+		 * @return float The maximum length of the joint
+		 */
 		float getMaxLength();
+
+		/**
+		 * @brief Set the maximum length of the joint
+		 * 
+		 * @param length The maximum length of the joint
+		 */
 		void setMaxLength(float maxLength);
+
+		/**
+		 * @brief Get the current length of the joint
+		 * 
+		 * @return float The current length of the joint
+		 */
 		float getCurrentLength();
+
+		/**
+		 * @brief Get the stiffness of the joint
+		 * 
+		 * @return float The stiffness of the joint
+		 */
 		float getStiffness();
+
+		/**
+		 * @brief Set the stiffness of the joint
+		 * 
+		 * @param stiffness The stiffness of the joint
+		 */
 		void setStiffness(float stiffness);
+
+		/**
+		 * @brief Get the damping of the joint
+		 * 
+		 * @return float The damping of the joint
+		 */
 		float getDamping();
+
+		/**
+		 * @brief Set the damping of the joint
+		 * 
+		 * @param damping The damping of the joint
+		 */
 		void setDamping(float damping);
 	};
 }
