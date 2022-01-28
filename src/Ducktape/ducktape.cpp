@@ -31,7 +31,7 @@ namespace DT
         if (SceneManager::currentScene == nullptr)
         {
             Debug::logSuccess("Ducktape is ready to go!");
-            Debug::logSuccess("Get Started: https://ducktapeengine.github.io/manual/intro");
+            Debug::logSuccess("Get Started: https://ducktapeengine.github.io/docs/intro");
             return;
         }
 
