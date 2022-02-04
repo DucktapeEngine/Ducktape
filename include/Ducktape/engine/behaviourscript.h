@@ -59,6 +59,13 @@ namespace DT
         bool isDestroyed = false;
 
         /**
+         * @brief Called when the component is added to an entity.
+         * 
+         * NOTE: This method MUST be used rather than the default BehaviourScript::BehaviourScript() constructor.
+         */
+        virtual void constructor() {};
+
+        /**
          * @brief Called at the start of the project.
          */
         virtual void init() {}

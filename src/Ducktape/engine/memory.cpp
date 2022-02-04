@@ -26,3 +26,11 @@ SOFTWARE.
 using namespace DT;
 
 std::vector<void *> Memory::heapMemory = {};
+
+void Memory::cleanup()
+{
+    for (int i = 0; i < heapMemory.size(); i++)
+    {
+        delete heapMemory[i];
+    }
+}

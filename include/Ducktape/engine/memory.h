@@ -37,6 +37,11 @@ namespace DT
 	namespace Memory
 	{
 		extern std::vector<void *> heapMemory;
+
+		/**
+		 * @brief Cleans up all memory allocated by the engine.
+		 */
+		void cleanup();
 	}
 }
 

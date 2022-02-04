@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/physics/boxcollider.h>
 using namespace DT;
 
-BoxCollider2D::BoxCollider2D()
+void BoxCollider2D::constructor()
 {
     rb = entity->getComponent<Rigidbody2D>();
     if (rb == nullptr)

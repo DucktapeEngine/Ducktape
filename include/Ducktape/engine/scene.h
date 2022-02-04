@@ -47,7 +47,7 @@ namespace DT
 		/**
 		 * @brief Called by the Scene Manager when the scene is loaded.
 		 */
-		virtual void initialize() {}
+		virtual void init() {}
 
 		/**
 		 * @brief Called by the Scene Manager when another scene is loaded.

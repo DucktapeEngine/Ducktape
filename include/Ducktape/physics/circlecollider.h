@@ -43,7 +43,7 @@ namespace DT
         float radius = 1.0f;
 
     public:
-        CircleCollider2D();
+        void constructor();
 
         void tick();
 

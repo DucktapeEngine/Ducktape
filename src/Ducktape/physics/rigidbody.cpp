@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/physics/rigidbody.h>
 using namespace DT;
 
-Rigidbody2D::Rigidbody2D()
+void Rigidbody2D::constructor()
 {
     b2BodyDef bodyDef;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(entity);

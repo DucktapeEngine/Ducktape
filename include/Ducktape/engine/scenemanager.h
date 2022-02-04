@@ -48,13 +48,14 @@ namespace DT
 		void loadScene()
 		{
 			T *scene = new T();
+			Memory::cleanup();
 			Memory::heapMemory.push_back(scene);
 			if (currentScene != nullptr)
 			{
 				currentScene->destroy();
 			}
 			currentScene = scene;
-			currentScene->initialize();
+			currentScene->init();
 		}
 	}
 }

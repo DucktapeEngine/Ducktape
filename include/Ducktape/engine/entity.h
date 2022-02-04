@@ -94,9 +94,9 @@ namespace DT
         template <typename T>
         T *addComponent()
         {
-            auto component = (T*)malloc(sizeof(T));
+            T *component = new T();
             component->entity = this;
-            *component = T();
+            component->constructor();
             this->components.push_back(component);
             Memory::heapMemory.push_back(component);
             return component;

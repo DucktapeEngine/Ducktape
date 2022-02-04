@@ -44,7 +44,7 @@ namespace DT
         Vector2 scale = Vector2(1.0f, 1.0f);
 
     public:
-        BoxCollider2D();
+        void constructor();
 
         void tick();
 

@@ -25,6 +25,36 @@ SOFTWARE.
 #include <Ducktape/rendering/spriterenderer.h>
 using namespace DT;
 
+void SpriteRenderer::setSpritePath(std::string newSpritePath)
+{
+    spritePath = newSpritePath;
+}
+
+void SpriteRenderer::setPixelPerUnit(float newPixelPerUnit)
+{
+    pixelPerUnit = newPixelPerUnit;
+}
+
+void SpriteRenderer::setColor(Color newColor)
+{
+    color = newColor;
+}
+
+Color SpriteRenderer::getColor()
+{
+    return color;
+}
+
+float SpriteRenderer::getPixelPerUnit()
+{
+    return pixelPerUnit;
+}
+
+std::string SpriteRenderer::getSpritePath()
+{
+    return spritePath;
+}
+
 void SpriteRenderer::tick()
 {
     if (spritePath != "")

@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/physics/edgecollider.h>
 using namespace DT;
 
-EdgeCollider2D::EdgeCollider2D()
+void EdgeCollider2D::constructor()
 {
     rb = entity->getComponent<Rigidbody2D>();
     if (rb == nullptr)

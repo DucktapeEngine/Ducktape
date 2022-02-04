@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/physics/frictionjoint.h>
 using namespace DT;
 
-FrictionJoint2D::FrictionJoint2D()
+void FrictionJoint2D::constructor()
 {
 	rb = entity->getComponent<Rigidbody2D>();
 	if (rb == nullptr)

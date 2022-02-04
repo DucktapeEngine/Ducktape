@@ -41,7 +41,7 @@ namespace DT
 		Rigidbody2D *connectedRigidbody = nullptr;
 
 	public:
-		HingeJoint2D();
+		void constructor();
 
 		void tick();
 		void onDestroy();

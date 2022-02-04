@@ -63,7 +63,7 @@ namespace DT
     public:
         b2Body *body;
 
-        Rigidbody2D();
+        void constructor();
 
         void tick();
 

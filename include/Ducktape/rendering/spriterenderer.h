@@ -39,21 +39,29 @@ namespace DT
      */
     class SpriteRenderer : public BehaviourScript
     {
-    public:
+    private:
         /**
          * @brief Path to the sprite to be rendered.
          */
         std::string spritePath;
-
         /**
          * @brief The pixel per unit to be used to draw the sprite.
          */
-        int pixelPerUnit = 1;
-
+        float pixelPerUnit = 1; 
+        
         /**
          * @brief The color of the sprite.
          */
         Color color = Color(255, 255, 255, 255);
+
+    public:
+        void setSpritePath(std::string newSpritePath);
+        void setPixelPerUnit(float newPixelPerUnit);
+        void setColor(Color newColor);
+
+        std::string getSpritePath();
+        float getPixelPerUnit();
+        Color getColor();
 
         void tick();
     };
