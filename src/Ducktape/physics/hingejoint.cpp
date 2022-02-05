@@ -25,12 +25,12 @@ SOFTWARE.
 #include <Ducktape/physics/hingejoint.h>
 using namespace DT;
 
-void HingeJoint2D::constructor()
+void HingeJoint2D::Constructor()
 {
-	rb = entity->getComponent<Rigidbody2D>();
+	rb = entity->GetComponent<Rigidbody2D>();
 	if (rb == nullptr)
 	{
-		rb = entity->addComponent<Rigidbody2D>();
+		rb = entity->AddComponent<Rigidbody2D>();
 	}
 
 	b2RevoluteJointDef jointDef;
@@ -39,27 +39,27 @@ void HingeJoint2D::constructor()
 	joint = (b2RevoluteJoint *)Physics::physicsWorld.CreateJoint(&jointDef);
 }
 
-void HingeJoint2D::onDestroy()
+void HingeJoint2D::OnDestroy()
 {
 	Physics::physicsWorld.DestroyJoint(joint);
 }
 
-Vector2 HingeJoint2D::getAnchorA()
+Vector2 HingeJoint2D::GetAnchorA()
 {
 	return Vector2(joint->GetLocalAnchorA().x, joint->GetLocalAnchorA().y);
 }
 
-Vector2 HingeJoint2D::getAnchorB()
+Vector2 HingeJoint2D::GetAnchorB()
 {
 	return Vector2(joint->GetLocalAnchorB().x, joint->GetLocalAnchorB().y);
 }
 
-Rigidbody2D *HingeJoint2D::getConnectedRigidbody()
+Rigidbody2D *HingeJoint2D::GetConnectedRigidbody()
 {
 	return connectedRigidbody;
 }
 
-void HingeJoint2D::setConnectedRigidbody(Rigidbody2D *rgb)
+void HingeJoint2D::SetConnectedRigidbody(Rigidbody2D *rgb)
 {
 	connectedRigidbody = rb;
 	b2RevoluteJointDef jointDef;
@@ -70,77 +70,77 @@ void HingeJoint2D::setConnectedRigidbody(Rigidbody2D *rgb)
 	joint = (b2RevoluteJoint *)Physics::physicsWorld.CreateJoint(&jointDef);
 }
 
-float HingeJoint2D::getReferenceAngle()
+float HingeJoint2D::GetReferenceAngle()
 {
 	return joint->GetReferenceAngle();
 }
 
-float HingeJoint2D::getJointAngle()
+float HingeJoint2D::GetJointAngle()
 {
 	return joint->GetJointAngle();
 }
 
-float HingeJoint2D::getJointSpeed()
+float HingeJoint2D::GetJointSpeed()
 {
 	return joint->GetJointSpeed();
 }
 
-bool HingeJoint2D::getLimitEnabled()
+bool HingeJoint2D::GetLimitEnabled()
 {
 	return joint->IsLimitEnabled();
 }
 
-void HingeJoint2D::setLimitEnabled(bool flag)
+void HingeJoint2D::SetLimitEnabled(bool flag)
 {
 	joint->EnableLimit(flag);
 }
 
-float HingeJoint2D::getLowerLimit()
+float HingeJoint2D::GetLowerLimit()
 {
 	return joint->GetLowerLimit();
 }
 
-float HingeJoint2D::getUpperLimit()
+float HingeJoint2D::GetUpperLimit()
 {
 	return joint->GetUpperLimit();
 }
 
-void HingeJoint2D::setLowerLimit(float val)
+void HingeJoint2D::SetLowerLimit(float val)
 {
-	joint->SetLimits(val, getUpperLimit());
+	joint->SetLimits(val, GetUpperLimit());
 }
 
-void HingeJoint2D::setUpperLimit(float val)
+void HingeJoint2D::SetUpperLimit(float val)
 {
-	joint->SetLimits(getLowerLimit(), val);
+	joint->SetLimits(GetLowerLimit(), val);
 }
 
-bool HingeJoint2D::getMotorEnabled()
+bool HingeJoint2D::GetMotorEnabled()
 {
 	return joint->IsMotorEnabled();
 }
 
-void HingeJoint2D::setMotorEnabled(bool flag)
+void HingeJoint2D::SetMotorEnabled(bool flag)
 {
 	joint->EnableMotor(flag);
 }
 
-void HingeJoint2D::setMotorSpeed(float speed)
+void HingeJoint2D::SetMotorSpeed(float speed)
 {
 	joint->SetMotorSpeed(speed);
 }
 
-float HingeJoint2D::getMotorSpeed()
+float HingeJoint2D::GetMotorSpeed()
 {
 	return joint->GetMotorSpeed();
 }
 
-void HingeJoint2D::setMaxMotorTorque(float torque)
+void HingeJoint2D::SetMaxMotorTorque(float torque)
 {
 	joint->SetMaxMotorTorque(torque);
 }
 
-float HingeJoint2D::getMaxMotorTorque()
+float HingeJoint2D::GetMaxMotorTorque()
 {
 	return joint->GetMaxMotorTorque();
 }

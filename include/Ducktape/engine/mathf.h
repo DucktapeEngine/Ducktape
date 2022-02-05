@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MATHF_H
-#define MATHF_H
+#ifndef DUCKTAPE_ENGINE_MATHF_H_
+#define DUCKTAPE_ENGINE_MATHF_H_
 
 #include <cmath>
 #include <algorithm>
@@ -56,7 +56,7 @@ namespace DT
          * @param value The number to get the arc cosine of.
          * @return The arc cosine of the given number.
          */
-        float acos(float value);
+        float Acos(float value);
 
         /**
          * @brief Returns true if the given valueues are approximately equal.
@@ -64,21 +64,21 @@ namespace DT
          * @param value2 The second valueue to compare.
          * @return True if the given valueues are approximately equal.
          */
-        bool approximately(float value, float value2);
+        bool Approximately(float value, float value2);
 
         /**
          * @brief Returns the arc sine of the given number.
          * @param value The number to get the arc sine of.
          * @return The arc sine of the given number.
          */
-        float asin(float value);
+        float Asin(float value);
 
         /**
          * @brief Returns the arc tangent of the given number.
          * @param value The number to get the arc tangent of.
          * @return The arc tangent of the given number.
          */
-        float atan(float value);
+        float Atan(float value);
 
         /**
          * @brief Returns the arc tangent of the given number.
@@ -86,14 +86,14 @@ namespace DT
          * @param value2 The denominator of the arc tangent.
          * @return The arc tangent of the given number.
          */
-        float atan2(float value, float value2);
+        float Atan2(float value, float value2);
 
         /**
          * @brief Returns the ceiling of the given number.
          * @param value The number to get the ceiling of.
          * @return The ceiling of the given number.
          */
-        float ceil(float value);
+        float Ceil(float value);
 
         /**
          * @brief Returns an integer that is value clamped between the given min and max.
@@ -103,14 +103,14 @@ namespace DT
          * @param max The maximum value to clamp to.
          * @return The clamped value.
          */
-        float clamp(float value, float min, float max);
+        float Clamp(float value, float min, float max);
 
         /**
          * @brief Returns the cosine of the given number.
          * @param value The number to get the cosine of.
          * @return The cosine of the given number.
          */
-        float cos(float value);
+        float Cos(float value);
 
         /**
          * @brief Returns the shortest difference between two given angles given in degrees.
@@ -118,28 +118,28 @@ namespace DT
          * @param value2 The second angle in degrees.
          * @return The shortest difference between two given angles given in degrees.
          */
-        float deltaAngle(float value, float value2);
+        float DeltaAngle(float value, float value2);
 
         /**
-         * @brief Returns the hyperbolic cosine of the given number.
-         * @param value The number to get the hyperbolic cosine of.
-         * @return The hyperbolic cosine of the given number.
+         * @brief Returns e raised to the specified power.
+         * @param value The power to raise e to.
+         * @return e raised to the specified power.
          */
-        float exp(float value);
+        float Exp(float value);
 
         /**
          * @brief Returns the floor of the given number.
          * @param value The number to get the floor of.
          * @return The floor of the given number.
          */
-        float floor(float value);
+        float Floor(float value);
 
         /**
          * @brief Returns the round of the given number.
          * @param value The number to get the hyperbolic cosine of.
          * @return The round of the given number.
          */
-        float round(float value);
+        float Round(float value);
 
         /**
          * @brief Get the interpolated float result between the two float values.
@@ -149,7 +149,7 @@ namespace DT
          * @param interpolation Interpolation value.
          * @return The interpolated float result between the two float values. 
          */
-        float lerp(float value, float target, float interpolation);
+        float Lerp(float value, float target, float interpolation);
 
         /**
          * @brief Get the maximum of the two float values.
@@ -158,7 +158,7 @@ namespace DT
          * @param value2 The second float value.
          * @return float The maximum of the two float values.
          */
-        float max(float value, float value2);
+        float Max(float value, float value2);
 
         /**
          * @brief Get the minimum of the two float values.
@@ -167,7 +167,7 @@ namespace DT
          * @param value2 The second float value.
          * @return float The minimum of the two float values.
          */
-        float min(float value, float value2);
+        float Min(float value, float value2);
 
         /**
          * @brief Moves value towards target.
@@ -177,7 +177,7 @@ namespace DT
          * @param delta The amount to move.
          * @return float The moved value.
          */
-        float moveTowards(float value, float target, float delta);
+        float MoveTowards(float value, float target, float delta);
 
         /**
          * @brief Returns value raised to the power of value2.
@@ -186,21 +186,21 @@ namespace DT
          * @param value2 The exponent value.
          * @return float The value raised to the power of value2.
          */
-        float pow(float value, float value2);
+        float Pow(float value, float value2);
 
         /**
          * @brief Returns the sine of the given number.
          * @param value The number to get the sine of.
          * @return The sine of the given number.
          */
-        float sin(float value);
+        float Sin(float value);
 
         /**
          * @brief Returns the square root of the given number.
          * @param value The number to get the square root of.
          * @return The square root of the given number.
          */
-        float sqrt(float value);
+        float Sqrt(float value);
 
         /**
          * @brief Returns the tangent of the given number.
@@ -208,7 +208,7 @@ namespace DT
          * @param value The number to get the tangent of.
          * @return float The tangent of the given number.
          */
-        float tan(float value);
+        float Tan(float value);
     };
 }
 

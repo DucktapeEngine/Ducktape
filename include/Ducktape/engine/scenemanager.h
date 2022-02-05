@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef SCENEMANAGER_H
-#define SCENEMANAGER_H
+#ifndef DUCKTAPE_ENGINE_SCENEMANAGER_H_
+#define DUCKTAPE_ENGINE_SCENEMANAGER_H_
 
 #include <Ducktape/engine/scene.h>
 #include <Ducktape/engine/memory.h>
@@ -45,17 +45,17 @@ namespace DT
 		 * @param scene Scene to load.
 		 */
 		template <typename T>
-		void loadScene()
+		void LoadScene()
 		{
 			T *scene = new T();
-			Memory::cleanup();
+			Memory::Cleanup();
 			Memory::heapMemory.push_back(scene);
 			if (currentScene != nullptr)
 			{
-				currentScene->destroy();
+				currentScene->Destroy();
 			}
 			currentScene = scene;
-			currentScene->init();
+			currentScene->Init();
 		}
 	}
 }

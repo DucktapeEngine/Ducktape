@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RIGIDBODY2D_H
-#define RIGIDBODY2D_H
+#ifndef DUCKTAPE_PHYSICS_RIGIDBODY2D_H_
+#define DUCKTAPE_PHYSICS_RIGIDBODY2D_H_
 
 #include <box2d/box2d.h>
+
 #include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/entity.h>
 #include <Ducktape/physics/physics.h>
@@ -63,142 +64,142 @@ namespace DT
     public:
         b2Body *body;
 
-        void constructor();
+        void Constructor();
 
-        void tick();
+        void Tick();
 
         /**
          * @brief Get the velocity of the rigidbody.
          * 
          * @return Vector2 The velocity of the rigidbody.
          */
-        Vector2 getVelocity();
+        Vector2 GetVelocity();
 
         /**
          * @brief Set the velocity of the rigidbody.
          * 
          * @param val The velocity of the rigidbody.
          */
-        void setVelocity(Vector2 val);
+        void SetVelocity(Vector2 val);
 
         /**
          * @brief Get the angular velocity of the rigidbody.
          * 
          * @return float The angular velocity of the rigidbody.
          */
-        float getAngularVelocity();
+        float GetAngularVelocity();
 
         /**
          * @brief Set the angular velocity of the rigidbody.
          * 
          * @param val The angular velocity of the rigidbody.
          */
-        void setAngularVelocity(float val);
+        void SetAngularVelocity(float val);
 
         /**
          * @brief Get the mass of the rigidbody.
          * 
          * @return float The mass of the rigidbody.
          */
-        float getMass();
+        float GetMass();
 
         /**
          * @brief Set the mass of the rigidbody.
          * 
          * @param mass The mass of the rigidbody.
          */
-        void setMass(float mass);
+        void SetMass(float mass);
 
         /**
          * @brief Set the Center of Mass of the rigidbody.
          * 
          * @param center 
          */
-        void setCenterOfMass(Vector2 center);
+        void SetCenterOfMass(Vector2 center);
         
         /**
          * @brief Get the inertia of the rigidbody.
          * 
          * @return float The inertia of the rigidbody.
          */
-        float getInertia();
+        float GetInertia();
 
         /**
          * @brief Get the damping of the rigidbody.
          * 
          * @return float The damping of the rigidbody.
          */
-        float getDamping();
+        float GetDamping();
 
         /**
          * @brief Set the damping of the rigidbody.
          * 
          * @param damping The damping of the rigidbody.
          */
-        void setDamping(float damping);
+        void SetDamping(float damping);
 
         /**
          * @brief Get the angular damping of the rigidbody.
          * 
          * @return float The angular damping of the rigidbody.
          */
-        float getAngularDamping();
+        float GetAngularDamping();
 
         /**
          * @brief Set the angular damping of the rigidbody.
          * 
          * @param damping The angular damping of the rigidbody.
          */
-        void setAngularDamping(float damping);
+        void SetAngularDamping(float damping);
 
         /**
          * @brief Get the gravity scale of the rigidbody.
          * 
          * @return float The gravity scale of the rigidbody.
          */
-        float getGravityScale();
+        float GetGravityScale();
 
         /**
          * @brief Set the gravity scale of the rigidbody.
          * 
          * @param scale The gravity scale of the rigidbody.
          */
-        void setGravityScale(float scale);
+        void SetGravityScale(float scale);
 
         /**
          * @brief Get the body type of the rigidbody.
          * 
          * @return BodyType The body type of the rigidbody.
          */
-        BodyType getType();
+        BodyType GetType();
 
         /**
          * @brief Set the body type of the rigidbody.
          * 
          * @param type The body type of the rigidbody.
          */
-        void setType(BodyType type);
+        void SetType(BodyType type);
 
         /**
          * @brief Get if the body's collision is set to be continous.
          * 
          * @return bool If the body's collision is set to be continous.
          */
-        bool getContinous();
+        bool GetContinous();
 
         /**
          * @brief Set if the body's collision is set to be continous.
          * 
          * @param flag If the body's collision is set to be continous.
          */
-        void setContinous(bool flag);
+        void SetContinous(bool flag);
 
         /**
          * @brief Get if the body is allowed to sleep.
          * 
          * @return true If the body is allowed to sleep.
          */
-        bool getSleepingAllowed();
+        bool GetSleepingAllowed();
 
         /**
          * @brief Set if the body is allowed to sleep.
@@ -206,21 +207,21 @@ namespace DT
          * 
          * @param flag If the body is allowed to sleep.
          */
-        void setSleepingAllowed(bool flag);
+        void SetSleepingAllowed(bool flag);
 
         /**
          * @brief Get if the body is sleeping.
          * 
          * @return bool If the body is sleeping.
          */
-        bool getAwake();
+        bool GetAwake();
 
         /**
          * @brief Set if the body is sleeping.
          * 
          * @param flag If the body is allowed to sleep.
          */
-        void setAwake(bool flag);
+        void SetAwake(bool flag);
 
         void OnEnable()
         {
@@ -237,21 +238,21 @@ namespace DT
          * 
          * @return bool If the body's rotation is fixed.
          */
-        bool getFixedRotation();
+        bool GetFixedRotation();
 
         /**
          * @brief Set if the body's rotation is fixed.
          * 
          * @param flag If the body's rotation is fixed.
          */
-        void setFixedRotation(bool flag);
+        void SetFixedRotation(bool flag);
 
         /**
          * @brief Apply a force to the rigidbody.
          * 
          * @param force The force to apply.
          */
-        void applyForce(Vector2 force);
+        void ApplyForce(Vector2 force);
 
         /**
          * @brief Apply a force to the rigidbody at a given position.
@@ -259,21 +260,21 @@ namespace DT
          * @param force The force to apply.
          * @param point The position to apply the force at.
          */
-        void applyForceAtPoint(Vector2 force, Vector2 point);
+        void ApplyForceAtPoint(Vector2 force, Vector2 point);
 
         /**
          * @brief Apply a torque to the rigidbody.
          * 
          * @param torque 
          */
-        void applyTorque(float torque);
+        void ApplyTorque(float torque);
 
         /**
          * @brief Apply a impulse to the rigidbody.
          * 
          * @param impulse The impulse to apply.
          */
-        void applyImpulse(Vector2 impulse);
+        void ApplyImpulse(Vector2 impulse);
 
         /**
          * @brief Apply a impulse to the rigidbody at a given position.
@@ -281,16 +282,16 @@ namespace DT
          * @param impulse The impulse to apply.
          * @param point The position to apply the impulse at.
          */
-        void applyImpulseAtPoint(Vector2 impulse, Vector2 point);
+        void ApplyImpulseAtPoint(Vector2 impulse, Vector2 point);
 
         /**
          * @brief Apply an angular impulse to the rigidbody.
          * 
          * @param impulse The angular impulse to apply.
          */
-        void applyAngularImpulse(float impulse);
+        void ApplyAngularImpulse(float impulse);
 
-        void onDestroy();
+        void OnDestroy();
     };
 }
 

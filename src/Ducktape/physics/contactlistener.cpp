@@ -36,7 +36,7 @@ void ContactListener::BeginContact(b2Contact *contact)
 		{
 			Collision collisionB;
 			collisionB.body = bodyB;
-			bs->onCollisionEnter(collisionB);
+			bs->OnCollisionEnter(collisionB);
 		}
 	}
 
@@ -46,7 +46,7 @@ void ContactListener::BeginContact(b2Contact *contact)
 		{
 			Collision collisionA;
 			collisionA.body = bodyA;
-			bs->onCollisionEnter(collisionA);
+			bs->OnCollisionEnter(collisionA);
 		}
 	}
 }
@@ -63,7 +63,7 @@ void ContactListener::EndContact(b2Contact *contact)
 		{
 			Collision collisionB;
 			collisionB.body = bodyB;
-			bs->onCollisionExit(collisionB);
+			bs->OnCollisionExit(collisionB);
 		}
 	}
 
@@ -73,7 +73,7 @@ void ContactListener::EndContact(b2Contact *contact)
 		{
 			Collision collisionA;
 			collisionA.body = bodyA;
-			bs->onCollisionExit(collisionA);
+			bs->OnCollisionExit(collisionA);
 		}
 	}
 }

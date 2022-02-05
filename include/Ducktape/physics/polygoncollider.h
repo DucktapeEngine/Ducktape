@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef POLYGONCOLLIDER2D_H
-#define POLYGONCOLLIDER2D_H
+#ifndef DUCKTAPE_PHYSICS_POLYGONCOLLIDER2D_H_
+#define DUCKTAPE_PHYSICS_POLYGONCOLLIDER2D_H_
 
 #include <box2d/box2d.h>
+
 #include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/physics/rigidbody.h>
 #include <Ducktape/engine/entity.h>
@@ -40,58 +41,58 @@ namespace DT
         std::vector<Vector2> points;
 
     public:
-        void constructor();
+        void Constructor();
 
-        void tick();
+        void Tick();
 
         /**
          * @brief Get the points of the collider.
          * @return std::vector<Vector2> The points of the collider.
          */
-        std::vector<Vector2> getPoints();
+        std::vector<Vector2> GetPoints();
         
         /**
          * @brief Get the density of the collider.
          * @return float The density of the collider.
          */
-        float getDensity();
+        float GetDensity();
 
         /**
          * @brief Get the friction of the collider.
          * @return Vector2 The friction of the collider.
          */
-        float getFriction();
+        float GetFriction();
 
         /**
          * @brief Get if the collider is a trigger or not.
          * 
          * @return bool If the collider is a trigger or not.
          */
-        bool getIsTrigger();
+        bool GetIsTrigger();
 
         /**
          * @brief Set the points of the collider.
          * @param points The points of the collider.
          */
-        void setPoints(std::vector<Vector2> points);
+        void SetPoints(std::vector<Vector2> points);
         
         /**
          * @brief Set the density of the collider.
          * @param val The density of the collider.
          */
-        void setDensity(float val);
+        void SetDensity(float val);
 
         /**
          * @brief Set the friction of the collider.
          * @param val The friction of the collider.
          */
-        void setFriction(float val);
+        void SetFriction(float val);
 
         /**
          * @brief Set if the collider is a trigger or not.
          * @param val If the collider is a trigger or not.
          */
-        void setIsTrigger(bool val);
+        void SetIsTrigger(bool val);
     };
 }
 

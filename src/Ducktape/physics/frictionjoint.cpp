@@ -25,12 +25,12 @@ SOFTWARE.
 #include <Ducktape/physics/frictionjoint.h>
 using namespace DT;
 
-void FrictionJoint2D::constructor()
+void FrictionJoint2D::Constructor()
 {
-	rb = entity->getComponent<Rigidbody2D>();
+	rb = entity->GetComponent<Rigidbody2D>();
 	if (rb == nullptr)
 	{
-		rb = entity->addComponent<Rigidbody2D>();
+		rb = entity->AddComponent<Rigidbody2D>();
 	}
 
 	b2FrictionJointDef jointDef;
@@ -39,35 +39,35 @@ void FrictionJoint2D::constructor()
 	joint = (b2FrictionJoint *)Physics::physicsWorld.CreateJoint(&jointDef);
 }
 
-void FrictionJoint2D::tick()
+void FrictionJoint2D::Tick()
 {
 	if (rb->isDestroyed)
 	{
-		destroy();
+		Destroy();
 	}
 }
 
-void FrictionJoint2D::onDestroy()
+void FrictionJoint2D::OnDestroy()
 {
 	Physics::physicsWorld.DestroyJoint(joint);
 }
 
-Vector2 FrictionJoint2D::getAnchorA()
+Vector2 FrictionJoint2D::GetAnchorA()
 {
 	return Vector2(joint->GetLocalAnchorA().x, joint->GetLocalAnchorA().y);
 }
 
-Vector2 FrictionJoint2D::getAnchorB()
+Vector2 FrictionJoint2D::GetAnchorB()
 {
 	return Vector2(joint->GetLocalAnchorB().x, joint->GetLocalAnchorB().y);
 }
 
-Rigidbody2D *FrictionJoint2D::getConnectedRigidbody()
+Rigidbody2D *FrictionJoint2D::GetConnectedRigidbody()
 {
 	return connectedRigidbody;
 }
 
-void FrictionJoint2D::setConnectedRigidbody(Rigidbody2D *rgb)
+void FrictionJoint2D::SetConnectedRigidbody(Rigidbody2D *rgb)
 {
 	connectedRigidbody = rb;
 	b2FrictionJointDef jointDef;
@@ -78,22 +78,22 @@ void FrictionJoint2D::setConnectedRigidbody(Rigidbody2D *rgb)
 	joint = (b2FrictionJoint *)Physics::physicsWorld.CreateJoint(&jointDef);
 }
 
-float FrictionJoint2D::getMaxForce()
+float FrictionJoint2D::GetMaxForce()
 {
 	return joint->GetMaxForce();
 }
 
-void FrictionJoint2D::setMaxForce(float maxForce)
+void FrictionJoint2D::SetMaxForce(float maxForce)
 {
 	return joint->SetMaxForce(maxForce);
 }
 
-float FrictionJoint2D::getMaxTorque()
+float FrictionJoint2D::GetMaxTorque()
 {
 	return joint->GetMaxTorque();
 }
 
-void FrictionJoint2D::setMaxTorque(float maxTorque)
+void FrictionJoint2D::SetMaxTorque(float maxTorque)
 {
 	return joint->SetMaxTorque(maxTorque);
 }

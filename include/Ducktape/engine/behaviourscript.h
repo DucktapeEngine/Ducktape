@@ -22,12 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef BEHAVIOURSCRIPT_H
-#define BEHAVIOURSCRIPT_H
+#ifndef DUCKTAPE_ENGINE_BEHAVIOURSCRIPT_H_
+#define DUCKTAPE_ENGINE_BEHAVIOURSCRIPT_H_
+
+#include <vector>
 
 #include <Ducktape/physics/collision.h>
 #include <Ducktape/engine/debug.h>
-#include <vector>
 
 namespace DT
 {
@@ -43,15 +44,15 @@ namespace DT
     {
     public:
         /**
+         * @brief The entity this component is attached to.
+         */
+        Entity *entity;
+
+        /**
          * @brief If the component is enabled or not. You may enable/disable components
          * using the BehaviourScript::setEnabled() method.
          */
         bool isEnabled = true;
-
-        /**
-         * @brief The entity this component is attached to.
-         */
-        Entity *entity;
 
         /**
          * @brief If the component has been destroyed yet using BehaviourScript::destroy();
@@ -63,63 +64,63 @@ namespace DT
          * 
          * NOTE: This method MUST be used rather than the default BehaviourScript::BehaviourScript() constructor.
          */
-        virtual void constructor() {};
+        virtual void Constructor() {};
 
         /**
          * @brief Called at the start of the project.
          */
-        virtual void init() {}
+        virtual void Init() {}
 
         /**
          * @brief Called on every frame.
          */
-        virtual void tick() {}
+        virtual void Tick() {}
 
         /**
          * @brief Triggered when the Rigidbody attached to this component enters a collision.
          * 
          * @param collider Collider containing information about the collision.
          */
-        virtual void onCollisionEnter(Collision collider) {}
+        virtual void OnCollisionEnter(Collision collider) {}
 
         /**
          * @brief Triggered when the Rigidbody attached to this component exits a collision.
          * 
          * @param collider Collider containing information about the collision.
          */
-        virtual void onCollisionExit(Collision collider) {}
+        virtual void OnCollisionExit(Collision collider) {}
 
         /**
          * @brief Triggered when this component is enabled using BehaviourScript::setEnabled().
          */
-        virtual void onEnable() {}
+        virtual void OnEnable() {}
 
         /**
          * @brief Triggered when this component is disabled using BehaviourScript::setEnabled().
          */
-        virtual void onDisable() {}
+        virtual void OnDisable() {}
 
         /**
          * @brief Enable/Disable this component.
          * 
          * @param enabled If the component should be enabled or not.
          */
-        void setEnabled(bool enabled);
+        void SetEnabled(bool enabled);
 
         /**
          * @brief Triggered when this component is destroyed using BehaviourScript::destroy().
          */
-        virtual void onDestroy() {}
+        virtual void OnDestroy() {}
 
         /**
          * @brief Destroy this component.
          */
-        void destroy();
+        void Destroy();
 
         /**
          * @brief Triggered when application is closed.
          */
-        virtual void onApplicationClose() {}
+        virtual void OnApplicationClose() {}
     };
 }
 

@@ -27,15 +27,15 @@ using namespace DT;
 
 // Definition for BehaviourScript::Destroy is in entity.h to avoid recursive dependency issues.
 
-void BehaviourScript::setEnabled(bool enabled)
+void BehaviourScript::SetEnabled(bool enabled)
 {
     if (enabled)
     {
-        this->onEnable();
+        this->OnEnable();
     }
     else
     {
-        this->onDisable();
+        this->OnDisable();
     }
     this->isEnabled = enabled;
 }

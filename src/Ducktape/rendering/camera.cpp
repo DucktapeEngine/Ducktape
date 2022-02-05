@@ -25,39 +25,49 @@ SOFTWARE.
 #include <Ducktape/rendering/camera.h>
 using namespace DT;
 
-void Camera::tick()
+void Camera::Tick()
 {
-    Vector2 pos = unitToPixel(entity->transform->getPosition());
+    Vector2 pos = UnitToPixel(entity->transform->SetPosition());
     Vector2 pos2 = Vector2(Application::Private::resolution.x / 4 + pos.x, Application::Private::resolution.y / 4 + pos.y);
 
     Application::view.setCenter(pos2.x, pos2.y);
-    Application::view.setRotation(entity->transform->getRotation());
+    Application::view.setRotation(entity->transform->GetRotation());
 
     Application::view.zoom(size);
 }
 
-Vector2 Camera::unitToPixel(Vector2 pos)
+void Camera::SetSize(float newSize)
 {
-    return Vector2(pos.x * (pixelPerUnit / 2), pos.y * (pixelPerUnit / 2));
+    size = newSize;
 }
 
-Vector2 Camera::pixelToUnit(Vector2 pos)
+float Camera::GetSize()
 {
-    return Vector2(pos.x / (pixelPerUnit / 2), pos.y / (pixelPerUnit / 2));
+    return size;
 }
 
-Vector2 Camera::screenToWorldPos(Vector2 pos)
+Vector2 Camera::UnitToPixel(Vector2 pos)
+{
+    return Vector2(pos.x * (PIXEL_PER_UNIT / 2), pos.y * (PIXEL_PER_UNIT / 2));
+}
+
+Vector2 Camera::PixelToUnit(Vector2 pos)
+{
+    return Vector2(pos.x / (PIXEL_PER_UNIT / 2), pos.y / (PIXEL_PER_UNIT / 2));
+}
+
+Vector2 Camera::ScreenToWorldPos(Vector2 pos)
 {
     sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x, pos.y));
-    vec /= pixelPerUnit;
+    vec /= PIXEL_PER_UNIT;
     vec -= sf::Vector2f(12.5f, 12.5f);
     return Vector2(vec.x, vec.y);
 }
 
-Vector2 Camera::worldToScreenPos(Vector2 pos)
+Vector2 Camera::WorldToScreenPos(Vector2 pos)
 {
-    sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x * pixelPerUnit, pos.y * pixelPerUnit));
+    sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x * PIXEL_PER_UNIT, pos.y * PIXEL_PER_UNIT));
     return Vector2(vec.x, vec.y);
 }
 
-const float Camera::pixelPerUnit = 10.0f;
+const float Camera::PIXEL_PER_UNIT = 10.0f;

@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef DUCKTAPE_ENGINE_SCENE_H_
+#define DUCKTAPE_ENGINE_SCENE_H_
+
+#include <vector>
 
 #include <Ducktape/engine/vector2.h>
-#include <vector>
 
 namespace DT
 {
@@ -47,12 +48,12 @@ namespace DT
 		/**
 		 * @brief Called by the Scene Manager when the scene is loaded.
 		 */
-		virtual void init() {}
+		virtual void Init() {}
 
 		/**
 		 * @brief Called by the Scene Manager when another scene is loaded.
 		 */
-		void destroy();
+		void Destroy();
 	};
 }
 

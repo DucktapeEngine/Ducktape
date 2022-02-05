@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef TIME_H
-#define TIME_H
+#ifndef DUCKTAPE_ENGINE_TIME_H_
+#define DUCKTAPE_ENGINE_TIME_H_
 
 #include <SFML/Window.hpp>
 
@@ -44,7 +44,7 @@ namespace DT
 		/**
 		 * @brief Calculate time related properties such as deltaTime.
 		 */
-		void update();
+		void Update();
 	};
 }
 

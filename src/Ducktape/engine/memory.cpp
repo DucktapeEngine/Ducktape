@@ -27,7 +27,7 @@ using namespace DT;
 
 std::vector<void *> Memory::heapMemory = {};
 
-void Memory::cleanup()
+void Memory::Cleanup()
 {
     for (int i = 0; i < heapMemory.size(); i++)
     {

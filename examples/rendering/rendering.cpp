@@ -5,31 +5,31 @@ class Parallax : public BehaviourScript {
 public:
     float div = 1.f;
 
-    void tick()
+    void Tick()
     {
-        Vector2 pos(entity->transform->getPosition().x - (Input::mousePosition.x - Application::getResolution().x/2), entity->transform->getPosition().y - (Input::mousePosition.y - Application::getResolution().y/2));
+        Vector2 pos(entity->transform->SetPosition().x - (Input::mousePosition.x - Application::GetResolution().x/2), entity->transform->SetPosition().y - (Input::mousePosition.y - Application::GetResolution().y/2));
         pos = pos / div;
 
-        entity->transform->setPosition(pos);
+        entity->transform->SetPosition(pos);
     }
 };
 
 class Rendering : public Scene {
 public:
-    void init()
+    void Init()
     {
-        Entity* cam = Entity::instantiate("Camera");
-        cam->addComponent<Camera>();
+        Entity* cam = Entity::Instantiate("Camera");
+        cam->AddComponent<Camera>();
 
         for (int i = 1; i <= 4; i++) 
         {
-            Entity* entity = Entity::instantiate(std::to_string(i));
+            Entity* entity = Entity::Instantiate(std::to_string(i));
 
-            SpriteRenderer* sr = entity->addComponent<SpriteRenderer>();
-            sr->setSpritePath("../assets/" + std::to_string(i) + ".png");
-            sr->setPixelPerUnit(2);
+            SpriteRenderer* sr = entity->AddComponent<SpriteRenderer>();
+            sr->SetSpritePath("../assets/" + std::to_string(i) + ".png");
+            sr->SetPixelPerUnit(2);
 
-            Parallax* par = entity->addComponent<Parallax>();
+            Parallax* par = entity->AddComponent<Parallax>();
             par->div = i * -30;
         }
     }
@@ -38,8 +38,10 @@ public:
 int main()
 {
     ProjectSettings::sceneBackgroundColor = Color(238,238,238);
-    SceneManager::loadScene<Rendering>();
+    ProjectSettings::windowTitle = "Rendering";
 
-    init();
+    SceneManager::LoadScene<Rendering>();
+
+    Init();
     return 0;
 }

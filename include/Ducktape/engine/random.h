@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RANDOM_H
-#define RANDOM_H
+#ifndef DUCKTAPE_ENGINE_RANDOM_H_
+#define DUCKTAPE_ENGINE_RANDOM_H_
 
 #include <algorithm>
 
@@ -40,7 +40,7 @@ namespace DT
 		 * @param max The maximum value to generate.
 		 * @return A random float between the given min and max values.
 		 */
-		float range(float min, float max);
+		float Range(float min, float max);
 	}
 }
 

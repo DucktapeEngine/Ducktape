@@ -26,12 +26,12 @@ SOFTWARE.
 
 namespace DT
 {
-    void init()
+    void Init()
     {
         if (SceneManager::currentScene == nullptr)
         {
-            Debug::logSuccess("Ducktape is ready to go!");
-            Debug::logSuccess("Get Started: https://ducktapeengine.github.io/docs/intro");
+            Debug::LogSuccess("Ducktape is ready to go!");
+            Debug::LogSuccess("Get Started: https://ducktapeengine.github.io/docs/intro");
             return;
         }
 
@@ -44,20 +44,20 @@ namespace DT
                 {
                     if (SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
                     {
-                        SceneManager::currentScene->entities[i]->components[j]->init();
+                        SceneManager::currentScene->entities[i]->components[j]->Init();
                     }
                 }
             }
         }
 
-        Physics::initialize();
-        Application::initialize();
+        Physics::Init();
+        Application::Initialize();
 
         // run the program as long as the window is open
-        while (Application::isOpen())
+        while (Application::IsOpen())
         {
-            Input::update();
-            Time::update();
+            Input::Tick();
+            Time::Update();
 
             Application::renderWindow.clear((sf::Color)ProjectSettings::sceneBackgroundColor);
 
@@ -69,7 +69,7 @@ namespace DT
                     {
                         if (SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
                         {
-                            SceneManager::currentScene->entities[i]->components[j]->tick();
+                            SceneManager::currentScene->entities[i]->components[j]->Tick();
                         }
                     }
                 }
@@ -90,7 +90,7 @@ namespace DT
                 {
                     if (SceneManager::currentScene->entities[i]->components[j]->isDestroyed == false && SceneManager::currentScene->entities[i]->components[j]->isEnabled && SceneManager::currentScene->entities[i]->components[j] != nullptr)
                     {
-                        SceneManager::currentScene->entities[i]->components[j]->onApplicationClose();
+                        SceneManager::currentScene->entities[i]->components[j]->OnApplicationClose();
                     }
                 }
             }

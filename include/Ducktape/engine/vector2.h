@@ -22,14 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef VECTOR2_H
-#define VECTOR2_H
+#ifndef DUCKTAPE_ENGINE_VECTOR2_H_
+#define DUCKTAPE_ENGINE_VECTOR2_H_
 
 #include <string>
+#include <iostream>
+
 #include <SFML/Window.hpp>
 #include <box2d/box2d.h>
-#include "mathf.h"
-#include <iostream>
+
+#include <Ducktape/engine/mathf.h>
 
 namespace DT
 {
@@ -93,21 +95,21 @@ namespace DT
          * 
          * @return float Magnitude of the vector.
          */
-        float magnitude();
+        float Magnitude();
 
         /**
          * @brief Returns the normalized vector.
          * 
          * @return float Normalized vector.
          */
-        Vector2 normalized();
+        Vector2 Normalized();
 
         /**
          * @brief Returns the squared magnitude of the vector.
          * 
          * @return float The squared magnitude of the vector.
          */
-        float sqrMagnitude();
+        float SqrMagnitude();
 
         /**
          * @brief Distance between two vectors.
@@ -116,7 +118,7 @@ namespace DT
          * @param vec2 Second vector.
          * @return float Distance between the two vectors.
          */
-        static float distance(Vector2 vec1, Vector2 vec2);
+        static float Distance(Vector2 vec1, Vector2 vec2);
 
         /**
          * @brief Get the interpolated float result between the two vectors.
@@ -126,7 +128,7 @@ namespace DT
          * @param delta Interpolation value.
          * @return Vector2 Interpolated vector.
          */
-        static Vector2 lerp(Vector2 start, Vector2 target, float delta);
+        static Vector2 Lerp(Vector2 start, Vector2 target, float delta);
 
         /**
          * @brief Get the maxiumum of the two vectors.
@@ -135,7 +137,7 @@ namespace DT
          * @param vec2 Second vector.
          * @return Vector2 Maximum vector.
          */
-        static Vector2 max(Vector2 vec1, Vector2 vec2);
+        static Vector2 Max(Vector2 vec1, Vector2 vec2);
 
         /**
          * @brief Get the minimum of the two vectors.
@@ -144,7 +146,7 @@ namespace DT
          * @param vec2 Second vector.
          * @return Vector2 Minimum vector.
          */
-        static Vector2 min(Vector2 vec1, Vector2 vec2);
+        static Vector2 Min(Vector2 vec1, Vector2 vec2);
 
          /**
          * @brief Moves value towards target.
@@ -154,7 +156,7 @@ namespace DT
          * @param delta The amount to move.
          * @return float The moved value.
          */
-        static Vector2 moveTowards(Vector2 value, Vector2 target, float delta);
+        static Vector2 MoveTowards(Vector2 value, Vector2 target, float delta);
 
         operator std::string() const;
         operator sf::Vector2f() const;

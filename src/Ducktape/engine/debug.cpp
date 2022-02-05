@@ -25,12 +25,12 @@ SOFTWARE.
 #include <Ducktape/engine/debug.h>
 using namespace DT;
 
-void Debug::drawLine(Vector2 start, Vector2 end, Color color)
+void Debug::DrawLine(Vector2 start, Vector2 end, Color color)
 {
-    Debug::logWarning("Debug::drawLine() is not implemented yet.");
+    Debug::LogWarning("Debug::drawLine() is not implemented yet.");
 }
 
-void Debug::drawRay(Vector2 start, Vector2 dir, float length, Color color)
+void Debug::DrawRay(Vector2 start, Vector2 dir, float length, Color color)
 {
-    Debug::drawLine(start, start + dir * length, color);
+    Debug::DrawLine(start, start + dir * length, color);
 }

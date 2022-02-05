@@ -22,11 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef INPUT_H
-#define INPUT_H
+#ifndef DUCKTAPE_ENGINE_INPUT_H_
+#define DUCKTAPE_ENGINE_INPUT_H_
+
+#include <vector>
 
 #include <SFML/Window.hpp>
-#include <vector>
+
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/application.h>
 
@@ -62,7 +64,7 @@ namespace DT
          * @param mouseButton The mouse button to check.
          * @return true/false based on if the mouse button is pressed or not. 
          */
-        bool getMouseButton(int mouseButton);
+        bool GetMouseButton(int mouseButton);
 
         /**
          * @brief Get if a key is currently being held down.
@@ -70,7 +72,7 @@ namespace DT
          * @param key The key to check. 
          * @return true/false based on if the key is being held down or not.
          */
-        bool getKey(KeyCode key);
+        bool GetKey(KeyCode key);
 
         /**
          * @brief Get if a key was released this frame.
@@ -78,7 +80,7 @@ namespace DT
          * @param key The key to check.
          * @return true/false based on if the key was released this frame or not.
          */
-        bool getKeyUp(KeyCode key);
+        bool GetKeyUp(KeyCode key);
 
         /**
          * @brief Get if a key was pressed this frame.
@@ -86,14 +88,14 @@ namespace DT
          * @param key The key to check.
          * @return true/false based on if the key was pressed this frame or not.
          */
-        bool getKeyDown(KeyCode key);
+        bool GetKeyDown(KeyCode key);
 
         /**
          * @brief Calculate all of the input-related properties. This function is also
          * responsible for the window being responsive (not get the error "Application
          * is not responding"). Thus, it needs to be called every frame by the engine.
          */
-        void update();
+        void Tick();
     };
 }
 

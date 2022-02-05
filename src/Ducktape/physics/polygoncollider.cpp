@@ -25,12 +25,12 @@ SOFTWARE.
 #include <Ducktape/physics/polygoncollider.h>
 using namespace DT;
 
-void PolygonCollider2D::constructor()
+void PolygonCollider2D::Constructor()
 {
-    rb = entity->getComponent<Rigidbody2D>();
+    rb = entity->GetComponent<Rigidbody2D>();
     if (rb == nullptr)
     {
-        rb = entity->addComponent<Rigidbody2D>();
+        rb = entity->AddComponent<Rigidbody2D>();
     }
 
     b2PolygonShape collisionShape;
@@ -39,7 +39,7 @@ void PolygonCollider2D::constructor()
 
     if (size < 3 || size > 8)
     {
-        Debug::logError("The number of vertices in a polygonCollider must be >= 3 and <= 8, the number of vertices chosen is " + std::to_string(size));
+        Debug::LogError("The number of vertices in a polygonCollider must be >= 3 and <= 8, the number of vertices chosen is " + std::to_string(size));
         return;
     }
 
@@ -56,35 +56,35 @@ void PolygonCollider2D::constructor()
     rb->body->CreateFixture(&fixtureDef);
 }
 
-void PolygonCollider2D::tick()
+void PolygonCollider2D::Tick()
 {
     if (rb->isDestroyed)
     {
-        destroy();
+        Destroy();
     }
 }
 
-std::vector<Vector2> PolygonCollider2D::getPoints()
+std::vector<Vector2> PolygonCollider2D::GetPoints()
 {
     return points;
 }
 
-float PolygonCollider2D::getDensity()
+float PolygonCollider2D::GetDensity()
 {
     return fixture->GetDensity();
 }
 
-float PolygonCollider2D::getFriction()
+float PolygonCollider2D::GetFriction()
 {
     return fixture->GetFriction();
 }
 
-bool PolygonCollider2D::getIsTrigger()
+bool PolygonCollider2D::GetIsTrigger()
 {
     return fixture->IsSensor();
 }
 
-void PolygonCollider2D::setPoints(std::vector<Vector2> val)
+void PolygonCollider2D::SetPoints(std::vector<Vector2> val)
 {
     points = val;
 
@@ -97,7 +97,7 @@ void PolygonCollider2D::setPoints(std::vector<Vector2> val)
     {
         if (size > 8)
         {
-            Debug::logError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
+            Debug::LogError("The number of vertices in a edgeCollider must be <= 8, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
@@ -112,7 +112,7 @@ void PolygonCollider2D::setPoints(std::vector<Vector2> val)
     {
         if (size <= 0)
         {
-            Debug::logError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
+            Debug::LogError("The number of vertices in a edgeCollider must be > 0, the number of vertices chosen is " + std::to_string(size));
             return;
         }
 
@@ -138,17 +138,17 @@ void PolygonCollider2D::setPoints(std::vector<Vector2> val)
     rb->body->CreateFixture(&fixtureDef);
 }
 
-void PolygonCollider2D::setDensity(float val)
+void PolygonCollider2D::SetDensity(float val)
 {
     fixture->SetDensity(val);
 }
 
-void PolygonCollider2D::setFriction(float val)
+void PolygonCollider2D::SetFriction(float val)
 {
     fixture->SetFriction(val);
 }
 
-void PolygonCollider2D::setIsTrigger(bool val)
+void PolygonCollider2D::SetIsTrigger(bool val)
 {
     fixture->SetSensor(val);
 }

@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef SPRITERENDERER_H
-#define SPRITERENDERER_H
+#ifndef DUCKTAPE_RENDERING_SPRITERENDERER_H_
+#define DUCKTAPE_RENDERING_SPRITERENDERER_H_
 
 #include <string>
+
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/color.h>
@@ -55,15 +56,15 @@ namespace DT
         Color color = Color(255, 255, 255, 255);
 
     public:
-        void setSpritePath(std::string newSpritePath);
-        void setPixelPerUnit(float newPixelPerUnit);
-        void setColor(Color newColor);
+        void SetSpritePath(std::string newSpritePath);
+        void SetPixelPerUnit(float newPixelPerUnit);
+        void SetColor(Color newColor);
 
-        std::string getSpritePath();
-        float getPixelPerUnit();
-        Color getColor();
+        std::string GetSpritePath();
+        float GetPixelPerUnit();
+        Color GetColor();
 
-        void tick();
+        void Tick();
     };
 }
 

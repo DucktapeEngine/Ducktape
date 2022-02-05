@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef DISTANCEJOINT2D_H
-#define DISTANCEJOINT2D_H
+#ifndef DUCKTAPE_PHYSICS_DISTANCEJOINT2D_H_
+#define DUCKTAPE_PHYSICS_DISTANCEJOINT2D_H_
+
+#include <box2d/box2d.h>
 
 #include <Ducktape/engine/behaviourscript.h>
-#include <box2d/box2d.h>
 #include <Ducktape/physics/rigidbody.h>
 #include <Ducktape/engine/entity.h>
 #include <Ducktape/physics/physics.h>
@@ -41,115 +42,115 @@ namespace DT
 		Rigidbody2D *connectedRigidbody = nullptr;
 
 	public:
-		void constructor();
+		void Constructor();
 
-		void tick();
-		void onDestroy();
+		void Tick();
+		void OnDestroy();
 
 		/**
 		 * @brief Get the Anchor A position of the joint
 		 * 
 		 * @return Vector2 The Anchor A position of the joint
 		 */
-		Vector2 getAnchorA();
+		Vector2 GetAnchorA();
 
 		/**
 		 * @brief Get the Anchor B position of the joint
 		 * 
 		 * @return Vector2 The Anchor B position of the joint
 		 */
-		Vector2 getAnchorB();
+		Vector2 GetAnchorB();
 		
 		/**
 		 * @brief Get the rigidbody connected to the joint
 		 * 
 		 * @return Rigidbody2D* The rigidbody connected to the joint
 		 */
-		Rigidbody2D *getConnectedRigidbody();
+		Rigidbody2D *GetConnectedRigidbody();
 
 		/**
 		 * @brief Set the connected rigidbody of the joint
 		 * 
 		 * @param rb The rigidbody to connect to the joint
 		 */
-		void setConnectedRigidbody(Rigidbody2D *rb);
+		void SetConnectedRigidbody(Rigidbody2D *rb);
 
 		/**
 		 * @brief Get the length of the joint
 		 * 
 		 * @return float The length of the joint
 		 */
-		float getLength();
+		float GetLength();
 
 		/**
 		 * @brief Set the length of the joint
 		 * 
 		 * @param length The length of the joint
 		 */
-		void setLength(float length);
+		void SetLength(float length);
 
 		/**
 		 * @brief Get the minimum length of the joint
 		 * 
 		 * @return float The minimum length of the joint
 		 */
-		float getMinLength();
+		float GetMinLength();
 
 		/**
 		 * @brief Set the minimum length of the joint
 		 * 
 		 * @param minLength The minimum length of the joint
 		 */
-		void setMinLength(float minLength);
+		void SetMinLength(float minLength);
 
 		/**
 		 * @brief Get the maximum length of the joint
 		 * 
 		 * @return float The maximum length of the joint
 		 */
-		float getMaxLength();
+		float GetMaxLength();
 
 		/**
 		 * @brief Set the maximum length of the joint
 		 * 
 		 * @param maxLength The maximum length of the joint
 		 */
-		void setMaxLength(float maxLength);
+		void SetMaxLength(float maxLength);
 
 		/**
 		 * @brief Get the current length of the joint
 		 * 
 		 * @return float The current length of the joint
 		 */
-		float getCurrentLength();
+		float GetCurrentLength();
 
 		/**
 		 * @brief Get the stiffness of the joint
 		 * 
 		 * @return float The stiffness of the joint
 		 */
-		float getStiffness();
+		float GetStiffness();
 
 		/**
 		 * @brief Set the stiffness of the joint
 		 * 
 		 * @param stiffness The stiffness of the joint
 		 */
-		void setStiffness(float stiffness);
+		void SetStiffness(float stiffness);
 
 		/**
 		 * @brief Get the damping of the joint
 		 * 
 		 * @return float The damping of the joint
 		 */
-		float getDamping();
+		float GetDamping();
 
 		/**
 		 * @brief Set the damping of the joint
 		 * 
 		 * @param damping The damping of the joint
 		 */
-		void setDamping(float damping);
+		void SetDamping(float damping);
 	};
 }
 

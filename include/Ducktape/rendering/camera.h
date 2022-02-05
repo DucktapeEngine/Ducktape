@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CAMERA_H
-#define CAMERA_H
+#ifndef DUCKTAPE_RENDERING_CAMERA_H_
+#define DUCKTAPE_RENDERING_CAMERA_H_
 
 #include <Ducktape/engine/application.h>
 #include <Ducktape/engine/behaviourscript.h>
@@ -33,54 +33,69 @@ SOFTWARE.
 
 namespace DT
 {
-  class Camera : public BehaviourScript
-  {
-  public:
-    /**
-     * @brief The size of the camera view.
-     *
-     */
-    float size = 1.0;
+    class Camera : public BehaviourScript
+    {
+    private:
+		/**
+		 * @brief The size of the camera view.
+		 *
+		 */
+		float size = 1.0;
+    public:
 
-    void tick();
+		void Tick();
 
-    /**
-     * @brief Convert pixel coordinates to metre coordinates.
-     * 
-     * @param pos The pixel coordinate to convert.
-     * @return Vector2 The converted metre coordinates.
-     */
-    static Vector2 unitToPixel(Vector2 pos);
+		/**
+		 * @brief Sets the size of the camera view.
+		 *
+		 * @param newSize The size of the camera view.
+		 */
+		void SetSize(float newSize);
 
-    /**
-     * @brief Convert metre coordinates to pixel coordinates.
-     * 
-     * @param pos The coordinate to convert.
-     * @return Vector2 The converted pixel coordinates.
-     */
-    static Vector2 pixelToUnit(Vector2 pos);
+		/**
+		 * @brief Gets the size of the camera view.
+		 *
+		 * @return The size of the camera view.
+		 */
+		float GetSize();
 
-    /**
-     * @brief Convert screen coordinates to world coordinates.
-     * 
-     * @param pos The screen coordinate to convert.
-     * @return Vector2 The converted world coordinates.
-     */
-    static Vector2 screenToWorldPos(Vector2 pos);
+		/**
+		 * @brief Convert pixel coordinates to metre coordinates.
+		 * 
+		 * @param pos The pixel coordinate to convert.
+		 * @return Vector2 The converted metre coordinates.
+		 */
+		static Vector2 UnitToPixel(Vector2 pos);
 
-    /**
-     * @brief Convert world coordinates to screen coordinates.
-     * 
-     * @param pos The world coordinate to convert.
-     * @return Vector2 The converted screen coordinates.
-     */
-    static Vector2 worldToScreenPos(Vector2 pos);
+		/**
+		 * @brief Convert metre coordinates to pixel coordinates.
+		 * 
+		 * @param pos The coordinate to convert.
+		 * @return Vector2 The converted pixel coordinates.
+		 */
+		static Vector2 PixelToUnit(Vector2 pos);
 
-    /**
-     * @brief The pixel per unit of the camera.
-     */
-    static const float pixelPerUnit;
-  };
+		/**
+		 * @brief Convert screen coordinates to world coordinates.
+		 * 
+		 * @param pos The screen coordinate to convert.
+		 * @return Vector2 The converted world coordinates.
+		 */
+		static Vector2 ScreenToWorldPos(Vector2 pos);
+
+		/**
+		 * @brief Convert world coordinates to screen coordinates.
+		 * 
+		 * @param pos The world coordinate to convert.
+		 * @return Vector2 The converted screen coordinates.
+		 */
+		static Vector2 WorldToScreenPos(Vector2 pos);
+
+		/**
+		 * @brief The pixel per unit of the camera.
+		 */
+		static const float PIXEL_PER_UNIT;
+    };
 } // namespace DT
 
 #endif

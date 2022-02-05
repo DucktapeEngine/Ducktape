@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef DUCKTAPE_ENGINE_APPLICATION_H_
+#define DUCKTAPE_ENGINE_APPLICATION_H_
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/projectsettings.h>
 
@@ -58,26 +59,26 @@ namespace DT
 		 * 
 		 * @param resolution The new resolution.
 		 */
-		void setResolution(Vector2 resolution);
+		void SetResolution(Vector2 resolution);
 
 		/**
 		 * @brief Get the application's current resolution.
 		 * 
 		 * @return The application's current resolution.
 		 */
-		Vector2 getResolution();
+		Vector2 GetResolution();
 
 		/**
 		 * @brief Initialize the application.
 		 */
-		void initialize();
+		void Initialize();
 
 		/**
 		 * @brief Check if the application is still open.
 		 * 
 		 * @return True if the application is still open, false otherwise.
 		 */
-		bool isOpen();
+		bool IsOpen();
 	}
 }
 

@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MEMORY_H
-#define MEMORY_H
+#ifndef DUCKTAPE_ENGINE_MEMORY_H_
+#define DUCKTAPE_ENGINE_MEMORY_H_
 
 #include <vector>
+
 #include <Ducktape/engine/behaviourscript.h>
 
 namespace DT
@@ -41,7 +42,7 @@ namespace DT
 		/**
 		 * @brief Cleans up all memory allocated by the engine.
 		 */
-		void cleanup();
+		void Cleanup();
 	}
 }
 

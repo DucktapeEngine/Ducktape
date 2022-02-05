@@ -22,13 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef AUDIOSOURCE_H
-#define AUDIOSOURCE_H
+#ifndef DUCKTAPE_AUDIO_AUDIOSOURCE_H_
+#define DUCKTAPE_AUDIO_AUDIOSOURCE_H_
+
+#include <vector>
+
+#include <SFML/Audio.hpp>
 
 #include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/debug.h>
-#include <SFML/Audio.hpp>
-#include <vector>
 
 namespace DT
 {
@@ -63,7 +65,7 @@ namespace DT
 		 * 
 		 * @param loadPath Path to the audio file to load.
 		 */
-		void loadSound(std::string loadPath);
+		void LoadSound(std::string loadPath);
 
 		/**
 		 * @brief Play a music from a specified path.
@@ -75,78 +77,78 @@ namespace DT
 		 * 
 		 * @param loadPath Path to the audio file to load.
 		 */
-		void loadMusic(std::string loadPath);
+		void LoadMusic(std::string loadPath);
 
 		/**
 		 * @brief Pause the currently playing sound.
 		 */
-		void pause();
+		void Pause();
 
 		/**
 		 * @brief Continue playing the currently paused sound.
 		 */
-		void play();
+		void Play();
 
 		/**
 		 * @brief Stop the currently playing sound.
 		 */
-		void stop();
+		void Stop();
 
 		/**
 		 * @brief Set the seek to/Move to a specific time (denoted in seconds).
 		 * 
 		 * @param seconds The number of seconds to seek to.
 		 */
-		void setSeek(float seconds);
+		void SetSeek(float seconds);
 
 		/**
 		 * @brief Get the time the seek/player is currently on (denoted in seconds).
 		 * 
 		 * @return `float` The time the seek/player is currently on (denoted in seconds).
 		 */
-		float getSeek();
+		float GetSeek();
 
 		/**
 		 * @brief Set if the sound must loop or not once it ends.
 		 * 
 		 * @param loop If the sound must loop or not once it ends.
 		 */
-		void setLoop(bool loop);
+		void SetLoop(bool loop);
 
 		/**
 		 * @brief Get if the sound is set to loop or not once it ends.
 		 * 
 		 * @return `bool` If the sound is set to loop or not once it ends.
 		 */
-		bool getLoop();
+		bool GetLoop();
 
 		/**
 		 * @brief Set the pitch of the sound.
 		 * 
 		 * @param pitch The pitch of the sound.
 		 */
-		void setPitch(float pitch);
+		void SetPitch(float pitch);
 
 		/**
 		 * @brief Get the pitch of the sound.
 		 * 
 		 * @return `float` The pitch of the sound.
 		 */
-		float getPitch();
+		float GetPitch();
 
 		/**
 		 * @brief Set the volume of the sound.
 		 * 
 		 * @param volume The volume of the sound.
 		 */
-		void setVolume(float volume);
+		void SetVolume(float volume);
 
 		/**
 		 * @brief Get the volume of the sound.
 		 * 
 		 * @return `float` The volume of the sound.
 		 */
-		float getVolume();
+		float GetVolume();
 
 		/**
 		 * @brief Set the distance the sound must be played from, if spatial audio
@@ -154,7 +156,7 @@ namespace DT
 		 * 
 		 * @param distance The distance the sound must be played from.
 		 */
-		void setDistance(float distance);
+		void SetDistance(float distance);
 
 		/**
 		 * @brief Get the distance the sound must be played from, if spatial audio
@@ -162,26 +164,26 @@ namespace DT
 		 * 
 		 * @return `float` The distance the sound must be played from. 
 		 */
-		float getDistance();
+		float GetDistance();
 
 		/**
 		 * @brief Set if the sound is spatial or not.
 		 * 
 		 * @param spatial If the sound is spatial or not.
 		 */
-		void setSpatial(bool spatial);
+		void SetSpatial(bool spatial);
 
 		/**
 		 * @brief Get if the sound is spatial or not.
 		 * 
 		 * @return `bool` If the sound is spatial or not.
 		 */
-		bool getSpatial();
+		bool GetSpatial();
 
 		/**
 		 * @cond section label="inherited from BehaviourScript"
 		 */
-		void onApplicationClose();
+		void OnApplicationClose();
 		/**
 		 * @endcond
 		 */

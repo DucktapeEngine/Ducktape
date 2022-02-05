@@ -32,13 +32,13 @@ int32 Physics::positionIterations = 2;
 Vector2 Physics::globalGravity = Vector2(0.0f, 1.0f);
 // ContactListener Physics::contactListener;
 
-void Physics::initialize()
+void Physics::Init()
 {
 	globalGravity = ProjectSettings::globalGravity;
 	// physicsWorld.SetContactListener(&contactListener);
 }
 
-Collision Physics::raycast(Vector2 origin, Vector2 direction)
+Collision Physics::Raycast(Vector2 origin, Vector2 direction)
 {
 	Collision raycastCallback;
 	physicsWorld.RayCast(&raycastCallback, (b2Vec2)origin, (b2Vec2)direction);

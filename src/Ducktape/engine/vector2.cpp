@@ -66,16 +66,16 @@ Vector2 &Vector2::operator=(Vector2 vec)
 
 bool Vector2::operator==(Vector2 vec)
 {
-    if (Mathf::approximately(x, vec.x) && Mathf::approximately(y, vec.y))
+    if (Mathf::Approximately(x, vec.x) && Mathf::Approximately(y, vec.y))
     {
         return true;
     }
     return false;
 }
 
-float Vector2::magnitude()
+float Vector2::Magnitude()
 {
-    return Mathf::sqrt((x * x) + (y * y));
+    return Mathf::Sqrt((x * x) + (y * y));
 }
 
 const Vector2 Vector2::ZERO = Vector2(0.0f, 0.0f);
@@ -87,40 +87,40 @@ const Vector2 Vector2::ONE = Vector2(1.0f, 1.0f);
 const Vector2 Vector2::NEGATIVE_INFINITY = Vector2(Mathf::NegativeInfinity, Mathf::NegativeInfinity);
 const Vector2 Vector2::POSITIVE_INFINITY = Vector2(Mathf::PositiveInfinity, Mathf::PositiveInfinity);
 
-Vector2 Vector2::normalized()
+Vector2 Vector2::Normalized()
 {
-    float mag = magnitude();
+    float mag = Magnitude();
     return Vector2(x / mag, y / mag);
 }
 
-float Vector2::sqrMagnitude()
+float Vector2::SqrMagnitude()
 {
     return (x * x) + (y * y);
 }
 
-float Vector2::distance(Vector2 vec1, Vector2 vec2)
+float Vector2::Distance(Vector2 vec1, Vector2 vec2)
 {
-    return (vec2 - vec1).magnitude();
+    return (vec2 - vec1).Magnitude();
 }
 
-Vector2 Vector2::lerp(Vector2 start, Vector2 target, float delta)
+Vector2 Vector2::Lerp(Vector2 start, Vector2 target, float delta)
 {
-    return Vector2(Mathf::lerp(start.x, target.x, delta), Mathf::lerp(start.y, target.y, delta));
+    return Vector2(Mathf::Lerp(start.x, target.x, delta), Mathf::Lerp(start.y, target.y, delta));
 }
 
-Vector2 Vector2::max(Vector2 vec1, Vector2 vec2)
+Vector2 Vector2::Max(Vector2 vec1, Vector2 vec2)
 {
-    return Vector2(Mathf::max(vec1.x, vec2.x), Mathf::max(vec1.y, vec2.y));
+    return Vector2(Mathf::Max(vec1.x, vec2.x), Mathf::Max(vec1.y, vec2.y));
 }
 
-Vector2 Vector2::min(Vector2 vec1, Vector2 vec2)
+Vector2 Vector2::Min(Vector2 vec1, Vector2 vec2)
 {
-    return Vector2(Mathf::min(vec1.x, vec2.x), Mathf::min(vec1.y, vec2.y));
+    return Vector2(Mathf::Min(vec1.x, vec2.x), Mathf::Min(vec1.y, vec2.y));
 }
 
-Vector2 Vector2::moveTowards(Vector2 value, Vector2 target, float delta)
+Vector2 Vector2::MoveTowards(Vector2 value, Vector2 target, float delta)
 {
-    return Vector2(Mathf::moveTowards(value.x, target.x, delta), Mathf::moveTowards(value.y, target.y, delta));
+    return Vector2(Mathf::MoveTowards(value.x, target.x, delta), Mathf::MoveTowards(value.y, target.y, delta));
 }
 
 std::ostream &operator<<(std::ostream &out, const Vector2 &vec)

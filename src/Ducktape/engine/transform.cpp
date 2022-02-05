@@ -25,48 +25,48 @@ SOFTWARE.
 #include <Ducktape/engine/transform.h>
 using namespace DT;
 
-void Transform::onTransformChange()
+void Transform::OnTransformChange()
 {
-    Rigidbody2D *rb = entity->getComponent<Rigidbody2D>();
+    Rigidbody2D *rb = entity->GetComponent<Rigidbody2D>();
     if (rb != nullptr)
     {
-        rb->body->SetTransform((b2Vec2)entity->transform->getPosition(), entity->transform->getRotation());
+        rb->body->SetTransform((b2Vec2)entity->transform->SetPosition(), entity->transform->GetRotation());
     }
 }
 
-Vector2 Transform::getPosition()
+Vector2 Transform::SetPosition()
 {
     return position;
 }
 
-float Transform::getRotation()
+float Transform::GetRotation()
 {
     return rotation;
 }
 
-Vector2 Transform::getScale()
+Vector2 Transform::GetScale()
 {
     return scale;
 }
 
 // local versions of each method
 
-Vector2 Transform::getLocalPosition()
+Vector2 Transform::GetLocalPosition()
 {
     return localPosition;
 }
 
-float Transform::getLocalRotation()
+float Transform::GetLocalRotation()
 {
     return localRotation;
 }
 
-Vector2 Transform::getLocalScale()
+Vector2 Transform::GetLocalScale()
 {
     return localScale;
 }
 
-void Transform::recalculateLocalValues()
+void Transform::RecalculateLocalValues()
 {
     Vector2 _pos;
     float _rot;
@@ -76,9 +76,9 @@ void Transform::recalculateLocalValues()
 
     while (currentParent != nullptr)
     {
-        _pos = _pos + currentParent->getLocalPosition();
-        _rot = _rot + currentParent->getLocalRotation();
-        _scl = _scl + currentParent->getLocalScale();
+        _pos = _pos + currentParent->GetLocalPosition();
+        _rot = _rot + currentParent->GetLocalRotation();
+        _scl = _scl + currentParent->GetLocalScale();
         currentParent = currentParent->parent;
     }
 
@@ -87,7 +87,7 @@ void Transform::recalculateLocalValues()
     localScale = scale - _scl;
 }
 
-void Transform::recalculateWorldValues()
+void Transform::RecalculateWorldValues()
 {
     Vector2 _pos;
     float _rot;
@@ -97,9 +97,9 @@ void Transform::recalculateWorldValues()
 
     while (currentParent != nullptr)
     {
-        _pos = _pos + currentParent->getLocalPosition();
-        _rot = _rot + currentParent->getLocalRotation();
-        _scl = _scl + currentParent->getLocalScale();
+        _pos = _pos + currentParent->GetLocalPosition();
+        _rot = _rot + currentParent->GetLocalRotation();
+        _scl = _scl + currentParent->GetLocalScale();
         currentParent = currentParent->parent;
     }
 
@@ -108,44 +108,44 @@ void Transform::recalculateWorldValues()
     scale = _scl;
 }
 
-void Transform::setPosition(Vector2 newPosition)
+void Transform::SetPosition(Vector2 newPosition)
 {
     position = newPosition;
-    onTransformChange();
-    recalculateLocalValues();
+    OnTransformChange();
+    RecalculateLocalValues();
 }
 
-void Transform::setRotation(float newRotation)
+void Transform::SetRotation(float newRotation)
 {
     rotation = newRotation;
-    onTransformChange();
-    recalculateLocalValues();
+    OnTransformChange();
+    RecalculateLocalValues();
 }
 
-void Transform::setScale(Vector2 newScale)
+void Transform::SetScale(Vector2 newScale)
 {
     scale = newScale;
-    onTransformChange();
-    recalculateLocalValues();
+    OnTransformChange();
+    RecalculateLocalValues();
 }
 
-void Transform::setLocalPosition(Vector2 newLocalPosition)
+void Transform::SetLocalPosition(Vector2 newLocalPosition)
 {
     position = newLocalPosition;
-    onTransformChange();
-    recalculateWorldValues();
+    OnTransformChange();
+    RecalculateWorldValues();
 }
 
-void Transform::setLocalRotation(float newLocalRotation)
+void Transform::SetLocalRotation(float newLocalRotation)
 {
     rotation = newLocalRotation;
-    onTransformChange();
-    recalculateWorldValues();
+    OnTransformChange();
+    RecalculateWorldValues();
 }
 
-void Transform::setLocalScale(Vector2 newLocalScale)
+void Transform::SetLocalScale(Vector2 newLocalScale)
 {
     scale = newLocalScale;
-    onTransformChange();
-    recalculateWorldValues();
+    OnTransformChange();
+    RecalculateWorldValues();
 }

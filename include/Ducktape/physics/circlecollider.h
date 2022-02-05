@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef CIRCLECOLLIDER2D_H
-#define CIRCLECOLLIDER2D_H
+#ifndef DUCKTAPE_PHYSICS_CIRCLECOLLIDER2D_H_
+#define DUCKTAPE_PHYSICS_CIRCLECOLLIDER2D_H_
 
 #include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/physics/rigidbody.h>
@@ -43,58 +43,58 @@ namespace DT
         float radius = 1.0f;
 
     public:
-        void constructor();
+        void Constructor();
 
-        void tick();
+        void Tick();
 
         /**
          * @brief Get the radius of the collider.
          * @return float The radius of the collider.
          */
-        float getRadius();
+        float GetRadius();
 
         /**
          * @brief Get the density of the collider.
          * @return float The density of the collider.
          */
-        float getDensity();
+        float GetDensity();
 
         /**
          * @brief Get the friction of the collider.
          * @return Vector2 The friction of the collider.
          */
-        float getFriction();
+        float GetFriction();
 
         /**
          * @brief Get if the collider is a trigger or not.
          * 
          * @return bool If the collider is a trigger or not.
          */
-        bool getIsTrigger();
+        bool GetIsTrigger();
 
         /**
          * @brief Set the radius of the collider.
          * @param val The radius of the collider.
          */
-        void setRadius(float val);
+        void SetRadius(float val);
         
         /**
          * @brief Set the density of the collider.
          * @param val The density of the collider.
          */
-        void setDensity(float val);
+        void SetDensity(float val);
 
         /**
          * @brief Set the friction of the collider.
          * @param val The friction of the collider.
          */
-        void setFriction(float val);
+        void SetFriction(float val);
 
         /**
          * @brief Set if the collider is a trigger or not.
          * @param val If the collider is a trigger or not.
          */
-        void setIsTrigger(bool val);
+        void SetIsTrigger(bool val);
     };
 }
 

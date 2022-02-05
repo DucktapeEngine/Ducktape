@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/physics/rigidbody.h>
 using namespace DT;
 
-void Rigidbody2D::constructor()
+void Rigidbody2D::Constructor()
 {
     b2BodyDef bodyDef;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(entity);
@@ -34,39 +34,39 @@ void Rigidbody2D::constructor()
     body = Physics::physicsWorld.CreateBody(&bodyDef);
 }
 
-void Rigidbody2D::tick()
+void Rigidbody2D::Tick()
 {
-    entity->transform->setPosition(Vector2(body->GetPosition().x, body->GetPosition().y));
-    entity->transform->setRotation(body->GetAngle());
-    setVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity * getGravityScale());
+    entity->transform->SetPosition(Vector2(body->GetPosition().x, body->GetPosition().y));
+    entity->transform->SetRotation(body->GetAngle());
+    SetVelocity(Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y) + Physics::globalGravity * GetGravityScale());
 }
 
-Vector2 Rigidbody2D::getVelocity()
+Vector2 Rigidbody2D::GetVelocity()
 {
     return Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y);
 }
 
-void Rigidbody2D::setVelocity(Vector2 val)
+void Rigidbody2D::SetVelocity(Vector2 val)
 {
     body->SetLinearVelocity((b2Vec2)val);
 }
 
-float Rigidbody2D::getAngularVelocity()
+float Rigidbody2D::GetAngularVelocity()
 {
     return body->GetAngularVelocity();
 }
 
-void Rigidbody2D::setAngularVelocity(float val)
+void Rigidbody2D::SetAngularVelocity(float val)
 {
     body->SetAngularVelocity(val);
 }
 
-float Rigidbody2D::getMass()
+float Rigidbody2D::GetMass()
 {
     return body->GetMass();
 }
 
-void Rigidbody2D::setMass(float mass)
+void Rigidbody2D::SetMass(float mass)
 {
     b2MassData *data;
     body->GetMassData(data);
@@ -74,7 +74,7 @@ void Rigidbody2D::setMass(float mass)
     body->SetMassData(data);
 }
 
-void Rigidbody2D::setCenterOfMass(Vector2 center)
+void Rigidbody2D::SetCenterOfMass(Vector2 center)
 {
     b2MassData *data;
     body->GetMassData(data);
@@ -82,42 +82,42 @@ void Rigidbody2D::setCenterOfMass(Vector2 center)
     body->SetMassData(data);
 }
 
-float Rigidbody2D::getInertia()
+float Rigidbody2D::GetInertia()
 {
     return body->GetInertia();
 }
 
-float Rigidbody2D::getDamping()
+float Rigidbody2D::GetDamping()
 {
     return body->GetLinearDamping();
 }
 
-void Rigidbody2D::setDamping(float damping)
+void Rigidbody2D::SetDamping(float damping)
 {
     body->SetLinearDamping(damping);
 }
 
-float Rigidbody2D::getAngularDamping()
+float Rigidbody2D::GetAngularDamping()
 {
     return body->GetAngularDamping();
 }
 
-void Rigidbody2D::setAngularDamping(float damping)
+void Rigidbody2D::SetAngularDamping(float damping)
 {
     body->SetAngularDamping(damping);
 }
 
-float Rigidbody2D::getGravityScale()
+float Rigidbody2D::GetGravityScale()
 {
     return gravityScale;
 }
 
-void Rigidbody2D::setGravityScale(float scale)
+void Rigidbody2D::SetGravityScale(float scale)
 {
     gravityScale = scale;
 }
 
-BodyType Rigidbody2D::getType()
+BodyType Rigidbody2D::GetType()
 {
     b2BodyType type = body->GetType();
     if (type == 0)
@@ -131,7 +131,7 @@ BodyType Rigidbody2D::getType()
     return BodyType::dynamicBody;
 }
 
-void Rigidbody2D::setType(BodyType type)
+void Rigidbody2D::SetType(BodyType type)
 {
     if (type == 0)
     {
@@ -147,77 +147,77 @@ void Rigidbody2D::setType(BodyType type)
     }
 }
 
-bool Rigidbody2D::getContinous()
+bool Rigidbody2D::GetContinous()
 {
     return body->IsBullet();
 }
 
-void Rigidbody2D::setContinous(bool flag)
+void Rigidbody2D::SetContinous(bool flag)
 {
     body->SetBullet(flag);
 }
 
-bool Rigidbody2D::getSleepingAllowed()
+bool Rigidbody2D::GetSleepingAllowed()
 {
     return body->IsSleepingAllowed();
 }
 
-void Rigidbody2D::setSleepingAllowed(bool flag)
+void Rigidbody2D::SetSleepingAllowed(bool flag)
 {
     body->SetSleepingAllowed(flag);
 }
 
-bool Rigidbody2D::getAwake()
+bool Rigidbody2D::GetAwake()
 {
     return body->IsAwake();
 }
 
-void Rigidbody2D::setAwake(bool flag)
+void Rigidbody2D::SetAwake(bool flag)
 {
     body->SetAwake(flag);
 }
 
-bool Rigidbody2D::getFixedRotation()
+bool Rigidbody2D::GetFixedRotation()
 {
     return body->IsFixedRotation();
 }
 
-void Rigidbody2D::setFixedRotation(bool flag)
+void Rigidbody2D::SetFixedRotation(bool flag)
 {
     body->SetFixedRotation(flag);
 }
 
-void Rigidbody2D::applyForce(Vector2 force)
+void Rigidbody2D::ApplyForce(Vector2 force)
 {
     body->ApplyForceToCenter((b2Vec2)force, true);
 }
 
-void Rigidbody2D::applyForceAtPoint(Vector2 force, Vector2 point)
+void Rigidbody2D::ApplyForceAtPoint(Vector2 force, Vector2 point)
 {
     body->ApplyForce((b2Vec2)force, (b2Vec2)point, true);
 }
 
-void Rigidbody2D::applyTorque(float torque)
+void Rigidbody2D::ApplyTorque(float torque)
 {
     body->ApplyTorque(torque, true);
 }
 
-void Rigidbody2D::applyImpulse(Vector2 impulse)
+void Rigidbody2D::ApplyImpulse(Vector2 impulse)
 {
     body->ApplyLinearImpulseToCenter((b2Vec2)impulse, true);
 }
 
-void Rigidbody2D::applyImpulseAtPoint(Vector2 impulse, Vector2 point)
+void Rigidbody2D::ApplyImpulseAtPoint(Vector2 impulse, Vector2 point)
 {
     body->ApplyLinearImpulse((b2Vec2)impulse, (b2Vec2)point, true);
 }
 
-void Rigidbody2D::applyAngularImpulse(float impulse)
+void Rigidbody2D::ApplyAngularImpulse(float impulse)
 {
     body->ApplyAngularImpulse(impulse, true);
 }
 
-void Rigidbody2D::onDestroy()
+void Rigidbody2D::OnDestroy()
 {
     Physics::physicsWorld.DestroyBody(body);
     body = nullptr;

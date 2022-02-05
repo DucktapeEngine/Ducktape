@@ -22,12 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef Entity_H
-#define Entity_H
+#ifndef DUCKTAPE_ENGINE_ENTITY_H_
+#define DUCKTAPE_ENGINE_ENTITY_H_
 
 #include <string>
 #include <vector>
 #include <typeinfo>
+
 #include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/scenemanager.h>
 #include <Ducktape/engine/transform.h>
@@ -47,12 +48,6 @@ namespace DT
     {
     public:
         /**
-         * @brief If the entity is enabled or not. You may disable an entity to stop the
-         * components on it from being executed using Entity::setEnabled().
-         */
-        bool isEnabled = true;
-
-        /**
          * @brief The transform component attached to this entity.
          */
         Transform *transform;
@@ -61,6 +56,12 @@ namespace DT
          * @brief If the entity has been destroyed or not.
          */
         bool isDestroyed = false;
+
+        /**
+         * @brief If the entity is enabled or not. You may disable an entity to stop the
+         * components on it from being executed using Entity::setEnabled().
+         */
+        bool isEnabled = true;
 
         /**
          * @brief The name of the entity.
@@ -92,11 +93,11 @@ namespace DT
          * @return T* Pointer to the component that was added.
          */
         template <typename T>
-        T *addComponent()
+        T *AddComponent()
         {
             T *component = new T();
             component->entity = this;
-            component->constructor();
+            component->Constructor();
             this->components.push_back(component);
             Memory::heapMemory.push_back(component);
             return component;
@@ -110,7 +111,7 @@ namespace DT
          * not attached to entity, nullptr is returned.
          */
         template <typename T>
-        T *getComponent()
+        T *GetComponent()
         {
             for (auto script : this->components)
             {
@@ -129,7 +130,7 @@ namespace DT
          * @return If the component was successfully removed.
          */
         template <typename T>
-        bool removeComponent()
+        bool RemoveComponent()
         {
             int i = 0;
             for (auto script : this->components)
@@ -150,7 +151,7 @@ namespace DT
          * Could be used to remove a specific component from the entity, if
          * multiple components of the same type are attached to the entity.
          */
-        bool removeComponent(BehaviourScript *check);
+        bool RemoveComponent(BehaviourScript *check);
 
         /**
          * @brief Finds an Entity in the current scene by name.
@@ -164,7 +165,7 @@ namespace DT
          * @brief Creates a new entity in the current scene.
          * @return `Entity*` Pointer to the entity that was created.
          */
-        static Entity *instantiate();
+        static Entity *Instantiate();
 
         /**
          * @brief Creates a new entity in the current scene.
@@ -172,7 +173,7 @@ namespace DT
          * @param entityName The name of the entity.
          * @return `Entity*` Pointer to the entity that was created.
          */
-        static Entity *instantiate(std::string entityName);
+        static Entity *Instantiate(std::string entityName);
 
         /**
          * @brief Creates a new entity in the current scene.
@@ -182,7 +183,7 @@ namespace DT
          * @param scl Scale of the entity.
          * @return `Entity*` Pointer to the entity that was created.
          */
-        static Entity *instantiate(Vector2 pos, float rot, Vector2 scl);
+        static Entity *Instantiate(Vector2 pos, float rot, Vector2 scl);
 
         /**
          * @brief Creates a new entity in the current scene.
@@ -193,28 +194,28 @@ namespace DT
          * @param scl Scale of the entity.
          * @return `Entity*` Pointer to the entity that was created.
          */
-        static Entity *instantiate(std::string entityName, Vector2 pos, float rot, Vector2 scl);
+        static Entity *Instantiate(std::string entityName, Vector2 pos, float rot, Vector2 scl);
 
         /**
          * @brief Destroy the entity.
          */
-        void destroy();
+        void Destroy();
 
         /**
          * @brief Enable/Disable the entity.
          * 
          * @param isEnabled If the entity should be enabled or not.
          */
-        void setEnabled(bool isEnabled);
+        void SetEnabled(bool isEnabled);
     };
 
     /**
      * @brief Destroy a component.
      */
-    inline void BehaviourScript::destroy()
+    inline void BehaviourScript::Destroy()
     {
-        this->onDestroy();
-        entity->removeComponent(this);
+        this->OnDestroy();
+        entity->RemoveComponent(this);
         this->isDestroyed = true;
     }
 }

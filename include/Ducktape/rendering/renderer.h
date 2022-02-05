@@ -22,11 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef DUCKTAPE_RENDERING_RENDERER_H_
+#define DUCKTAPE_RENDERING_RENDERER_H_
 
 #include <vector>
+
 #include <SFML/Graphics.hpp>
+
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/color.h>
 #include <Ducktape/engine/debug.h>
@@ -52,7 +54,7 @@ namespace DT
          * @param path The path to the texture. 
          * @return int The index of the texture in the cache.
          */
-        int loadTextureFromCache(std::string path);
+        int LoadTextureFromCache(std::string path);
 
         /**
          * @brief Draw a sprite to the screen.
@@ -64,7 +66,7 @@ namespace DT
          * @param pixelPerUnit The pixels per unit to use to draw the sprite.
          * @param color The color of the images.
          */
-        void drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color color);
+        void DrawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color color);
     };
 }
 

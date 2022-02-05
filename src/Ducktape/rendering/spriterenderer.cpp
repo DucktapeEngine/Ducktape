@@ -25,40 +25,40 @@ SOFTWARE.
 #include <Ducktape/rendering/spriterenderer.h>
 using namespace DT;
 
-void SpriteRenderer::setSpritePath(std::string newSpritePath)
+void SpriteRenderer::SetSpritePath(std::string newSpritePath)
 {
     spritePath = newSpritePath;
 }
 
-void SpriteRenderer::setPixelPerUnit(float newPixelPerUnit)
+void SpriteRenderer::SetPixelPerUnit(float newPixelPerUnit)
 {
     pixelPerUnit = newPixelPerUnit;
 }
 
-void SpriteRenderer::setColor(Color newColor)
+void SpriteRenderer::SetColor(Color newColor)
 {
     color = newColor;
 }
 
-Color SpriteRenderer::getColor()
+Color SpriteRenderer::GetColor()
 {
     return color;
 }
 
-float SpriteRenderer::getPixelPerUnit()
+float SpriteRenderer::GetPixelPerUnit()
 {
     return pixelPerUnit;
 }
 
-std::string SpriteRenderer::getSpritePath()
+std::string SpriteRenderer::GetSpritePath()
 {
     return spritePath;
 }
 
-void SpriteRenderer::tick()
+void SpriteRenderer::Tick()
 {
     if (spritePath != "")
     {
-        Renderer::drawSprite(spritePath, Camera::worldToScreenPos(entity->transform->getPosition()), entity->transform->getRotation(), entity->transform->getScale(), pixelPerUnit, color);
+        Renderer::DrawSprite(spritePath, Camera::WorldToScreenPos(entity->transform->SetPosition()), entity->transform->GetRotation(), entity->transform->GetScale(), pixelPerUnit, color);
     }
 }

@@ -29,37 +29,37 @@ Entity::Entity()
 {
     isEnabled = true;
     name = "New Entity";
-    transform = addComponent<Transform>();
+    transform = AddComponent<Transform>();
 }
 
 Entity::Entity(std::string entityName)
 {
     isEnabled = true;
     name = entityName;
-    transform = addComponent<Transform>();
+    transform = AddComponent<Transform>();
 }
 
 Entity::Entity(Vector2 pos, float rot, Vector2 scl)
 {
     isEnabled = true;
     name = "New Entity";
-    transform = addComponent<Transform>();
-    transform->setPosition(pos);
-    transform->setRotation(rot);
-    transform->setScale(scl);
+    transform = AddComponent<Transform>();
+    transform->SetPosition(pos);
+    transform->SetRotation(rot);
+    transform->SetScale(scl);
 }
 
 Entity::Entity(std::string entityName, Vector2 pos, float rot, Vector2 scl)
 {
     isEnabled = true;
     name = entityName;
-    transform = addComponent<Transform>();
-    transform->setPosition(pos);
-    transform->setRotation(rot);
-    transform->setScale(scl);
+    transform = AddComponent<Transform>();
+    transform->SetPosition(pos);
+    transform->SetRotation(rot);
+    transform->SetScale(scl);
 }
 
-bool Entity::removeComponent(BehaviourScript *check)
+bool Entity::RemoveComponent(BehaviourScript *check)
 {
     int i = 0;
     for (auto script : this->components)
@@ -83,11 +83,11 @@ Entity *Entity::find(std::string entityName)
             return SceneManager::currentScene->entities[i];
         }
     }
-    Debug::logError("Entity with name \"" + entityName + "\" doesn't exist!");
+    Debug::LogError("Entity with name \"" + entityName + "\" doesn't exist!");
     return nullptr;
 }
 
-Entity *Entity::instantiate(std::string entityName)
+Entity *Entity::Instantiate(std::string entityName)
 {
     Entity *ent = new Entity(entityName);
     SceneManager::currentScene->entities.push_back(ent);
@@ -95,7 +95,7 @@ Entity *Entity::instantiate(std::string entityName)
     return ent;
 }
 
-Entity *Entity::instantiate(Vector2 pos, float rot, Vector2 scl)
+Entity *Entity::Instantiate(Vector2 pos, float rot, Vector2 scl)
 {
     Entity *ent = new Entity(pos, rot, scl);
     SceneManager::currentScene->entities.push_back(ent);
@@ -103,7 +103,7 @@ Entity *Entity::instantiate(Vector2 pos, float rot, Vector2 scl)
     return ent;
 }
 
-Entity *Entity::instantiate(std::string entityName, Vector2 pos, float rot, Vector2 scl)
+Entity *Entity::Instantiate(std::string entityName, Vector2 pos, float rot, Vector2 scl)
 {
     Entity *ent = new Entity(entityName, pos, rot, scl);
     SceneManager::currentScene->entities.push_back(ent);
@@ -111,7 +111,7 @@ Entity *Entity::instantiate(std::string entityName, Vector2 pos, float rot, Vect
     return ent;
 }
 
-void Entity::destroy()
+void Entity::Destroy()
 {
     this->isDestroyed = true;
     for (size_t i = 0, n = SceneManager::currentScene->entities.size(); i < n; i++)
@@ -124,7 +124,7 @@ void Entity::destroy()
     }
 }
 
-void Entity::setEnabled(bool isEnabled)
+void Entity::SetEnabled(bool isEnabled)
 {
     this->isEnabled = isEnabled;
 }

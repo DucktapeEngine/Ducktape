@@ -1,6 +1,6 @@
 .vscode
-
 build
 
 examples/build
-examples/FlappyBird/build
+examples/helloducktape/build
+examples/rendering/build

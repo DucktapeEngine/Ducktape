@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef PHYSICS_H
-#define PHYSICS_H
+#ifndef DUCKTAPE_PHYSICS_PHYSICS_H_
+#define DUCKTAPE_PHYSICS_PHYSICS_H_
 
 #include <box2d/box2d.h>
+
 #include <Ducktape/physics/contactlistener.h>
 #include <Ducktape/engine/projectsettings.h>
 
@@ -43,7 +44,7 @@ namespace DT
 		/**
 		 * @brief Initialize the physics world.
 		 */
-		void initialize();
+		void Init();
 
 		/**
 		 * @brief Send a raycast from a point origin to a direction.
@@ -53,7 +54,7 @@ namespace DT
 		 * 
 		 * @return Collision Info about the collision that was hit by the raycast.
 		 */
-		Collision raycast(Vector2 origin, Vector2 direction);
+		Collision Raycast(Vector2 origin, Vector2 direction);
 	};
 }
 

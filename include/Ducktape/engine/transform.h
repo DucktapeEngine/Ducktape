@@ -22,11 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef TRANSFORM_H
-#define TRANSFORM_H
+#ifndef DUCKTAPE_ENGINE_TRANSFORM_H_
+#define DUCKTAPE_ENGINE_TRANSFORM_H_
 
 #include <vector>
+
 #include <box2d/box2d.h>
+
 #include <Ducktape/engine/behaviourscript.h>
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/physics/rigidbody.h>
@@ -44,7 +46,7 @@ namespace DT
         float localRotation;
         Vector2 localScale = Vector2(1.0, 1.0);
 
-        void onTransformChange();
+        void OnTransformChange();
 
     public:
         /**
@@ -62,94 +64,94 @@ namespace DT
          * 
          * @param newPosition New position of the transform. 
          */
-        void setPosition(Vector2 newPosition);
+        void SetPosition(Vector2 newPosition);
 
         /**
          * @brief Get the position of the transform.
          * 
          * @return Vector2 Position of the transform.
          */
-        Vector2 getPosition();
+        Vector2 SetPosition();
 
         /**
          * @brief Set the rotation of the transform.
          * 
          * @param newRotation New rotation of the transform.
          */
-        void setRotation(float newRotation);
+        void SetRotation(float newRotation);
 
         /**
          * @brief Get the rotation of the transform.
          * 
          * @return float Rotation of the transform.
          */
-        float getRotation();
+        float GetRotation();
 
         /**
          * @brief Set the scale of the transform.
          * 
          * @param newScale New scale of the transform.
          */
-        void setScale(Vector2 newScale);
+        void SetScale(Vector2 newScale);
 
         /**
          * @brief Get the scale of the transform.
          * 
          * @return Vector2 Scale of the transform.
          */
-        Vector2 getScale();
+        Vector2 GetScale();
 
         /**
          * @brief Set the local position of the transform.
          * 
          * @param newLocalPosition New local position of the transform.
          */
-        void setLocalPosition(Vector2 newLocalPosition);
+        void SetLocalPosition(Vector2 newLocalPosition);
 
         /**
          * @brief Get the local position of the transform.
          * 
          * @return Vector2 Local position of the transform.
          */
-        Vector2 getLocalPosition();
+        Vector2 GetLocalPosition();
 
         /**
          * @brief Set the local rotation of the transform.
          * 
          * @param newLocalRotation New local rotation of the transform.
          */
-        void setLocalRotation(float newLocalRotation);
+        void SetLocalRotation(float newLocalRotation);
 
         /**
          * @brief Get the local rotation of the transform.
          * 
          * @return float Local rotation of the transform.
          */
-        float getLocalRotation();
+        float GetLocalRotation();
 
         /**
          * @brief Set the local scale of the transform.
          * 
          * @param newLocalScale New local scale of the transform.
          */
-        void setLocalScale(Vector2 newLocalScale);
+        void SetLocalScale(Vector2 newLocalScale);
 
         /**
          * @brief Get the local scale of the transform.
          * 
          * @return Vector2 Local scale of the transform.
          */
-        Vector2 getLocalScale();
+        Vector2 GetLocalScale();
 
         /**
          * @brief Recalculate the local position, rotation, and scale.
          */
-        void recalculateLocalValues();
+        void RecalculateLocalValues();
 
         /**
          * @brief Recalculate the world position, rotation, and scale.
          */
-        void recalculateWorldValues();
+        void RecalculateWorldValues();
     };
 }
 

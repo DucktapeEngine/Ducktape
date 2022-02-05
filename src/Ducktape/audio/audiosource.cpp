@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/audio/audiosource.h>
 using namespace DT;
 
-void AudioSource::loadSound(std::string loadPath)
+void AudioSource::LoadSound(std::string loadPath)
 {
     path = loadPath;
     isMusic = false;
@@ -33,7 +33,7 @@ void AudioSource::loadSound(std::string loadPath)
     {
         if (!music.openFromFile(path))
         {
-            Debug::logError("The specified audio file: " + path + " could not be found.");
+            Debug::LogError("The specified audio file: " + path + " could not be found.");
             return;
         }
         music.play();
@@ -42,7 +42,7 @@ void AudioSource::loadSound(std::string loadPath)
     {
         if (!buffer.loadFromFile(path))
         {
-            Debug::logError("The specified audio file: " + path + " could not be found.");
+            Debug::LogError("The specified audio file: " + path + " could not be found.");
             return;
         }
 
@@ -51,7 +51,7 @@ void AudioSource::loadSound(std::string loadPath)
     }
 }
 
-void AudioSource::loadMusic(std::string loadPath)
+void AudioSource::LoadMusic(std::string loadPath)
 {
     path = loadPath;
     isMusic = true;
@@ -59,7 +59,7 @@ void AudioSource::loadMusic(std::string loadPath)
     {
         if (!music.openFromFile(path))
         {
-            Debug::logError("The specified audio file: " + path + " could not be found.");
+            Debug::LogError("The specified audio file: " + path + " could not be found.");
             return;
         }
         music.play();
@@ -68,7 +68,7 @@ void AudioSource::loadMusic(std::string loadPath)
     {
         if (!buffer.loadFromFile(path))
         {
-            Debug::logError("The specified audio file: " + path + " could not be found.");
+            Debug::LogError("The specified audio file: " + path + " could not be found.");
             return;
         }
 
@@ -77,7 +77,7 @@ void AudioSource::loadMusic(std::string loadPath)
     }
 }
 
-void AudioSource::pause()
+void AudioSource::Pause()
 {
     if (isMusic)
     {
@@ -89,7 +89,7 @@ void AudioSource::pause()
     }
 }
 
-void AudioSource::play()
+void AudioSource::Play()
 {
     if (isMusic)
     {
@@ -101,7 +101,7 @@ void AudioSource::play()
     }
 }
 
-void AudioSource::stop()
+void AudioSource::Stop()
 {
     if (isMusic)
     {
@@ -113,7 +113,7 @@ void AudioSource::stop()
     }
 }
 
-void AudioSource::setSeek(float seconds)
+void AudioSource::SetSeek(float seconds)
 {
     if (isMusic)
     {
@@ -125,7 +125,7 @@ void AudioSource::setSeek(float seconds)
     }
 }
 
-float AudioSource::getSeek()
+float AudioSource::GetSeek()
 {
     if (isMusic)
     {
@@ -137,7 +137,7 @@ float AudioSource::getSeek()
     }
 }
 
-void AudioSource::setLoop(bool loop)
+void AudioSource::SetLoop(bool loop)
 {
     if (isMusic)
     {
@@ -149,7 +149,7 @@ void AudioSource::setLoop(bool loop)
     }
 }
 
-bool AudioSource::getLoop()
+bool AudioSource::GetLoop()
 {
     if (isMusic)
     {
@@ -161,7 +161,7 @@ bool AudioSource::getLoop()
     }
 }
 
-void AudioSource::setPitch(float pitch)
+void AudioSource::SetPitch(float pitch)
 {
     if (isMusic)
     {
@@ -173,7 +173,7 @@ void AudioSource::setPitch(float pitch)
     }
 }
 
-float AudioSource::getPitch()
+float AudioSource::GetPitch()
 {
     if (isMusic)
     {
@@ -185,7 +185,7 @@ float AudioSource::getPitch()
     }
 }
 
-void AudioSource::setVolume(float volume)
+void AudioSource::SetVolume(float volume)
 {
     if (isMusic)
     {
@@ -197,7 +197,7 @@ void AudioSource::setVolume(float volume)
     }
 }
 
-float AudioSource::getVolume()
+float AudioSource::GetVolume()
 {
     if (isMusic)
     {
@@ -209,7 +209,7 @@ float AudioSource::getVolume()
     }
 }
 
-void AudioSource::setDistance(float distance)
+void AudioSource::SetDistance(float distance)
 {
     if (isMusic)
     {
@@ -221,7 +221,7 @@ void AudioSource::setDistance(float distance)
     }
 }
 
-float AudioSource::getDistance()
+float AudioSource::GetDistance()
 {
     if (isMusic)
     {
@@ -233,7 +233,7 @@ float AudioSource::getDistance()
     }
 }
 
-void AudioSource::setSpatial(bool spatial)
+void AudioSource::SetSpatial(bool spatial)
 {
     if (isMusic)
     {
@@ -245,7 +245,7 @@ void AudioSource::setSpatial(bool spatial)
     }
 }
 
-bool AudioSource::getSpatial()
+bool AudioSource::GetSpatial()
 {
     if (isMusic)
     {
@@ -257,7 +257,7 @@ bool AudioSource::getSpatial()
     }
 }
 
-void AudioSource::onApplicationClose()
+void AudioSource::OnApplicationClose()
 {
-    stop();
+    Stop();
 }

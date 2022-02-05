@@ -29,32 +29,30 @@ SOFTWARE.
  * @brief Including all the ducktape headers.
  */
 
-#include <box2d/box2d.h>
-
-#include "engine/mathf.h"
-#include "engine/vector2.h"
-#include "engine/dt_time.h"
-#include "engine/color.h"
-#include "engine/debug.h"
-#include "engine/projectsettings.h"
-#include "engine/application.h"
+#include <Ducktape/engine/mathf.h>
+#include <Ducktape/engine/vector2.h>
+#include <Ducktape/engine/dt_time.h>
+#include <Ducktape/engine/color.h>
+#include <Ducktape/engine/debug.h>
+#include <Ducktape/engine/projectsettings.h>
+#include <Ducktape/engine/application.h>
 
 namespace DT
 {
     class Entity;
 }
 
-#include "physics/collision.h"
-#include "engine/behaviourscript.h"
-#include "engine/transform.h"
-#include "engine/scenemanager.h"
-#include "engine/entity.h"
-#include "engine/input.h"
-#include "rendering/camera.h"
-#include "physics/contactlistener.h"
-#include "physics/physics.h"
-#include "rendering/renderer.h"
-#include "rendering/spriterenderer.h"
+#include <Ducktape/physics/collision.h>
+#include <Ducktape/engine/behaviourscript.h>
+#include <Ducktape/engine/transform.h>
+#include <Ducktape/engine/scenemanager.h>
+#include <Ducktape/engine/entity.h>
+#include <Ducktape/engine/input.h>
+#include <Ducktape/rendering/camera.h>
+#include <Ducktape/physics/contactlistener.h>
+#include <Ducktape/physics/physics.h>
+#include <Ducktape/rendering/renderer.h>
+#include <Ducktape/rendering/spriterenderer.h>
 
 namespace DT
 {
@@ -63,24 +61,24 @@ namespace DT
     class FrictionJoint2D;
 }
 
-#include "physics/rigidbody.h"
-#include "physics/boxcollider.h"
-#include "physics/circlecollider.h"
-#include "physics/edgecollider.h"
-#include "physics/polygoncollider.h"
-#include "engine/scene.h"
-#include "engine/random.h"
-#include "physics/distancejoint.h"
-#include "physics/hingejoint.h"
-#include "physics/frictionjoint.h"
-#include "audio/audiosource.h"
+#include <Ducktape/physics/rigidbody.h>
+#include <Ducktape/physics/boxcollider.h>
+#include <Ducktape/physics/circlecollider.h>
+#include <Ducktape/physics/edgecollider.h>
+#include <Ducktape/physics/polygoncollider.h>
+#include <Ducktape/engine/scene.h>
+#include <Ducktape/engine/random.h>
+#include <Ducktape/physics/distancejoint.h>
+#include <Ducktape/physics/hingejoint.h>
+#include <Ducktape/physics/frictionjoint.h>
+#include <Ducktape/audio/audiosource.h>
 
 /**
  * @brief Namespace to hold all Ducktape namespaces, classes, functions.
  */
 namespace DT
 {
-    void init();
+    void Init();
 }
 
 #endif

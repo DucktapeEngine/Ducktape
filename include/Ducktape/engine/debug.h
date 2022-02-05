@@ -22,15 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef DUCKTAPE_ENGINE_DEBUG_H_
+#define DUCKTAPE_ENGINE_DEBUG_H_
 
 #define FATAL_ERROR 8
 
+#include <iostream>
+
+#include <SFML/Graphics.hpp>
+
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/color.h>
-#include <SFML/Graphics.hpp>
-#include <iostream>
 
 namespace DT
 {
@@ -44,7 +46,7 @@ namespace DT
          * @param message The message to print.
          */
         template <typename T>               
-        void log(T message)
+        void Log(T message)
         {
         #ifndef PRODUCTION
             std::cout << message << "\n";
@@ -56,7 +58,7 @@ namespace DT
          * @param message The message to print.
          */
         template <typename T>               
-        void logError(T message)
+        void LogError(T message)
         {
             std::cout << "\033[0;31m" << message << "\033[0m\n";
         }
@@ -66,7 +68,7 @@ namespace DT
          * @param message The message to print.
          */
         template <typename T>       
-        void logFatalError(T message)
+        void LogFatalError(T message)
         {
             std::cout << "\033[0;31m [FATAL ERR] " << message << "\033[0m" << std::endl;
             exit(FATAL_ERROR);
@@ -77,7 +79,7 @@ namespace DT
          * @param message The message to print.
          */
         template <typename T>       
-        void logWarning(T message)
+        void LogWarning(T message)
         {
         #ifndef PRODUCTION
             std::cout << "\033[0;33m" << message << "\033[0m\n";
@@ -89,16 +91,16 @@ namespace DT
          * @param message The message to print.
          */
         template <typename T>       
-        void logSuccess(T message)
+        void LogSuccess(T message)
         {
         #ifndef PRODUCTION
             std::cout << "\033[0;32m" << message << "\033[0m\n";
         #endif
         }
 
-        void drawLine(Vector2 start, Vector2 end, Color color);
+        void DrawLine(Vector2 start, Vector2 end, Color color);
 
-        void drawRay(Vector2 start, Vector2 dir, float length, Color color);
+        void DrawRay(Vector2 start, Vector2 dir, float length, Color color);
     };
 }
 

@@ -27,7 +27,7 @@ using namespace DT;
 
 std::vector<std::pair<std::string, sf::Texture>> Renderer::textureCache;
 
-int Renderer::loadTextureFromCache(std::string path)
+int Renderer::LoadTextureFromCache(std::string path)
 {
     int idx = -1;
     for (int i = 0, n = textureCache.size(); i < n; i++)
@@ -52,12 +52,12 @@ int Renderer::loadTextureFromCache(std::string path)
     return idx;
 }
 
-void Renderer::drawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color color)
+void Renderer::DrawSprite(std::string path, Vector2 pos, float rot, Vector2 scl, int pixelPerUnit, Color color)
 {
-    int idx = loadTextureFromCache(path);
+    int idx = LoadTextureFromCache(path);
     if (idx == -1)
     {
-        Debug::logError("Error loading sprite from " + path);
+        Debug::LogError("Error loading sprite from " + path);
         return;
     }
 

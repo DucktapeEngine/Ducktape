@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef COLLISION_H
-#define COLLISION_H
+#ifndef DUCKTAPE_PHYSICS_COLLISION_H_
+#define DUCKTAPE_PHYSICS_COLLISION_H_
 
 #include <box2d/box2d.h>
+
 #include <Ducktape/engine/vector2.h>
 
 namespace DT
