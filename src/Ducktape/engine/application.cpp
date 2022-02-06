@@ -26,7 +26,7 @@ SOFTWARE.
 using namespace DT;
 
 Vector2 Application::Private::resolution = Vector2(500, 500);
-sf::View Application::view = sf::View(sf::FloatRect(0.f, 0.f, Private::resolution.x, Private::resolution.y));
+sf::View Application::view = sf::View(sf::Rect<float>(0.f, 0.f, Private::resolution.x, Private::resolution.y));
 sf::RenderWindow Application::renderWindow(sf::VideoMode(Private::resolution.x, Private::resolution.y), "Hello Ducktape", sf::Style::Default);
 
 void Application::SetResolution(Vector2 resolution)

@@ -30,47 +30,28 @@ set(CMAKE_CXX_FLAGS "-pthread -fPIC")
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/src;")
 
+# Box2D
+add_subdirectory(${PROJECT_SOURCE_DIR}/extern/box2d)
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/box2d/include")
-target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/box2d/bin")
+target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/build/extern/box2d/bin")
 
-if (UNIX)
-    set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML-linux-gcc/SFML-2.5.1/lib/cmake/SFML)
+# SFML
+add_subdirectory(${PROJECT_SOURCE_DIR}/extern/SFML)
+set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML/cmake/)
 
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML-linux-gcc/SFML-2.5.1/include")
-
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML-linux-gcc/SFML-2.5.1/lib")
-endif (UNIX)
-
-if (WIN32)
-    set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML-windows-gcc/SFML-2.5.1/lib/cmake/SFML)
-
-    target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML-windows-gcc/SFML-2.5.1/include")
-
-    target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML-windows-gcc/SFML-2.5.1/lib")
-endif (WIN32)
-
-set(SFML_STATIC_LIBRARIES TRUE)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/extern/)
-
-find_package(SFML COMPONENTS graphics audio window network system CONFIG REQUIRED)
+target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML/include")
+target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/build/extern/SFML/lib")
 
 target_link_libraries(ducktape PRIVATE 
     sfml-window
     sfml-system
-    opengl32
-    winmm
-    gdi32
     sfml-graphics
-    freetype
     sfml-audio
     sfml-system
-    openal32
-    flac
-    vorbisenc
-    vorbisfile
-    vorbis
-    ogg
     sfml-network
-    ws2_32
+    glad
+    glfw
+    imgui
+    sajson
     box2d
 )
