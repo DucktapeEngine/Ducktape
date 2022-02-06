@@ -191,6 +191,16 @@ namespace DT
 		Color(int r, int b, int g, int a);
 
 		operator sf::Color() const;
+
+		/**
+		 * @brief Lerp between two colors
+		 * 
+		 * @param initialColor
+		 * @param targetColor
+		 * @param delta
+		 * @return Color The lerped color between the two
+		 */
+		static Color Lerp(const Color initialColor, const Color targetColor, float delta);
 	};
 }
 
