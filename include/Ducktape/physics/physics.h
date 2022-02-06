@@ -27,11 +27,19 @@ SOFTWARE.
 
 #include <box2d/box2d.h>
 
-#include <Ducktape/physics/contactlistener.h>
 #include <Ducktape/engine/projectsettings.h>
+#include <Ducktape/engine/entity.h>
 
 namespace DT
 {
+	class ContactListener : public b2ContactListener
+	{
+	public:
+		void BeginContact(b2Contact *contact);
+
+		void EndContact(b2Contact *contact);
+	};
+	
 	namespace Physics
 	{
 		extern b2Vec2 b2Gravity;
@@ -39,7 +47,9 @@ namespace DT
 		extern int32 velocityIterations;
 		extern int32 positionIterations;
 		extern Vector2 globalGravity;
-		// extern ContactListener contactListener;
+
+
+		extern ContactListener contactListener;
 
 		/**
 		 * @brief Initialize the physics world.

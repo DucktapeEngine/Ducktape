@@ -49,7 +49,6 @@ namespace DT
 #include <Ducktape/engine/entity.h>
 #include <Ducktape/engine/input.h>
 #include <Ducktape/rendering/camera.h>
-#include <Ducktape/physics/contactlistener.h>
 #include <Ducktape/physics/physics.h>
 #include <Ducktape/rendering/renderer.h>
 #include <Ducktape/rendering/spriterenderer.h>
