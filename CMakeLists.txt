@@ -26,7 +26,7 @@ set_target_properties(ducktape PROPERTIES
     CXX_EXTENSIONS OFF
 )
 
-set(CMAKE_CXX_FLAGS "-ggdb -pthread -fPIC")
+set(CMAKE_CXX_FLAGS "-pthread -fPIC")
 
 target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/src;")
 

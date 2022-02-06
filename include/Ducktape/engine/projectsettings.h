@@ -27,6 +27,7 @@ SOFTWARE.
 
 #include <Ducktape/engine/color.h>
 #include <Ducktape/engine/vector2.h>
+#include <Ducktape/engine/scene.h>
 
 namespace DT
 {
@@ -55,6 +56,12 @@ namespace DT
 		 * @brief The initial size of the window.
 		 */
 		extern Vector2 initialResolution;
+
+		/**
+		 * @brief The first scene of the game.
+		 * @param scene The scene to be loaded.
+		 */
+		extern Scene *initialScene;
 	}
 }
 

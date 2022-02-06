@@ -39,8 +39,7 @@ int main()
 {
     ProjectSettings::sceneBackgroundColor = Color(238,238,238);
     ProjectSettings::windowTitle = "Rendering";
-
-    SceneManager::LoadScene<Rendering>();
+    ProjectSettings::initialScene = new Rendering();
 
     Init();
     return 0;

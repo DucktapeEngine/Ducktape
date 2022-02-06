@@ -28,6 +28,10 @@ namespace DT
 {
     void Init()
     {
+        SceneManager::currentScene = ProjectSettings::initialScene;
+        Memory::heapMemory.push_back(SceneManager::currentScene);
+        SceneManager::currentScene->Init();
+
         if (SceneManager::currentScene == nullptr)
         {
             Debug::LogSuccess("Ducktape is ready to go!");
@@ -35,7 +39,6 @@ namespace DT
             return;
         }
 
-        
         for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
         {
             if (SceneManager::currentScene->entities[i]->isDestroyed == false && SceneManager::currentScene->entities[i]->isEnabled && SceneManager::currentScene->entities[i] != nullptr)
