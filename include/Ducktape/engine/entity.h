@@ -78,14 +78,6 @@ namespace DT
          */
         Scene *scene;
 
-        Entity();
-
-        Entity(std::string entityName);
-
-        Entity(Vector2 pos, float rot, Vector2 scl);
-
-        Entity(std::string entityName, Vector2 pos, float rot, Vector2 scl);
-
         /**
          * @brief Adds a component to the entity.
          * 
@@ -159,7 +151,7 @@ namespace DT
          * @param entityName 
          * @return `Entity*` Pointer to the entity that was found, nullptr if no entity was found.
          */
-        static Entity *find(std::string entityName);
+        static Entity *Find(std::string entityName);
 
         /**
          * @brief Creates a new entity in the current scene.

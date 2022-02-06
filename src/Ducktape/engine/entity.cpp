@@ -25,40 +25,6 @@ SOFTWARE.
 #include <Ducktape/engine/entity.h>
 using namespace DT;
 
-Entity::Entity()
-{
-    isEnabled = true;
-    name = "New Entity";
-    transform = AddComponent<Transform>();
-}
-
-Entity::Entity(std::string entityName)
-{
-    isEnabled = true;
-    name = entityName;
-    transform = AddComponent<Transform>();
-}
-
-Entity::Entity(Vector2 pos, float rot, Vector2 scl)
-{
-    isEnabled = true;
-    name = "New Entity";
-    transform = AddComponent<Transform>();
-    transform->SetPosition(pos);
-    transform->SetRotation(rot);
-    transform->SetScale(scl);
-}
-
-Entity::Entity(std::string entityName, Vector2 pos, float rot, Vector2 scl)
-{
-    isEnabled = true;
-    name = entityName;
-    transform = AddComponent<Transform>();
-    transform->SetPosition(pos);
-    transform->SetRotation(rot);
-    transform->SetScale(scl);
-}
-
 bool Entity::RemoveComponent(BehaviourScript *check)
 {
     int i = 0;
@@ -74,7 +40,7 @@ bool Entity::RemoveComponent(BehaviourScript *check)
     return false;
 }
 
-Entity *Entity::find(std::string entityName)
+Entity *Entity::Find(std::string entityName)
 {
     for (int i = 0, n = SceneManager::currentScene->entities.size(); i < n; i++)
     {
@@ -89,24 +55,27 @@ Entity *Entity::find(std::string entityName)
 
 Entity *Entity::Instantiate(std::string entityName)
 {
-    Entity *ent = new Entity(entityName);
+    Entity *ent = new Entity();
+    ent->isEnabled = true;
+    ent->name = entityName;
+    ent->transform = ent->AddComponent<Transform>();
     SceneManager::currentScene->entities.push_back(ent);
-    Memory::heapMemory.push_back(ent);
-    return ent;
-}
-
-Entity *Entity::Instantiate(Vector2 pos, float rot, Vector2 scl)
-{
-    Entity *ent = new Entity(pos, rot, scl);
-    SceneManager::currentScene->entities.push_back(ent);
+    ent->scene = SceneManager::currentScene;
     Memory::heapMemory.push_back(ent);
     return ent;
 }
 
 Entity *Entity::Instantiate(std::string entityName, Vector2 pos, float rot, Vector2 scl)
 {
-    Entity *ent = new Entity(entityName, pos, rot, scl);
+    Entity *ent = new Entity();
+    ent->isEnabled = true;
+    ent->name = entityName;
+    ent->transform = ent->AddComponent<Transform>();
+    ent->transform->SetPosition(pos);
+    ent->transform->SetRotation(rot);
+    ent->transform->SetScale(scl); 
     SceneManager::currentScene->entities.push_back(ent);
+    ent->scene = SceneManager::currentScene;
     Memory::heapMemory.push_back(ent);
     return ent;
 }
