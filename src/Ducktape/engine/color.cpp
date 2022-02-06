@@ -193,13 +193,3 @@ Color::operator sf::Color() const
 {
 	return sf::Color(red, green, blue, alpha);
 }
-
-Color Color::Lerp(Color initialColor, Color targetColor, float delta)
-{
-	return Color(
-		initialColor.red + (targetColor.red - initialColor.red) * delta,
-		initialColor.green + (targetColor.green - initialColor.green) * delta,
-		initialColor.blue + (targetColor.blue - initialColor.blue) * delta,
-		initialColor.alpha + (targetColor.alpha - initialColor.alpha) * delta
-	);
-}
