@@ -79,6 +79,11 @@ namespace DT
 		 * @return True if the application is still open, false otherwise.
 		 */
 		bool IsOpen();
+
+		/**
+		 * @brief Close the application.
+		 */
+		void Close();
 	}
 }
 

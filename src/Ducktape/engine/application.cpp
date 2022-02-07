@@ -43,14 +43,20 @@ Vector2 Application::GetResolution()
 
 void Application::Initialize()
 {
-    renderWindow.setVerticalSyncEnabled(true);
+    renderWindow.setVerticalSyncEnabled(false);
     renderWindow.setFramerateLimit(60);
     renderWindow.setView(view);
     renderWindow.setKeyRepeatEnabled(false);
+    renderWindow.setTitle(ProjectSettings::windowTitle);
     SetResolution(ProjectSettings::initialResolution);
 }
 
 bool Application::IsOpen()
 {
     return renderWindow.isOpen();
+}
+
+void Application::Close()
+{
+    renderWindow.close();
 }
