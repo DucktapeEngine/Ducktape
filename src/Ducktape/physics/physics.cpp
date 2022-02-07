@@ -87,7 +87,7 @@ ContactListener Physics::contactListener;
 
 void Physics::Init()
 {
-	globalGravity = ProjectSettings::globalGravity;
+	globalGravity = ProjectSettings::Physics::globalGravity;
 	physicsWorld.SetContactListener(&contactListener);
 }
 

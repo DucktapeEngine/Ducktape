@@ -35,29 +35,13 @@ namespace DT
 {
     class Camera : public BehaviourScript
     {
-    private:
-		/**
-		 * @brief The size of the camera view.
-		 *
-		 */
-		float size = 1.0;
     public:
+		static Camera* activeCamera;
 
+		Color backgroundColor = Color(0, 0, 0, 255);
+
+		void Constructor();
 		void Tick();
-
-		/**
-		 * @brief Sets the size of the camera view.
-		 *
-		 * @param newSize The size of the camera view.
-		 */
-		void SetSize(float newSize);
-
-		/**
-		 * @brief Gets the size of the camera view.
-		 *
-		 * @return The size of the camera view.
-		 */
-		float GetSize();
 
 		/**
 		 * @brief Convert pixel coordinates to metre coordinates.

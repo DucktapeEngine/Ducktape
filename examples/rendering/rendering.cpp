@@ -19,7 +19,7 @@ public:
     void Init()
     {
         Entity* cam = Entity::Instantiate("Camera");
-        cam->AddComponent<Camera>();
+        cam->AddComponent<Camera>()->backgroundColor = Color(238,238,238);;
 
         for (int i = 1; i <= 4; i++) 
         {
@@ -37,9 +37,8 @@ public:
 
 int main()
 {
-    ProjectSettings::sceneBackgroundColor = Color(238,238,238);
-    ProjectSettings::windowTitle = "Rendering";
-    ProjectSettings::initialScene = new Rendering();
+    ProjectSettings::Application::windowTitle = "Rendering";
+    ProjectSettings::SceneManagement::initialScene = new Rendering();
 
     Init();
     return 0;

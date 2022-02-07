@@ -69,49 +69,43 @@ public:
     void Init()
     {
         Entity* cam = Entity::Instantiate("Camera");
-        cam->AddComponent<Camera>();
+        cam->AddComponent<Camera>()->backgroundColor = Color(18,18,18);
 
         float scale = 10.f;
 
         Entity* entity = Entity::Instantiate("a", Vector2(-1.f * scale, 0.f), 0.f, Vector2(0.5f, 0.5f));
 
-        SpriteRenderer* sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/a.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/a.png");
 
         entity->AddComponent<KeyHandler>()->SetKey(KeyCode::A);
 
         entity = Entity::Instantiate("s", Vector2(0.f, 0.f), 0.f, Vector2(0.5f, 0.5f));
 
-        sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/s.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/s.png");
 
         entity->AddComponent<KeyHandler>()->SetKey(KeyCode::S);
 
         entity = Entity::Instantiate("d", Vector2(1.f * scale, 0.f), 0.f, Vector2(0.5f, 0.5f));
 
-        sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/d.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/d.png");
 
         entity->AddComponent<KeyHandler>()->SetKey(KeyCode::D);
 
         entity = Entity::Instantiate("w", Vector2(0.f, -1.025f * scale), 0.f, Vector2(0.5f, 0.5f));
 
-        sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/w.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/w.png");
 
         entity->AddComponent<KeyHandler>()->SetKey(KeyCode::W);
 
         entity = Entity::Instantiate("space", Vector2(0.f, 1.025f * scale), 0.f, Vector2(0.5f, 0.5f));
 
-        sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/space.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/space.png");
 
         entity->AddComponent<KeyHandler>()->SetKey(KeyCode::Space);
 
         entity = Entity::Instantiate("mouseLeft", Vector2(0.f, 0.f), 0.f, Vector2(0.25f, 0.25f));
 
-        sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/mouse.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/mouse.png");
 
         MouseHandler* mouseHandler = entity->AddComponent<MouseHandler>();
         mouseHandler->offset = Vector2(-1.f, -1.f) * 3.f;
@@ -119,8 +113,7 @@ public:
 
         entity = Entity::Instantiate("mouseRight", Vector2(0.f, 0.f), 0.f, Vector2(0.25f, 0.25f));
 
-        sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/mouse.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/mouse.png");
 
         mouseHandler = entity->AddComponent<MouseHandler>();
         mouseHandler->offset = Vector2(1.f, -1.f) * 3.f;
@@ -128,8 +121,7 @@ public:
 
         entity = Entity::Instantiate("mouse", Vector2(0.f, 0.f), 0.f, Vector2(0.5f, 0.5f));
 
-        sr = entity->AddComponent<SpriteRenderer>();
-        sr->SetSpritePath("../assets/mouse.png");
+        entity->AddComponent<SpriteRenderer>()->SetSpritePath("../assets/mouse.png");
 
         mouseHandler = entity->AddComponent<MouseHandler>();
         mouseHandler->offset = Vector2(0.f, 2.1f) * 3.f;
@@ -139,9 +131,8 @@ public:
 
 int main()
 {
-    ProjectSettings::sceneBackgroundColor = Color(18,18,18);
-    ProjectSettings::windowTitle = "Input";
-    ProjectSettings::initialScene = new InputScene();
+    ProjectSettings::Application::windowTitle = "Input";
+    ProjectSettings::SceneManagement::initialScene = new InputScene();
 
     Init();
     return 0;
