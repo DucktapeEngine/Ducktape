@@ -25,6 +25,20 @@ SOFTWARE.
 #include <Ducktape/rendering/camera.h>
 using namespace DT;
 
+Camera* Camera::activeCamera = nullptr;
+
+void Camera::Constructor()
+{
+    if(activeCamera == nullptr)
+    {
+        activeCamera = this;
+    }
+    else
+    {
+        Debug::LogFatalError("Cannot create multiple Cameras.");
+    }
+}
+
 void Camera::Tick()
 {
     Vector2 pos = UnitToPixel(entity->transform->SetPosition());
@@ -32,18 +46,6 @@ void Camera::Tick()
 
     Application::view.setCenter(pos2.x, pos2.y);
     Application::view.setRotation(entity->transform->GetRotation());
-
-    Application::view.zoom(size);
-}
-
-void Camera::SetSize(float newSize)
-{
-    size = newSize;
-}
-
-float Camera::GetSize()
-{
-    return size;
 }
 
 Vector2 Camera::UnitToPixel(Vector2 pos)

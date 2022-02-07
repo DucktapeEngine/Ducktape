@@ -28,7 +28,7 @@ namespace DT
 {
     void Init()
     {
-        SceneManager::currentScene = ProjectSettings::initialScene;
+        SceneManager::currentScene = ProjectSettings::SceneManagement::initialScene;
         Memory::heapMemory.push_back(SceneManager::currentScene);
         SceneManager::currentScene->Init();
 
@@ -62,7 +62,7 @@ namespace DT
             Input::Tick();
             Time::Update();
 
-            Application::renderWindow.clear((sf::Color)ProjectSettings::sceneBackgroundColor);
+            Application::renderWindow.clear((sf::Color)Camera::activeCamera->backgroundColor);
 
             for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
             {

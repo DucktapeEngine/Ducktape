@@ -37,31 +37,35 @@ namespace DT
 	 */
 	namespace ProjectSettings
 	{
-		/**
-		 * @brief The title of the window.
-		 */
-		extern std::string windowTitle;
+		namespace Application
+		{
+			/**
+			 * @brief The title of the window.
+			 */
+			extern std::string windowTitle;
 
-		/**
-		 * @brief The background color to be used by the whole project.
-		 */
-		extern Color sceneBackgroundColor;
+			/**
+			 * @brief The initial size of the window.
+			 */
+			extern Vector2 initialResolution;
+		}
 
-		/**
-		 * @brief The gravity all Rigidbodies will be affected by.
-		 */
-		extern Vector2 globalGravity;
+		namespace Physics
+		{
+			/**
+			 * @brief The gravity all Rigidbodies will be affected by.
+			 */
+			extern Vector2 globalGravity;
+		}
 
-		/**
-		 * @brief The initial size of the window.
-		 */
-		extern Vector2 initialResolution;
-
-		/**
-		 * @brief The first scene of the game.
-		 * @param scene The scene to be loaded.
-		 */
-		extern Scene *initialScene;
+		namespace SceneManagement
+		{
+			/**
+			 * @brief The first scene of the game.
+			 * @param scene The scene to be loaded.
+			 */
+			extern Scene *initialScene;
+		}
 	}
 }
 

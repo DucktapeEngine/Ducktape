@@ -47,8 +47,8 @@ void Application::Initialize()
     renderWindow.setFramerateLimit(60);
     renderWindow.setView(view);
     renderWindow.setKeyRepeatEnabled(false);
-    renderWindow.setTitle(ProjectSettings::windowTitle);
-    SetResolution(ProjectSettings::initialResolution);
+    renderWindow.setTitle(ProjectSettings::Application::windowTitle);
+    SetResolution(ProjectSettings::Application::initialResolution);
 }
 
 bool Application::IsOpen()
