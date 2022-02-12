@@ -1,10 +1,11 @@
 
+
 # Contributing
 
 **Note**: Please do not submit pull requests with new features or major changes. Instead, please file an issue first for discussion. If you'd like a feature implemented into the Game Engine, feel free to use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=feature_request.md&title=). Or if you encountered a bug, you may use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=bug_report.md&title=) instead.
 
 ## 🖥️ How to set up `Ducktape` for development?
-You can compile and run Ducktape locally with a few easy steps.  
+You can compile Ducktape locally with a few easy steps.  
 Clone the repository using git:
 ```
 git clone https://github.com/DucktapeEngine/Ducktape.git
@@ -34,11 +35,5 @@ Specify your compiler:
 e compiler path is already in your PATH environment variable)
 ```
 
-## Naming scheme:
-| Token | Naming Scheme |
-| ------------- | ------------- |
-| variables | camelCase |
-| functions | PascalCase |
-| classes | PascalCase |
-| namespaces | PascalCase |
-> Note: Ducktape prefers to use classes over structs for consistency.
+## Code practices
+We try our best to follow [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html) for maximum consistency, and we hope you do too.
