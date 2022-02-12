@@ -1,3 +1,4 @@
+
 <br><br><br>
 <p align="center">
     <a href="https://ducktapeengine.github.io/" target="_blank">
@@ -36,34 +37,35 @@
 </p>
 
 # 👋 Introducing `Ducktape`
-`Ducktape` is an open source 2d game engine that gives users an easy-to-use library to develop games for platforms including Windows and Linux (more platforms coming soon™️!)
-It has an integrated Scripting, Rendering, Audio, Physics engine which you can use to make your game stand out.
+`Ducktape` is an open source 2d game engine that gives users an easy-to-use library to develop games for platforms including Windows and Linux (more platforms coming soon™️!) It has an integrated Scripting, Rendering, Audio, Physics engine which you can use to make your game stand out.
 
-# 🚀 Demo
-Here's some footage of how powerful the engine is:
-<footage coming soon>
-    
-### If you like this project, consider being one of many people who has supported this project with stars (⭐)!
+   
+### If you like this project, consider being one of many people who has supported this project with stars ⭐!
 
 [![Stargazers repo roster for @Ducktapeengine/Ducktape](https://reporoster.com/stars/Ducktapeengine/Ducktape)](https://github.com/Ducktapeengine/ducktape/stargazers)
     
-# 👏 Features
-## ⚙️ Scene-Entity-Component system
-> footage coming soon
-    
-## 🖼️ Rendering engine
-> footage coming soon
+# ✨ Features
 
-## 🔊 Audio engine
-> footage coming soon
+⚙️ **Scene-Entity-Component system**
+- Create Scenes, Entities, Components in a tree-based system
+- Scriptable components
+- 
+🖼️ **Rendering engine**
+- Render sprites from .bmp, .png, .tga and .jpg image formats.
+- Frame by frame animation controller (Coming soon).
 
-## ⚛️ Physics engine
-> footage coming soon
+🔊 **Audio engine**
+- Play sound/music from audio formats including .wav, .ogg and .flac with the ability to pause/stop/set seek the song.
+- Many customization options including loop, pitch, volume, spatial distance.
+
+⚛️ **Physics engine**
+- A fully fledged physics engine with support for Rigidbodies.
+- Box/Circle/Polygon/Edge colliders.
+- Distance/Friction/Hinge joints.
+- Raycasts and OnCollisionEnter handlers.
     
 # Get Started
-Interested in using the library? We have a [manual](https://ducktapeengine.github.io/manual) for how things work in Ducktape and how to use the library to create your own first game.
-    
-[![Manual](https://img.shields.io/badge/Get-Manual-%23FAD315?style=for-the-badge)](https://ducktapeengine.github.io/manual)
+Interested in using the library? We have a [manual](https://ducktapeengine.github.io/docs/intro) for how things work in Ducktape and how to use the library to create your own first game.
     
 # 🖥️ How to set up `Ducktape` for development?
 You can compile and run Ducktape locally with a few easy steps.  
@@ -74,7 +76,7 @@ git clone https://github.com/DucktapeEngine/Ducktape.git
 Execute the build script (`build.bat` if you're on Windows, `build.sh` if you're on Linux):
 ```
 cd Ducktape
-build.bat
+./build.bat
 ```
 Select the generator for CMake
 ```
@@ -105,9 +107,9 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 # 🤝 Contributing to `Ducktape`
 All contributions are welcome! Please help us to grow by contributing to the project.
 
-If you wish to contribute, you can work on any features/bugs [listed here](https://github.com/DucktapeEngine/Ducktape/issues) or create one on your own. After adding your code, please send us a Pull Request.
+If you wish to contribute, you can work on any features/bugs [listed here](https://github.com/DucktapeEngine/Ducktape/issues) or create one on your own. After adding your code, please send us a Pull Request.`+
 
 > Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
 
 # 🫂 Support
-This project is relatively new to the open source community, and we hope to make a difference! So if you like this project, please consider supporting us by, simply starring the repository! It really helps.
+This project is relatively new to the open source community, and we hope to make a difference! So if you like this project, please consider supporting us by simply starring the repository! It really helps.
