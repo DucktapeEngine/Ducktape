@@ -73,7 +73,7 @@ Entity *Entity::Instantiate(std::string entityName, Vector2 pos, float rot, Vect
     ent->transform = ent->AddComponent<Transform>();
     ent->transform->SetPosition(pos);
     ent->transform->SetRotation(rot);
-    ent->transform->SetScale(scl); 
+    ent->transform->SetScale(scl);
     SceneManager::currentScene->entities.push_back(ent);
     ent->scene = SceneManager::currentScene;
     Memory::heapMemory.push_back(ent);

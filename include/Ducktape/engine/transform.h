@@ -35,6 +35,9 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief Component for managing position, rotation, and scale of an entity. This component also allows parent-child system, allowing for a hierarchy of entities where each one depend on their parent.
+     */
     class Transform : public BehaviourScript
     {
     private:
@@ -61,84 +64,84 @@ namespace DT
 
         /**
          * @brief Set the position of the transform.
-         * 
-         * @param newPosition New position of the transform. 
+         *
+         * @param newPosition New position of the transform.
          */
         void SetPosition(Vector2 newPosition);
 
         /**
          * @brief Get the position of the transform.
-         * 
+         *
          * @return Vector2 Position of the transform.
          */
         Vector2 SetPosition();
 
         /**
          * @brief Set the rotation of the transform.
-         * 
+         *
          * @param newRotation New rotation of the transform.
          */
         void SetRotation(float newRotation);
 
         /**
          * @brief Get the rotation of the transform.
-         * 
+         *
          * @return float Rotation of the transform.
          */
         float GetRotation();
 
         /**
          * @brief Set the scale of the transform.
-         * 
+         *
          * @param newScale New scale of the transform.
          */
         void SetScale(Vector2 newScale);
 
         /**
          * @brief Get the scale of the transform.
-         * 
+         *
          * @return Vector2 Scale of the transform.
          */
         Vector2 GetScale();
 
         /**
          * @brief Set the local position of the transform.
-         * 
+         *
          * @param newLocalPosition New local position of the transform.
          */
         void SetLocalPosition(Vector2 newLocalPosition);
 
         /**
          * @brief Get the local position of the transform.
-         * 
+         *
          * @return Vector2 Local position of the transform.
          */
         Vector2 GetLocalPosition();
 
         /**
          * @brief Set the local rotation of the transform.
-         * 
+         *
          * @param newLocalRotation New local rotation of the transform.
          */
         void SetLocalRotation(float newLocalRotation);
 
         /**
          * @brief Get the local rotation of the transform.
-         * 
+         *
          * @return float Local rotation of the transform.
          */
         float GetLocalRotation();
 
         /**
          * @brief Set the local scale of the transform.
-         * 
+         *
          * @param newLocalScale New local scale of the transform.
          */
         void SetLocalScale(Vector2 newLocalScale);
 
         /**
          * @brief Get the local scale of the transform.
-         * 
+         *
          * @return Vector2 Local scale of the transform.
          */
         Vector2 GetLocalScale();

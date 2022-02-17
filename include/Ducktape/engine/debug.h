@@ -37,7 +37,7 @@ SOFTWARE.
 namespace DT
 {
     /**
-     * @brief Debugging functions.
+     * @brief Debugging related functions for logging text with colors to the console.
      */
     namespace Debug
     {
@@ -45,19 +45,19 @@ namespace DT
          * @brief Prints a message to the console.
          * @param message The message to print.
          */
-        template <typename T>               
+        template <typename T>
         void Log(T message)
         {
-        #ifndef PRODUCTION
+#ifndef PRODUCTION
             std::cout << message << "\n";
-        #endif
+#endif
         }
 
         /**
          * @brief Prints an error to the console in red.
          * @param message The message to print.
          */
-        template <typename T>               
+        template <typename T>
         void LogError(T message)
         {
             std::cout << "\033[0;31m" << message << "\033[0m\n";
@@ -67,7 +67,7 @@ namespace DT
          * @brief Prints a warning to the console in red and aborts the program.
          * @param message The message to print.
          */
-        template <typename T>       
+        template <typename T>
         void LogFatalError(T message)
         {
             std::cout << "\033[0;31m [FATAL ERR] " << message << "\033[0m" << std::endl;
@@ -78,24 +78,24 @@ namespace DT
          * @brief Prints a warning to the console in yellow.
          * @param message The message to print.
          */
-        template <typename T>       
+        template <typename T>
         void LogWarning(T message)
         {
-        #ifndef PRODUCTION
+#ifndef PRODUCTION
             std::cout << "\033[0;33m" << message << "\033[0m\n";
-        #endif
+#endif
         }
 
         /**
          * @brief Prints a message to the console in green.
          * @param message The message to print.
          */
-        template <typename T>       
+        template <typename T>
         void LogSuccess(T message)
         {
-        #ifndef PRODUCTION
+#ifndef PRODUCTION
             std::cout << "\033[0;32m" << message << "\033[0m\n";
-        #endif
+#endif
         }
 
         void DrawLine(Vector2 start, Vector2 end, Color color);

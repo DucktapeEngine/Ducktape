@@ -25,11 +25,11 @@ SOFTWARE.
 #include <Ducktape/rendering/camera.h>
 using namespace DT;
 
-Camera* Camera::activeCamera = nullptr;
+Camera *Camera::activeCamera = nullptr;
 
 void Camera::Constructor()
 {
-    if(activeCamera == nullptr)
+    if (activeCamera == nullptr)
     {
         activeCamera = this;
     }

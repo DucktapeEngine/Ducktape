@@ -32,11 +32,14 @@ SOFTWARE.
 namespace DT
 {
 	/**
-	 * @brief A namespace to hold all project related properties that can be 
+	 * @brief A namespace to hold all project related properties that can be
 	 * modified by the user.
 	 */
 	namespace ProjectSettings
 	{
+		/**
+		 * @brief Settings related to the Application itself.
+		 */
 		namespace Application
 		{
 			/**
@@ -50,6 +53,9 @@ namespace DT
 			extern Vector2 initialResolution;
 		}
 
+		/**
+		 * @brief Settings related to the Physics engine.
+		 */
 		namespace Physics
 		{
 			/**
@@ -58,6 +64,9 @@ namespace DT
 			extern Vector2 globalGravity;
 		}
 
+		/**
+		 * @brief Settings related to the Scenes loaded in the project.
+		 */
 		namespace SceneManagement
 		{
 			/**

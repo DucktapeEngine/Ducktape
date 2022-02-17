@@ -80,7 +80,7 @@ namespace DT
 
         /**
          * @brief Adds a component to the entity.
-         * 
+         *
          * @tparam T The type of component to add.
          * @return T* Pointer to the component that was added.
          */
@@ -97,7 +97,7 @@ namespace DT
 
         /**
          * @brief Gets a component from the entity.
-         * 
+         *
          * @tparam T The type of component to get.
          * @return T* Pointer to the component that was found, if component is
          * not attached to entity, nullptr is returned.
@@ -117,7 +117,7 @@ namespace DT
 
         /**
          * @brief Removes a component from the entity.
-         * 
+         *
          * @tparam T The type of component to remove.
          * @return If the component was successfully removed.
          */
@@ -139,7 +139,7 @@ namespace DT
 
         /**
          * @brief Remove a component using a pointer to the component.
-         * 
+         *
          * Could be used to remove a specific component from the entity, if
          * multiple components of the same type are attached to the entity.
          */
@@ -147,8 +147,8 @@ namespace DT
 
         /**
          * @brief Finds an Entity in the current scene by name.
-         * 
-         * @param entityName 
+         *
+         * @param entityName
          * @return `Entity*` Pointer to the entity that was found, nullptr if no entity was found.
          */
         static Entity *Find(std::string entityName);
@@ -161,7 +161,7 @@ namespace DT
 
         /**
          * @brief Creates a new entity in the current scene.
-         * 
+         *
          * @param entityName The name of the entity.
          * @return `Entity*` Pointer to the entity that was created.
          */
@@ -169,7 +169,7 @@ namespace DT
 
         /**
          * @brief Creates a new entity in the current scene.
-         * 
+         *
          * @param pos Position of the entity.
          * @param rot Rotation of the entity.
          * @param scl Scale of the entity.
@@ -179,7 +179,7 @@ namespace DT
 
         /**
          * @brief Creates a new entity in the current scene.
-         * 
+         *
          * @param entityName The name of the entity.
          * @param pos Position of the entity.
          * @param rot Rotation of the entity.
@@ -195,7 +195,7 @@ namespace DT
 
         /**
          * @brief Enable/Disable the entity.
-         * 
+         *
          * @param isEnabled If the entity should be enabled or not.
          */
         void SetEnabled(bool isEnabled);

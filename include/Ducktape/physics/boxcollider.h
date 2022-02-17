@@ -33,12 +33,15 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief Collider for 2D physics representing an axis-aligned rectangle.
+     */
     class BoxCollider2D : public BehaviourScript
     {
     private:
         Rigidbody2D *rb;
         b2Fixture *fixture;
-        
+
         /**
          * @brief The width and height of the box collider.
          */
@@ -54,7 +57,7 @@ namespace DT
          * @return Vector2 The scale of the collider.
          */
         Vector2 GetScale();
-        
+
         /**
          * @brief Get the density of the collider.
          * @return float The density of the collider.
@@ -69,7 +72,7 @@ namespace DT
 
         /**
          * @brief Get if the collider is a trigger or not.
-         * 
+         *
          * @return bool If the collider is a trigger or not.
          */
         bool GetIsTrigger();

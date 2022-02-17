@@ -34,13 +34,13 @@ SOFTWARE.
 namespace DT
 {
 	/**
-	 * @brief Namespace for dealing with the application.
+	 * @brief Namespace containing application-related functions and properties.
 	 */
 	namespace Application
 	{
 		/**
 		 * @cond section label="No need to confuse users with this."
-		 * Not really private, it's just for preventing users from 
+		 * Not really private, it's just for preventing users from
 		 * having direct access to these variables.
 		 */
 		namespace Private
@@ -56,14 +56,14 @@ namespace DT
 
 		/**
 		 * @brief Set the application's resolution.
-		 * 
+		 *
 		 * @param resolution The new resolution.
 		 */
 		void SetResolution(Vector2 resolution);
 
 		/**
 		 * @brief Get the application's current resolution.
-		 * 
+		 *
 		 * @return The application's current resolution.
 		 */
 		Vector2 GetResolution();
@@ -75,7 +75,7 @@ namespace DT
 
 		/**
 		 * @brief Check if the application is still open.
-		 * 
+		 *
 		 * @return True if the application is still open, false otherwise.
 		 */
 		bool IsOpen();

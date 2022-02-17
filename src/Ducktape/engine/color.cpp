@@ -200,6 +200,5 @@ Color Color::Lerp(Color initialColor, Color targetColor, float delta)
 		initialColor.red + (targetColor.red - initialColor.red) * delta,
 		initialColor.green + (targetColor.green - initialColor.green) * delta,
 		initialColor.blue + (targetColor.blue - initialColor.blue) * delta,
-		initialColor.alpha + (targetColor.alpha - initialColor.alpha) * delta
-	);
+		initialColor.alpha + (targetColor.alpha - initialColor.alpha) * delta);
 }

@@ -33,6 +33,9 @@ namespace DT
 {
 	class Entity;
 
+	/**
+	 * @brief Class holding data related to a collision.
+	 */
 	class Collision : public b2RayCastCallback
 	{
 	public:

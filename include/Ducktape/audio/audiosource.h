@@ -36,15 +36,18 @@ namespace DT
 {
 	/**
 	 * @brief Component for playing Audio.
-	 * 
-	 * Attaching this component to an entity lets you play audio. Use the
-	 * AudioSource::loadSound() / AudioSource::loadMusic() methods to load sound/music
-	 * from a specified path, and the AudioSource::play(), AudioSource::stop(),
-	 * AudioSource::pause() functions to control the playback of the audio.
-	 * Ducktape supports the .wav, .ogg, .flac audio formats. Due to licensing issues, .mp3 is
-	 * not supported as of now. 
-	 * 
-	 * Usage can be found in the Manual: https://ducktapeengine.github.io/manual/audio.html
+	 *
+	 * Ducktape allows you to play audio in your project through the `AudioSource` component. It offers customization options like pitch, volume, loop, and spatial audio.
+	 *
+	 * There are two types of audio - Sound, Music. Sound is primarily for short tracks like gunshots, footsteps, or quick sound effects in general. But on the other hand, music is for long audio tracks like background soundtracks that last several minutes. The main difference behind the scene is that sounds are loaded directly into memory and played from there. Thus they are used for small sounds that fit in memory and should suffer no lag when played. Music doesn't load all the audio data into memory; instead, it streams it on the fly from the source file. It generally is used for playing compressed music that lasts several minutes, which would otherwise take many seconds to load and eat hundreds of MB in memory.
+	 *
+	 * You may start by adding this component to an Entity and calling either the `AudioSource::LoadSound(loadPath)` or the `AudioSource::LoadMusic(loadPath)` method depending on the type of audio you wish to play, where `loadPath` is the path to your audio file.
+	 * Note: The path MUST be relative to the executable.
+	 *
+	 * Loading your audio file starts the audio track right away, but this can be avoided by calling the `AudioSource::Stop()` method right after you load.
+	 * You can use `AudioSource::Play()` to start playing a paused track, `AudioSource::Pause()` to pause a track, `AudioSource::Stop()` to completely stop a track.
+	 * Now that we've covered the basics, let's get to the fancy 👏 customization 👏 part.
+	 * The `AudioSource` component allows for quite a few customizations using the`AudioSource::SetSeek()`, `AudioSource::SetLoop()`, `AudioSource::SetPitch()`, `AudioSource::SetVolume()`, and `AudioSource::SetDistance()` methods - which allow you to set the specific properties. These methods are documented themselves so there's no need to explain them here.
 	 */
 	class AudioSource : public BehaviourScript
 	{
@@ -58,23 +61,23 @@ namespace DT
 	public:
 		/**
 		 * @brief Play a sound from a specified path.
-		 * 
+		 *
 		 * Use this method to load and play a sound from a specified path. It should be used for
-		 * small sounds that can fit in memory and should suffer no lag when they are 
+		 * small sounds that can fit in memory and should suffer no lag when they are
 		 * played. Examples are gun shots, foot steps, etc.
-		 * 
+		 *
 		 * @param loadPath Path to the audio file to load.
 		 */
 		void LoadSound(std::string loadPath);
 
 		/**
 		 * @brief Play a music from a specified path.
-		 * 
+		 *
 		 * Use this method to load and play a music from a specified path. Unlike AudioSource::loadSound()
 		 * It doesn't load all the audio data into memory, instead it streams it on the fly from the
 		 * source file. It is typically used to play compressed music that lasts several minutes, and
 		 * would otherwise take many seconds to load and eat hundreds of MB in memory.
-		 * 
+		 *
 		 * @param loadPath Path to the audio file to load.
 		 */
 		void LoadMusic(std::string loadPath);
@@ -96,56 +99,56 @@ namespace DT
 
 		/**
 		 * @brief Set the seek to/Move to a specific time (denoted in seconds).
-		 * 
+		 *
 		 * @param seconds The number of seconds to seek to.
 		 */
 		void SetSeek(float seconds);
 
 		/**
 		 * @brief Get the time the seek/player is currently on (denoted in seconds).
-		 * 
+		 *
 		 * @return `float` The time the seek/player is currently on (denoted in seconds).
 		 */
 		float GetSeek();
 
 		/**
 		 * @brief Set if the sound must loop or not once it ends.
-		 * 
+		 *
 		 * @param loop If the sound must loop or not once it ends.
 		 */
 		void SetLoop(bool loop);
 
 		/**
 		 * @brief Get if the sound is set to loop or not once it ends.
-		 * 
+		 *
 		 * @return `bool` If the sound is set to loop or not once it ends.
 		 */
 		bool GetLoop();
 
 		/**
 		 * @brief Set the pitch of the sound.
-		 * 
+		 *
 		 * @param pitch The pitch of the sound.
 		 */
 		void SetPitch(float pitch);
 
 		/**
 		 * @brief Get the pitch of the sound.
-		 * 
+		 *
 		 * @return `float` The pitch of the sound.
 		 */
 		float GetPitch();
 
 		/**
 		 * @brief Set the volume of the sound.
-		 * 
+		 *
 		 * @param volume The volume of the sound.
 		 */
 		void SetVolume(float volume);
 
 		/**
 		 * @brief Get the volume of the sound.
-		 * 
+		 *
 		 * @return `float` The volume of the sound.
 		 */
 		float GetVolume();
@@ -153,7 +156,7 @@ namespace DT
 		/**
 		 * @brief Set the distance the sound must be played from, if spatial audio
 		 * is enabled using AudioSource::setSpatial(true).
-		 * 
+		 *
 		 * @param distance The distance the sound must be played from.
 		 */
 		void SetDistance(float distance);
@@ -161,21 +164,21 @@ namespace DT
 		/**
 		 * @brief Get the distance the sound must be played from, if spatial audio
 		 * is enabled using AudioSource::setSpatial(true).
-		 * 
-		 * @return `float` The distance the sound must be played from. 
+		 *
+		 * @return `float` The distance the sound must be played from.
 		 */
 		float GetDistance();
 
 		/**
 		 * @brief Set if the sound is spatial or not.
-		 * 
+		 *
 		 * @param spatial If the sound is spatial or not.
 		 */
 		void SetSpatial(bool spatial);
 
 		/**
 		 * @brief Get if the sound is spatial or not.
-		 * 
+		 *
 		 * @return `bool` If the sound is spatial or not.
 		 */
 		bool GetSpatial();

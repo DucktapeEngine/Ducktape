@@ -36,9 +36,61 @@ namespace DT
 
     /**
      * @brief Base class for components that are to be attached to entities.
-     * 
-     * You may add a component to an entity by calling Entity::AddComponent<type>() 
-     * where type is the class of the component.
+     *
+     * Components are essentially what add scripting functionality to the engine. You may attach any number of components to an entity. Components are executed in the order of attachment.
+
+     * Scripting a component is done through creating a class that inherits from the `BehaviourScript` like:
+     * ```cpp
+     * class SomeComponent : public DT::BehaviourScript {
+     * };```
+     *
+     * Through inheritance, the engine lets you override various methods, primarily `BehaviourScript::Init()` and `BehaviourScript::Tick()`.
+     * So what's the purpose of all this?
+     * `BehaviourScript::Init()` is called at the start of every scene, and `BehavourScript::Tick()` is called on every frame. And thus overriding these methods will let you, well, execute code at the start of every scene, and every frame. Ducktape's scripting is similar to that of Unity's, so if you have past experience with Unity's scripting before, this should be familiar to you. `BehaviourScript` being `MonoBehavour`, `Init()` being `Start()`, and `Tick()` being `Update()`.
+     *
+     * You may add a component to an Entity using `Entity::AddComponent()`. This method returns a pointer to the component, so you may store it in a variable and thus modify the properties of other components.
+     *
+     * Example:
+     *
+     * ```cpp
+     * // Creating a component to control our player based on input
+     * class PlayerController : public BehaviourScript
+     * {
+     * public:
+     *     float playerSpeed = 10.0f;
+     *
+     *     // Called at the start of the scene
+     *     void Init()
+     *     {
+     *
+     *     }
+     *
+     *     // Called every frame
+     *     void Tick()
+     *     {
+     *         // Handle player movement here or something
+     *     }
+     * };
+     *
+     * class SampleScene : public Scene {
+     * public:
+     *     void Init()
+     *     {
+     *         // Create a new entity
+     *         Entity* player = Entity::Instantiate("Player");
+     *
+     *         // Add the player component to the entity
+     *         PlayerController* playerController = player->AddComponent<PlayerController>();
+     *     }
+     * };
+     * ```
+     *
+     * Other than `BehaviourScript::Init()` and `BehaviourScript::Tick()`, there are other methods too. Check the virtual function list for the `BehaviourScript` class to see what else you can override.
+     *
+     * Fun fact:
+     * All components like `SpriteRenderer`, `Rigidbody`, etc. are all components scripted like this. :)
+     * Now hopefully this should've given you an idea of how to use components in Ducktape.
+     * Cheers!
      */
     class BehaviourScript
     {
@@ -61,10 +113,10 @@ namespace DT
 
         /**
          * @brief Called when the component is added to an entity.
-         * 
+         *
          * NOTE: This method MUST be used rather than the default BehaviourScript::BehaviourScript() constructor.
          */
-        virtual void Constructor() {};
+        virtual void Constructor(){};
 
         /**
          * @brief Called at the start of the project.
@@ -78,14 +130,14 @@ namespace DT
 
         /**
          * @brief Triggered when the Rigidbody attached to this component enters a collision.
-         * 
+         *
          * @param collider Collider containing information about the collision.
          */
         virtual void OnCollisionEnter(Collision collider) {}
 
         /**
          * @brief Triggered when the Rigidbody attached to this component exits a collision.
-         * 
+         *
          * @param collider Collider containing information about the collision.
          */
         virtual void OnCollisionExit(Collision collider) {}
@@ -102,7 +154,7 @@ namespace DT
 
         /**
          * @brief Enable/Disable this component.
-         * 
+         *
          * @param enabled If the component should be enabled or not.
          */
         void SetEnabled(bool enabled);

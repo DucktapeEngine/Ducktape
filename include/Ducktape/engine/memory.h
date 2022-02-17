@@ -32,7 +32,7 @@ SOFTWARE.
 namespace DT
 {
 	/**
-	 * @brief A namespace to hold all memory related properties and functions that 
+	 * @brief A namespace to hold all memory related properties and functions that
 	 * are used by the engine to manage memory.
 	 */
 	namespace Memory

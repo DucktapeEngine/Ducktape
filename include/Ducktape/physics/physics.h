@@ -32,6 +32,9 @@ SOFTWARE.
 
 namespace DT
 {
+	/**
+	 * @brief Handling contact callbacks.
+	 */
 	class ContactListener : public b2ContactListener
 	{
 	public:
@@ -39,7 +42,7 @@ namespace DT
 
 		void EndContact(b2Contact *contact);
 	};
-	
+
 	namespace Physics
 	{
 		extern b2Vec2 b2Gravity;
@@ -47,7 +50,6 @@ namespace DT
 		extern int32 velocityIterations;
 		extern int32 positionIterations;
 		extern Vector2 globalGravity;
-
 
 		extern ContactListener contactListener;
 
@@ -58,10 +60,10 @@ namespace DT
 
 		/**
 		 * @brief Send a raycast from a point origin to a direction.
-		 * 
+		 *
 		 * @param origin The origin of the raycast.
 		 * @param direction The direction of the raycast.
-		 * 
+		 *
 		 * @return Collision Info about the collision that was hit by the raycast.
 		 */
 		Collision Raycast(Vector2 origin, Vector2 direction);

@@ -33,6 +33,9 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief Collider for 2D physics representing an arbitrary set of connected edges (lines) defined by its vertices.
+     */
     class EdgeCollider2D : public BehaviourScript
     {
     private:
@@ -65,7 +68,7 @@ namespace DT
 
         /**
          * @brief Get if the collider is a trigger or not.
-         * 
+         *
          * @return bool If the collider is a trigger or not.
          */
         bool GetIsTrigger();
@@ -75,7 +78,7 @@ namespace DT
          * @param points The points of the collider.
          */
         void SetPoints(std::vector<Vector2> points);
-        
+
         /**
          * @brief Set the density of the collider.
          * @param val The density of the collider.
