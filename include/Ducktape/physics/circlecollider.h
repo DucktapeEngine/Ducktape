@@ -31,6 +31,9 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief Collider for 2D physics representing an circle.
+     */
     class CircleCollider2D : public BehaviourScript
     {
     private:
@@ -67,7 +70,7 @@ namespace DT
 
         /**
          * @brief Get if the collider is a trigger or not.
-         * 
+         *
          * @return bool If the collider is a trigger or not.
          */
         bool GetIsTrigger();
@@ -77,7 +80,7 @@ namespace DT
          * @param val The radius of the collider.
          */
         void SetRadius(float val);
-        
+
         /**
          * @brief Set the density of the collider.
          * @param val The density of the collider.

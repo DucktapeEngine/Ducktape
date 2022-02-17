@@ -31,7 +31,7 @@ SOFTWARE.
 namespace DT
 {
     /**
-     * @brief A namespace to hold all math related properties and functions that 
+     * @brief A namespace to hold all math related properties and functions that
      * can be used to perform math operations.
      */
     namespace Mathf
@@ -49,7 +49,7 @@ namespace DT
          * @param value The number to get the absolute valueue of.
          * @return The absolute valueue of the given number.
          */
-        float abs(float value);
+        float Abs(float value);
 
         /**
          * @brief Returns the arc cosine of the given number.
@@ -97,7 +97,7 @@ namespace DT
 
         /**
          * @brief Returns an integer that is value clamped between the given min and max.
-         * 
+         *
          * @param value The value to clamp.
          * @param min The minimum value to clamp to.
          * @param max The maximum value to clamp to.
@@ -143,17 +143,17 @@ namespace DT
 
         /**
          * @brief Get the interpolated float result between the two float values.
-         * 
+         *
          * @param value Initial value.
          * @param target Target value.
          * @param interpolation Interpolation value.
-         * @return The interpolated float result between the two float values. 
+         * @return The interpolated float result between the two float values.
          */
         float Lerp(float value, float target, float interpolation);
 
         /**
          * @brief Get the maximum of the two float values.
-         * 
+         *
          * @param value The first float value.
          * @param value2 The second float value.
          * @return float The maximum of the two float values.
@@ -162,7 +162,7 @@ namespace DT
 
         /**
          * @brief Get the minimum of the two float values.
-         * 
+         *
          * @param value The first float value.
          * @param value2 The second float value.
          * @return float The minimum of the two float values.
@@ -171,7 +171,7 @@ namespace DT
 
         /**
          * @brief Moves value towards target.
-         * 
+         *
          * @param value The current value.
          * @param target The target value.
          * @param delta The amount to move.
@@ -181,7 +181,7 @@ namespace DT
 
         /**
          * @brief Returns value raised to the power of value2.
-         * 
+         *
          * @param value The base value.
          * @param value2 The exponent value.
          * @return float The value raised to the power of value2.
@@ -204,7 +204,7 @@ namespace DT
 
         /**
          * @brief Returns the tangent of the given number.
-         * 
+         *
          * @param value The number to get the tangent of.
          * @return float The tangent of the given number.
          */

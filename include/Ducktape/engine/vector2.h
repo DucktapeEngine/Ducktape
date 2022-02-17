@@ -35,6 +35,9 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief A class representing a 2D vector.
+     */
     class Vector2
     {
     public:
@@ -92,28 +95,28 @@ namespace DT
 
         /**
          * @brief Returns the magntiude of the vector.
-         * 
+         *
          * @return float Magnitude of the vector.
          */
         float Magnitude();
 
         /**
          * @brief Returns the normalized vector.
-         * 
+         *
          * @return float Normalized vector.
          */
         Vector2 Normalized();
 
         /**
          * @brief Returns the squared magnitude of the vector.
-         * 
+         *
          * @return float The squared magnitude of the vector.
          */
         float SqrMagnitude();
 
         /**
          * @brief Distance between two vectors.
-         * 
+         *
          * @param vec1 First vector.
          * @param vec2 Second vector.
          * @return float Distance between the two vectors.
@@ -122,7 +125,7 @@ namespace DT
 
         /**
          * @brief Get the interpolated float result between the two vectors.
-         * 
+         *
          * @param start Initial vector.
          * @param target Target vector.
          * @param delta Interpolation value.
@@ -132,7 +135,7 @@ namespace DT
 
         /**
          * @brief Get the maxiumum of the two vectors.
-         * 
+         *
          * @param vec1 First vector.
          * @param vec2 Second vector.
          * @return Vector2 Maximum vector.
@@ -141,16 +144,16 @@ namespace DT
 
         /**
          * @brief Get the minimum of the two vectors.
-         * 
+         *
          * @param vec1 First vector.
          * @param vec2 Second vector.
          * @return Vector2 Minimum vector.
          */
         static Vector2 Min(Vector2 vec1, Vector2 vec2);
 
-         /**
+        /**
          * @brief Moves value towards target.
-         * 
+         *
          * @param value The current value.
          * @param target The target value.
          * @param delta The amount to move.

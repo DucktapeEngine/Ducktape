@@ -34,6 +34,9 @@ SOFTWARE.
 
 namespace DT
 {
+	/**
+	 * @brief This is used for top-down friction. It provides 2D translational friction and angular friction.
+	 */
 	class FrictionJoint2D : public BehaviourScript
 	{
 	private:
@@ -49,56 +52,56 @@ namespace DT
 
 		/**
 		 * @brief Get the Anchor A position of the joint
-		 * 
+		 *
 		 * @return Vector2 The Anchor A position of the joint
 		 */
 		Vector2 GetAnchorA();
 
 		/**
 		 * @brief Get the Anchor B position of the joint
-		 * 
+		 *
 		 * @return Vector2 The Anchor B position of the joint
 		 */
 		Vector2 GetAnchorB();
 
 		/**
 		 * @brief Get the rigidbody connected to the joint
-		 * 
+		 *
 		 * @return Rigidbody2D* The rigidbody connected to the joint
 		 */
 		Rigidbody2D *GetConnectedRigidbody();
 
 		/**
 		 * @brief Set the connected rigidbody of the joint
-		 * 
+		 *
 		 * @param rb The rigidbody to connect to the joint
 		 */
 		void SetConnectedRigidbody(Rigidbody2D *rb);
 
 		/**
 		 * @brief Get the max force of the joint
-		 * 
+		 *
 		 * @return float The max force of the joint
 		 */
 		float GetMaxForce();
 
 		/**
 		 * @brief Set the max force of the joint
-		 * 
+		 *
 		 * @param maxForce The max force of the joint
 		 */
 		void SetMaxForce(float maxForce);
 
 		/**
 		 * @brief Get the max torque of the joint
-		 * 
+		 *
 		 * @return float The max torque of the joint
 		 */
 		float GetMaxTorque();
 
 		/**
 		 * @brief Set the max torque of the joint
-		 * 
+		 *
 		 * @param maxTorque The max torque of the joint
 		 */
 		void SetMaxTorque(float maxTorque);

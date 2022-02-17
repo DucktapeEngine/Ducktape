@@ -48,17 +48,17 @@ namespace DT
         extern std::vector<std::pair<std::string, sf::Texture>> textureCache;
 
         /**
-         * @brief Load a texture from: the cache if the texture has been loaded before, the 
+         * @brief Load a texture from: the cache if the texture has been loaded before, the
          * local directory if it has not.
-         * 
-         * @param path The path to the texture. 
+         *
+         * @param path The path to the texture.
          * @return int The index of the texture in the cache.
          */
         int LoadTextureFromCache(std::string path);
 
         /**
          * @brief Draw a sprite to the screen.
-         * 
+         *
          * @param path The path to the images.
          * @param pos The position of the images (in pixel units).
          * @param rot The rotation of the images.

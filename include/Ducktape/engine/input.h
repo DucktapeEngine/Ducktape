@@ -32,14 +32,19 @@ SOFTWARE.
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/application.h>
 
-typedef sf::Keyboard::Key KeyCode;
 
 namespace DT
 {
+    typedef sf::Keyboard::Key KeyCode;
+    
     /**
      * @brief A namespace to hold all input related properties and functions that 
      * can be used to detect key presses, key releases, mouse presses, mouse releases, 
      * mouse position, etc.
+     * 
+     * List of inputs that can be detected:
+     * All (almost every) key on the keyboard using `KeyCode::A` where `A` is the key. Check documentation for enum `KeyCode` for more information.
+     * Mouse buttons using `MouseButton::Left` or `MouseButton::Right`.
      */
     namespace Input
     {

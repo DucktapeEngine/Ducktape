@@ -46,7 +46,7 @@ void EdgeCollider2D::Constructor()
             return;
         }
 
-        b2Vec2 vertices[size]; 
+        b2Vec2 vertices[size];
         for (int i = 0, n = size; i < n; i++)
         {
             vertices[i].Set(points[i].x, points[i].y);

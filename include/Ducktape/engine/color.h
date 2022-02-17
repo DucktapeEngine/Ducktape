@@ -194,7 +194,7 @@ namespace DT
 
 		/**
 		 * @brief Lerp between two colors
-		 * 
+		 *
 		 * @param initialColor
 		 * @param targetColor
 		 * @param delta

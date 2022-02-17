@@ -33,10 +33,13 @@ SOFTWARE.
 
 namespace DT
 {
-    class Camera : public BehaviourScript
-    {
-    public:
-		static Camera* activeCamera;
+	/**
+	 * @brief A Camera is a device through which the player views the world.
+	 */
+	class Camera : public BehaviourScript
+	{
+	public:
+		static Camera *activeCamera;
 
 		Color backgroundColor = Color(0, 0, 0, 255);
 
@@ -45,7 +48,7 @@ namespace DT
 
 		/**
 		 * @brief Convert pixel coordinates to metre coordinates.
-		 * 
+		 *
 		 * @param pos The pixel coordinate to convert.
 		 * @return Vector2 The converted metre coordinates.
 		 */
@@ -53,7 +56,7 @@ namespace DT
 
 		/**
 		 * @brief Convert metre coordinates to pixel coordinates.
-		 * 
+		 *
 		 * @param pos The coordinate to convert.
 		 * @return Vector2 The converted pixel coordinates.
 		 */
@@ -61,7 +64,7 @@ namespace DT
 
 		/**
 		 * @brief Convert screen coordinates to world coordinates.
-		 * 
+		 *
 		 * @param pos The screen coordinate to convert.
 		 * @return Vector2 The converted world coordinates.
 		 */
@@ -69,7 +72,7 @@ namespace DT
 
 		/**
 		 * @brief Convert world coordinates to screen coordinates.
-		 * 
+		 *
 		 * @param pos The world coordinate to convert.
 		 * @return Vector2 The converted screen coordinates.
 		 */
@@ -79,7 +82,7 @@ namespace DT
 		 * @brief The pixel per unit of the camera.
 		 */
 		static const float PIXEL_PER_UNIT;
-    };
+	};
 } // namespace DT
 
 #endif

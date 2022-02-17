@@ -33,7 +33,7 @@ float Mathf::PI = 3.14159265358979;
 float Mathf::Rad2Deg = 57.2957795131;
 float Mathf::GoldenRatio = 1.61803398875;
 
-float Mathf::abs(float value)
+float Mathf::Abs(float value)
 {
     return std::abs(value);
 }
@@ -45,7 +45,7 @@ float Mathf::Acos(float value)
 
 bool Mathf::Approximately(float value, float value2)
 {
-    if (Mathf::abs(value - value2) <= Mathf::Epsilon)
+    if (Mathf::Abs(value - value2) <= Mathf::Epsilon)
     {
         return true;
     }

@@ -33,6 +33,9 @@ SOFTWARE.
 
 namespace DT
 {
+    /**
+     * @brief Collider for 2D physics representing an arbitrary polygon defined by its vertices.
+     */
     class PolygonCollider2D : public BehaviourScript
     {
     private:
@@ -50,7 +53,7 @@ namespace DT
          * @return std::vector<Vector2> The points of the collider.
          */
         std::vector<Vector2> GetPoints();
-        
+
         /**
          * @brief Get the density of the collider.
          * @return float The density of the collider.
@@ -65,7 +68,7 @@ namespace DT
 
         /**
          * @brief Get if the collider is a trigger or not.
-         * 
+         *
          * @return bool If the collider is a trigger or not.
          */
         bool GetIsTrigger();
@@ -75,7 +78,7 @@ namespace DT
          * @param points The points of the collider.
          */
         void SetPoints(std::vector<Vector2> points);
-        
+
         /**
          * @brief Set the density of the collider.
          * @param val The density of the collider.

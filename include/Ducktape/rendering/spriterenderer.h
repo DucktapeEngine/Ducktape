@@ -48,8 +48,8 @@ namespace DT
         /**
          * @brief The pixel per unit to be used to draw the sprite.
          */
-        float pixelPerUnit = 1; 
-        
+        float pixelPerUnit = 1;
+
         /**
          * @brief The color of the sprite.
          */
