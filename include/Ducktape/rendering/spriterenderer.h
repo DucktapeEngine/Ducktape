@@ -37,6 +37,26 @@ namespace DT
 {
     /**
      * @brief Component to render sprites to the screen.
+     * 
+     * The `SpriteRenderer` component allows you to render sprites to the screen. Ducktape allows the bmp, png, tga and jpg file formats.
+     * To get started, add this component to an `Entity`, and then use the `SpriteRenderer::SetSpritePath()` method to set the path to the sprite to be rendered. Note that this path must be relative to the executable.
+     * 
+     * That's it, yep, it's as simple as that. 
+     * 
+     * But there's more -- Ducktape also allows you to set the sprite's color, and pixel per unit constant to use while rendering the image. The transform properties like position, rotation, and scale are controlled by the `Entity`'s `Transform` component's properties. But additionally, you may add an additional offset using the `SpriteRenderer::SetOffset()` method that accepts `(Vector2 offsetPosition, float offsetRotation, Vector2 offsetScale)`.
+     * 
+     * Note: The end transform result is gotten by multiplying the properties of `entity->transform` and the specified offset.
+     * 
+     * Example:
+     * ```cpp
+     * // Create a new entity
+     * Entity* player = Entity::Instantiate("Player");
+     * player->AddComponent<SpriteRenderer>()
+     *       ->SetSpritePath("assets/player.png")
+     *       ->SetOffset(Vector2(0.0f, 0.0f), 90.0f, Vector2(1.0f, 1.0f));
+     * ```
+     * 
+     * Cheers!
      */
     class SpriteRenderer : public BehaviourScript
     {

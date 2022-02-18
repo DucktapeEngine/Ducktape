@@ -43,6 +43,9 @@ namespace DT
 		void EndContact(b2Contact *contact);
 	};
 
+	/**
+	 * @brief Namespace for dealing with physics.
+	 */
 	namespace Physics
 	{
 		extern b2Vec2 b2Gravity;
