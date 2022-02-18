@@ -25,7 +25,7 @@ SOFTWARE.
 #include <Ducktape/audio/audiosource.h>
 using namespace DT;
 
-void AudioSource::LoadSound(std::string loadPath)
+AudioSource* AudioSource::LoadSound(std::string loadPath)
 {
     path = loadPath;
     isMusic = false;
@@ -34,7 +34,7 @@ void AudioSource::LoadSound(std::string loadPath)
         if (!music.openFromFile(path))
         {
             Debug::LogError("The specified audio file: " + path + " could not be found.");
-            return;
+            return this;
         }
         music.play();
     }
@@ -43,15 +43,16 @@ void AudioSource::LoadSound(std::string loadPath)
         if (!buffer.loadFromFile(path))
         {
             Debug::LogError("The specified audio file: " + path + " could not be found.");
-            return;
+            return this;
         }
 
         sound.setBuffer(buffer);
         sound.play();
     }
+    return this;
 }
 
-void AudioSource::LoadMusic(std::string loadPath)
+AudioSource* AudioSource::LoadMusic(std::string loadPath)
 {
     path = loadPath;
     isMusic = true;
@@ -60,7 +61,7 @@ void AudioSource::LoadMusic(std::string loadPath)
         if (!music.openFromFile(path))
         {
             Debug::LogError("The specified audio file: " + path + " could not be found.");
-            return;
+            return this;
         }
         music.play();
     }
@@ -69,15 +70,16 @@ void AudioSource::LoadMusic(std::string loadPath)
         if (!buffer.loadFromFile(path))
         {
             Debug::LogError("The specified audio file: " + path + " could not be found.");
-            return;
+            return this;
         }
 
         sound.setBuffer(buffer);
         sound.play();
     }
+    return this;
 }
 
-void AudioSource::Pause()
+AudioSource* AudioSource::Pause()
 {
     if (isMusic)
     {
@@ -87,9 +89,10 @@ void AudioSource::Pause()
     {
         sound.pause();
     }
+    return this;
 }
 
-void AudioSource::Play()
+AudioSource* AudioSource::Play()
 {
     if (isMusic)
     {
@@ -99,9 +102,10 @@ void AudioSource::Play()
     {
         sound.play();
     }
+    return this;
 }
 
-void AudioSource::Stop()
+AudioSource* AudioSource::Stop()
 {
     if (isMusic)
     {
@@ -111,9 +115,10 @@ void AudioSource::Stop()
     {
         sound.stop();
     }
+    return this;
 }
 
-void AudioSource::SetSeek(float seconds)
+AudioSource* AudioSource::SetSeek(float seconds)
 {
     if (isMusic)
     {
@@ -123,6 +128,7 @@ void AudioSource::SetSeek(float seconds)
     {
         sound.setPlayingOffset(sf::seconds(seconds));
     }
+    return this;
 }
 
 float AudioSource::GetSeek()
@@ -137,7 +143,7 @@ float AudioSource::GetSeek()
     }
 }
 
-void AudioSource::SetLoop(bool loop)
+AudioSource* AudioSource::SetLoop(bool loop)
 {
     if (isMusic)
     {
@@ -147,6 +153,7 @@ void AudioSource::SetLoop(bool loop)
     {
         sound.setLoop(loop);
     }
+    return this;
 }
 
 bool AudioSource::GetLoop()
@@ -161,7 +168,7 @@ bool AudioSource::GetLoop()
     }
 }
 
-void AudioSource::SetPitch(float pitch)
+AudioSource* AudioSource::SetPitch(float pitch)
 {
     if (isMusic)
     {
@@ -171,6 +178,7 @@ void AudioSource::SetPitch(float pitch)
     {
         sound.setPitch(pitch);
     }
+    return this;
 }
 
 float AudioSource::GetPitch()
@@ -185,7 +193,7 @@ float AudioSource::GetPitch()
     }
 }
 
-void AudioSource::SetVolume(float volume)
+AudioSource* AudioSource::SetVolume(float volume)
 {
     if (isMusic)
     {
@@ -195,6 +203,7 @@ void AudioSource::SetVolume(float volume)
     {
         sound.setVolume(volume);
     }
+    return this;
 }
 
 float AudioSource::GetVolume()
@@ -209,7 +218,7 @@ float AudioSource::GetVolume()
     }
 }
 
-void AudioSource::SetDistance(float distance)
+AudioSource* AudioSource::SetDistance(float distance)
 {
     if (isMusic)
     {
@@ -219,6 +228,7 @@ void AudioSource::SetDistance(float distance)
     {
         sound.setMinDistance(distance);
     }
+    return this;
 }
 
 float AudioSource::GetDistance()
@@ -233,7 +243,7 @@ float AudioSource::GetDistance()
     }
 }
 
-void AudioSource::SetSpatial(bool spatial)
+AudioSource* AudioSource::SetSpatial(bool spatial)
 {
     if (isMusic)
     {
@@ -243,6 +253,7 @@ void AudioSource::SetSpatial(bool spatial)
     {
         sound.setRelativeToListener(spatial);
     }
+    return this;
 }
 
 bool AudioSource::GetSpatial()

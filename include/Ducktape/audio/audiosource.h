@@ -68,7 +68,7 @@ namespace DT
 		 *
 		 * @param loadPath Path to the audio file to load.
 		 */
-		void LoadSound(std::string loadPath);
+		AudioSource* LoadSound(std::string loadPath);
 
 		/**
 		 * @brief Play a music from a specified path.
@@ -80,29 +80,29 @@ namespace DT
 		 *
 		 * @param loadPath Path to the audio file to load.
 		 */
-		void LoadMusic(std::string loadPath);
+		AudioSource* LoadMusic(std::string loadPath);
 
 		/**
 		 * @brief Pause the currently playing sound.
 		 */
-		void Pause();
+		AudioSource* Pause();
 
 		/**
 		 * @brief Continue playing the currently paused sound.
 		 */
-		void Play();
+		AudioSource* Play();
 
 		/**
 		 * @brief Stop the currently playing sound.
 		 */
-		void Stop();
+		AudioSource* Stop();
 
 		/**
 		 * @brief Set the seek to/Move to a specific time (denoted in seconds).
 		 *
 		 * @param seconds The number of seconds to seek to.
 		 */
-		void SetSeek(float seconds);
+		AudioSource* SetSeek(float seconds);
 
 		/**
 		 * @brief Get the time the seek/player is currently on (denoted in seconds).
@@ -116,7 +116,7 @@ namespace DT
 		 *
 		 * @param loop If the sound must loop or not once it ends.
 		 */
-		void SetLoop(bool loop);
+		AudioSource* SetLoop(bool loop);
 
 		/**
 		 * @brief Get if the sound is set to loop or not once it ends.
@@ -130,7 +130,7 @@ namespace DT
 		 *
 		 * @param pitch The pitch of the sound.
 		 */
-		void SetPitch(float pitch);
+		AudioSource* SetPitch(float pitch);
 
 		/**
 		 * @brief Get the pitch of the sound.
@@ -144,7 +144,7 @@ namespace DT
 		 *
 		 * @param volume The volume of the sound.
 		 */
-		void SetVolume(float volume);
+		AudioSource* SetVolume(float volume);
 
 		/**
 		 * @brief Get the volume of the sound.
@@ -159,7 +159,7 @@ namespace DT
 		 *
 		 * @param distance The distance the sound must be played from.
 		 */
-		void SetDistance(float distance);
+		AudioSource* SetDistance(float distance);
 
 		/**
 		 * @brief Get the distance the sound must be played from, if spatial audio
@@ -174,7 +174,7 @@ namespace DT
 		 *
 		 * @param spatial If the sound is spatial or not.
 		 */
-		void SetSpatial(bool spatial);
+		AudioSource* SetSpatial(bool spatial);
 
 		/**
 		 * @brief Get if the sound is spatial or not.

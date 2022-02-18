@@ -36,6 +36,35 @@ namespace DT
 	/**
 	 * @brief Scene system for Ducktape. This class can be used to create and manage entities
 	 * in different scenes.
+	 * 
+	 * Ducktape allows your game to be split into different Scenes, for easier Entity management. For example, users usually would like to split their menu screen and actual game into two different scenes. 
+	 * Scripting a Scene is done by creating a class that inherits `DT::Scene` like:
+	 * ```cpp
+	 * class SampleScene : public Scene 
+	 * {
+	 * };
+	 * ```
+	 * Through inheritence, the engine lets you override the `Scene::Init()` method, through which you can manage the entities that needs to be in that specific scene.
+	 * 
+	 * Example:
+	 * ```cpp
+	 * // Creating a sample scene
+	 * class SampleScene : public Scene
+	 * {
+	 * public:
+	 *     void Init()
+	 *     {
+	 *         // Creating the Camera
+	 *         Entity* player = Entity::Instantiate("Main Camera");
+	 *         player->AddComponent<Camera>();
+	 * 
+	 *         // Creating a player entity
+	 *         Entity* player = Entity::Instantiate("Player");
+	 *         player->AddComponent<PlayerController>();
+	 *         player->AddComponent<SpriteRenderer>();
+	 *     }
+	 * };
+	 * ```
 	 */
 	class Scene
 	{

@@ -39,10 +39,12 @@ namespace DT
      *
      * Components are essentially what add scripting functionality to the engine. You may attach any number of components to an entity. Components are executed in the order of attachment.
 
-     * Scripting a component is done through creating a class that inherits from the `BehaviourScript` like:
+     * Scripting a component is done by creating a class that inherits from the `BehaviourScript` like:
      * ```cpp
-     * class SomeComponent : public DT::BehaviourScript {
-     * };```
+     * class SomeComponent : public DT::BehaviourScript 
+     * {
+     * };
+     * ```
      *
      * Through inheritance, the engine lets you override various methods, primarily `BehaviourScript::Init()` and `BehaviourScript::Tick()`.
      * So what's the purpose of all this?
@@ -72,17 +74,11 @@ namespace DT
      *     }
      * };
      *
-     * class SampleScene : public Scene {
-     * public:
-     *     void Init()
-     *     {
-     *         // Create a new entity
-     *         Entity* player = Entity::Instantiate("Player");
-     *
-     *         // Add the player component to the entity
-     *         PlayerController* playerController = player->AddComponent<PlayerController>();
-     *     }
-     * };
+     * // Create a new entity
+     * // NOTE: The following code is supposed to be executed in `Scene::Init()` or a component.
+     * Entity* player = Entity::Instantiate("Player");
+     * // Add the player component to the entity
+     * PlayerController* playerController = player->AddComponent<PlayerController>();-
      * ```
      *
      * Other than `BehaviourScript::Init()` and `BehaviourScript::Tick()`, there are other methods too. Check the virtual function list for the `BehaviourScript` class to see what else you can override.

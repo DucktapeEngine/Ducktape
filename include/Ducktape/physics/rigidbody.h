@@ -59,7 +59,46 @@ namespace DT
     /**
      * @brief Control of an object's position through physics simulation.
      * 
-     * Adding a Rigidbody component to an object will put its motion under the control of Ducktape's physics engine. Even without adding any code, a Rigidbody object will be pulled downward by gravity and will react to collisions with incoming objects if the right Collider component is also present.
+     * Rigidbodies enable your `Entity`s to act under the control of physics. The Rigidbody can receive forces and torque to make your objects move in a realistic way. Any `Entity` must contain a Rigidbody to be influenced by gravity, or act under applied forces. Rigidbodies allow `Entity`s to collide with other blocks, have joints between them, etc etc.
+     * 
+     * To get started, add the `Rigidbody2D` component to your `Entity`.
+     * ```cpp
+     * entity->AddComponent<Rigidbody2D>();
+     * ```
+     * 
+     * Rigidbodies in Ducktape can be of three types, Dynamic, Kinematic, and Static.
+     * 
+     * Dynamic bodies are affected by gravity and applied forces. And they only collide with dynamic bodies.
+     * Static bodies are not affected by forces or collisions. They are not supposed to be moved at all, and they only collide with dynamic bodies.
+     * Kinematic bodies are not affected by gravity or applied forces. And they only collide with dynamic bodies.
+     * 
+     * You may set the type of a Rigidbody2D by calling `SetBodyType()` and passing in the desired type using the enum `BodyType`.
+     * 
+     * Rigidbodies offer a variety of options for controlling the behavior of the Rigidbody, including
+     * - Mass
+     * - Friction
+     * - Linear Drag
+     * - Angular Drag
+     * - Gravity Scale
+     * - Is Sleeping
+     * and much more. 
+     * Read the rest of the documentation to see what types are available.
+     * 
+     * Adding colliders/joints are as simple as adding the appropriate component to your entity and setting their appropriate properties.
+     * 
+     * Most of the stuff about them are explained in the documentation for the component themselves, thus there isn't a need for it to be explained here. But for easy access, I'll link the docs to all of such components here.
+     * **Colliders**
+     * - [BoxCollider2D](https://ducktapeengine.github.io/scriptingreference/class_d_t_1_1_box_collider2_d.html)
+     * - [CircleCollider2D](https://ducktapeengine.github.io/scriptingreference/class_d_t_1_1_circle_collider2_d.html)
+     * - [EdgeCollider2D](https://ducktapeengine.github.io/scriptingreference/class_d_t_1_1_edge_collider2_d.html)
+     * - [PolygonCollider2D](https://ducktapeengine.github.io/scriptingreference/class_d_t_1_1_polygon_collider2_d.html)
+     * 
+     * **Joints**
+     * - [DistanceJoint2D](https://ducktapeengine.github.io/scriptingreference/class_d_t_1_1_distance_joint2_d.html)
+     * - [FrictionJoint2D](https://ducktapeengine.github.io/scriptingreference/class_d_t_1_1_friction_joint2_d.html)
+     * - [HingeJoint2D](https://ducktapeengine.github.io/scriptingreference/class_d_t_1_1_hinge_joint2_d.html)
+     * 
+     * Cheers!
      */
     class Rigidbody2D : public BehaviourScript
     {
