@@ -84,7 +84,7 @@ namespace DT
      * Other than `BehaviourScript::Init()` and `BehaviourScript::Tick()`, there are other methods too. Check the virtual function list for the `BehaviourScript` class to see what else you can override.
      *
      * Fun fact:
-     * All components like `SpriteRenderer`, `Rigidbody`, etc. are all components scripted like this. :)
+     * All components like `SpriteRenderer`, `Rigidbody2D`, etc. are all components scripted like this. : )  
      * Now hopefully this should've given you an idea of how to use components in Ducktape.
      * Cheers!
      */

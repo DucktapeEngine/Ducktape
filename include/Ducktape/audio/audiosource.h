@@ -41,7 +41,7 @@ namespace DT
 	 *
 	 * There are two types of audio - Sound, Music. Sound is primarily for short tracks like gunshots, footsteps, or quick sound effects in general. But on the other hand, music is for long audio tracks like background soundtracks that last several minutes. The main difference behind the scene is that sounds are loaded directly into memory and played from there. Thus they are used for small sounds that fit in memory and should suffer no lag when played. Music doesn't load all the audio data into memory; instead, it streams it on the fly from the source file. It generally is used for playing compressed music that lasts several minutes, which would otherwise take many seconds to load and eat hundreds of MB in memory.
 	 *
-	 * You may start by adding this component to an Entity and calling either the `AudioSource::LoadSound(loadPath)` or the `AudioSource::LoadMusic(loadPath)` method depending on the type of audio you wish to play, where `loadPath` is the path to your audio file.
+	 * You may start by adding this component to an Entity and calling either the `AudioSource::LoadSound()` or the `AudioSource::LoadMusic()` method depending on the type of audio you wish to play, in which you must pass the path to your audio file as a parameter.
 	 * Note: The path MUST be relative to the executable.
 	 *
 	 * Loading your audio file starts the audio track right away, but this can be avoided by calling the `AudioSource::Stop()` method right after you load.

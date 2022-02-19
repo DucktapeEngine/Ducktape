@@ -43,7 +43,7 @@ namespace DT
      * mouse position, etc.
      * 
      * List of inputs that can be detected:
-     * All (almost every) key on the keyboard using `KeyCode::A` where `A` is the key. Check documentation for enum `KeyCode` for more information.
+     * All (almost every) key on the keyboard using `KeyCode::A` where `A` is the key. Check documentation for enum <a href="https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Keyboard.php#acb4cacd7cc5802dec45724cf3314a142" target="_blank">`KeyCode`</a> for more information.
      * Mouse buttons using `MouseButton::Left` or `MouseButton::Right`.
      */
     namespace Input
