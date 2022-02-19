@@ -76,9 +76,9 @@ namespace DT
         Color color = Color(255, 255, 255, 255);
 
     public:
-        void SetSpritePath(std::string newSpritePath);
-        void SetPixelPerUnit(float newPixelPerUnit);
-        void SetColor(Color newColor);
+        SpriteRenderer* SetSpritePath(std::string newSpritePath);
+        SpriteRenderer* SetPixelPerUnit(float newPixelPerUnit);
+        SpriteRenderer* SetColor(Color newColor);
 
         std::string GetSpritePath();
         float GetPixelPerUnit();
