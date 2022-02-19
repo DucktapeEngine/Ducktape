@@ -1,6 +1,21 @@
 #include <Ducktape/ducktape.h>
 using namespace DT;
 
+class MousePointer : public BehaviourScript {
+public:
+    void Tick()
+    {
+        // Get the mouse position
+        auto mousePos = Input::mousePosition;
+
+        // Get the mouse position in world space
+        auto worldPos = Camera::ScreenToWorldPos(mousePos);
+
+        // Set the transform position to the mouse position
+        entity->transform->SetPosition(worldPos);
+    }
+};
+
 class Parallax : public BehaviourScript {
 public:
     float div = 1.f;
@@ -18,7 +33,7 @@ class Rendering : public Scene {
 public:
     void Init()
     {
-        Entity* cam = Entity::Instantiate("Camera");
+        Entity* cam = Entity::Instantiate("Camera", Vector2(0.f, 0.f), 0.f, Vector2(1.f, 1.f));
         cam->AddComponent<Camera>()->backgroundColor = Color(238,238,238);;
 
         for (int i = 1; i <= 4; i++) 
@@ -32,6 +47,13 @@ public:
             Parallax* par = entity->AddComponent<Parallax>();
             par->div = i * -30;
         }
+
+        // Cursor
+        Entity* cursor = Entity::Instantiate("Cursor");
+        cursor->AddComponent<SpriteRenderer>()
+            ->SetSpritePath("../assets/cursor.png")
+            ->SetPixelPerUnit(2);
+        cursor->AddComponent<MousePointer>();
     }
 };
 

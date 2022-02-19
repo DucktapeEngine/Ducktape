@@ -29,8 +29,6 @@ namespace DT
     void Init()
     {
         SceneManager::currentScene = ProjectSettings::SceneManagement::initialScene;
-        Memory::heapMemory.push_back(SceneManager::currentScene);
-        SceneManager::currentScene->Init();
 
         if (SceneManager::currentScene == nullptr)
         {
@@ -38,6 +36,9 @@ namespace DT
             Debug::LogSuccess("Get Started: https://ducktapeengine.github.io/docs/intro");
             return;
         }
+        
+        Memory::heapMemory.push_back(SceneManager::currentScene);
+        SceneManager::currentScene->Init();
 
         for (size_t i = 0; i < SceneManager::currentScene->entities.size(); i++)
         {
