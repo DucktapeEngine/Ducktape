@@ -72,7 +72,7 @@ float Mathf::Atan2(float value, float value2)
 
 float Mathf::Ceil(float value)
 {
-    return Ceil(value);
+    return ceil(value);
 }
 
 float Mathf::Clamp(float value, float min, float max)
@@ -106,12 +106,12 @@ float Mathf::Exp(float value)
 
 float Mathf::Floor(float value)
 {
-    return Floor(value);
+    return floor(value);
 }
 
 float Mathf::Round(float value)
 {
-    return Round(value);
+    return round(value);
 }
 
 float Mathf::Lerp(float value, float target, float interpolation)
@@ -153,7 +153,7 @@ float Mathf::Sin(float value)
 
 float Mathf::Sqrt(float value)
 {
-    return Sqrt(value);
+    return sqrt(value);
 }
 
 float Mathf::Tan(float value)
