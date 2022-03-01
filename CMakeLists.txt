@@ -55,3 +55,5 @@ target_link_libraries(ducktape PRIVATE
     sajson
     box2d
 )
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/dev)

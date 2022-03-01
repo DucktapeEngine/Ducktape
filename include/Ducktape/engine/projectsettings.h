@@ -51,6 +51,11 @@ namespace DT
 			 * @brief The initial size of the window.
 			 */
 			extern Vector2 initialResolution;
+
+			/**
+			 * @brief If the window should be resizable.
+			 */
+			extern bool resizable;
 		}
 
 		/**

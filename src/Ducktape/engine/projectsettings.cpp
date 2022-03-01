@@ -27,6 +27,7 @@ using namespace DT;
 
 std::string ProjectSettings::Application::windowTitle = "Ducktape Project";
 Vector2 ProjectSettings::Application::initialResolution = Vector2(500.0f, 500.0f);
+bool ProjectSettings::Application::resizable = true;
 
 Vector2 ProjectSettings::Physics::globalGravity = Vector2(0.0f, 1.0f);
 

@@ -31,7 +31,7 @@ SOFTWARE.
 
 #include <Ducktape/engine/vector2.h>
 #include <Ducktape/engine/application.h>
-
+#include <Ducktape/engine/debug.h>
 
 namespace DT
 {
@@ -59,9 +59,11 @@ namespace DT
         extern std::vector<KeyCode> keyDownList;
 
         /**
-         * @brief The current mouse position.
+         * @brief Get the current mouse position in screen space.
+         * 
+         * @return Vector2 The current mouse position in screen space.
          */
-        extern Vector2 mousePosition;
+        Vector2 GetMousePosition();
 
         /**
          * @brief Get if a mouse button is pressed. 0 = left, 1 = right.
