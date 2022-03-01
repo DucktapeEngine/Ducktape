@@ -42,34 +42,30 @@ void Camera::Constructor()
 void Camera::Tick()
 {
     Vector2 pos = UnitToPixel(entity->transform->SetPosition());
-    Vector2 pos2 = Vector2(Application::Private::resolution.x / 4 + pos.x, Application::Private::resolution.y / 4 + pos.y);
+    pos = Vector2(Application::Private::resolution.x / 2 + pos.x, Application::Private::resolution.y / 2 + pos.y);
 
-    Application::view.setCenter(pos2.x, pos2.y);
+    Application::view.setCenter(pos.x, pos.y);
     Application::view.setRotation(entity->transform->GetRotation());
 }
 
 Vector2 Camera::UnitToPixel(Vector2 pos)
 {
-    return Vector2(pos.x * (PIXEL_PER_UNIT / 2), pos.y * (PIXEL_PER_UNIT / 2));
+    return Vector2(pos.x * (Application::PIXEL_PER_UNIT), pos.y * (Application::PIXEL_PER_UNIT));
 }
 
 Vector2 Camera::PixelToUnit(Vector2 pos)
 {
-    return Vector2(pos.x / (PIXEL_PER_UNIT / 2), pos.y / (PIXEL_PER_UNIT / 2));
+    return Vector2(pos.x / (Application::PIXEL_PER_UNIT), pos.y / (Application::PIXEL_PER_UNIT));
 }
 
 Vector2 Camera::ScreenToWorldPos(Vector2 pos)
 {
     sf::Vector2f vec = Application::renderWindow.mapPixelToCoords(sf::Vector2i(pos.x, pos.y));
-    vec /= PIXEL_PER_UNIT;
-    vec -= sf::Vector2f(12.5f, 12.5f);
     return Vector2(vec.x, vec.y);
 }
 
 Vector2 Camera::WorldToScreenPos(Vector2 pos)
 {
-    sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x * PIXEL_PER_UNIT, pos.y * PIXEL_PER_UNIT));
+    sf::Vector2i vec = Application::renderWindow.mapCoordsToPixel(sf::Vector2f(pos.x, pos.y));
     return Vector2(vec.x, vec.y);
 }
-
-const float Camera::PIXEL_PER_UNIT = 10.0f;

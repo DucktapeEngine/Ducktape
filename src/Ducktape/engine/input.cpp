@@ -27,7 +27,11 @@ using namespace DT;
 
 std::vector<KeyCode> Input::keyUpList;
 std::vector<KeyCode> Input::keyDownList;
-Vector2 Input::mousePosition;
+
+Vector2 Input::GetMousePosition()
+{
+    return Vector2(sf::Mouse::getPosition(Application::renderWindow).x, sf::Mouse::getPosition(Application::renderWindow).y);
+}
 
 bool Input::GetMouseButton(int mouseButton)
 {
@@ -64,17 +68,17 @@ void Input::Tick()
 
     std::vector<KeyCode>::iterator position;
     sf::Event event;
+
     while (Application::renderWindow.pollEvent(event))
     {
         switch (event.type)
         {
-        // window closed
         case sf::Event::Closed:
             Application::renderWindow.close();
             break;
 
         case sf::Event::Resized:
-            Application::SetResolution(Vector2(Application::renderWindow.getSize().x, Application::renderWindow.getSize().y));
+            Application::SetResolution(Vector2(event.size.width, event.size.height));
             break;
 
         case sf::Event::KeyPressed:
@@ -85,11 +89,8 @@ void Input::Tick()
             keyUpList.push_back(event.key.code);
             break;
 
-        // we don't process other types of events
         default:
             break;
         }
     }
-
-    mousePosition = Vector2(sf::Mouse::getPosition(Application::renderWindow).x, sf::Mouse::getPosition(Application::renderWindow).y);
 }

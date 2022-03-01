@@ -29,11 +29,14 @@ Vector2 Application::Private::resolution = Vector2(500, 500);
 sf::View Application::view = sf::View(sf::Rect<float>(0.f, 0.f, Private::resolution.x, Private::resolution.y));
 sf::RenderWindow Application::renderWindow(sf::VideoMode(Private::resolution.x, Private::resolution.y), "Hello Ducktape", sf::Style::Default);
 
+const float Application::PIXEL_PER_UNIT = 10.f;
+
 void Application::SetResolution(Vector2 resolution)
 {
     Private::resolution = resolution;
     renderWindow.setSize(sf::Vector2u(Private::resolution.x, Private::resolution.y));
     view.setSize(Private::resolution.x, Private::resolution.y);
+    renderWindow.setView(view);
 }
 
 Vector2 Application::GetResolution()
@@ -48,6 +51,7 @@ void Application::Initialize()
     renderWindow.setView(view);
     renderWindow.setKeyRepeatEnabled(false);
     renderWindow.setTitle(ProjectSettings::Application::windowTitle);
+    view.setSize(sf::Vector2f(1/PIXEL_PER_UNIT, 1/PIXEL_PER_UNIT));
     SetResolution(ProjectSettings::Application::initialResolution);
 }
 

@@ -55,6 +55,11 @@ namespace DT
 		extern sf::RenderWindow renderWindow;
 
 		/**
+		 * @brief Pixel per unit value of the camera.
+		 */
+		extern const float PIXEL_PER_UNIT;
+
+		/**
 		 * @brief Set the application's resolution.
 		 *
 		 * @param resolution The new resolution.

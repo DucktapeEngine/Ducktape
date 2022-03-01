@@ -77,11 +77,6 @@ namespace DT
 		 * @return Vector2 The converted screen coordinates.
 		 */
 		static Vector2 WorldToScreenPos(Vector2 pos);
-
-		/**
-		 * @brief The pixel per unit of the camera.
-		 */
-		static const float PIXEL_PER_UNIT;
 	};
 } // namespace DT
 
