@@ -42,7 +42,7 @@ void Camera::Constructor()
 void Camera::Tick()
 {
     Vector2 pos = UnitToPixel(entity->transform->SetPosition());
-    pos = Vector2(Application::Private::resolution.x / 2 + pos.x, Application::Private::resolution.y / 2 + pos.y);
+    pos = Vector2(Application::Private::resolution.x / 2, Application::Private::resolution.y / 2);
 
     Application::view.setCenter(pos.x, pos.y);
     Application::view.setRotation(entity->transform->GetRotation());

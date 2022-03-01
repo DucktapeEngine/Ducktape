@@ -44,8 +44,7 @@ public:
 class SampleScene : public Scene {
     void Init()
     {
-        // Entity::Instantiate("Camera", Vector2(10.f, 0), 0.f, Vector2(1.f, 1.f))->AddComponent<Camera>();
-        Entity::Instantiate("Camera")->AddComponent<Camera>();
+        Entity::Instantiate("Camera", Vector2(15.f, 0.f), 0.f, Vector2(1.f, 1.f))->AddComponent<Camera>();
         Entity::Instantiate("Player", Vector2(0, 0), 0.f, Vector2(1.f, 1.f))
         ->AddComponent<FollowMouse>()->entity
         ->AddComponent<SpriteRenderer>()
@@ -57,6 +56,5 @@ class SampleScene : public Scene {
 int main()
 {
     ProjectSettings::SceneManagement::initialScene = new SampleScene();
-    // ProjectSettings::Application::initialResolution = Vector2(800, 600);
     DT::Init();
 }
