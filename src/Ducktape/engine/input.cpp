@@ -78,7 +78,14 @@ void Input::Tick()
             break;
 
         case sf::Event::Resized:
-            Application::SetResolution(Vector2(event.size.width, event.size.height));
+            if (ProjectSettings::Application::resizable)
+            {
+                Application::SetResolution(Vector2(event.size.width, event.size.height));
+            }
+            else
+            {
+                Application::SetResolution(ProjectSettings::Application::initialResolution);
+            }
             break;
 
         case sf::Event::KeyPressed:

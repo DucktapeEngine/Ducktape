@@ -56,5 +56,6 @@ class SampleScene : public Scene {
 int main()
 {
     ProjectSettings::SceneManagement::initialScene = new SampleScene();
+    ProjectSettings::Application::resizable = false;
     DT::Init();
 }
