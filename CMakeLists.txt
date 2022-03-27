@@ -12,6 +12,7 @@ add_executable (Ducktape
     "${PROJECT_SOURCE_DIR}/src/Ducktape.h"
 )
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/")
+target_compile_features(Ducktape PRIVATE cxx_std_17)
 
 # Vulkan
 find_package(Vulkan)
