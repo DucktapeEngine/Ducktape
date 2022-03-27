@@ -34,6 +34,3 @@ Specify your compiler:
 (You may enter a path to your compiler or just the compiler's command name if th
 e compiler path is already in your PATH environment variable)
 ```
-
-## Code practices
-We try our best to follow [Google's C++ Style Guide](https://google.github.io/styleguide/cppguide.html) for maximum consistency, and we hope you do too.

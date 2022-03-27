@@ -1,5 +1,2 @@
 .vscode
 build
-
-examples/helloducktape/build
-examples/parallax/build

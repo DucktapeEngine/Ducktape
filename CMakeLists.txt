@@ -1,59 +1,36 @@
-cmake_minimum_required (VERSION 3.12)
+﻿# CMakeList.txt : CMake project for Ducktape, include source and define
+# project specific logic here.
+#
+cmake_minimum_required (VERSION 3.8)
 
-message (STATUS "Building Ducktape")
+project ("Ducktape")
+set(CMAKE_CURRENT_BINARY_DIR "${PROJECT_SOURCE_DIR}/build/")
 
-if (UNIX)
-    message (STATUS "Platform Detected: Linux")
-endif (UNIX)
-
-if (WIN32)
-    message (STATUS "Platform Detected: Windows")
-endif (WIN32)
-
-project(ducktape LANGUAGES CXX)
-enable_language(C)
-
-set(CMAKE_BUILD_TYPE "Debug")
-
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/Ducktape/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/Ducktape/*.cpp")
-
-file(GLOB_RECURSE header_list "${PROJECT_SOURCE_DIR}/include/Ducktape/**/*.h" "${PROJECT_SOURCE_DIR}/include/Ducktape/*.h")
-
-add_library(ducktape ${source_list} ${header_list})
-
-set_target_properties(ducktape PROPERTIES
-    CXX_STANDARD 20
-    CXX_EXTENSIONS OFF
+# Ducktape
+add_executable (Ducktape 
+    "${PROJECT_SOURCE_DIR}/src/Ducktape.cpp" 
+    "${PROJECT_SOURCE_DIR}/src/Ducktape.h"
 )
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/")
 
-set(CMAKE_CXX_FLAGS "-pthread -fPIC")
+# Vulkan
+find_package(Vulkan)
 
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/include;${PROJECT_SOURCE_DIR}/src;")
+if (${Vulkan_FOUND})
+    message (STATUS "Found Vulkan")
+    target_link_libraries(Ducktape PRIVATE Vulkan::Vulkan)
+else (${GTK_FOUND})
+    message (FATAL_ERROR "Vulkan SDK has not been installed. Please install Vulkan SDK and try again.")
+endif()
 
-# Box2D
-add_subdirectory(${PROJECT_SOURCE_DIR}/extern/box2d)
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/box2d/include")
-target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/build/extern/box2d/bin")
+# GLFW
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/glfw")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glfw/include")
+target_link_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/build/extern/glfw/src/")
+target_link_libraries(Ducktape PUBLIC glfw3)
 
-# SFML
-add_subdirectory(${PROJECT_SOURCE_DIR}/extern/SFML)
-set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML/cmake/)
+# GLM
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glm/")
 
-target_include_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML/include")
-target_link_directories(ducktape PUBLIC "${PROJECT_SOURCE_DIR}/build/extern/SFML/lib")
-
-target_link_libraries(ducktape PRIVATE 
-    sfml-window
-    sfml-system
-    sfml-graphics
-    sfml-audio
-    sfml-system
-    sfml-network
-    glad
-    glfw
-    imgui
-    sajson
-    box2d
-)
-
-add_subdirectory(${PROJECT_SOURCE_DIR}/dev)
+# EnTT
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/entt/single_include")
