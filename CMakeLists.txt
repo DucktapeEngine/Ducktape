@@ -26,6 +26,7 @@ endif()
 # GLFW
 add_subdirectory("${PROJECT_SOURCE_DIR}/extern/glfw")
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glfw/include")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glfw/deps")
 target_link_libraries(Ducktape PUBLIC glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIES})
 
 # GLM
