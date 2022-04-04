@@ -6,9 +6,9 @@ namespace Ducktape
     {
         namespace Application
         {
-            Vec2i initialWindowSize({800, 600});
+            vec2 initialWindowSize = vec2(800.f, 600.f);
             std::string applicationName = "Ducktape";
-            Vec3i version({1, 0, 0});
+            vec3 version = vec3(1.0f, 0.0f, 0.0f);
         }
     }
 }

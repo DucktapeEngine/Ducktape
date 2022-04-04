@@ -22,6 +22,7 @@
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
+using namespace glm;
 
 #include <entt/entt.hpp>
 
@@ -31,14 +32,14 @@ const int DUCKTAPE_VERSION_MAJOR = 1;
 const int DUCKTAPE_VERSION_MINOR = 0;
 const int DUCKTAPE_VERSION_PATCH = 0;
 
-std::mutex globalMutex;
-
 #include <Core/Assert.h>
-#include <Core/Math.h>
-#include <Core/Vector.h>
 #include <Core/Console.h>
-#include <Core/Configuration.h>
-#include <Core/Application.h>
-#include <Components/Transform.h>
+#include <Core/AssetManager.h>
 #include <Core/Scene.h>
+#include <Core/Configuration.h>
+#include <Rendering/Shader.h>
+#include <Rendering/Window.h>
+#include <Core/Engine.h>
+#include <Components/Tag.h>
+#include <Components/Transform.h>
 #include <Core/Entity.h>

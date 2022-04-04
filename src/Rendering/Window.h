@@ -1,66 +1,24 @@
 #pragma once
 
-const uint32_t WIDTH = 800;
-const uint32_t HEIGHT = 600;
-
-const std::vector<const char *> validationLayers = {
-    "VK_LAYER_KHRONOS_validation"};
-
-const std::vector<const char *> deviceExtensions = {
-    VK_KHR_SWAPCHAIN_EXTENSION_NAME};
-
-#ifdef NDEBUG
-const bool enableValidationLayers = false;
-#else
-const bool enableValidationLayers = true;
-#endif
-
-VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger)
-{
-    auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-    if (func != nullptr)
-    {
-        return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
-    }
-    else
-    {
-        return VK_ERROR_EXTENSION_NOT_PRESENT;
-    }
-}
-
-void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks *pAllocator)
-{
-    auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-    if (func != nullptr)
-    {
-        func(instance, debugMessenger, pAllocator);
-    }
-}
-
-struct QueueFamilyIndices
-{
-    std::optional<uint32_t> graphicsFamily;
-    std::optional<uint32_t> presentFamily;
-
-    bool isComplete()
-    {
-        return graphicsFamily.has_value() && presentFamily.has_value();
-    }
-};
-
-const int MAX_FRAMES_IN_FLIGHT = 2;
-
-struct SwapChainSupportDetails
-{
-    VkSurfaceCapabilitiesKHR capabilities;
-    std::vector<VkSurfaceFormatKHR> formats;
-    std::vector<VkPresentModeKHR> presentModes;
-};
-
 namespace Ducktape
 {
-    namespace Application
+    namespace Window
     {
+        // Variables
+        const int MAX_FRAMES_IN_FLIGHT = 2;
+
+        const std::vector<const char *> validationLayers = {
+            "VK_LAYER_KHRONOS_validation"};
+
+        const std::vector<const char *> deviceExtensions = {
+            VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+
+#ifdef NDEBUG
+        const bool enableValidationLayers = false;
+#else
+        const bool enableValidationLayers = true;
+#endif
+
         GLFWwindow *window;
 
         VkInstance instance;
@@ -90,92 +48,128 @@ namespace Ducktape
         std::vector<VkSemaphore> imageAvailableSemaphores;
         std::vector<VkSemaphore> renderFinishedSemaphores;
         std::vector<VkFence> inFlightFences;
-        bool framebufferResized = false;
         uint32_t currentFrame = 0;
 
-        // Declarations
-        void framebufferResizeCallback(GLFWwindow *window, int width, int height);
-        void initWindow();
-        void cleanupSwapChain();
-        void recreateSwapChain();
-        void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
-        void drawFrame();
-        void mainLoop();
-        void cleanup();
-        void createImageViews();
-        void createRenderPass();
-        void createFramebuffers();
-        VkShaderModule createShaderModule(const std::vector<char> &code);
-        VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
-        VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
-        VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
-        SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
-        bool checkDeviceExtensionSupport(VkPhysicalDevice device);
-        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-        std::vector<const char *> getRequiredExtensions();
-        bool checkValidationLayerSupport();
-        static std::vector<char> readFile(const std::string &filename);
-        static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData);
-        bool isDeviceSuitable(VkPhysicalDevice device);
-        void createGraphicsPipeline();
-        void createSwapChain();
-        void createLogicalDevice();
-        void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
-        void setupDebugMessenger();
-        void createSurface();
-        void pickPhysicalDevice();
-        void createInstance();
-        void createCommandPool();
-        void createCommandBuffers();
-        void createSyncObjects();
-        void initVulkan();
-        void run();
+        bool framebufferResized = false;
 
-        // Definitions
-        void initWindow()
+        // Structs
+        struct QueueFamilyIndices
+        {
+            std::optional<uint32_t> graphicsFamily;
+            std::optional<uint32_t> presentFamily;
+
+            bool isComplete()
+            {
+                return graphicsFamily.has_value() && presentFamily.has_value();
+            }
+        };
+
+        struct SwapChainSupportDetails
+        {
+            VkSurfaceCapabilitiesKHR capabilities;
+            std::vector<VkSurfaceFormatKHR> formats;
+            std::vector<VkPresentModeKHR> presentModes;
+        };
+
+        // Function Declarations
+        VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger);
+        void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks *pAllocator);
+        void Init();
+        void InitWindow();
+        void FramebufferResizeCallback(GLFWwindow *window, int width, int height);
+        void InitVulkan();
+        void CleanupSwapChain();
+        void Cleanup();
+        void RecreateSwapChain();
+        void CreateInstance();
+        void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
+        void SetupDebugMessenger();
+        void CreateSurface();
+        void PickPhysicalDevice();
+        void CreateLogicalDevice();
+        void CreateSwapChain();
+        void CreateImageViews();
+        void CreateRenderPass();
+        void CreateGraphicsPipeline();
+        void CreateFramebuffers();
+        void CreateCommandPool();
+        void CreateCommandBuffers();
+        void RecordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+        void CreateSyncObjects();
+        void DrawFrame();
+        VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+        VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
+        VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+        SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device);
+        bool IsDeviceSuitable(VkPhysicalDevice device);
+        bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
+        QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
+        std::vector<const char *> GetRequiredExtensions();
+        bool CheckValidationLayerSupport();
+        VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData);
+
+        // Function Definitions
+        VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger)
+        {
+            auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+            if (func != nullptr)
+            {
+                return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
+            }
+            else
+            {
+                return VK_ERROR_EXTENSION_NOT_PRESENT;
+            }
+        }
+
+        void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks *pAllocator)
+        {
+            auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+            if (func != nullptr)
+            {
+                func(instance, debugMessenger, pAllocator);
+            }
+        }
+
+        void Init()
+        {
+            InitWindow();
+            InitVulkan();
+        }
+
+        void InitWindow()
         {
             glfwInit();
 
             glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
-            window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
-            glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+            window = glfwCreateWindow(Configuration::Application::initialWindowSize.x, Configuration::Application::initialWindowSize.y, "Vulkan", nullptr, nullptr);
+            glfwSetFramebufferSizeCallback(window, FramebufferResizeCallback);
         }
 
-        void framebufferResizeCallback(GLFWwindow *window, int width, int height)
+        void FramebufferResizeCallback(GLFWwindow *window, int width, int height)
         {
             framebufferResized = true;
         }
 
-        void initVulkan()
+        void InitVulkan()
         {
-            createInstance();
-            setupDebugMessenger();
-            createSurface();
-            pickPhysicalDevice();
-            createLogicalDevice();
-            createSwapChain();
-            createImageViews();
-            createRenderPass();
-            createGraphicsPipeline();
-            createFramebuffers();
-            createCommandPool();
-            createCommandBuffers();
-            createSyncObjects();
+            CreateInstance();
+            SetupDebugMessenger();
+            CreateSurface();
+            PickPhysicalDevice();
+            CreateLogicalDevice();
+            CreateSwapChain();
+            CreateImageViews();
+            CreateRenderPass();
+            CreateGraphicsPipeline();
+            CreateFramebuffers();
+            CreateCommandPool();
+            CreateCommandBuffers();
+            CreateSyncObjects();
         }
 
-        void mainLoop()
-        {
-            while (!glfwWindowShouldClose(window))
-            {
-                glfwPollEvents();
-                drawFrame();
-            }
-
-            vkDeviceWaitIdle(device);
-        }
-
-        void cleanupSwapChain()
+        void CleanupSwapChain()
         {
             for (auto framebuffer : swapChainFramebuffers)
             {
@@ -194,9 +188,9 @@ namespace Ducktape
             vkDestroySwapchainKHR(device, swapChain, nullptr);
         }
 
-        void cleanup()
+        void Cleanup()
         {
-            cleanupSwapChain();
+            CleanupSwapChain();
 
             for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
             {
@@ -222,7 +216,7 @@ namespace Ducktape
             glfwTerminate();
         }
 
-        void recreateSwapChain()
+        void RecreateSwapChain()
         {
             int width = 0, height = 0;
             glfwGetFramebufferSize(window, &width, &height);
@@ -234,18 +228,18 @@ namespace Ducktape
 
             vkDeviceWaitIdle(device);
 
-            cleanupSwapChain();
+            CleanupSwapChain();
 
-            createSwapChain();
-            createImageViews();
-            createRenderPass();
-            createGraphicsPipeline();
-            createFramebuffers();
+            CreateSwapChain();
+            CreateImageViews();
+            CreateRenderPass();
+            CreateGraphicsPipeline();
+            CreateFramebuffers();
         }
 
-        void createInstance()
+        void CreateInstance()
         {
-            if (enableValidationLayers && !checkValidationLayerSupport())
+            if (enableValidationLayers && !CheckValidationLayerSupport())
             {
                 throw std::runtime_error("validation layers requested, but not available!");
             }
@@ -262,7 +256,7 @@ namespace Ducktape
             createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
             createInfo.pApplicationInfo = &appInfo;
 
-            auto extensions = getRequiredExtensions();
+            auto extensions = GetRequiredExtensions();
             createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
             createInfo.ppEnabledExtensionNames = extensions.data();
 
@@ -272,7 +266,7 @@ namespace Ducktape
                 createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
                 createInfo.ppEnabledLayerNames = validationLayers.data();
 
-                populateDebugMessengerCreateInfo(debugCreateInfo);
+                PopulateDebugMessengerCreateInfo(debugCreateInfo);
                 createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT *)&debugCreateInfo;
             }
             else
@@ -288,22 +282,22 @@ namespace Ducktape
             }
         }
 
-        void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo)
+        void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo)
         {
             createInfo = {};
             createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
             createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
             createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-            createInfo.pfnUserCallback = debugCallback;
+            createInfo.pfnUserCallback = DebugCallback;
         }
 
-        void setupDebugMessenger()
+        void SetupDebugMessenger()
         {
             if (!enableValidationLayers)
                 return;
 
             VkDebugUtilsMessengerCreateInfoEXT createInfo;
-            populateDebugMessengerCreateInfo(createInfo);
+            PopulateDebugMessengerCreateInfo(createInfo);
 
             if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS)
             {
@@ -311,7 +305,7 @@ namespace Ducktape
             }
         }
 
-        void createSurface()
+        void CreateSurface()
         {
             if (glfwCreateWindowSurface(instance, window, nullptr, &surface) != VK_SUCCESS)
             {
@@ -319,7 +313,7 @@ namespace Ducktape
             }
         }
 
-        void pickPhysicalDevice()
+        void PickPhysicalDevice()
         {
             uint32_t deviceCount = 0;
             vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
@@ -334,7 +328,7 @@ namespace Ducktape
 
             for (const auto &device : devices)
             {
-                if (isDeviceSuitable(device))
+                if (IsDeviceSuitable(device))
                 {
                     physicalDevice = device;
                     break;
@@ -347,9 +341,9 @@ namespace Ducktape
             }
         }
 
-        void createLogicalDevice()
+        void CreateLogicalDevice()
         {
-            QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+            QueueFamilyIndices indices = FindQueueFamilies(physicalDevice);
 
             std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
             std::set<uint32_t> uniqueQueueFamilies = {indices.graphicsFamily.value(), indices.presentFamily.value()};
@@ -397,13 +391,13 @@ namespace Ducktape
             vkGetDeviceQueue(device, indices.presentFamily.value(), 0, &presentQueue);
         }
 
-        void createSwapChain()
+        void CreateSwapChain()
         {
-            SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physicalDevice);
+            SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(physicalDevice);
 
-            VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-            VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
-            VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
+            VkSurfaceFormatKHR surfaceFormat = ChooseSwapSurfaceFormat(swapChainSupport.formats);
+            VkPresentModeKHR presentMode = ChooseSwapPresentMode(swapChainSupport.presentModes);
+            VkExtent2D extent = ChooseSwapExtent(swapChainSupport.capabilities);
 
             uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
             if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
@@ -422,7 +416,7 @@ namespace Ducktape
             createInfo.imageArrayLayers = 1;
             createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-            QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+            QueueFamilyIndices indices = FindQueueFamilies(physicalDevice);
             uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
 
             if (indices.graphicsFamily != indices.presentFamily)
@@ -454,7 +448,7 @@ namespace Ducktape
             swapChainExtent = extent;
         }
 
-        void createImageViews()
+        void CreateImageViews()
         {
             swapChainImageViews.resize(swapChainImages.size());
 
@@ -482,7 +476,7 @@ namespace Ducktape
             }
         }
 
-        void createRenderPass()
+        void CreateRenderPass()
         {
             VkAttachmentDescription colorAttachment{};
             colorAttachment.format = swapChainImageFormat;
@@ -526,13 +520,10 @@ namespace Ducktape
             }
         }
 
-        void createGraphicsPipeline()
+        void CreateGraphicsPipeline()
         {
-            auto vertShaderCode = readFile("../shaders/vert.spv");
-            auto fragShaderCode = readFile("../shaders/frag.spv");
-
-            VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
-            VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
+            VkShaderModule vertShaderModule = Shader("../shaders/vert.spv", device).shaderModule;
+            VkShaderModule fragShaderModule = Shader("../shaders/frag.spv", device).shaderModule;
 
             VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
             vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -641,7 +632,7 @@ namespace Ducktape
             vkDestroyShaderModule(device, vertShaderModule, nullptr);
         }
 
-        void createFramebuffers()
+        void CreateFramebuffers()
         {
             swapChainFramebuffers.resize(swapChainImageViews.size());
 
@@ -666,9 +657,9 @@ namespace Ducktape
             }
         }
 
-        void createCommandPool()
+        void CreateCommandPool()
         {
-            QueueFamilyIndices queueFamilyIndices = findQueueFamilies(physicalDevice);
+            QueueFamilyIndices queueFamilyIndices = FindQueueFamilies(physicalDevice);
 
             VkCommandPoolCreateInfo poolInfo{};
             poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
@@ -681,7 +672,7 @@ namespace Ducktape
             }
         }
 
-        void createCommandBuffers()
+        void CreateCommandBuffers()
         {
             commandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
 
@@ -697,7 +688,7 @@ namespace Ducktape
             }
         }
 
-        void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex)
+        void RecordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex)
         {
             VkCommandBufferBeginInfo beginInfo{};
             beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -732,7 +723,7 @@ namespace Ducktape
             }
         }
 
-        void createSyncObjects()
+        void CreateSyncObjects()
         {
             imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
             renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
@@ -756,7 +747,7 @@ namespace Ducktape
             }
         }
 
-        void drawFrame()
+        void DrawFrame()
         {
             vkWaitForFences(device, 1, &inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
 
@@ -765,7 +756,7 @@ namespace Ducktape
 
             if (result == VK_ERROR_OUT_OF_DATE_KHR)
             {
-                recreateSwapChain();
+                RecreateSwapChain();
                 return;
             }
             else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
@@ -776,7 +767,7 @@ namespace Ducktape
             vkResetFences(device, 1, &inFlightFences[currentFrame]);
 
             vkResetCommandBuffer(commandBuffers[currentFrame], /*VkCommandBufferResetFlagBits*/ 0);
-            recordCommandBuffer(commandBuffers[currentFrame], imageIndex);
+            RecordCommandBuffer(commandBuffers[currentFrame], imageIndex);
 
             VkSubmitInfo submitInfo{};
             submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -816,7 +807,7 @@ namespace Ducktape
             if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || framebufferResized)
             {
                 framebufferResized = false;
-                recreateSwapChain();
+                RecreateSwapChain();
             }
             else if (result != VK_SUCCESS)
             {
@@ -826,23 +817,7 @@ namespace Ducktape
             currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
         }
 
-        VkShaderModule createShaderModule(const std::vector<char> &code)
-        {
-            VkShaderModuleCreateInfo createInfo{};
-            createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-            createInfo.codeSize = code.size();
-            createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
-
-            VkShaderModule shaderModule;
-            if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
-            {
-                throw std::runtime_error("failed to create shader module!");
-            }
-
-            return shaderModule;
-        }
-
-        VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
+        VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats)
         {
             for (const auto &availableFormat : availableFormats)
             {
@@ -855,7 +830,7 @@ namespace Ducktape
             return availableFormats[0];
         }
 
-        VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes)
+        VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes)
         {
             for (const auto &availablePresentMode : availablePresentModes)
             {
@@ -868,7 +843,7 @@ namespace Ducktape
             return VK_PRESENT_MODE_FIFO_KHR;
         }
 
-        VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities)
+        VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities)
         {
             if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
             {
@@ -890,7 +865,7 @@ namespace Ducktape
             }
         }
 
-        SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device)
+        SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device)
         {
             SwapChainSupportDetails details;
 
@@ -917,23 +892,23 @@ namespace Ducktape
             return details;
         }
 
-        bool isDeviceSuitable(VkPhysicalDevice device)
+        bool IsDeviceSuitable(VkPhysicalDevice device)
         {
-            QueueFamilyIndices indices = findQueueFamilies(device);
+            QueueFamilyIndices indices = FindQueueFamilies(device);
 
-            bool extensionsSupported = checkDeviceExtensionSupport(device);
+            bool extensionsSupported = CheckDeviceExtensionSupport(device);
 
             bool swapChainAdequate = false;
             if (extensionsSupported)
             {
-                SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
+                SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(device);
                 swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
             }
 
             return indices.isComplete() && extensionsSupported && swapChainAdequate;
         }
 
-        bool checkDeviceExtensionSupport(VkPhysicalDevice device)
+        bool CheckDeviceExtensionSupport(VkPhysicalDevice device)
         {
             uint32_t extensionCount;
             vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
@@ -951,7 +926,7 @@ namespace Ducktape
             return requiredExtensions.empty();
         }
 
-        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device)
+        QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device)
         {
             QueueFamilyIndices indices;
 
@@ -988,7 +963,7 @@ namespace Ducktape
             return indices;
         }
 
-        std::vector<const char *> getRequiredExtensions()
+        std::vector<const char *> GetRequiredExtensions()
         {
             uint32_t glfwExtensionCount = 0;
             const char **glfwExtensions;
@@ -1004,7 +979,7 @@ namespace Ducktape
             return extensions;
         }
 
-        bool checkValidationLayerSupport()
+        bool CheckValidationLayerSupport()
         {
             uint32_t layerCount;
             vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
@@ -1034,39 +1009,11 @@ namespace Ducktape
             return true;
         }
 
-        static std::vector<char> readFile(const std::string &filename)
-        {
-            std::ifstream file(filename, std::ios::ate | std::ios::binary);
-
-            if (!file.is_open())
-            {
-                throw std::runtime_error("failed to open file!");
-            }
-
-            size_t fileSize = (size_t)file.tellg();
-            std::vector<char> buffer(fileSize);
-
-            file.seekg(0);
-            file.read(buffer.data(), fileSize);
-
-            file.close();
-
-            return buffer;
-        }
-
-        static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData)
+        VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData)
         {
             std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
 
             return VK_FALSE;
-        }
-
-        void run()
-        {
-            initWindow();
-            initVulkan();
-            mainLoop();
-            cleanup();
         }
     }
 }

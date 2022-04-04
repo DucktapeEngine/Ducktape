@@ -8,8 +8,8 @@ namespace Ducktape
         Transform() = default;
         Transform(const Transform &) = default;
 
-        Vec3f position;
-        Vec3f rotation;
-        Vec3f scale;
+        vec3 position;
+        vec3 rotation;
+        vec3 scale;
     };
 }

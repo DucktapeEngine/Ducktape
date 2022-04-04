@@ -7,12 +7,9 @@ namespace Ducktape
     class Scene
     {
     public:
-        entt::registry registry;
-        std::vector<Entity> entities;
+        entt::registry sceneRegistry;
 
-        Entity *CreateEntity(const std::string& name);
-        Entity *CreateEntity(Entity entity);
-        Entity *GetEntity(const std::string name);
-        Entity *DestroyEntity(Entity* entity);
+        Entity CreateEntity(const std::string& name);
+        void DestroyEntity(Entity entity);
     };
 }

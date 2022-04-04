@@ -5,10 +5,13 @@ using namespace Ducktape;
 
 int main()
 {
-	// Application::run(); // When Working on Graphics
+	Configuration::Application::initialWindowSize = { 800, 600 };
+	Configuration::Application::applicationName = "DucktapeTest";
 
 	Scene mainScene;
-	Entity *player = mainScene.CreateEntity("Player");
-	Transform *transform = player->AddComponent<Transform>();
-	transform->position = Vec3f({0.0f, 0.0f, 0.0f});
+	Entity player = mainScene.CreateEntity("Player");
+	Transform& transform = player.GetComponent<Transform>();
+	transform.position = vec3(0.0f, 0.0f, 0.0f);
+
+	Engine::Run(mainScene);
 }
