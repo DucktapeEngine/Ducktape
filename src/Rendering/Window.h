@@ -52,6 +52,19 @@ namespace Ducktape
 
         bool framebufferResized = false;
 
+        const std::vector<Vertex> vertices = {
+            {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+            {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+            {{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+            {{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}};
+
+        const std::vector<uint16_t> indices = {0, 1, 2, 2, 3, 0};
+
+        VkBuffer vertexBuffer;
+        VkDeviceMemory vertexBufferMemory;
+        VkBuffer indexBuffer;
+        VkDeviceMemory indexBufferMemory;
+
         // Structs
         struct QueueFamilyIndices
         {
@@ -93,6 +106,9 @@ namespace Ducktape
         void CreateGraphicsPipeline();
         void CreateFramebuffers();
         void CreateCommandPool();
+        void CreateBuffer();
+        void CreateVertexBuffer();
+        void CreateIndexBuffer();
         void CreateCommandBuffers();
         void RecordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
         void CreateSyncObjects();
@@ -107,6 +123,8 @@ namespace Ducktape
         std::vector<const char *> GetRequiredExtensions();
         bool CheckValidationLayerSupport();
         VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData);
+        uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+        void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
         // Function Definitions
         VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger)
@@ -143,7 +161,7 @@ namespace Ducktape
 
             glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
-            window = glfwCreateWindow(Configuration::Application::initialWindowSize.x, Configuration::Application::initialWindowSize.y, "Vulkan", nullptr, nullptr);
+            window = glfwCreateWindow(Configuration::Application::initialWindowSize.x, Configuration::Application::initialWindowSize.y, Configuration::Application::applicationName.c_str(), nullptr, nullptr);
             glfwSetFramebufferSizeCallback(window, FramebufferResizeCallback);
         }
 
@@ -165,6 +183,8 @@ namespace Ducktape
             CreateGraphicsPipeline();
             CreateFramebuffers();
             CreateCommandPool();
+            CreateVertexBuffer();
+            CreateIndexBuffer();
             CreateCommandBuffers();
             CreateSyncObjects();
         }
@@ -191,6 +211,12 @@ namespace Ducktape
         void Cleanup()
         {
             CleanupSwapChain();
+
+            vkDestroyBuffer(device, indexBuffer, nullptr);
+            vkFreeMemory(device, indexBufferMemory, nullptr);
+
+            vkDestroyBuffer(device, vertexBuffer, nullptr);
+            vkFreeMemory(device, vertexBufferMemory, nullptr);
 
             for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
             {
@@ -241,7 +267,7 @@ namespace Ducktape
         {
             if (enableValidationLayers && !CheckValidationLayerSupport())
             {
-                throw std::runtime_error("validation layers requested, but not available!");
+                Console::Throw("Validation layers requested, but not available.");
             }
 
             VkApplicationInfo appInfo{};
@@ -278,7 +304,7 @@ namespace Ducktape
 
             if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create instance!");
+                Console::Throw("Failed to create instance.");
             }
         }
 
@@ -301,7 +327,7 @@ namespace Ducktape
 
             if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to set up debug messenger!");
+                Console::Throw("Failed to set up debug messenger.");
             }
         }
 
@@ -309,7 +335,7 @@ namespace Ducktape
         {
             if (glfwCreateWindowSurface(instance, window, nullptr, &surface) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create window surface!");
+                Console::Throw("Failed to create window surface.");
             }
         }
 
@@ -320,7 +346,7 @@ namespace Ducktape
 
             if (deviceCount == 0)
             {
-                throw std::runtime_error("failed to find GPUs with Vulkan support!");
+                Console::Throw("Failed to find GPUs with Vulkan support.");
             }
 
             std::vector<VkPhysicalDevice> devices(deviceCount);
@@ -337,7 +363,7 @@ namespace Ducktape
 
             if (physicalDevice == VK_NULL_HANDLE)
             {
-                throw std::runtime_error("failed to find a suitable GPU!");
+                Console::Throw("Failed to find a suitable GPU.");
             }
         }
 
@@ -384,7 +410,7 @@ namespace Ducktape
 
             if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create logical device!");
+                Console::Throw("Failed to create logical device.");
             }
 
             vkGetDeviceQueue(device, indices.graphicsFamily.value(), 0, &graphicsQueue);
@@ -437,7 +463,7 @@ namespace Ducktape
 
             if (vkCreateSwapchainKHR(device, &createInfo, nullptr, &swapChain) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create swap chain!");
+                Console::Throw("Failed to create swap chain.");
             }
 
             vkGetSwapchainImagesKHR(device, swapChain, &imageCount, nullptr);
@@ -471,7 +497,7 @@ namespace Ducktape
 
                 if (vkCreateImageView(device, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS)
                 {
-                    throw std::runtime_error("failed to create image views!");
+                    Console::Throw("Failed to create image views.");
                 }
             }
         }
@@ -516,7 +542,7 @@ namespace Ducktape
 
             if (vkCreateRenderPass(device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create render pass!");
+                Console::Throw("Failed to create render pass.");
             }
         }
 
@@ -541,8 +567,14 @@ namespace Ducktape
 
             VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
             vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-            vertexInputInfo.vertexBindingDescriptionCount = 0;
-            vertexInputInfo.vertexAttributeDescriptionCount = 0;
+
+            auto bindingDescription = Vertex::GetBindingDescription();
+            auto attributeDescriptions = Vertex::GetAttributeDescriptions();
+
+            vertexInputInfo.vertexBindingDescriptionCount = 1;
+            vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+            vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+            vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
             VkPipelineInputAssemblyStateCreateInfo inputAssembly{};
             inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -605,7 +637,7 @@ namespace Ducktape
 
             if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create pipeline layout!");
+                Console::Throw("Failed to create pipeline layout.");
             }
 
             VkGraphicsPipelineCreateInfo pipelineInfo{};
@@ -625,7 +657,7 @@ namespace Ducktape
 
             if (vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &graphicsPipeline) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create graphics pipeline!");
+                Console::Throw("Failed to create graphics pipeline.");
             }
 
             vkDestroyShaderModule(device, fragShaderModule, nullptr);
@@ -652,7 +684,7 @@ namespace Ducktape
 
                 if (vkCreateFramebuffer(device, &framebufferInfo, nullptr, &swapChainFramebuffers[i]) != VK_SUCCESS)
                 {
-                    throw std::runtime_error("failed to create framebuffer!");
+                    Console::Throw("Failed to create framebuffer.");
                 }
             }
         }
@@ -668,7 +700,7 @@ namespace Ducktape
 
             if (vkCreateCommandPool(device, &poolInfo, nullptr, &commandPool) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to create command pool!");
+                Console::Throw("Failed to create command pool.");
             }
         }
 
@@ -684,7 +716,7 @@ namespace Ducktape
 
             if (vkAllocateCommandBuffers(device, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to allocate command buffers!");
+                Console::Throw("Failed to allocate command buffers.");
             }
         }
 
@@ -695,7 +727,7 @@ namespace Ducktape
 
             if (vkBeginCommandBuffer(commandBuffer, &beginInfo) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to begin recording command buffer!");
+                Console::Throw("Failed to begin recording command buffer.");
             }
 
             VkRenderPassBeginInfo renderPassInfo{};
@@ -713,13 +745,19 @@ namespace Ducktape
 
             vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 
-            vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+            VkBuffer vertexBuffers[] = {vertexBuffer};
+            VkDeviceSize offsets[] = {0};
+            vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
+
+            vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
+            vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
             vkCmdEndRenderPass(commandBuffer);
 
             if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to record command buffer!");
+                Console::Throw("Failed to record command buffer.");
             }
         }
 
@@ -742,7 +780,7 @@ namespace Ducktape
                     vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != VK_SUCCESS ||
                     vkCreateFence(device, &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS)
                 {
-                    throw std::runtime_error("failed to create synchronization objects for a frame!");
+                    Console::Throw("Failed to create synchronization objects for a frame.");
                 }
             }
         }
@@ -761,7 +799,7 @@ namespace Ducktape
             }
             else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
             {
-                throw std::runtime_error("failed to acquire swap chain image!");
+                Console::Throw("Failed to acquire swap chain image.");
             }
 
             vkResetFences(device, 1, &inFlightFences[currentFrame]);
@@ -787,7 +825,7 @@ namespace Ducktape
 
             if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, inFlightFences[currentFrame]) != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to submit draw command buffer!");
+                Console::Throw("Failed to submit draw command buffer.");
             }
 
             VkPresentInfoKHR presentInfo{};
@@ -811,7 +849,7 @@ namespace Ducktape
             }
             else if (result != VK_SUCCESS)
             {
-                throw std::runtime_error("failed to present swap chain image!");
+                Console::Throw("Failed to present swap chain image.");
             }
 
             currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
@@ -1014,6 +1052,128 @@ namespace Ducktape
             std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
 
             return VK_FALSE;
+        }
+
+        void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer &buffer, VkDeviceMemory &bufferMemory)
+        {
+            VkBufferCreateInfo bufferInfo{};
+            bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+            bufferInfo.size = size;
+            bufferInfo.usage = usage;
+            bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+            if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
+            {
+                throw std::runtime_error("failed to create buffer!");
+            }
+
+            VkMemoryRequirements memRequirements;
+            vkGetBufferMemoryRequirements(device, buffer, &memRequirements);
+
+            VkMemoryAllocateInfo allocInfo{};
+            allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+            allocInfo.allocationSize = memRequirements.size;
+            allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, properties);
+
+            if (vkAllocateMemory(device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
+            {
+                throw std::runtime_error("failed to allocate buffer memory!");
+            }
+
+            vkBindBufferMemory(device, buffer, bufferMemory, 0);
+        }
+
+        void CreateVertexBuffer()
+        {
+            VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+
+            VkBuffer stagingBuffer;
+            VkDeviceMemory stagingBufferMemory;
+            CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
+
+            void *data;
+            vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
+            memcpy(data, vertices.data(), (size_t)bufferSize);
+            vkUnmapMemory(device, stagingBufferMemory);
+
+            CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, vertexBuffer, vertexBufferMemory);
+
+            CopyBuffer(stagingBuffer, vertexBuffer, bufferSize);
+
+            vkDestroyBuffer(device, stagingBuffer, nullptr);
+            vkFreeMemory(device, stagingBufferMemory, nullptr);
+        }
+
+        void CreateIndexBuffer()
+        {
+            VkDeviceSize bufferSize = sizeof(indices[0]) * indices.size();
+
+            VkBuffer stagingBuffer;
+            VkDeviceMemory stagingBufferMemory;
+            CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
+
+            void *data;
+            vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
+            memcpy(data, indices.data(), (size_t)bufferSize);
+            vkUnmapMemory(device, stagingBufferMemory);
+
+            CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, indexBuffer, indexBufferMemory);
+
+            CopyBuffer(stagingBuffer, indexBuffer, bufferSize);
+
+            vkDestroyBuffer(device, stagingBuffer, nullptr);
+            vkFreeMemory(device, stagingBufferMemory, nullptr);
+        }
+
+        uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties)
+        {
+            VkPhysicalDeviceMemoryProperties memProperties;
+            vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
+
+            for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++)
+            {
+                if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties)
+                {
+                    return i;
+                }
+            }
+
+            Console::Throw("Failed to find suitable memory type.");
+            return 0;
+        }
+
+        void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
+        {
+            VkCommandBufferAllocateInfo allocInfo{};
+            allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+            allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+            allocInfo.commandPool = commandPool;
+            allocInfo.commandBufferCount = 1;
+
+            VkCommandBuffer commandBuffer;
+            vkAllocateCommandBuffers(device, &allocInfo, &commandBuffer);
+
+            VkCommandBufferBeginInfo beginInfo{};
+            beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+            beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+            vkBeginCommandBuffer(commandBuffer, &beginInfo);
+
+            VkBufferCopy copyRegion{};
+            copyRegion.size = size;
+            vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+
+            vkEndCommandBuffer(commandBuffer);
+
+            VkSubmitInfo submitInfo{};
+            submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+            submitInfo.commandBufferCount = 1;
+            submitInfo.pCommandBuffers = &commandBuffer;
+
+            vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
+            vkQueueWaitIdle(graphicsQueue);
+
+            vkFreeCommandBuffers(device, commandPool, 1, &commandBuffer);
         }
     }
 }

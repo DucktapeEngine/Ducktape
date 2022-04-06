@@ -15,6 +15,7 @@
 #include <fstream>
 #include <assert.h>
 #include <mutex>
+#include <array>
 
 // External header includes
 
@@ -38,6 +39,7 @@ const int DUCKTAPE_VERSION_PATCH = 0;
 #include <Core/Scene.h>
 #include <Core/Configuration.h>
 #include <Rendering/Shader.h>
+#include <Rendering/Vertex.h>
 #include <Rendering/Window.h>
 #include <Core/Engine.h>
 #include <Components/Tag.h>
