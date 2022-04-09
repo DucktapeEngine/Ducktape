@@ -28,17 +28,13 @@ namespace Ducktape
 {
     Texture::Texture(const std::string &path)
     {
-        cimg_library::CImg<unsigned char> src(path.c_str());
-        width = src.width();
-        height = src.height();
-        channels = src.spectrum();
-        data = src.data();
+        data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
 
         VkDeviceSize imageSize = width * height * 4;
 
         if (!data)
         {
-            Console::Throw("Failed to load texture image.");
+            Console::Throw("Cannot load texture: " + (std::string)stbi_failure_reason());
         }
 
         VkImageCreateInfo imageInfo{};
@@ -78,14 +74,10 @@ namespace Ducktape
         vkBindImageMemory(Window::device, image, imageMemory, 0);
     }
 
-    void Texture::Free()
+    Texture::~Texture()
     {
         vkDestroyImage(Window::device, image, nullptr);
         vkFreeMemory(Window::device, imageMemory, nullptr);
-    }
-
-    Texture::~Texture()
-    {
-        Free();
+        delete this;
     }
 }

@@ -46,7 +46,7 @@ SOFTWARE.
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <cimg/CImg.h>
+#include <stbimage/stb_image.h>
 
 #include <Rendering/Vertex.h>
 #include <Core/Configuration.h>

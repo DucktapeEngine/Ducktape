@@ -30,6 +30,10 @@ const int DUCKTAPE_VERSION_MAJOR = 1;
 const int DUCKTAPE_VERSION_MINOR = 0;
 const int DUCKTAPE_VERSION_PATCH = 0;
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stbimage/stb_image.h>
+#undef STB_IMAGE_IMPLEMENTATION
+
 #include <Core/Assert.h>
 #include <Core/Console.h>
 #include <Core/AssetManager.h>

@@ -26,8 +26,7 @@ SOFTWARE.
 
 #include <string>
 
-#define cimg_use_jpeg
-#include <cimg/CImg.h>
+#include <stbimage/stb_image.h>
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -40,6 +39,7 @@ namespace Ducktape
     class Texture
     {
     public:
+        bool freed = false;
         int width, height, channels;
         unsigned char *data;
 
@@ -48,6 +48,5 @@ namespace Ducktape
 
         Texture(const std::string &path);
         ~Texture();
-        void Free();
     };
 }
