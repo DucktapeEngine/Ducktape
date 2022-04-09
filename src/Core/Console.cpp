@@ -22,21 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
+#include <Core/Console.h>
 
 namespace Ducktape
 {
-    class Transform
-    {
-    public:
-        Transform() = default;
-        Transform(const Transform &) = default;
+    std::vector<std::pair<std::string, std::string>> Console::logHistory;
 
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
-    };
+    void Console::Log(std::string text)
+    {
+        std::cout << text;
+        logHistory.push_back({"default", text});
+    }
+
+    void Console::Log(std::string category, std::string text)
+    {
+        std::cout << text;
+        logHistory.push_back({category, text});
+    }
+
+    void Console::Throw(std::string text)
+    {
+        throw std::runtime_error(text);
+    }
+
+    void Console::InvalidArgument(std::string text)
+    {
+        throw std::invalid_argument(text);
+    }
 }

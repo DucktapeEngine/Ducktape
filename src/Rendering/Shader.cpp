@@ -22,21 +22,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
+#include <Rendering/Shader.h>
 
 namespace Ducktape
 {
-    class Transform
+    Shader::Shader(const std::string &filePath)
     {
-    public:
-        Transform() = default;
-        Transform(const Transform &) = default;
+        shaderModule = CreateShaderModule(AssetManager::ReadFile(filePath));
+    }
 
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
-    };
+    void Shader::LoadShader(const std::string filePath)
+    {
+        shaderModule = CreateShaderModule(AssetManager::ReadFile(filePath));
+    }
+
+    VkShaderModule Shader::CreateShaderModule(const std::vector<char> &code)
+    {
+        VkShaderModuleCreateInfo createInfo{};
+        createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+        createInfo.codeSize = code.size();
+        createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
+
+        VkShaderModule shaderModule;
+        if (vkCreateShaderModule(Window::device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
+        {
+            Console::Throw("failed to create shader module!");
+        }
+
+        return shaderModule;
+    }
 }

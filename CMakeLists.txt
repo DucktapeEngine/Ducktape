@@ -7,12 +7,16 @@ project ("Ducktape")
 set(CMAKE_CURRENT_BINARY_DIR "${PROJECT_SOURCE_DIR}/build/")
 
 # Ducktape
+file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cpp")
+
 add_executable (Ducktape 
-    "${PROJECT_SOURCE_DIR}/src/Ducktape.cpp" 
-    "${PROJECT_SOURCE_DIR}/src/Ducktape.h"
+    ${source_list}
 )
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/")
 target_compile_features(Ducktape PRIVATE cxx_std_17)
+
+# Extern
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/")
 
 # Vulkan
 find_package(Vulkan)

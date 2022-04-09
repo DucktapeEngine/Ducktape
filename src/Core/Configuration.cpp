@@ -22,21 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
+#include <Core/Configuration.h>
 
 namespace Ducktape
 {
-    class Transform
+    namespace Configuration
     {
-    public:
-        Transform() = default;
-        Transform(const Transform &) = default;
-
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
-    };
+        namespace Application
+        {
+            glm::vec2 initialWindowSize = glm::vec2(800.f, 600.f);
+            std::string applicationName = "Ducktape Engine";
+            glm::vec3 version = glm::vec3(1.0f, 0.0f, 0.0f);
+        }
+    }
 }

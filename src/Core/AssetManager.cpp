@@ -22,21 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
+#include <Core/AssetManager.h>
 
 namespace Ducktape
 {
-    class Transform
+    std::vector<char> AssetManager::ReadFile(const std::string &filename)
     {
-    public:
-        Transform() = default;
-        Transform(const Transform &) = default;
+        std::ifstream file(filename, std::ios::ate | std::ios::binary);
 
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
-    };
+        if (!file.is_open())
+        {
+            Console::Throw("failed to open file!");
+        }
+
+        size_t fileSize = (size_t)file.tellg();
+        std::vector<char> buffer(fileSize);
+
+        file.seekg(0);
+        file.read(buffer.data(), fileSize);
+
+        file.close();
+
+        return buffer;
+    }
 }

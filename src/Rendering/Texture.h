@@ -24,19 +24,30 @@ SOFTWARE.
 
 #pragma once
 
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
+#include <string>
+
+#define cimg_use_jpeg
+#include <cimg/CImg.h>
+
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
+
+#include <Core/Console.h>
+#include <Rendering/Window.h>
 
 namespace Ducktape
 {
-    class Transform
+    class Texture
     {
     public:
-        Transform() = default;
-        Transform(const Transform &) = default;
+        int width, height, channels;
+        unsigned char *data;
 
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
+        VkImage image;
+        VkDeviceMemory imageMemory;
+
+        Texture(const std::string &path);
+        ~Texture();
+        void Free();
     };
 }

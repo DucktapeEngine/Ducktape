@@ -22,21 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
+#include <Core/Entity.h>
 
 namespace Ducktape
 {
-    class Transform
+    Entity Scene::CreateEntity(const std::string &name)
     {
-    public:
-        Transform() = default;
-        Transform(const Transform &) = default;
+        Entity entity = Entity(sceneRegistry.create(), this);
 
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
-    };
+        entity.AddComponent<Transform>();
+        Tag &tag = entity.AddComponent<Tag>();
+
+        if (tag.name.empty())
+        {
+            tag.name = name;
+        }
+        else
+        {
+            tag.name = "Unnamed Entity";
+        }
+        return entity;
+    }
+
+    void Scene::DestroyEntity(Entity entity)
+    {
+        sceneRegistry.destroy(entity.handle);
+    }
 }

@@ -1,36 +1,30 @@
-﻿#pragma once
+﻿/*
+MIT License
 
-// Standard includes
+Copyright (c) 2022 Ducktape
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <array>
-#include <algorithm>
-#include <math.h>
-#include <stdexcept>
-#include <cstring>
-#include <optional>
-#include <set>
-#include <fstream>
-#include <assert.h>
-#include <mutex>
-#include <array>
-#include <chrono>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-// External header includes
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
+#pragma once
 
-#include <entt/entt.hpp>
-
-// Ducktape header includes
+// Ducktape includes
 
 const int DUCKTAPE_VERSION_MAJOR = 1;
 const int DUCKTAPE_VERSION_MINOR = 0;
@@ -43,6 +37,7 @@ const int DUCKTAPE_VERSION_PATCH = 0;
 #include <Core/Configuration.h>
 #include <Rendering/Shader.h>
 #include <Rendering/Vertex.h>
+#include <Rendering/Texture.h>
 #include <Rendering/Window.h>
 #include <Core/Engine.h>
 #include <Components/Tag.h>
