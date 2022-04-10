@@ -36,10 +36,11 @@ namespace Ducktape
 {
     struct Vertex
     {
-        glm::vec2 position;
+        glm::vec3 position;
         glm::vec3 color;
+        glm::vec2 texCoord;
 
         static VkVertexInputBindingDescription GetBindingDescription();
-        static std::array<VkVertexInputAttributeDescription, 2> GetAttributeDescriptions();
+        static std::array<VkVertexInputAttributeDescription, 3> GetAttributeDescriptions();
     };
 }

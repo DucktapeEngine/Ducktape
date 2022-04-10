@@ -37,7 +37,5 @@ namespace Ducktape
 
         void Log(std::string text);
         void Log(std::string category, std::string text);
-        void Throw(std::string text);
-        void InvalidArgument(std::string text);
     }
 }

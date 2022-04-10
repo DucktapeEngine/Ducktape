@@ -32,7 +32,7 @@ namespace Ducktape
 
         if (!file.is_open())
         {
-            Console::Throw("failed to open file!");
+            throw std::runtime_error("Failed to open file.");
         }
 
         size_t fileSize = (size_t)file.tellg();

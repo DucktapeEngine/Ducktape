@@ -35,7 +35,6 @@ namespace Ducktape
 {
     namespace Engine
     {
-        void MainLoop(Scene &scene);
         void Run(Scene &scene);
     }
 }

@@ -39,9 +39,7 @@ const int DUCKTAPE_VERSION_PATCH = 0;
 #include <Core/AssetManager.h>
 #include <Core/Scene.h>
 #include <Core/Configuration.h>
-#include <Rendering/Shader.h>
 #include <Rendering/Vertex.h>
-#include <Rendering/Texture.h>
 #include <Rendering/Window.h>
 #include <Core/Engine.h>
 #include <Components/Tag.h>

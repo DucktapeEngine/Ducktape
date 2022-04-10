@@ -26,23 +26,20 @@ SOFTWARE.
 
 namespace Ducktape
 {
-    void Engine::MainLoop(Scene &scene)
-    {
-        while (!glfwWindowShouldClose(Window::window))
-        {
-            glfwPollEvents();
-            Window::DrawFrame();
-        }
-
-        vkDeviceWaitIdle(Window::device);
-    }
-
     void Engine::Run(Scene &scene)
     {
         try
         {
             Window::Init();
-            MainLoop(scene);
+
+            while (!glfwWindowShouldClose(Window::window))
+            {
+                glfwPollEvents();
+                Window::DrawFrame();
+            }
+
+            vkDeviceWaitIdle(Window::device);
+
             Window::Cleanup();
         }
         catch (const std::exception &e)

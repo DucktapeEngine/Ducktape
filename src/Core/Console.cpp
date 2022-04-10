@@ -39,14 +39,4 @@ namespace Ducktape
         std::cout << text;
         logHistory.push_back({category, text});
     }
-
-    void Console::Throw(std::string text)
-    {
-        throw std::runtime_error(text);
-    }
-
-    void Console::InvalidArgument(std::string text)
-    {
-        throw std::invalid_argument(text);
-    }
 }

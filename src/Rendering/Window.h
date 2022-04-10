@@ -43,6 +43,7 @@ SOFTWARE.
 #include <GLFW/glfw3.h>
 
 #define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -51,6 +52,7 @@ SOFTWARE.
 #include <Rendering/Vertex.h>
 #include <Core/Configuration.h>
 #include <Core/Console.h>
+#include <Core/AssetManager.h>
 
 namespace Ducktape
 {
@@ -113,6 +115,17 @@ namespace Ducktape
         inline VkDescriptorPool descriptorPool;
         inline std::vector<VkDescriptorSet> descriptorSets;
 
+        inline VkImage textureImage;
+        inline VkDeviceMemory textureImageMemory;
+        inline VkImageView textureImageView;
+        inline VkSampler textureSampler;
+
+        inline VkImage depthImage;
+        inline VkDeviceMemory depthImageMemory;
+        inline VkImageView depthImageView;
+
+        // inline Texture texture;
+
         // Structs
         struct UniformBufferObject
         {
@@ -155,6 +168,7 @@ namespace Ducktape
         void PickPhysicalDevice();
         void CreateLogicalDevice();
         void CreateSwapChain();
+        VkImageView CreateImageView(VkImage image, VkFormat format);
         void CreateImageViews();
         void CreateRenderPass();
         void CreateGraphicsPipeline();
@@ -188,8 +202,14 @@ namespace Ducktape
         void EndSingleTimeCommands(VkCommandBuffer commandBuffer);
         void TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
         void CopyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
+        void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory);
+        VkShaderModule CreateShaderModule(const std::vector<char> &code);
+        void CreateTextureImageView();
+        VkImageView CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
+        void CreateTextureSampler();
+        void CreateDepthResources();
+        VkFormat FindSupportedFormat(const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+        VkFormat FindDepthFormat();
+        bool HasStencilComponent(VkFormat format);
     }
 }
-
-#include <Rendering/Texture.h>
-#include <Rendering/Shader.h>
