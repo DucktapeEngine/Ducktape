@@ -34,6 +34,10 @@ const int DUCKTAPE_VERSION_PATCH = 0;
 #include <stbimage/stb_image.h>
 #undef STB_IMAGE_IMPLEMENTATION
 
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <objloader/objloader.h>
+#undef TINYOBJLOADER_IMPLEMENTATION
+
 #include <Core/Assert.h>
 #include <Core/Console.h>
 #include <Core/AssetManager.h>

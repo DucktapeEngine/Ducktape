@@ -38,6 +38,7 @@ SOFTWARE.
 #include <mutex>
 #include <array>
 #include <chrono>
+#include <unordered_map>
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -48,6 +49,8 @@ SOFTWARE.
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <stbimage/stb_image.h>
+
+#include <objloader/objloader.h>
 
 #include <Rendering/Vertex.h>
 #include <Core/Configuration.h>
@@ -101,9 +104,9 @@ namespace Ducktape
 
         extern bool framebufferResized;
 
-        extern const std::vector<Vertex> vertices;
+        inline std::vector<Vertex> vertices;
 
-        extern const std::vector<uint16_t> indices;
+        inline std::vector<uint32_t> indices;
 
         inline VkBuffer vertexBuffer;
         inline VkDeviceMemory vertexBufferMemory;
@@ -124,7 +127,8 @@ namespace Ducktape
         inline VkDeviceMemory depthImageMemory;
         inline VkImageView depthImageView;
 
-        // inline Texture texture;
+        extern const std::string MODEL_PATH;
+        extern const std::string TEXTURE_PATH;
 
         // Structs
         struct UniformBufferObject
@@ -150,7 +154,7 @@ namespace Ducktape
         };
 
         // Functions
-
+        void LoadModel();
         VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator, VkDebugUtilsMessengerEXT *pDebugMessenger);
         void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks *pAllocator);
         void Init();

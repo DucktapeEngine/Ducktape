@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("Ducktape")
 set(CMAKE_CURRENT_BINARY_DIR "${PROJECT_SOURCE_DIR}/build/")
+set(CMAKE_BUILD_TYPE "Debug")
 
 # Ducktape
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cpp")

@@ -31,6 +31,8 @@ SOFTWARE.
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/hash.hpp>
 
 namespace Ducktape
 {
@@ -42,5 +44,21 @@ namespace Ducktape
 
         static VkVertexInputBindingDescription GetBindingDescription();
         static std::array<VkVertexInputAttributeDescription, 3> GetAttributeDescriptions();
+        bool operator==(const Vertex &other) const;
+    };
+}
+
+namespace std
+{
+    template <>
+    struct hash<Ducktape::Vertex>
+    {
+        size_t operator()(Ducktape::Vertex const &vertex) const
+        {
+            return ((hash<glm::vec3>()(vertex.position) ^
+                     (hash<glm::vec3>()(vertex.color) << 1)) >>
+                    1) ^
+                   (hash<glm::vec2>()(vertex.texCoord) << 1);
+        }
     };
 }
