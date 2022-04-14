@@ -131,6 +131,12 @@ namespace Ducktape
         extern const std::string MODEL_PATH;
         extern const std::string TEXTURE_PATH;
 
+        extern VkSampleCountFlagBits msaaSamples;
+
+        inline VkImage colorImage;
+        inline VkDeviceMemory colorImageMemory;
+        inline VkImageView colorImageView;
+
         // Structs
         struct UniformBufferObject
         {
@@ -207,7 +213,7 @@ namespace Ducktape
         void EndSingleTimeCommands(VkCommandBuffer commandBuffer);
         void TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels);
         void CopyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
-        void CreateImage(uint32_t width, uint32_t height, uint32_t mipLevels, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory);
+        void CreateImage(uint32_t width, uint32_t height, uint32_t mipLevels, VkSampleCountFlagBits numSamples, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory);
         VkShaderModule CreateShaderModule(const std::vector<char> &code);
         void CreateTextureImageView();
         VkImageView CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevels);
@@ -217,5 +223,7 @@ namespace Ducktape
         VkFormat FindDepthFormat();
         bool HasStencilComponent(VkFormat format);
         void GenerateMipmaps(VkImage image, VkFormat format, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
+        VkSampleCountFlagBits GetMaxUsableSampleCount();
+        void CreateColorResources();
     }
 }
