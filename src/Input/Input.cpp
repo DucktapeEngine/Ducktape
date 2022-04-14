@@ -22,21 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#include <string>
-#include <iostream>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Rendering/Window.h>
 #include <Input/Input.h>
 
 namespace Ducktape
 {
-    namespace Engine
+    bool Input::KeyPressed(Key keyCode)
     {
-        void Run(Scene &scene);
+        return glfwGetKey(Window::window, static_cast<int32_t>(keyCode)) == GLFW_PRESS;
+    }
+
+    bool Input::KeyReleased(Key keyCode)
+    {
+        return glfwGetKey(Window::window, static_cast<int32_t>(keyCode)) == GLFW_RELEASE;
     }
 }

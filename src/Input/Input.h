@@ -24,19 +24,17 @@ SOFTWARE.
 
 #pragma once
 
-#include <string>
-#include <iostream>
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
 
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
 #include <Rendering/Window.h>
-#include <Input/Input.h>
+#include <Input/Key.h>
 
 namespace Ducktape
 {
-    namespace Engine
+    namespace Input
     {
-        void Run(Scene &scene);
+        bool KeyPressed(Key keyCode);
+        bool KeyReleased(Key keyCode);
     }
 }
