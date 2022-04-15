@@ -27,14 +27,44 @@ SOFTWARE.
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+#include <glm/glm.hpp>
+
 #include <Rendering/Window.h>
 #include <Input/Key.h>
+#include <Input/MouseMode.h>
 
 namespace Ducktape
 {
     namespace Input
     {
-        bool KeyPressed(Key keyCode);
-        bool KeyReleased(Key keyCode);
+
+        inline std::unordered_map<Key, bool> keyHeldMap;
+        inline std::unordered_map<Key, bool> keyPressedMap;
+        inline std::unordered_map<Key, bool> keyReleasedMap;
+
+        inline std::unordered_map<int, bool> mouseHeldMap;
+        inline std::unordered_map<int, bool> mousePressedMap;
+        inline std::unordered_map<int, bool> mouseReleasedMap;
+
+        inline glm::vec2 mousePosition;
+        inline glm::vec2 scrollDelta;
+
+        void Init();
+        void Tick();
+        void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+        bool KeyHeld(Key key);
+        bool KeyPressed(Key key);
+        bool KeyReleased(Key key);
+        void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
+        void SetMouseMode(MouseMode mode);
+        bool MouseHeld(int button);
+        bool MousePressed(int button);
+        bool MouseReleased(int button);
+        void ScrollCallback(GLFWwindow *window, double xoffset, double yoffset);
+        bool JoystickConnected(int joystick);
+        std::vector<float> JoystickAxes(int joystick);
+        std::vector<unsigned char> JoystickButtons(int joystick);
+        std::string GetClipboard();
+        void SetClipboard(std::string string);
     }
 }

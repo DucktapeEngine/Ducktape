@@ -26,13 +26,121 @@ SOFTWARE.
 
 namespace Ducktape
 {
-    bool Input::KeyPressed(Key keyCode)
+    void Input::Init()
     {
-        return glfwGetKey(Window::window, static_cast<int32_t>(keyCode)) == GLFW_PRESS;
+        glfwSetKeyCallback(Window::window, KeyCallback);
     }
 
-    bool Input::KeyReleased(Key keyCode)
+    void Input::Tick()
     {
-        return glfwGetKey(Window::window, static_cast<int32_t>(keyCode)) == GLFW_RELEASE;
+        keyPressedMap.clear();
+        keyReleasedMap.clear();
+
+        mousePressedMap.clear();
+        mouseReleasedMap.clear();
+
+        double xpos, ypos;
+        glfwGetCursorPos(Window::window, &xpos, &ypos);
+        mousePosition = glm::vec2(xpos, ypos);
+    }
+
+    void Input::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+    {
+        if (action == GLFW_PRESS)
+        {
+            keyHeldMap[static_cast<Key>(key)] = true;
+            keyPressedMap[static_cast<Key>(key)] = true;
+        }
+        else if (action == GLFW_RELEASE)
+        {
+            keyHeldMap[static_cast<Key>(key)] = false;
+            keyReleasedMap[static_cast<Key>(key)] = true;
+        }
+    }
+
+    bool Input::KeyHeld(Key key)
+    {
+        return keyHeldMap[key];
+    }
+
+    bool Input::KeyPressed(Key key)
+    {
+        return keyPressedMap[key];
+    }
+
+    bool Input::KeyReleased(Key key)
+    {
+        return keyReleasedMap[key];
+    }
+
+    void Input::SetMouseMode(MouseMode mode)
+    {
+        glfwSetInputMode(Window::window, GLFW_CURSOR, mode);
+    }
+
+    void Input::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+    {
+        if (action == GLFW_PRESS)
+        {
+            mouseHeldMap[button] = true;
+            mousePressedMap[button] = true;
+        }
+        else if (action == GLFW_RELEASE)
+        {
+            mouseHeldMap[button] = false;
+            mouseReleasedMap[button] = true;
+        }
+    }
+
+    bool Input::MouseHeld(int button)
+    {
+        return mouseHeldMap[button];
+    }
+
+    bool Input::MousePressed(int button)
+    {
+        return mousePressedMap[button];
+    }
+
+    bool Input::MouseReleased(int button)
+    {
+        return mouseReleasedMap[button];
+    }
+
+    void Input::ScrollCallback(GLFWwindow *window, double xoffset, double yoffset)
+    {
+        scrollDelta.x = xoffset;
+        scrollDelta.y = yoffset;
+    }
+
+    bool Input::JoystickConnected(int joystick)
+    {
+        return glfwJoystickPresent(joystick);
+    }
+
+    std::vector<float> Input::JoystickAxes(int joystick)
+    {
+        int count;
+        const float *axes = glfwGetJoystickAxes(joystick, &count);
+        std::vector<float> axesVector(axes, axes + count);
+        return axesVector;
+    }
+
+    std::vector<unsigned char> Input::JoystickButtons(int joystick)
+    {
+        int count;
+        const unsigned char *buttons = glfwGetJoystickButtons(joystick, &count);
+        std::vector<unsigned char> buttonsVector(buttons, buttons + count);
+        return buttonsVector;
+    }
+
+    std::string Input::GetClipboard()
+    {
+        return glfwGetClipboardString(Window::window);
+    }
+
+    void Input::SetClipboard(std::string string)
+    {
+        glfwSetClipboardString(Window::window, string.c_str());
     }
 }
