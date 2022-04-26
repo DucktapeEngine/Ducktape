@@ -33,9 +33,10 @@ int main()
 	Configuration::Application::applicationName = "DucktapeTest";
 
 	Scene mainScene;
-	Entity player = mainScene.CreateEntity("Player");
-	Transform &transform = player.GetComponent<Transform>();
-	transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
+
+	Entity room = mainScene.CreateEntity("Room");
+
+	room.AddComponent<PlayerController>();
 
 	Engine::Run(mainScene);
 }

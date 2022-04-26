@@ -38,14 +38,16 @@ const int DUCKTAPE_VERSION_PATCH = 0;
 #include <objloader/objloader.h>
 #undef TINYOBJLOADER_IMPLEMENTATION
 
-#include <Core/Assert.h>
-#include <Core/Console.h>
-#include <Core/AssetManager.h>
-#include <Core/Scene.h>
-#include <Core/Configuration.h>
-#include <Rendering/Vertex.h>
-#include <Rendering/Window.h>
-#include <Core/Engine.h>
 #include <Components/Tag.h>
 #include <Components/Transform.h>
+#include <Core/Assert.h>
+#include <Core/AssetManager.h>
+#include <Core/Configuration.h>
+#include <Core/Console.h>
+#include <Core/Engine.h>
 #include <Core/Entity.h>
+#include <Core/Scene.h>
+#include <Input/Input.h>
+#include <Input/JoystickHat.h>
+#include <Input/Key.h>
+#include <Input/MouseMode.h>

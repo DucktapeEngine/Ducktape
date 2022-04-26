@@ -32,5 +32,8 @@ namespace Ducktape
     {
     public:
         std::string name;
+
+        void Init() {}
+        void Tick() {}
     };
 }

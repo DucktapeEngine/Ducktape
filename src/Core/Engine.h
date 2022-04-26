@@ -30,7 +30,6 @@ SOFTWARE.
 #include <entt/entt.hpp>
 
 #include <Core/Scene.h>
-#include <Rendering/Window.h>
 #include <Input/Input.h>
 
 namespace Ducktape

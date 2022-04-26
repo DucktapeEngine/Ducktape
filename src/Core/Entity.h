@@ -24,6 +24,8 @@ SOFTWARE.
 
 #pragma once
 
+#include <functional>
+
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 
@@ -61,7 +63,12 @@ namespace Ducktape
         {
             DT_ASSERT(!HasComponent<T>(), "Entity already has component.");
 
-            return scene->sceneRegistry.emplace<T>(handle, std::forward<Args>(args)...);
+            T &component = scene->sceneRegistry.emplace<T>(handle, std::forward<Args>(args)...);
+            scene->componentInits.push_back([&component]()
+                                            { component.Init(); });
+            scene->componentTicks.push_back([&component]()
+                                            { component.Tick(); });
+            return component;
         }
 
         template <typename T>
@@ -75,6 +82,15 @@ namespace Ducktape
         void RemoveComponent()
         {
             DT_ASSERT(HasComponent<T>(), "Entity does not have component.");
+
+            T &component = GetComponent<T>();
+            scene->componentInits.erase(std::remove(scene->componentInits.begin(), scene->componentInits.end(), [&component]()
+                                                    { component.Init(); }),
+                                        scene->componentInits.end());
+            scene->componentTicks.erase(std::remove(scene->componentTicks.begin(), scene->componentTicks.end(), [&component]()
+                                                    { component.Tick(); }),
+                                        scene->componentTicks.end());
+
             scene->sceneRegistry.remove<T>(handle);
         }
     };

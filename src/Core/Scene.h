@@ -25,6 +25,7 @@ SOFTWARE.
 #pragma once
 
 #include <string>
+
 #include <entt/entt.hpp>
 
 namespace Ducktape
@@ -35,8 +36,18 @@ namespace Ducktape
     {
     public:
         entt::registry sceneRegistry;
+        static inline Scene *currentScene;
+        std::vector<std::function<void(void)>> componentInits;
+        std::vector<std::function<void(void)>> componentTicks;
 
+        // Defined in Entity.cpp
+        void Init();
+        // Defined in Entity.cpp
+        void Tick();
+
+        // Defined in Entity.cpp
         Entity CreateEntity(const std::string &name);
+        // Defined in Entity.cpp
         void DestroyEntity(Entity entity);
     };
 }

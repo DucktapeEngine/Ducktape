@@ -30,21 +30,15 @@ namespace Ducktape
     {
         try
         {
-            Window::Init();
-            Input::Init();
+            Scene::currentScene = &scene;
+            // Input::Init();
+            scene.Init();
 
-            Input::SetClipboard("Never gonna give you up");
-
-            while (!glfwWindowShouldClose(Window::window))
+            while (true)
             {
-                glfwPollEvents();
-                Window::DrawFrame();
-                Input::Tick();
+                // Input::Tick();
+                scene.Tick();
             }
-
-            vkDeviceWaitIdle(Window::device);
-
-            Window::Cleanup();
         }
         catch (const std::exception &e)
         {

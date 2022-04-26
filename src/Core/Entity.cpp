@@ -48,4 +48,20 @@ namespace Ducktape
     {
         sceneRegistry.destroy(entity.handle);
     }
+
+    void Scene::Init()
+    {
+        for (std::function<void()> &init : componentInits)
+        {
+            init();
+        }
+    }
+
+    void Scene::Tick()
+    {
+        for (std::function<void()> &tick : componentTicks)
+        {
+            tick();
+        }
+    }
 }
