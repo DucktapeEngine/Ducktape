@@ -35,5 +35,6 @@ int main()
 
 	Scene mainScene;
 	Entity room = mainScene.CreateEntity("Room");
+	std::cout << "Room: " << std::endl;
 	engine.Run(mainScene);
 }

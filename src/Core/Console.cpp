@@ -26,23 +26,18 @@ SOFTWARE.
 
 namespace Ducktape
 {
-#ifndef DT_BUILD_RELEASE
-    std::vector<std::pair<std::string, std::string>> Console::logHistory;
-#endif
-
-    void Console::Log(std::string text)
+    Console::Console()
     {
-#ifndef DT_BUILD_RELEASE
-        std::cout << text;
-        logHistory.push_back({"default", text});
-#endif
+        old = std::cout.rdbuf(buffer.rdbuf());
     }
 
-    void Console::Log(std::string category, std::string text)
+    Console::~Console()
     {
-#ifndef DT_BUILD_RELEASE
-        std::cout << text;
-        logHistory.push_back({category, text});
-#endif
+        std::cout.rdbuf(old);
+    }
+
+    void Console::Tick()
+    {
+        output += buffer.str();
     }
 }

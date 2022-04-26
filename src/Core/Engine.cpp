@@ -38,6 +38,7 @@ namespace Ducktape
             {
                 // Input::Tick();
                 scene.Tick();
+                console.Tick();
             }
         }
         catch (const std::exception &e)

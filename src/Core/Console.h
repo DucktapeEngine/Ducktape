@@ -24,20 +24,27 @@ SOFTWARE.
 
 #pragma once
 
+#include <stdio.h>
 #include <iostream>
+#include <streambuf>
+#include <stdlib.h>
 #include <string>
-#include <vector>
-#include <stdexcept>
+#include <sstream>
 
 namespace Ducktape
 {
-    namespace Console
+    class Console
     {
-#ifndef DT_BUILD_RELEASE
-        extern std::vector<std::pair<std::string, std::string>> logHistory;
-#endif
+    private:
+        std::stringstream buffer;
+        std::streambuf *old;
 
-        void Log(std::string text);
-        void Log(std::string category, std::string text);
-    }
+    public:
+        std::string output;
+
+        Console();
+        ~Console();
+
+        void Tick();
+    };
 }
