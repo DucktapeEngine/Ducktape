@@ -33,7 +33,9 @@ namespace Ducktape
 {
     namespace Console
     {
+#ifndef DT_BUILD_RELEASE
         extern std::vector<std::pair<std::string, std::string>> logHistory;
+#endif
 
         void Log(std::string text);
         void Log(std::string category, std::string text);

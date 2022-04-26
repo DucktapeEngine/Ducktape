@@ -31,13 +31,14 @@ SOFTWARE.
 
 namespace Ducktape
 {
-    namespace Configuration
+    class Configuration
     {
-        namespace Application
-        {
-            extern glm::vec2 initialWindowSize;
-            extern std::string applicationName;
-            extern glm::vec3 version;
-        }
-    }
+    public:
+        Configuration() = default;
+        ~Configuration() = default;
+
+        glm::vec2 windowSize;
+        std::string windowTitle;
+        glm::vec3 version;
+    };
 }

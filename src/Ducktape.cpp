@@ -29,14 +29,11 @@ using namespace Ducktape;
 
 int main()
 {
-	Configuration::Application::initialWindowSize = {800, 600};
-	Configuration::Application::applicationName = "DucktapeTest";
+	Engine engine;
+	engine.configuration.windowSize = {800, 600};
+	engine.configuration.windowTitle = "DucktapeTest";
 
 	Scene mainScene;
-
 	Entity room = mainScene.CreateEntity("Room");
-
-	room.AddComponent<PlayerController>();
-
-	Engine::Run(mainScene);
+	engine.Run(mainScene);
 }

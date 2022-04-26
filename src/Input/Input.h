@@ -34,9 +34,9 @@
 
 // namespace Ducktape
 // {
-//     namespace Input
+//     class Input
 //     {
-
+// public:
 //         inline std::unordered_map<Key, bool> keyHeldMap;
 //         inline std::unordered_map<Key, bool> keyPressedMap;
 //         inline std::unordered_map<Key, bool> keyReleasedMap;
@@ -47,6 +47,9 @@
 
 //         inline glm::vec2 mousePosition;
 //         inline glm::vec2 scrollDelta;
+
+//         Input() = default;
+//         ~Input() = default;
 
 //         void Init();
 //         void Tick();
@@ -65,5 +68,5 @@
 //         std::vector<unsigned char> JoystickButtons(int joystick);
 //         std::string GetClipboard();
 //         void SetClipboard(std::string string);
-//     }
+//     };
 // }

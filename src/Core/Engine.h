@@ -29,13 +29,21 @@ SOFTWARE.
 
 #include <entt/entt.hpp>
 
+#include <Core/Configuration.h>
 #include <Core/Scene.h>
 #include <Input/Input.h>
 
 namespace Ducktape
 {
-    namespace Engine
+    class Engine
     {
+    public:
+        Configuration configuration;
+        // Input input;
+
+        Engine() = default;
+        ~Engine() = default;
+
         void Run(Scene &scene);
-    }
+    };
 }
