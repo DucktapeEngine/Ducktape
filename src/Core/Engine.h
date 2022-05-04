@@ -45,9 +45,6 @@ namespace Ducktape
         // Console console;
         Input input;
 
-        Engine() = default;
-        ~Engine() = default;
-
         void Run(Scene &scene);
     };
 }

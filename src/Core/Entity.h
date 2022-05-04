@@ -45,8 +45,6 @@ namespace Ducktape
         std::string name;
         Scene *scene;
 
-        Entity() = default;
-        Entity(const Entity &other) = default;
         Entity(entt::entity entityHandle, Scene *scene) : handle(entityHandle), scene(scene) {}
 
         operator entt::entity() const { return handle; }

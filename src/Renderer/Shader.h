@@ -38,8 +38,9 @@ namespace Ducktape
     public:
         unsigned int ID;
 
+        Shader() = default;
         Shader(const char *vertexPath, const char *fragmentPath);
-        ~Shader();
+        void Load(const char *vertexPath, const char *fragmentPath);
 
         void Use();
         void SetBool(const std::string &name, bool value) const;

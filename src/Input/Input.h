@@ -28,6 +28,7 @@ SOFTWARE.
 #include <vector>
 #include <string>
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -53,9 +54,6 @@ namespace Ducktape
 
         glm::vec2 mousePosition;
         glm::vec2 scrollDelta;
-
-        Input() = default;
-        ~Input() = default;
 
         void Init(Window &window);
         void Tick(Window &window);

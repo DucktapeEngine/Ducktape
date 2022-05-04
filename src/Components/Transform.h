@@ -32,9 +32,6 @@ namespace Ducktape
     class Transform
     {
     public:
-        Transform() = default;
-        Transform(const Transform &) = default;
-
         glm::vec3 position;
         glm::vec3 rotation;
         glm::vec3 scale;

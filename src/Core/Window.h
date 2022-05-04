@@ -40,7 +40,7 @@ namespace Ducktape
     public:
         GLFWwindow *window;
 
-        unsigned int VBO, VAO, EBO;
+        unsigned int VBO, VAO;
 
         const char *vertexShaderSource = "#version 330 core\n"
                                          "layout (location = 0) in vec3 aPos;\n"
@@ -56,11 +56,7 @@ namespace Ducktape
                                            "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
                                            "}\n\0";
 
-        unsigned int shaderProgram;
-
-        // Shader vertexShader{"../shaders/vertex.glsl", "../shaders/fragment.glsl"};
-
-        Window() = default;
+        Shader shader;
 
         void Init(const Configuration &config);
         void Tick();

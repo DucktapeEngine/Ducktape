@@ -33,9 +33,6 @@ namespace Ducktape
     class Configuration
     {
     public:
-        Configuration() = default;
-        ~Configuration() = default;
-
         glm::vec2 windowSize;
         std::string windowTitle;
         glm::vec3 version;

@@ -28,6 +28,11 @@ namespace Ducktape
 {
     Shader::Shader(const char *vertexPath, const char *fragmentPath)
     {
+        Load(vertexPath, fragmentPath);
+    }
+
+    void Shader::Load(const char *vertexPath, const char *fragmentPath)
+    {
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
         std::string fragmentCode;
@@ -88,11 +93,6 @@ namespace Ducktape
         // delete the shaders as they're linked into our program now and no longer necessary
         glDeleteShader(vertex);
         glDeleteShader(fragment);
-    }
-
-    Shader::~Shader()
-    {
-        glDeleteProgram(ID);
     }
 
     void Shader::Use()
