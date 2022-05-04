@@ -31,15 +31,19 @@ namespace Ducktape
         try
         {
             Scene::currentScene = &scene;
-            // Input::Init();
+            window.Init(configuration);
+            input.Init(window);
             scene.Init();
 
-            while (true)
+            while (!glfwWindowShouldClose(window.window))
             {
-                // Input::Tick();
+                window.Tick();
+                input.Tick(window);
                 scene.Tick();
-                console.Tick();
+                // console.Tick();
             }
+
+            window.Cleanup();
         }
         catch (const std::exception &e)
         {

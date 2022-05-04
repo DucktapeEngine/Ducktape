@@ -30,23 +30,15 @@ const int DUCKTAPE_VERSION_MAJOR = 1;
 const int DUCKTAPE_VERSION_MINOR = 0;
 const int DUCKTAPE_VERSION_PATCH = 0;
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <stbimage/stb_image.h>
-#undef STB_IMAGE_IMPLEMENTATION
-
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <objloader/objloader.h>
-#undef TINYOBJLOADER_IMPLEMENTATION
-
 #include <Components/Tag.h>
 #include <Components/Transform.h>
 #include <Core/Assert.h>
-#include <Core/AssetManager.h>
 #include <Core/Configuration.h>
 #include <Core/Console.h>
 #include <Core/Engine.h>
 #include <Core/Entity.h>
 #include <Core/Scene.h>
+#include <Core/Window.h>
 #include <Input/Input.h>
 #include <Input/JoystickHat.h>
 #include <Input/Key.h>

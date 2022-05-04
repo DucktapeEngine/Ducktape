@@ -26,7 +26,6 @@ SOFTWARE.
 
 #include <string>
 
-#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 
 namespace Ducktape
@@ -40,5 +39,6 @@ namespace Ducktape
         glm::vec2 windowSize;
         std::string windowTitle;
         glm::vec3 version;
+        bool renderWireframe = false;
     };
 }

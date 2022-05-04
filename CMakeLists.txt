@@ -10,29 +10,35 @@ set(CMAKE_BUILD_TYPE "Debug")
 # Ducktape
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
-add_executable (Ducktape 
+set(glad_source_list "${PROJECT_SOURCE_DIR}/extern/glad/src/glad.c" "${PROJECT_SOURCE_DIR}/extern/glad/include/glad/glad.h")
+
+add_executable (Ducktape
     ${source_list}
+    ${glad_source_list}
 )
+
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/")
 target_compile_features(Ducktape PRIVATE cxx_std_17)
 
 # Extern
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/")
 
-# Vulkan
-find_package(Vulkan)
-
-if (${Vulkan_FOUND})
-    message (STATUS "Found Vulkan")
-    target_link_libraries(Ducktape PRIVATE Vulkan::Vulkan)
-else (${GTK_FOUND})
-    message (FATAL_ERROR "Vulkan SDK has not been installed. Please install Vulkan SDK and try again.")
+# OpenGL
+find_package(OpenGL REQUIRED)
+if (OPENGL_FOUND)
+    message("OpenGL found.")
+else (OPENGL_FOUND)
+    message("OpenGL not found.")
 endif()
+target_link_libraries(Ducktape PUBLIC ${OPENGL_gl_LIBRARY})
 
 # GLFW
 add_subdirectory("${PROJECT_SOURCE_DIR}/extern/glfw")
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glfw/include")
 target_link_libraries(Ducktape PUBLIC glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIES})
+
+# GLAD
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glad/include/")
 
 # GLM
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glm/")

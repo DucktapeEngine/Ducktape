@@ -33,6 +33,7 @@ SOFTWARE.
 #include <Core/Scene.h>
 #include <Input/Input.h>
 #include <Core/Console.h>
+#include <Core/Window.h>
 
 namespace Ducktape
 {
@@ -40,8 +41,9 @@ namespace Ducktape
     {
     public:
         Configuration configuration;
-        Console console;
-        // Input input;
+        Window window;
+        // Console console;
+        Input input;
 
         Engine() = default;
         ~Engine() = default;

@@ -22,27 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <Core/AssetManager.h>
+#pragma once
+
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+#include <glad/glad.h>
 
 namespace Ducktape
 {
-    std::vector<char> AssetManager::ReadFile(const std::string &filename)
+    class Shader
     {
-        std::ifstream file(filename, std::ios::ate | std::ios::binary);
+    public:
+        unsigned int ID;
 
-        if (!file.is_open())
-        {
-            throw std::runtime_error("Failed to open file.");
-        }
+        Shader(const char *vertexPath, const char *fragmentPath);
+        ~Shader();
 
-        size_t fileSize = (size_t)file.tellg();
-        std::vector<char> buffer(fileSize);
+        void Use();
+        void SetBool(const std::string &name, bool value) const;
+        void SetInt(const std::string &name, int value) const;
+        void SetFloat(const std::string &name, float value) const;
 
-        file.seekg(0);
-        file.read(buffer.data(), fileSize);
-
-        file.close();
-
-        return buffer;
-    }
+    private:
+        void CheckCompileErrors(unsigned int shader, std::string type);
+    };
 }

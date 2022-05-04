@@ -32,9 +32,9 @@ int main()
 	Engine engine;
 	engine.configuration.windowSize = {800, 600};
 	engine.configuration.windowTitle = "DucktapeTest";
+	// engine.configuration.renderWireframe = true;
 
 	Scene mainScene;
 	Entity room = mainScene.CreateEntity("Room");
-	std::cout << "Room: " << std::endl;
 	engine.Run(mainScene);
 }
