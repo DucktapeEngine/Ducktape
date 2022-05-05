@@ -43,3 +43,5 @@ const int DUCKTAPE_VERSION_PATCH = 0;
 #include <Input/JoystickHat.h>
 #include <Input/Key.h>
 #include <Input/MouseMode.h>
+#include <Renderer/Shader.h>
+#include <Renderer/Texture.h>

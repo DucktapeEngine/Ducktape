@@ -29,9 +29,12 @@ SOFTWARE.
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
 
 #include <Core/Configuration.h>
 #include <Renderer/Shader.h>
+#include <Renderer/Texture.h>
 
 namespace Ducktape
 {
@@ -40,7 +43,7 @@ namespace Ducktape
     public:
         GLFWwindow *window;
 
-        unsigned int VBO, VAO;
+        unsigned int VBO, VAO, EBO;
 
         const char *vertexShaderSource = "#version 330 core\n"
                                          "layout (location = 0) in vec3 aPos;\n"
@@ -57,9 +60,11 @@ namespace Ducktape
                                            "}\n\0";
 
         Shader shader;
+        Texture texture1, texture2;
 
         void Init(const Configuration &config);
-        void Tick();
+        void Clear();
+        void Draw();
         void Cleanup();
         static void FrameBufferResizeCallback(GLFWwindow *window, int width, int height);
     };

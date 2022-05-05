@@ -25,27 +25,25 @@ SOFTWARE.
 #pragma once
 
 #include <string>
-#include <iostream>
+#include <stdexcept>
 
-#include <entt/entt.hpp>
-
-#include <Core/Configuration.h>
-#include <Core/Scene.h>
-#include <Input/Input.h>
-#include <Core/Console.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <utils/std_image.h>
 
 namespace Ducktape
 {
-    class Engine
+    class Texture
     {
     public:
-        Configuration configuration;
-        Window window;
-        Console console;
-        Input input;
+        int width, height, nrChannels;
+        unsigned char *data;
+        unsigned int ID;
+        int mipmapLevel = 0;
 
-        void Run(Scene &scene);
+        Texture();
+        Texture(const std::string &path);
+
+        void Load(const std::string &path);
     };
 }

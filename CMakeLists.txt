@@ -11,10 +11,12 @@ set(CMAKE_BUILD_TYPE "Debug")
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
 set(glad_source_list "${PROJECT_SOURCE_DIR}/extern/glad/src/glad.c" "${PROJECT_SOURCE_DIR}/extern/glad/include/glad/glad.h")
+file(GLOB_RECURSE imgui_source_list "${PROJECT_SOURCE_DIR}/extern/imgui/*.cpp")
 
 add_executable (Ducktape
     ${source_list}
     ${glad_source_list}
+    ${imgui_source_list}
 )
 
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/")
@@ -45,3 +47,9 @@ target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glm/")
 
 # EnTT
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/entt/single_include")
+
+# Util
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/util/")
+
+# ImGUI
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/imgui/")

@@ -22,30 +22,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#include <string>
-#include <iostream>
-
-#include <entt/entt.hpp>
-
-#include <Core/Configuration.h>
-#include <Core/Scene.h>
-#include <Input/Input.h>
-#include <Core/Console.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-
-namespace Ducktape
-{
-    class Engine
-    {
-    public:
-        Configuration configuration;
-        Window window;
-        Console console;
-        Input input;
-
-        void Run(Scene &scene);
-    };
-}
+#define STB_IMAGE_IMPLEMENTATION
+#include <utils/std_image.h>

@@ -39,5 +39,6 @@ namespace Ducktape
     void Console::Tick()
     {
         output += buffer.str();
+        std::cout << buffer.str();
     }
 }

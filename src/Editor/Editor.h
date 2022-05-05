@@ -24,28 +24,19 @@ SOFTWARE.
 
 #pragma once
 
-#include <string>
-#include <iostream>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 
-#include <entt/entt.hpp>
-
-#include <Core/Configuration.h>
-#include <Core/Scene.h>
-#include <Input/Input.h>
-#include <Core/Console.h>
 #include <Core/Window.h>
-#include <Editor/Editor.h>
 
 namespace Ducktape
 {
-    class Engine
+    namespace Editor
     {
-    public:
-        Configuration configuration;
-        Window window;
-        Console console;
-        Input input;
-
-        void Run(Scene &scene);
-    };
+        void Init(const Window &window);
+        void SetStyle();
+        void Tick();
+        void Cleanup();
+    }
 }

@@ -30,17 +30,32 @@ namespace Ducktape
     {
         try
         {
-            Scene::currentScene = &scene;
+            // Rendering
             window.Init(configuration);
+            Editor::Init(window);
+
+            // Input
             input.Init(window);
+
+            // Logic
             scene.Init();
+            Scene::currentScene = &scene;
 
             while (!glfwWindowShouldClose(window.window))
             {
-                window.Tick();
+                // Rendering
+                window.Clear();
+                window.Draw();
+                Editor::Tick();
+                glfwSwapBuffers(window.window);
+                glfwPollEvents();
+
+                // Input
                 input.Tick(window);
+
+                // Logic
                 scene.Tick();
-                // console.Tick();
+                console.Tick();
             }
 
             window.Cleanup();
