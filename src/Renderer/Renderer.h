@@ -24,17 +24,33 @@ SOFTWARE.
 
 #pragma once
 
-#include <string>
-
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <Renderer/Shader.h>
+#include <Core/Window.h>
 
 namespace Ducktape
 {
-    class Configuration
+    class Renderer
     {
     public:
-        glm::vec2 windowSize;
-        std::string windowTitle;
-        glm::vec3 version;
+        // bool isOrthographic = false; // TOFIX
+        // float nearClipPlane = 0.1f;
+        // float farClipPlane = 100.0f;
+        // float fieldOfView = 45.0f;
+        // bool renderWireframe = false;
+        // glm::mat4 projection = glm::mat4(1.0f);
+
+        Shader shader;
+
+        Window *window;
+
+        void Init(Window &window);
+        void Flush();
+        void Clear();
     };
 }

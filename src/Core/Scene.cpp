@@ -22,19 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
+#include <Core/Scene.h>
 
-#include <assert.h>
-#include <iostream>
-#include <string>
+namespace Ducktape
+{
+    Scene::Scene(std::function<void(Scene &)> function)
+    {
+        tickFunction = function;
+    }
 
-#define DT_ASSERT(condition, message)                                                                     \
-    do                                                                                                    \
-    {                                                                                                     \
-        if (condition == false)                                                                           \
-        {                                                                                                 \
-            std::cout << "Assertion failed: " + std::string(message) << '\n'                              \
-                      << "In file: " << std::string(__FILE__) << ":" << std::to_string(__LINE__) << '\n'; \
-            exit(1);                                                                                      \
-        }                                                                                                 \
-    } while (0)
+    void Scene::Init()
+    {
+        tickFunction(*this);
+        initCalled = true;
+    }
+
+    void Scene::Tick()
+    {
+        tickFunction(*this);
+    }
+}

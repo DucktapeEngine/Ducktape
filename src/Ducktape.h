@@ -30,11 +30,13 @@ const int DUCKTAPE_VERSION_MAJOR = 1;
 const int DUCKTAPE_VERSION_MINOR = 0;
 const int DUCKTAPE_VERSION_PATCH = 0;
 
+#include <Components/Component.h>
 #include <Components/Tag.h>
 #include <Components/Transform.h>
-#include <Core/Assert.h>
+#include <Components/Camera.h>
+#include <Components/SpriteRenderer.h>
+#include <Core/Macro.h>
 #include <Core/Configuration.h>
-#include <Core/Console.h>
 #include <Core/Engine.h>
 #include <Core/Entity.h>
 #include <Core/Scene.h>
@@ -45,3 +47,4 @@ const int DUCKTAPE_VERSION_PATCH = 0;
 #include <Input/MouseMode.h>
 #include <Renderer/Shader.h>
 #include <Renderer/Texture.h>
+#include <Renderer/Renderer.h>

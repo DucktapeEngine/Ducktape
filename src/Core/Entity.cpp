@@ -26,42 +26,18 @@ SOFTWARE.
 
 namespace Ducktape
 {
-    Entity Scene::CreateEntity(const std::string &name)
+    Entity::Entity()
     {
-        Entity entity = Entity(sceneRegistry.create(), this);
+        handle = entt::null;
+    }
 
-        entity.AddComponent<Transform>();
-        Tag &tag = entity.AddComponent<Tag>();
-
-        if (tag.name.empty())
-        {
-            tag.name = name;
-        }
-        else
-        {
-            tag.name = "Unnamed Entity";
-        }
-        return entity;
+    Entity Scene::CreateEntity()
+    {
+        return Entity(sceneRegistry.create(), this);
     }
 
     void Scene::DestroyEntity(Entity entity)
     {
         sceneRegistry.destroy(entity.handle);
-    }
-
-    void Scene::Init()
-    {
-        for (std::function<void()> &init : componentInits)
-        {
-            init();
-        }
-    }
-
-    void Scene::Tick()
-    {
-        for (std::function<void()> &tick : componentTicks)
-        {
-            tick();
-        }
     }
 }

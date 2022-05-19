@@ -22,29 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#pragma once
-
-#include <stdio.h>
-#include <iostream>
-#include <streambuf>
-#include <stdlib.h>
-#include <string>
-#include <sstream>
+#include <Renderer/Renderer.h>
 
 namespace Ducktape
 {
-    class Console
+    void Renderer::Init(Window &window)
     {
-    private:
-        std::stringstream buffer;
-        std::streambuf *old;
+        this->window = &window;
+        shader.Load("../shaders/vertex.glsl", "../shaders/fragment.glsl");
+    }
 
-    public:
-        std::string output;
+    void Renderer::Clear()
+    {
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
 
-        Console();
-        ~Console();
-
-        void Tick();
-    };
+    void Renderer::Flush()
+    {
+        glfwSwapBuffers(window->window);
+    }
 }

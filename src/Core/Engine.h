@@ -26,25 +26,32 @@ SOFTWARE.
 
 #include <string>
 #include <iostream>
+#include <functional>
 
 #include <entt/entt.hpp>
 
 #include <Core/Configuration.h>
 #include <Core/Scene.h>
 #include <Input/Input.h>
-#include <Core/Console.h>
 #include <Core/Window.h>
 #include <Editor/Editor.h>
+#include <Renderer/Renderer.h>
 
 namespace Ducktape
 {
+    class Engine;
+
+    inline Engine *engine;
+
     class Engine
     {
     public:
         Configuration configuration;
         Window window;
-        Console console;
         Input input;
+        Renderer renderer;
+
+        Engine();
 
         void Run(Scene &scene);
     };

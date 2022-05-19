@@ -26,14 +26,13 @@ SOFTWARE.
 
 #include <string>
 
+#include <Components/Component.h>
+
 namespace Ducktape
 {
-    class Tag
+    class Tag : public Component
     {
     public:
         std::string name;
-
-        void Init() {}
-        void Tick() {}
     };
 }

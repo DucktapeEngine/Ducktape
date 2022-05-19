@@ -28,6 +28,8 @@ SOFTWARE.
 
 #include <entt/entt.hpp>
 
+#include <Components/Component.h>
+
 namespace Ducktape
 {
     class Entity;
@@ -36,18 +38,33 @@ namespace Ducktape
     {
     public:
         entt::registry sceneRegistry;
-        static inline Scene *currentScene;
-        std::vector<std::function<void(void)>> componentInits;
-        std::vector<std::function<void(void)>> componentTicks;
+        static inline Scene *activeScene;
+        std::function<void(Scene &)> tickFunction;
 
-        // Defined in Entity.cpp
+        bool initCalled = 0;
+
+        Scene(std::function<void(Scene &)> function);
+
         void Init();
-        // Defined in Entity.cpp
         void Tick();
 
         // Defined in Entity.cpp
-        Entity CreateEntity(const std::string &name);
+        Entity CreateEntity();
         // Defined in Entity.cpp
         void DestroyEntity(Entity entity);
+
+        template <typename T>
+        void Call()
+        {
+            entt::view view = sceneRegistry.view<T>();
+
+            for (auto entity : view)
+            {
+                if (!initCalled)
+                    view.template get<T>(entity).Init();
+                else
+                    view.template get<T>(entity).Tick();
+            }
+        }
     };
 }

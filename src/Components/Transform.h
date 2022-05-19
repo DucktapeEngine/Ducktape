@@ -27,16 +27,15 @@ SOFTWARE.
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 
+#include <Components/Component.h>
+
 namespace Ducktape
 {
-    class Transform
+    class Transform : public Component
     {
     public:
-        glm::vec3 position;
-        glm::vec3 rotation;
-        glm::vec3 scale;
-
-        void Init() {}
-        void Tick() {}
+        glm::vec2 position;
+        float rotation;
+        glm::vec2 scale;
     };
 }

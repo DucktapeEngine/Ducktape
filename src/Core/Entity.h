@@ -25,6 +25,7 @@ SOFTWARE.
 #pragma once
 
 #include <functional>
+#include <iostream>
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -32,9 +33,7 @@ SOFTWARE.
 #include <entt/entt.hpp>
 
 #include <Core/Scene.h>
-#include <Components/Transform.h>
-#include <Components/Tag.h>
-#include <Core/Assert.h>
+#include <Core/Macro.h>
 
 namespace Ducktape
 {
@@ -45,6 +44,7 @@ namespace Ducktape
         std::string name;
         Scene *scene;
 
+        Entity();
         Entity(entt::entity entityHandle, Scene *scene) : handle(entityHandle), scene(scene) {}
 
         operator entt::entity() const { return handle; }
@@ -62,11 +62,16 @@ namespace Ducktape
             DT_ASSERT(!HasComponent<T>(), "Entity already has component.");
 
             T &component = scene->sceneRegistry.emplace<T>(handle, std::forward<Args>(args)...);
-            scene->componentInits.push_back([&component]()
-                                            { component.Init(); });
-            scene->componentTicks.push_back([&component]()
-                                            { component.Tick(); });
             return component;
+        }
+
+        template <typename T, typename... Args>
+        T &RequireComponent(Args &&...args)
+        {
+            if (HasComponent<T>())
+                return GetComponent<T>();
+
+            return AddComponent<T>(std::forward<Args>(args)...);
         }
 
         template <typename T>
@@ -80,16 +85,19 @@ namespace Ducktape
         void RemoveComponent()
         {
             DT_ASSERT(HasComponent<T>(), "Entity does not have component.");
-
-            T &component = GetComponent<T>();
-            scene->componentInits.erase(std::remove(scene->componentInits.begin(), scene->componentInits.end(), [&component]()
-                                                    { component.Init(); }),
-                                        scene->componentInits.end());
-            scene->componentTicks.erase(std::remove(scene->componentTicks.begin(), scene->componentTicks.end(), [&component]()
-                                                    { component.Tick(); }),
-                                        scene->componentTicks.end());
-
             scene->sceneRegistry.remove<T>(handle);
+        }
+
+        template <typename T>
+        static Entity FromComponent(T &component)
+        {
+            return FromComponent<T>(component, Scene::activeScene);
+        }
+
+        template <typename T>
+        static Entity FromComponent(T &component, Scene *scene)
+        {
+            return Entity(entt::to_entity(scene->sceneRegistry, component), scene);
         }
     };
 }

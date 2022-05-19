@@ -26,6 +26,7 @@ SOFTWARE.
 
 #include <string>
 #include <stdexcept>
+#include <iostream>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -38,12 +39,14 @@ namespace Ducktape
     public:
         int width, height, nrChannels;
         unsigned char *data;
-        unsigned int ID;
+        unsigned int id;
         int mipmapLevel = 0;
+        bool loaded = false;
 
         Texture();
         Texture(const std::string &path);
 
         void Load(const std::string &path);
+        void Bind(unsigned int slot = 0);
     };
 }

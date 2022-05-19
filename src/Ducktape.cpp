@@ -22,19 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#define FUNCTION_TRACE
 #include "Ducktape.h"
 
 using namespace std;
 using namespace Ducktape;
 
+void MainScene(Scene &scene)
+{
+	scene.Call<Tag>();
+	scene.Call<Transform>();
+	scene.Call<Camera>();
+	scene.Call<SpriteRenderer>();
+}
+
 int main()
 {
-	Engine engine;
-	engine.configuration.windowSize = {800, 600};
-	engine.configuration.windowTitle = "DucktapeTest";
-	// engine.configuration.renderWireframe = true;
+	try
+	{
+		Engine game;
+		game.configuration.windowSize = {800, 600};
+		game.configuration.windowTitle = "DucktapeTest";
 
-	Scene mainScene;
-	Entity room = mainScene.CreateEntity("Room");
-	engine.Run(mainScene);
+		Scene mainScene = Scene(MainScene);
+
+		Entity camera = mainScene.CreateEntity();
+		camera.AddComponent<Tag>().name = "MainCamera";
+		camera.AddComponent<Transform>();
+		camera.AddComponent<Camera>();
+
+		Entity player = mainScene.CreateEntity();
+		player.AddComponent<Tag>().name = "Player";
+		player.AddComponent<Transform>();
+
+		SpriteRenderer &sr = player.AddComponent<SpriteRenderer>();
+		sr.sprite = "../sprites/ducktapeicon.png";
+
+		game.Run(mainScene);
+	}
+	catch (const exception &e)
+	{
+		cout << e.what() << endl;
+		exit(1);
+	}
 }

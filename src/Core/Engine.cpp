@@ -26,6 +26,11 @@ SOFTWARE.
 
 namespace Ducktape
 {
+    Engine::Engine()
+    {
+        engine = this;
+    }
+
     void Engine::Run(Scene &scene)
     {
         try
@@ -33,29 +38,28 @@ namespace Ducktape
             // Rendering
             window.Init(configuration);
             Editor::Init(window);
+            renderer.Init(window);
 
             // Input
             input.Init(window);
 
             // Logic
+            Scene::activeScene = &scene;
             scene.Init();
-            Scene::currentScene = &scene;
 
             while (!glfwWindowShouldClose(window.window))
             {
-                // Rendering
-                window.Clear();
-                window.Draw();
-                Editor::Tick();
-                glfwSwapBuffers(window.window);
-                glfwPollEvents();
+                window.Tick();
 
-                // Input
+                renderer.Clear();
+
                 input.Tick(window);
 
-                // Logic
                 scene.Tick();
-                console.Tick();
+
+                Editor::Tick();
+
+                renderer.Flush();
             }
 
             window.Cleanup();

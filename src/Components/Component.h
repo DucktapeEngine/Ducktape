@@ -24,17 +24,12 @@ SOFTWARE.
 
 #pragma once
 
-#include <string>
-
-#include <glm/glm.hpp>
-
 namespace Ducktape
 {
-    class Configuration
+    class Component
     {
     public:
-        glm::vec2 windowSize;
-        std::string windowTitle;
-        glm::vec3 version;
+        virtual void Init() {}
+        virtual void Tick() {}
     };
 }

@@ -26,15 +26,31 @@ SOFTWARE.
 
 #include <string>
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <Components/Component.h>
+#include <Core/Engine.h>
+#include <Core/Entity.h>
+#include <Components/Transform.h>
 
 namespace Ducktape
 {
-    class Configuration
+    class SpriteRenderer : public Component
     {
     public:
-        glm::vec2 windowSize;
-        std::string windowTitle;
-        glm::vec3 version;
+        std::string sprite = "";
+        glm::vec3 color = glm::vec3(1.0f);
+
+        void Init();
+        void Tick();
+
+    private:
+        Texture texture;
+        unsigned int VAO;
+        Transform *transform;
     };
 }

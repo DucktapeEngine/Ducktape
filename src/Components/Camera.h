@@ -22,23 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <Core/Console.h>
+#pragma once
+
+#include <Components/Component.h>
 
 namespace Ducktape
 {
-    Console::Console()
+    class Camera : public Component
     {
-        old = std::cout.rdbuf(buffer.rdbuf());
-    }
-
-    Console::~Console()
-    {
-        std::cout.rdbuf(old);
-    }
-
-    void Console::Tick()
-    {
-        output += buffer.str();
-        std::cout << buffer.str();
-    }
+    };
 }
