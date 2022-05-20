@@ -26,12 +26,23 @@ namespace Ducktape
 {
     void Renderer::Init(Window &window)
     {
+        FT("Renderer::Init()");
+
         this->window = &window;
         shader.Load("../shaders/vertex.glsl", "../shaders/fragment.glsl");
+
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->window->windowSize.x),
+                                          static_cast<float>(this->window->windowSize.y), 0.0f, -1.0f, 1.0f);
+
+        shader.Use();
+        shader.SetInt("image", 0);
+        shader.SetMat4("projection", projection);
     }
 
     void Renderer::Clear()
     {
+        FT("Renderer::Clear()");
+
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -39,6 +50,8 @@ namespace Ducktape
 
     void Renderer::Flush()
     {
+        FT("Renderer::Flush()");
+
         glfwSwapBuffers(window->window);
     }
 }

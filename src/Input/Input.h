@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <unordered_map>
 #include <vector>
 #include <string>
+#include <iostream>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -34,6 +35,7 @@ aryanbaburajan2007@gmail.com
 #include <Input/Key.h>
 #include <Input/MouseMode.h>
 #include <Core/Window.h>
+#include <Core/Macro.h>
 
 namespace Ducktape
 {

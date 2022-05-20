@@ -22,6 +22,8 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -30,6 +32,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Renderer/Shader.h>
 #include <Core/Window.h>
+#include <Core/Macro.h>
 
 namespace Ducktape
 {

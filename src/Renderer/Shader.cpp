@@ -24,18 +24,10 @@ aryanbaburajan2007@gmail.com
 
 namespace Ducktape
 {
-    Shader::Shader()
-    {
-        id = glCreateProgram();
-    }
-
-    Shader::Shader(const char *vertexPath, const char *fragmentPath)
-    {
-        Load(vertexPath, fragmentPath);
-    }
-
     void Shader::Load(const char *vertexPath, const char *fragmentPath)
     {
+        FT("Shader::Load()");
+
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
         std::string fragmentCode;
@@ -100,26 +92,36 @@ namespace Ducktape
 
     void Shader::Use()
     {
+        FT("Shader::Use()");
+
         glUseProgram(id);
     }
 
     void Shader::SetBool(const std::string &name, bool value) const
     {
+        FT("Shader::SetBool()");
+
         glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
     }
 
     void Shader::SetInt(const std::string &name, int value) const
     {
+        FT("Shader::SetInt()");
+
         glUniform1i(glGetUniformLocation(id, name.c_str()), value);
     }
 
     void Shader::SetFloat(const std::string &name, float value) const
     {
+        FT("Shader::SetFloat()");
+
         glUniform1f(glGetUniformLocation(id, name.c_str()), value);
     }
 
     void Shader::CheckCompileErrors(unsigned int shader, std::string type)
     {
+        FT("Shader::CheckCompileErrors()");
+
         int success;
         char infoLog[1024];
         if (type != "PROGRAM")
@@ -146,46 +148,64 @@ namespace Ducktape
 
     void Shader::SetVec2(const std::string &name, const glm::vec2 &value) const
     {
+        FT("Shader::SetVec2()");
+
         glUniform2fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
     }
 
     void Shader::SetVec2(const std::string &name, float x, float y) const
     {
+        FT("Shader::SetVec2()");
+
         glUniform2f(glGetUniformLocation(id, name.c_str()), x, y);
     }
 
     void Shader::SetVec3(const std::string &name, const glm::vec3 &value) const
     {
+        FT("Shader::SetVec3()");
+
         glUniform3fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
     }
 
     void Shader::SetVec3(const std::string &name, float x, float y, float z) const
     {
+        FT("Shader::SetVec3()");
+
         glUniform3f(glGetUniformLocation(id, name.c_str()), x, y, z);
     }
 
     void Shader::SetVec4(const std::string &name, const glm::vec4 &value) const
     {
+        FT("Shader::SetVec4()");
+
         glUniform4fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
     }
 
     void Shader::SetVec4(const std::string &name, float x, float y, float z, float w)
     {
+        FT("Shader::SetVec4()");
+
         glUniform4f(glGetUniformLocation(id, name.c_str()), x, y, z, w);
     }
 
     void Shader::SetMat2(const std::string &name, const glm::mat2 &mat) const
     {
+        FT("Shader::SetMat2()");
+
         glUniformMatrix2fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 
     void Shader::SetMat3(const std::string &name, const glm::mat3 &mat) const
     {
+        FT("Shader::SetMat3()");
+
         glUniformMatrix3fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 
     void Shader::SetMat4(const std::string &name, const glm::mat4 &mat) const
     {
+        FT("Shader::SetMat4()");
+
         glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 }

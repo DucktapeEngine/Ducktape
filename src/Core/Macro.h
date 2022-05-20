@@ -37,9 +37,8 @@ aryanbaburajan2007@gmail.com
         }                                                                                                 \
     } while (0)
 
-#ifdef FUNCTION_TRACE
-#include <iostream>
-#define FT(name) std::cout << "Function: " << name << '\n';
-#else
+#if defined(NDEBUG) || !defined(FUNCTION_TRACE)
 #define FT(name)
+#else
+#define FT(name) std::cout << name << '\n';
 #endif

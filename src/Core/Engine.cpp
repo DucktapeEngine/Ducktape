@@ -26,6 +26,8 @@ namespace Ducktape
 {
     Engine::Engine()
     {
+        FT("Engine::Engine()");
+
         engine = this;
     }
 
@@ -67,5 +69,7 @@ namespace Ducktape
             std::cerr << e.what() << std::endl;
             std::cin.get();
         }
+
+        FT("Engine::Run()");
     }
 }

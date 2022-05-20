@@ -23,10 +23,12 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <string>
+#include <iostream>
 
 #include <entt/entt.hpp>
 
 #include <Components/Component.h>
+#include <Core/Macro.h>
 
 namespace Ducktape
 {

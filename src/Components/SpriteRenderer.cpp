@@ -26,21 +26,44 @@ namespace Ducktape
 {
     void SpriteRenderer::Init()
     {
+        FT("SpriteRenderer::Init()");
+
         if (sprite != "")
             texture.Load(sprite);
 
         transform = &Entity::FromComponent(*this).GetComponent<Transform>();
 
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(engine->window.windowSize.x),
-                                          static_cast<float>(engine->window.windowSize.y), 0.0f, -1.0f, 1.0f);
+        unsigned int VBO;
 
-        engine->renderer.shader.Use();
-        engine->renderer.shader.SetInt("image", 0);
-        engine->renderer.shader.SetMat4("projection", projection);
+        float vertices[] = {
+            // pos      // tex
+            0.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f,
+
+            0.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 0.0f, 1.0f, 0.0f};
+
+        glGenVertexArrays(1, &VAO);
+        glGenBuffers(1, &VBO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        glBindVertexArray(VAO);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+        transform->scale *= 100.0f;
     }
 
     void SpriteRenderer::Tick()
     {
+        FT("SpriteRenderer::Tick()");
+
         engine->renderer.shader.Use(); // TOFIX: Change this to seperate shader for each SpriteRenderer
 
         glm::mat4 model = glm::mat4(1.0f);
@@ -54,9 +77,7 @@ namespace Ducktape
         model = glm::scale(model, glm::vec3(transform->scale, 1.0f)); // last scale
 
         engine->renderer.shader.SetMat4("model", model);
-
-        // render textured quad
-        engine->renderer.shader.SetVec3("spriteColor", color);
+        engine->renderer.shader.SetVec3("spriteColor", (glm::vec4)color);
 
         glActiveTexture(GL_TEXTURE0);
         texture.Bind();

@@ -34,6 +34,6 @@ namespace Ducktape
     public:
         glm::vec2 position;
         float rotation;
-        glm::vec2 scale;
+        glm::vec2 scale = glm::vec2(1.0f);
     };
 }

@@ -26,6 +26,8 @@ namespace Ducktape
 {
     void Editor::Init(const Window &window)
     {
+        FT("Editor::Init()");
+
         ImGui::CreateContext();
         ImGui_ImplGlfw_InitForOpenGL(window.window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
@@ -41,6 +43,8 @@ namespace Ducktape
 
     void Editor::SetStyle()
     {
+        FT("Editor::SetStyle()");
+
         ImGuiStyle &style = ImGui::GetStyle();
         style.Colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
         style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
@@ -95,6 +99,8 @@ namespace Ducktape
 
     void Editor::Tick()
     {
+        FT("Editor::Tick()");
+
         ImGui_ImplGlfw_NewFrame();
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
@@ -110,6 +116,8 @@ namespace Ducktape
 
     void Editor::Cleanup()
     {
+        FT("Editor::Cleanup()");
+
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }

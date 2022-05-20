@@ -23,6 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <string>
+#include <iostream>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -34,6 +35,8 @@ aryanbaburajan2007@gmail.com
 #include <Core/Engine.h>
 #include <Core/Entity.h>
 #include <Components/Transform.h>
+#include <Core/Macro.h>
+#include <Renderer/Color.h>
 
 namespace Ducktape
 {
@@ -41,7 +44,7 @@ namespace Ducktape
     {
     public:
         std::string sprite = "";
-        glm::vec3 color = glm::vec3(1.0f);
+        Color color = Color::WHITE;
 
         void Init();
         void Tick();

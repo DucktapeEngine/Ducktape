@@ -26,6 +26,8 @@ namespace Ducktape
 {
     void Window::Init(const Configuration &config)
     {
+        FT("Window::Init()");
+
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -53,16 +55,22 @@ namespace Ducktape
 
     void Window::Tick()
     {
+        FT("Window::Tick()");
+
         glfwPollEvents();
     }
 
     void Window::Cleanup()
     {
+        FT("Window::Cleanup()");
+
         glfwTerminate();
     }
 
     void Window::FrameBufferResizeCallback(GLFWwindow *window, int width, int height)
     {
+        FT("Window::FrameBufferResizeCallback()");
+
         glViewport(0, 0, width, height);
         static_cast<Window *>(glfwGetWindowUserPointer(window))->windowSize = glm::vec2(width, height);
     }

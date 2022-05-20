@@ -32,6 +32,8 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <Core/Macro.h>
+
 namespace Ducktape
 {
     class Shader
@@ -39,8 +41,7 @@ namespace Ducktape
     public:
         unsigned int id;
 
-        Shader();
-        Shader(const char *vertexPath, const char *fragmentPath);
+        Shader() {}
         void Load(const char *vertexPath, const char *fragmentPath);
 
         void Use();

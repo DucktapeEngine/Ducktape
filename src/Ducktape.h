@@ -24,10 +24,6 @@ aryanbaburajan2007@gmail.com
 
 // Ducktape includes
 
-const int DUCKTAPE_VERSION_MAJOR = 1;
-const int DUCKTAPE_VERSION_MINOR = 0;
-const int DUCKTAPE_VERSION_PATCH = 0;
-
 #include <Components/Component.h>
 #include <Components/Tag.h>
 #include <Components/Transform.h>

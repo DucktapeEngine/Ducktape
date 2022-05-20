@@ -24,6 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <vector>
 #include <stdexcept>
+#include <iostream>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -36,6 +37,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Configuration.h>
 #include <Renderer/Shader.h>
 #include <Renderer/Texture.h>
+#include <Core/Macro.h>
 
 namespace Ducktape
 {

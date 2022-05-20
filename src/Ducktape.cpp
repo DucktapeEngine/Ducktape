@@ -20,8 +20,8 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#define FUNCTION_TRACE
-#include "Ducktape.h"
+// #define FUNCTION_TRACE
+#include <Ducktape.h>
 
 using namespace std;
 using namespace Ducktape;
@@ -38,6 +38,11 @@ int main()
 {
 	try
 	{
+		std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
+					 "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
+					 "This is free software, and you are welcome to redistribute it\n"
+					 "under certain conditions; type `show c' for details.\n";
+
 		Engine game;
 		game.configuration.windowSize = {800, 600};
 		game.configuration.windowTitle = "DucktapeTest";

@@ -22,6 +22,13 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <iostream>
+
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+
+#include <Core/Macro.h>
+
 namespace Ducktape
 {
     class Color
@@ -190,5 +197,10 @@ namespace Ducktape
          * @return Color The lerped color between the two
          */
         static Color Lerp(const Color initialColor, const Color targetColor, float delta);
+
+        operator glm::vec4() const
+        {
+            return glm::vec4(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
+        }
     };
 }

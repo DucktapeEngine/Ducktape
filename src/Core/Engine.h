@@ -34,6 +34,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Window.h>
 #include <Editor/Editor.h>
 #include <Renderer/Renderer.h>
+#include <Core/Macro.h>
 
 namespace Ducktape
 {

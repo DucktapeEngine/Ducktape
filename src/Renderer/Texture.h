@@ -30,6 +30,8 @@ aryanbaburajan2007@gmail.com
 #include <GLFW/glfw3.h>
 #include <utils/std_image.h>
 
+#include <Core/Macro.h>
+
 namespace Ducktape
 {
     class Texture

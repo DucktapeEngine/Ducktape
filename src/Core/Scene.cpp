@@ -26,17 +26,23 @@ namespace Ducktape
 {
     Scene::Scene(std::function<void(Scene &)> function)
     {
+        FT("Scene::Scene()");
+
         tickFunction = function;
     }
 
     void Scene::Init()
     {
+        FT("Scene::Init()");
+
         tickFunction(*this);
         initCalled = true;
     }
 
     void Scene::Tick()
     {
+        FT("Scene::Tick()");
+
         tickFunction(*this);
     }
 }

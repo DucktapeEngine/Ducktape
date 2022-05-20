@@ -26,16 +26,22 @@ namespace Ducktape
 {
     Entity::Entity()
     {
+        FT("Entity::Entity()");
+
         handle = entt::null;
     }
 
     Entity Scene::CreateEntity()
     {
+        FT("Scene::CreateEntity()");
+
         return Entity(sceneRegistry.create(), this);
     }
 
     void Scene::DestroyEntity(Entity entity)
     {
+        FT("Scene::DestroyEntity()");
+
         sceneRegistry.destroy(entity.handle);
     }
 }
