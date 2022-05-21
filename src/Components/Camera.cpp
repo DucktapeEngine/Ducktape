@@ -20,40 +20,12 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <iostream>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <Renderer/Shader.h>
-#include <Core/Window.h>
-#include <Core/Macro.h>
-#include <Renderer/Texture.h>
-#include <Renderer/Color.h>
-#include <Components/Transform.h>
+#include <Components/Camera.h>
 
 namespace Ducktape
 {
-    class Renderer
+    Camera::Camera()
     {
-    public:
-        bool renderWireframe = false;
-        glm::mat4 projection = glm::mat4(1.0f);
-        glm::mat4 view = glm::mat4(1.0f);
-
-        Shader shader;
-
-        Window *window;
-
-        void Init(Window &window);
-        void Flush();
-        void Clear();
-
-        void DrawQuad(const glm::vec2 &position, const float &rotation, const glm::vec2 &scale, const Color &color, Texture &texture, unsigned int &VAO, const Transform &camera);
-    };
+        activeCamera = this;
+    }
 }

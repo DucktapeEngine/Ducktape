@@ -28,5 +28,9 @@ namespace Ducktape
 {
     class Camera : public Component
     {
+    public:
+        inline static Camera *activeCamera;
+
+        Camera();
     };
 }

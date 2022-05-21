@@ -31,12 +31,15 @@ namespace Ducktape
         this->window = &window;
         shader.Load("../shaders/vertex.glsl", "../shaders/fragment.glsl");
 
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->window->windowSize.x),
-                                          static_cast<float>(this->window->windowSize.y), 0.0f, -1.0f, 1.0f);
+        projection = glm::ortho(0.0f, static_cast<float>(this->window->windowSize.x),
+                                static_cast<float>(this->window->windowSize.y), 0.0f, -1.0f, 1.0f);
 
         shader.Use();
         shader.SetInt("image", 0);
         shader.SetMat4("projection", projection);
+
+        if (renderWireframe)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
     void Renderer::Clear()
@@ -53,5 +56,36 @@ namespace Ducktape
         FT("Renderer::Flush()");
 
         glfwSwapBuffers(window->window);
+    }
+
+    void Renderer::DrawQuad(const glm::vec2 &position, const float &rotation, const glm::vec2 &scale, const Color &color, Texture &texture, unsigned int &VAO, const Transform &camera)
+    {
+        shader.Use(); // TOFIX: Change this so that SpriteRenderers have their own shader
+
+        view = glm::mat4(1.0f);
+        view = glm::translate(view, glm::vec3(camera.position, 0.0f));
+        view = glm::rotate(view, glm::radians(camera.rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+        view = glm::scale(view, glm::vec3(camera.scale, 1.0f));
+
+        glm::mat4 model = glm::mat4(1.0f);
+
+        model = glm::translate(model, glm::vec3(position, 0.0f)); // first translate (transformations are: scale happens first, then rotation, and then final translation happens; reversed order)
+
+        model = glm::translate(model, glm::vec3(0.5f * scale.x, 0.5f * scale.y, 0.0f));   // move origin of rotation to center of quad
+        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));  // then rotate
+        model = glm::translate(model, glm::vec3(-0.5f * scale.x, -0.5f * scale.y, 0.0f)); // move origin back
+
+        model = glm::scale(model, glm::vec3(scale, 1.0f)); // last scale
+
+        shader.SetMat4("view", view);
+        shader.SetMat4("model", model);
+        shader.SetVec3("spriteColor", (glm::vec4)color);
+
+        glActiveTexture(GL_TEXTURE0);
+        texture.Bind();
+
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
     }
 }

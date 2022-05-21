@@ -8,12 +8,8 @@ If you are interested in contributing to this game engne, feel free to fork the 
 
 ## Setting up Ducktape for development
 
-### Install the Vulkan SDK
-From the [Vulkan SDK website](https://vulkan.lunarg.com/) download the latest version of the Vulkan SDK.
-
-
 ### Clone the repository
-Fork the Ducktape repository (this one).
+Fork this repository to your own account.
 Then, clone the repository using:
 ```
 git clone https://github.com/<username>/Ducktape.git

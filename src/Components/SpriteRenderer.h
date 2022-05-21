@@ -37,6 +37,7 @@ aryanbaburajan2007@gmail.com
 #include <Components/Transform.h>
 #include <Core/Macro.h>
 #include <Renderer/Color.h>
+#include <Components/Camera.h>
 
 namespace Ducktape
 {
@@ -53,5 +54,6 @@ namespace Ducktape
         Texture texture;
         unsigned int VAO;
         Transform *transform;
+        Transform *activeCamera;
     };
 }

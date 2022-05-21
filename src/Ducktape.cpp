@@ -26,12 +26,31 @@ aryanbaburajan2007@gmail.com
 using namespace std;
 using namespace Ducktape;
 
+class CameraController : public Component
+{
+public:
+	Transform *transform;
+
+	void Init()
+	{
+		transform = &Entity::FromComponent(*this).GetComponent<Transform>();
+		transform->position.y = 300.f;
+	}
+
+	void Tick()
+	{
+		transform->rotation += 0.1f;
+		transform->position.x += 0.1f;
+	}
+};
+
 void MainScene(Scene &scene)
 {
 	scene.Call<Tag>();
 	scene.Call<Transform>();
 	scene.Call<Camera>();
 	scene.Call<SpriteRenderer>();
+	scene.Call<CameraController>();
 }
 
 int main()
@@ -53,6 +72,7 @@ int main()
 		camera.AddComponent<Tag>().name = "MainCamera";
 		camera.AddComponent<Transform>();
 		camera.AddComponent<Camera>();
+		camera.AddComponent<CameraController>();
 
 		Entity player = mainScene.CreateEntity();
 		player.AddComponent<Tag>().name = "Player";

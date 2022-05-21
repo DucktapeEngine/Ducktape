@@ -32,6 +32,7 @@ namespace Ducktape
             texture.Load(sprite);
 
         transform = &Entity::FromComponent(*this).GetComponent<Transform>();
+        activeCamera = &Entity::FromComponent(*Camera::activeCamera).GetComponent<Transform>();
 
         unsigned int VBO;
 
@@ -64,26 +65,6 @@ namespace Ducktape
     {
         FT("SpriteRenderer::Tick()");
 
-        engine->renderer.shader.Use(); // TOFIX: Change this to seperate shader for each SpriteRenderer
-
-        glm::mat4 model = glm::mat4(1.0f);
-
-        model = glm::translate(model, glm::vec3(transform->position, 0.0f)); // first translate (transformations are: scale happens first, then rotation, and then final translation happens; reversed order)
-
-        model = glm::translate(model, glm::vec3(0.5f * transform->scale.x, 0.5f * transform->scale.y, 0.0f));   // move origin of rotation to center of quad
-        model = glm::rotate(model, glm::radians(transform->rotation), glm::vec3(0.0f, 0.0f, 1.0f));             // then rotate
-        model = glm::translate(model, glm::vec3(-0.5f * transform->scale.x, -0.5f * transform->scale.y, 0.0f)); // move origin back
-
-        model = glm::scale(model, glm::vec3(transform->scale, 1.0f)); // last scale
-
-        engine->renderer.shader.SetMat4("model", model);
-        engine->renderer.shader.SetVec3("spriteColor", (glm::vec4)color);
-
-        glActiveTexture(GL_TEXTURE0);
-        texture.Bind();
-
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
+        engine->renderer.DrawQuad(transform->position, transform->rotation, transform->scale, color, texture, VAO, *activeCamera);
     }
 }
