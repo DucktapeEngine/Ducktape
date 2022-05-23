@@ -34,5 +34,6 @@ namespace Ducktape
         glm::vec2 windowSize;
         std::string windowTitle;
         glm::vec3 version;
+        int targetFPS;
     };
 }

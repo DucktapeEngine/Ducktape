@@ -27,13 +27,12 @@ aryanbaburajan2007@gmail.com
 #include <functional>
 
 #include <entt/entt.hpp>
+#include <raylib-cpp.hpp>
 
 #include <Core/Configuration.h>
 #include <Core/Scene.h>
-#include <Input/Input.h>
 #include <Core/Window.h>
 #include <Editor/Editor.h>
-#include <Renderer/Renderer.h>
 #include <Core/Macro.h>
 
 namespace Ducktape
@@ -47,8 +46,6 @@ namespace Ducktape
     public:
         Configuration configuration;
         Window window;
-        Input input;
-        Renderer renderer;
 
         Engine();
 

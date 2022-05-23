@@ -23,34 +23,13 @@ aryanbaburajan2007@gmail.com
 // #define FUNCTION_TRACE
 #include <Ducktape.h>
 
-using namespace std;
-using namespace Ducktape;
+// using namespace Ducktape;
 
-class CameraController : public Component
+void MainScene(Ducktape::Scene &scene)
 {
-public:
-	Transform *transform;
-
-	void Init()
-	{
-		transform = &Entity::FromComponent(*this).GetComponent<Transform>();
-		transform->position.y = 300.f;
-	}
-
-	void Tick()
-	{
-		transform->rotation += 0.1f;
-		transform->position.x += 0.1f;
-	}
-};
-
-void MainScene(Scene &scene)
-{
-	scene.Call<Tag>();
-	scene.Call<Transform>();
-	scene.Call<Camera>();
-	scene.Call<SpriteRenderer>();
-	scene.Call<CameraController>();
+	scene.Call<Ducktape::Tag>();
+	scene.Call<Ducktape::Transform>();
+	scene.Call<Ducktape::Camera>();
 }
 
 int main()
@@ -62,30 +41,26 @@ int main()
 					 "This is free software, and you are welcome to redistribute it\n"
 					 "under certain conditions; type `show c' for details.\n";
 
-		Engine game;
+		Ducktape::Engine game;
 		game.configuration.windowSize = {800, 600};
 		game.configuration.windowTitle = "DucktapeTest";
 
-		Scene mainScene = Scene(MainScene);
+		Ducktape::Scene mainScene = Ducktape::Scene(MainScene);
 
-		Entity camera = mainScene.CreateEntity();
-		camera.AddComponent<Tag>().name = "MainCamera";
-		camera.AddComponent<Transform>();
-		camera.AddComponent<Camera>();
-		camera.AddComponent<CameraController>();
+		Ducktape::Entity camera = mainScene.CreateEntity();
+		camera.AddComponent<Ducktape::Tag>().name = "MainCamera";
+		camera.AddComponent<Ducktape::Transform>();
+		camera.AddComponent<Ducktape::Camera>();
 
-		Entity player = mainScene.CreateEntity();
-		player.AddComponent<Tag>().name = "Player";
-		player.AddComponent<Transform>();
-
-		SpriteRenderer &sr = player.AddComponent<SpriteRenderer>();
-		sr.sprite = "../sprites/ducktapeicon.png";
+		Ducktape::Entity player = mainScene.CreateEntity();
+		player.AddComponent<Ducktape::Tag>().name = "Player";
+		player.AddComponent<Ducktape::Transform>();
 
 		game.Run(mainScene);
 	}
-	catch (const exception &e)
+	catch (const std::exception &e)
 	{
-		cout << e.what() << endl;
+		std::cout << e.what() << std::endl;
 		exit(1);
 	}
 }

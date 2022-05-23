@@ -1,0 +1,28 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  Test:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    
+    - name: Update Packages
+      run: sudo apt-get update
+
+    - name: Install Dependencies
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev -y
+
+    - name: Configure
+      run: cmake -B build .
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Test
+      run: ./build/tests/raylib_cpp_test

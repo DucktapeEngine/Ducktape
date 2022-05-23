@@ -26,17 +26,13 @@ aryanbaburajan2007@gmail.com
 #include <stdexcept>
 #include <iostream>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <raylib-cpp.hpp>
 
 #include <Core/Configuration.h>
-#include <Renderer/Shader.h>
-#include <Renderer/Texture.h>
 #include <Core/Macro.h>
 
 namespace Ducktape
@@ -44,12 +40,7 @@ namespace Ducktape
     class Window
     {
     public:
-        GLFWwindow *window;
-        glm::vec2 windowSize;
-
+        raylib::Window window;
         void Init(const Configuration &config);
-        void Tick();
-        void Cleanup();
-        static void FrameBufferResizeCallback(GLFWwindow *window, int width, int height);
     };
 }

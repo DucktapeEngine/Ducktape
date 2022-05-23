@@ -13,7 +13,6 @@ Fork this repository to your own account.
 Then, clone the repository using:
 ```
 git clone https://github.com/<username>/Ducktape.git
-git submodule update --init --recursive
 ```
 
 ### Compile Ducktape

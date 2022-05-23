@@ -33,43 +33,34 @@ namespace Ducktape
 
     void Engine::Run(Scene &scene)
     {
+        FT("Engine::Run()");
+
         try
         {
             // Rendering
             window.Init(configuration);
             Editor::Init(window);
-            renderer.Init(window);
-
-            // Input
-            input.Init(window);
 
             // Logic
             Scene::activeScene = &scene;
             scene.Init();
 
-            while (!glfwWindowShouldClose(window.window))
+            while (!window.window.ShouldClose())
             {
-                window.Tick();
-
-                renderer.Clear();
-
-                input.Tick(window);
+                BeginDrawing();
+                window.window.ClearBackground(BLACK);
 
                 scene.Tick();
 
                 Editor::Tick();
 
-                renderer.Flush();
+                EndDrawing();
             }
-
-            window.Cleanup();
         }
         catch (const std::exception &e)
         {
             std::cerr << e.what() << std::endl;
             std::cin.get();
         }
-
-        FT("Engine::Run()");
     }
 }

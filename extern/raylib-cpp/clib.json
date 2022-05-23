@@ -1,0 +1,62 @@
+{
+  "name": "raylib-cpp",
+  "version": "4.2.1",
+  "repo": "RobLoach/raylib-cpp",
+  "description": "raylib-cpp: C++ Object-Oriented Wrapper for raylib",
+  "homepage": "https://github.com/robloach/raylib-cpp",
+  "bugs": {
+    "url": "https://github.com/robloach/raylib-cpp/issues"
+  },
+  "directories": {
+    "lib": "include",
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "keywords": [
+    "raylib"
+  ],
+  "license": "Zlib",
+  "scripts": {
+    "test": "mkdir build && cd build && cmake .. && make && make test"
+  },
+  "src": [
+    "include/AudioDevice.hpp",
+    "include/AudioStream.hpp",
+    "include/BoundingBox.hpp",
+    "include/Camera2D.hpp",
+    "include/Camera3D.hpp",
+    "include/Color.hpp",
+    "include/Font.hpp",
+    "include/Functions.hpp",
+    "include/Gamepad.hpp",
+    "include/Image.hpp",
+    "include/Material.hpp",
+    "include/Matrix.hpp",
+    "include/Mesh.hpp",
+    "include/Model.hpp",
+    "include/ModelAnimation.hpp",
+    "include/Mouse.hpp",
+    "include/Music.hpp",
+    "include/physac.hpp",
+    "include/Physics.hpp",
+    "include/Ray.hpp",
+    "include/RayCollision.hpp",
+    "include/RaylibException.hpp",
+    "include/raylib-cpp-utils.hpp",
+    "include/raylib-cpp.hpp",
+    "include/raylib.hpp",
+    "include/raymath.hpp",
+    "include/Rectangle.hpp",
+    "include/RenderTexture.hpp",
+    "include/Shader.hpp",
+    "include/Sound.hpp",
+    "include/Texture.hpp",
+    "include/Vector2.hpp",
+    "include/Vector3.hpp",
+    "include/Vector4.hpp",
+    "include/VrStereoConfig.hpp",
+    "include/Wave.hpp",
+    "include/Window.hpp"
+  ]
+}

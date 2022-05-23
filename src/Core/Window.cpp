@@ -28,50 +28,8 @@ namespace Ducktape
     {
         FT("Window::Init()");
 
-        glfwInit();
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        windowSize = config.windowSize;
-        window = glfwCreateWindow(windowSize.x, windowSize.y, config.windowTitle.c_str(), NULL, NULL);
-        glfwSetWindowUserPointer(window, this);
-
-        if (window == NULL)
-        {
-            throw std::runtime_error("Failed to create GLFW window.");
-            glfwTerminate();
-        }
-        glfwMakeContextCurrent(window);
-        glfwSetFramebufferSizeCallback(window, FrameBufferResizeCallback);
-
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        {
-            throw std::runtime_error("Failed to initialize GLAD.");
-        }
-
-        glEnable(GL_DEPTH_TEST);
-    }
-
-    void Window::Tick()
-    {
-        FT("Window::Tick()");
-
-        glfwPollEvents();
-    }
-
-    void Window::Cleanup()
-    {
-        FT("Window::Cleanup()");
-
-        glfwTerminate();
-    }
-
-    void Window::FrameBufferResizeCallback(GLFWwindow *window, int width, int height)
-    {
-        FT("Window::FrameBufferResizeCallback()");
-
-        glViewport(0, 0, width, height);
-        static_cast<Window *>(glfwGetWindowUserPointer(window))->windowSize = glm::vec2(width, height);
+        window.Close();
+        window.Init(config.windowSize.x, config.windowSize.y, config.windowTitle);
+        SetTargetFPS(config.targetFPS);
     }
 }
