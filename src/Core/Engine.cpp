@@ -48,12 +48,14 @@ namespace Ducktape
             while (!window.window.ShouldClose())
             {
                 BeginDrawing();
-                window.window.ClearBackground(BLACK);
+                window.window.ClearBackground(WHITE);
+                BeginMode3D(Camera::activeCamera->camera);
 
                 scene.Tick();
 
                 Editor::Tick();
 
+                EndMode3D();
                 EndDrawing();
             }
         }

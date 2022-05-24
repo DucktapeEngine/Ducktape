@@ -20,26 +20,24 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-
-#include <Components/Component.h>
+#include <Components/Transform.h>
 
 namespace Ducktape
 {
-    class Transform : public Component
+    glm::vec3 Transform::Forward()
     {
-    public:
-        glm::vec3 position = glm::vec3(0.0f);
-        glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-        glm::vec3 scale = glm::vec3(1.0f);
+        return glm::vec3(2 * (rotation.x * rotation.z + rotation.w * rotation.y),
+                         2 * (rotation.y * rotation.z - rotation.w * rotation.x),
+                         1 - 2 * (rotation.x * rotation.x + rotation.y * rotation.y));
+    }
 
-        glm::vec3 Forward();
-        glm::vec3 Right();
-        glm::vec3 Up();
-    };
+    glm::vec3 Transform::Right()
+    {
+        return glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), Forward()));
+    }
+
+    glm::vec3 Transform::Up()
+    {
+        return glm::cross(Forward(), Right());
+    }
 }

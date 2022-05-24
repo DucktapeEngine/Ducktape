@@ -22,7 +22,12 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <raylib-cpp.hpp>
+
 #include <Components/Component.h>
+#include <Components/Transform.h>
+#include <Core/Entity.h>
+#include <Core/Math.h>
 
 namespace Ducktape
 {
@@ -31,6 +36,16 @@ namespace Ducktape
     public:
         inline static Camera *activeCamera;
 
+        float fieldOfView = 45.0f;
+        bool isOrthographic = false;
+        raylib::Camera3D camera;
+
         Camera();
+
+        void Init();
+        void Tick();
+
+    private:
+        Transform *transform;
     };
 }

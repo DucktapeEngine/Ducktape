@@ -22,24 +22,13 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#define GLM_FORCE_RADIANS
+#include <raylib-cpp.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-
-#include <Components/Component.h>
 
 namespace Ducktape
 {
-    class Transform : public Component
+    namespace Math
     {
-    public:
-        glm::vec3 position = glm::vec3(0.0f);
-        glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-        glm::vec3 scale = glm::vec3(1.0f);
-
-        glm::vec3 Forward();
-        glm::vec3 Right();
-        glm::vec3 Up();
-    };
+        raylib::Vector3 ToRaylibVector(const glm::vec3 &vec);
+    }
 }
