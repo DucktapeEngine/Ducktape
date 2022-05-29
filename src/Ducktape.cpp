@@ -20,16 +20,16 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-// #define FUNCTION_TRACE
+#define FUNCTION_TRACE
 #include <Ducktape.h>
 
-// using namespace Ducktape;
+using namespace DT;
 
-void MainScene(Ducktape::Scene &scene)
+void MainScene(Scene &scene)
 {
-	scene.Call<Ducktape::Tag>();
-	scene.Call<Ducktape::Transform>();
-	scene.Call<Ducktape::Camera>();
+	scene.Call<Tag>();
+	scene.Call<Transform>();
+	scene.Call<Camera>();
 }
 
 int main()
@@ -41,22 +41,23 @@ int main()
 					 "This is free software, and you are welcome to redistribute it\n"
 					 "under certain conditions; type `show c' for details.\n";
 
-		Ducktape::Engine game;
-		game.configuration.windowSize = {800, 600};
-		game.configuration.windowTitle = "DucktapeTest";
+		Configuration::windowSize = {800, 600};
+		Configuration::windowTitle = "DucktapeTest";
 
-		Ducktape::Scene mainScene = Ducktape::Scene(MainScene);
+		Scene mainScene = Scene(MainScene);
 
-		Ducktape::Entity camera = mainScene.CreateEntity();
-		camera.AddComponent<Ducktape::Tag>().name = "MainCamera";
-		camera.AddComponent<Ducktape::Transform>();
-		camera.AddComponent<Ducktape::Camera>();
+		Entity camera = mainScene.CreateEntity();
+		camera.AddComponent<Tag>().name = "MainCamera";
+		Transform &camTrans = camera.AddComponent<Transform>();
+		camTrans.position = {25.0f, 25.0f, 25.0f};
+		camTrans.rotation = glm::quat(glm::vec3(0.0f, 0.0f, 45.0f));
+		camera.AddComponent<Camera>();
 
-		Ducktape::Entity player = mainScene.CreateEntity();
-		player.AddComponent<Ducktape::Tag>().name = "Player";
-		player.AddComponent<Ducktape::Transform>();
+		Entity player = mainScene.CreateEntity();
+		player.AddComponent<Tag>().name = "Player";
+		player.AddComponent<Transform>();
 
-		game.Run(mainScene);
+		Engine::Run(mainScene);
 	}
 	catch (const std::exception &e)
 	{

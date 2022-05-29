@@ -33,7 +33,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Scene.h>
 #include <Core/Macro.h>
 
-namespace Ducktape
+namespace DT
 {
     class Entity
     {
@@ -83,6 +83,7 @@ namespace Ducktape
         void RemoveComponent()
         {
             DT_ASSERT(HasComponent<T>(), "Entity does not have component.");
+            scene->sceneRegistry.get<T>(handle).OnDestroy();
             scene->sceneRegistry.remove<T>(handle);
         }
 

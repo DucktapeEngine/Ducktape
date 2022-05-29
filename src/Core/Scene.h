@@ -30,7 +30,7 @@ aryanbaburajan2007@gmail.com
 #include <Components/Component.h>
 #include <Core/Macro.h>
 
-namespace Ducktape
+namespace DT
 {
     class Entity;
 

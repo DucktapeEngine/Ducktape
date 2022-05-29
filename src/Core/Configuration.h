@@ -26,14 +26,13 @@ aryanbaburajan2007@gmail.com
 
 #include <glm/glm.hpp>
 
-namespace Ducktape
+namespace DT
 {
-    class Configuration
+    namespace Configuration
     {
-    public:
-        glm::vec2 windowSize;
-        std::string windowTitle;
-        glm::vec3 version;
-        int targetFPS;
+        inline glm::vec2 windowSize;
+        inline std::string windowTitle;
+        inline glm::vec3 version;
+        inline int targetFPS;
     };
 }

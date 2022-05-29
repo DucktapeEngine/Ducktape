@@ -26,11 +26,11 @@ aryanbaburajan2007@gmail.com
 
 #include <Components/Component.h>
 
-namespace Ducktape
+namespace DT
 {
     class Tag : public Component
     {
     public:
-        std::string name;
+        std::string name = "Untitled";
     };
 }

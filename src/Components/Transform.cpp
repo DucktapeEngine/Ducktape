@@ -22,10 +22,11 @@ aryanbaburajan2007@gmail.com
 
 #include <Components/Transform.h>
 
-namespace Ducktape
+namespace DT
 {
     glm::vec3 Transform::Forward()
     {
+        FT("Transform::Forward()");
         return glm::vec3(2 * (rotation.x * rotation.z + rotation.w * rotation.y),
                          2 * (rotation.y * rotation.z - rotation.w * rotation.x),
                          1 - 2 * (rotation.x * rotation.x + rotation.y * rotation.y));
@@ -33,11 +34,13 @@ namespace Ducktape
 
     glm::vec3 Transform::Right()
     {
+        FT("Transform::Right()");
         return glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), Forward()));
     }
 
     glm::vec3 Transform::Up()
     {
+        FT("Transform::Up()");
         return glm::cross(Forward(), Right());
     }
 }

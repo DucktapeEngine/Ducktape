@@ -29,7 +29,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Macro.h>
 
-namespace Ducktape
+namespace DT
 {
     class Color
     {

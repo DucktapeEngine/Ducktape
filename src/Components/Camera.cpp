@@ -22,31 +22,11 @@ aryanbaburajan2007@gmail.com
 
 #include <Components/Camera.h>
 
-namespace Ducktape
+namespace DT
 {
     Camera::Camera()
     {
+        FT("Camera::Camera()");
         activeCamera = this;
-    }
-
-    void Camera::Init()
-    {
-        transform = &Entity::FromComponent(*this).GetComponent<Transform>();
-    }
-
-    void Camera::Tick()
-    {
-        camera.SetPosition(Math::ToRaylibVector(transform->position));
-        camera.SetTarget(Math::ToRaylibVector(transform->position + transform->Forward()));
-        camera.SetUp(Math::ToRaylibVector(transform->Up()));
-        camera.SetFovy(fieldOfView);
-        if (isOrthographic)
-        {
-            camera.SetMode(CAMERA_ORTHOGRAPHIC);
-        }
-        else
-        {
-            camera.SetMode(CAMERA_PERSPECTIVE);
-        }
     }
 }

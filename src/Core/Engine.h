@@ -27,29 +27,17 @@ aryanbaburajan2007@gmail.com
 #include <functional>
 
 #include <entt/entt.hpp>
-#include <raylib-cpp.hpp>
 
-#include <Core/Configuration.h>
 #include <Core/Scene.h>
 #include <Core/Window.h>
 #include <Editor/Editor.h>
 #include <Core/Macro.h>
-#include <Components/Camera.h>
+#include <Input/Input.h>
 
-namespace Ducktape
+namespace DT
 {
-    class Engine;
-
-    inline Engine *engine;
-
-    class Engine
+    namespace Engine
     {
-    public:
-        Configuration configuration;
-        Window window;
-
-        Engine();
-
         void Run(Scene &scene);
     };
 }

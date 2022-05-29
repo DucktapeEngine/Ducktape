@@ -29,11 +29,11 @@ aryanbaburajan2007@gmail.com
 #include <Core/Window.h>
 #include <Core/Macro.h>
 
-namespace Ducktape
+namespace DT
 {
     namespace Editor
     {
-        void Init(const Window &window);
+        void Init();
         void SetStyle();
         void Tick();
         void Cleanup();

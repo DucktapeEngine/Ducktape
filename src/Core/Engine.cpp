@@ -22,15 +22,8 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Engine.h>
 
-namespace Ducktape
+namespace DT
 {
-    Engine::Engine()
-    {
-        FT("Engine::Engine()");
-
-        engine = this;
-    }
-
     void Engine::Run(Scene &scene)
     {
         FT("Engine::Run()");
@@ -38,25 +31,20 @@ namespace Ducktape
         try
         {
             // Rendering
-            window.Init(configuration);
-            Editor::Init(window);
+            Window::Init();
+            Editor::Init();
 
             // Logic
             Scene::activeScene = &scene;
             scene.Init();
 
-            while (!window.window.ShouldClose())
+            while (Window::window.isOpen())
             {
-                BeginDrawing();
-                window.window.ClearBackground(WHITE);
-                BeginMode3D(Camera::activeCamera->camera);
+                Input::Tick();
 
                 scene.Tick();
 
                 Editor::Tick();
-
-                EndMode3D();
-                EndDrawing();
             }
         }
         catch (const std::exception &e)

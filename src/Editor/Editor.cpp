@@ -22,17 +22,12 @@ aryanbaburajan2007@gmail.com
 
 #include <Editor/Editor.h>
 
-namespace Ducktape
+namespace DT
 {
-    void Editor::Init(const Window &window)
+    void Editor::Init()
     {
         FT("Editor::Init()");
 
-        // ImGui::CreateContext();
-        // ImGui_ImplGlfw_InitForOpenGL(window.window, true);
-        // ImGui_ImplOpenGL3_Init("#version 330");
-
-        // ImGui::StyleColorsDark();
         // SetStyle();
     }
 
@@ -101,24 +96,7 @@ namespace Ducktape
     {
         FT("Editor::Tick()");
 
-        // ImGui_ImplGlfw_NewFrame();
-        // ImGui_ImplOpenGL3_NewFrame();
-        // ImGui::NewFrame();
-
-        // ImGui::Begin("Ducktape");
-        // ImGui::Text("Hello, world!");
-        // ImGui::End();
-
-        // ImGui::EndFrame();
-        // ImGui::Render();
-        // ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    }
-
-    void Editor::Cleanup()
-    {
-        FT("Editor::Cleanup()");
-
-        // ImGui_ImplGlfw_Shutdown();
-        // ImGui::DestroyContext();
+        // bool show_demo_window = false;
+        // ImGui::ShowDemoWindow(&show_demo_window);
     }
 }

@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Scene.h>
 
-namespace Ducktape
+namespace DT
 {
     Scene::Scene(std::function<void(Scene &)> function)
     {

@@ -30,17 +30,17 @@ aryanbaburajan2007@gmail.com
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <raylib-cpp.hpp>
+#include <SFML/Window.hpp>
 
 #include <Core/Configuration.h>
 #include <Core/Macro.h>
 
-namespace Ducktape
+namespace DT
 {
-    class Window
+    namespace Window
     {
-    public:
-        raylib::Window window;
-        void Init(const Configuration &config);
+        inline sf::Window window;
+
+        void Init();
     };
 }

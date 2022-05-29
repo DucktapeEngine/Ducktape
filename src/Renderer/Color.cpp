@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Renderer/Color.h>
 
-namespace Ducktape
+namespace DT
 {
     Color::Color(float red, float green, float blue)
     {

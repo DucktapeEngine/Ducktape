@@ -22,14 +22,12 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Window.h>
 
-namespace Ducktape
+namespace DT
 {
-    void Window::Init(const Configuration &config)
+    void Window::Init()
     {
         FT("Window::Init()");
 
-        window.Close();
-        window.Init(config.windowSize.x, config.windowSize.y, config.windowTitle);
-        SetTargetFPS(config.targetFPS);
+        window.create(sf::VideoMode(Configuration::windowSize.x, Configuration::windowSize.y), Configuration::windowTitle, sf::Style::Default);
     }
 }

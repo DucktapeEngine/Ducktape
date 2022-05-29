@@ -28,8 +28,9 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtc/quaternion.hpp>
 
 #include <Components/Component.h>
+#include <Core/Macro.h>
 
-namespace Ducktape
+namespace DT
 {
     class Transform : public Component
     {

@@ -22,12 +22,13 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-namespace Ducktape
+namespace DT
 {
     class Component
     {
     public:
         virtual void Init() {}
         virtual void Tick() {}
+        virtual void OnDestroy() {}
     };
 }

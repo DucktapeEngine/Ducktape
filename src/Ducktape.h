@@ -34,5 +34,6 @@ aryanbaburajan2007@gmail.com
 #include <Core/Entity.h>
 #include <Core/Scene.h>
 #include <Core/Window.h>
-#include <Input/Key.h>
+#include <Editor/Editor.h>
+#include <Input/Input.h>
 #include <Renderer/Color.h>

@@ -10,12 +10,18 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Ducktape
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cpp")
-
 file(GLOB_RECURSE imgui_source_list "${PROJECT_SOURCE_DIR}/extern/imgui/*.cpp")
+
+set(CMAKE_CXX_FLAGS "-fPIC")
 
 add_executable (Ducktape
     ${source_list}
     ${imgui_source_list}
+)
+
+set_target_properties(Ducktape PROPERTIES
+    CXX_STANDARD 20
+    CXX_EXTENSIONS OFF
 )
 
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/src/")
@@ -33,9 +39,20 @@ target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/entt/si
 # ImGUI
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/imgui/")
 
-# Raylib
-add_subdirectory("${PROJECT_SOURCE_DIR}/extern/raylib")
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/raylib/src")
-target_link_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/raylib/build/raylib")
-target_link_libraries(Ducktape PUBLIC raylib)
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/raylib-cpp/include")
+# SFML
+set(BUILD_SHARED_LIBS OFF)
+set(SFML_STATIC_LIBRARY TRUE)
+add_subdirectory(${PROJECT_SOURCE_DIR}/extern/SFML)
+set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML/cmake/)
+
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML/include")
+target_link_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/build/extern/SFML/lib")
+
+target_link_libraries(Ducktape PRIVATE
+    sfml-window
+    sfml-system
+    sfml-graphics
+    sfml-audio
+    sfml-system
+    sfml-network
+)

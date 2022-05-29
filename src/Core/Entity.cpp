@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Entity.h>
 
-namespace Ducktape
+namespace DT
 {
     Entity::Entity()
     {
