@@ -25,11 +25,66 @@ aryanbaburajan2007@gmail.com
 
 using namespace DT;
 
+class CamController : public Component
+{
+public:
+	Transform *transform;
+
+	void Init()
+	{
+		transform = &Entity::FromComponent(*this).GetComponent<Transform>();
+	}
+
+	void Tick()
+	{
+		if (Input::GetKey(KeyCode::W))
+			transform->position += glm::vec2(0.f, -1.f);
+
+		if (Input::GetKey(KeyCode::S))
+			transform->position += glm::vec2(0.f, 1.f);
+
+		if (Input::GetKey(KeyCode::A))
+			transform->position += glm::vec2(-1.f, 0.f);
+
+		if (Input::GetKey(KeyCode::D))
+			transform->position += glm::vec2(1.f, 0.f);
+	}
+};
+
+class PlayController : public Component
+{
+public:
+	Transform *transform;
+
+	void Init()
+	{
+		transform = &Entity::FromComponent(*this).GetComponent<Transform>();
+	}
+
+	void Tick()
+	{
+		if (Input::GetKey(KeyCode::Up))
+			transform->position += glm::vec2(0.f, -1.f);
+
+		if (Input::GetKey(KeyCode::Down))
+			transform->position += glm::vec2(0.f, 1.f);
+
+		if (Input::GetKey(KeyCode::Left))
+			transform->position += glm::vec2(-1.f, 0.f);
+
+		if (Input::GetKey(KeyCode::Right))
+			transform->position += glm::vec2(1.f, 0.f);
+	}
+};
+
 void MainScene(Scene &scene)
 {
 	scene.Call<Tag>();
 	scene.Call<Transform>();
 	scene.Call<Camera>();
+	scene.Call<SpriteRenderer>();
+	scene.Call<CamController>();
+	scene.Call<PlayController>();
 }
 
 int main()
@@ -48,14 +103,17 @@ int main()
 
 		Entity camera = mainScene.CreateEntity();
 		camera.AddComponent<Tag>().name = "MainCamera";
-		Transform &camTrans = camera.AddComponent<Transform>();
-		camTrans.position = {25.0f, 25.0f, 25.0f};
-		camTrans.rotation = glm::quat(glm::vec3(0.0f, 0.0f, 45.0f));
+		camera.AddComponent<Transform>().position = {0.f, -1.f};
 		camera.AddComponent<Camera>();
+		camera.AddComponent<CamController>();
 
 		Entity player = mainScene.CreateEntity();
 		player.AddComponent<Tag>().name = "Player";
 		player.AddComponent<Transform>();
+		SpriteRenderer &sr = player.AddComponent<SpriteRenderer>();
+		sr.spritePath = "../resources/sprites/logo.png";
+		sr.pixelPerUnit = 2.f;
+		player.AddComponent<PlayController>();
 
 		Engine::Run(mainScene);
 	}

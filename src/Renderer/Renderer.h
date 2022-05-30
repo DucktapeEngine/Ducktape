@@ -20,42 +20,23 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#pragma once
+
+#include <vector>
+
+#include <SFML/Graphics.hpp>
+#include <glm/glm.hpp>
+
+#include <Renderer/Color.h>
 #include <Core/Window.h>
 
 namespace DT
 {
-    void Window::Init()
+    namespace Renderer
     {
-        FT("Window::Init()");
+        inline std::vector<std::pair<std::string, sf::Texture>> textureCache;
 
-        window.create(sf::VideoMode(Configuration::windowSize.x, Configuration::windowSize.y), Configuration::windowTitle, sf::Style::Default);
-    }
-
-    void Window::Clear()
-    {
-        window.clear(sf::Color::Black);
-    }
-
-    void Window::Tick()
-    {
-        FT("Window::Tick()");
-
-        window.display();
-    }
-
-    glm::vec2 Window::GetResolution()
-    {
-        FT("Window::GetResolution()");
-
-        return glm::vec2(window.getSize().x, window.getSize().y);
-    }
-
-    void Window::SetResolution(glm::vec2 resolution)
-    {
-        FT("Window::SetResolution()");
-
-        window.setSize(sf::Vector2u(resolution.x, resolution.y));
-        view.setSize(sf::Vector2f(resolution.x, resolution.y));
-        window.setView(view);
+        int LoadTextureFromCache(std::string path);
+        void DrawSprite(std::string path, glm::vec2 pos, float rot, glm::vec2 scl, int pixelPerUnit, Color color);
     }
 }

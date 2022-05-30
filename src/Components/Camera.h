@@ -22,9 +22,14 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <glm/glm.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+
 #include <Components/Component.h>
 #include <Components/Transform.h>
 #include <Core/Entity.h>
+#include <Core/Window.h>
 
 namespace DT
 {
@@ -34,5 +39,16 @@ namespace DT
         inline static Camera *activeCamera;
 
         Camera();
+
+        void Init();
+        void Tick();
+
+        static glm::vec2 UnitToPixel(glm::vec2 pos);
+        static glm::vec2 PixelToUnit(glm::vec2 pos);
+        static glm::vec2 ScreenToWorld(glm::vec2 pos);
+        static glm::vec2 WorldToScreen(glm::vec2 pos);
+
+    private:
+        Transform *transform;
     };
 }

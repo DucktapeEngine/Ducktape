@@ -28,9 +28,8 @@ aryanbaburajan2007@gmail.com
 
 #include <imgui/imgui.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <Core/Configuration.h>
 #include <Core/Macro.h>
@@ -39,8 +38,17 @@ namespace DT
 {
     namespace Window
     {
-        inline sf::Window window;
+        inline sf::RenderWindow window;
+        inline sf::View view;
+
+        inline const float PIXEL_PER_UNIT = 10.0f;
+
+        glm::vec2 GetResolution();
+        void SetResolution(glm::vec2 resolution);
 
         void Init();
+        void Tick();
+
+        void Clear();
     };
 }

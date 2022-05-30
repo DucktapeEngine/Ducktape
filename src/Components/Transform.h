@@ -35,12 +35,8 @@ namespace DT
     class Transform : public Component
     {
     public:
-        glm::vec3 position = glm::vec3(0.0f);
-        glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-        glm::vec3 scale = glm::vec3(1.0f);
-
-        glm::vec3 Forward();
-        glm::vec3 Right();
-        glm::vec3 Up();
+        glm::vec2 position = glm::vec3(0.0f);
+        float rotation = 0.f;
+        glm::vec2 scale = glm::vec3(1.0f);
     };
 }

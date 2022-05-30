@@ -77,7 +77,7 @@ namespace DT
                 break;
 
             case sf::Event::Resized:
-                // Window::SetResolution(Vector2(event.size.width, event.size.height));
+                Window::SetResolution({event.size.width, event.size.height});
                 break;
 
             case sf::Event::KeyPressed:

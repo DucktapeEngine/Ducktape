@@ -20,27 +20,29 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#pragma once
+
+#include <string>
+
+#include <Components/Component.h>
+#include <Renderer/Color.h>
+#include <Renderer/Renderer.h>
 #include <Components/Transform.h>
+#include <Components/Camera.h>
 
 namespace DT
 {
-    glm::vec3 Transform::Forward()
+    class SpriteRenderer : public Component
     {
-        FT("Transform::Forward()");
-        return glm::vec3(2 * (rotation.x * rotation.z + rotation.w * rotation.y),
-                         2 * (rotation.y * rotation.z - rotation.w * rotation.x),
-                         1 - 2 * (rotation.x * rotation.x + rotation.y * rotation.y));
-    }
+    public:
+        std::string spritePath;
+        float pixelPerUnit = 1;
+        Color color = Color(255, 255, 255, 255);
 
-    glm::vec3 Transform::Right()
-    {
-        FT("Transform::Right()");
-        return glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), Forward()));
-    }
+        void Init();
+        void Tick();
 
-    glm::vec3 Transform::Up()
-    {
-        FT("Transform::Up()");
-        return glm::cross(Forward(), Right());
-    }
-}
+    private:
+        Transform *transform;
+    };
+};

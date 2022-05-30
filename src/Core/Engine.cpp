@@ -40,11 +40,13 @@ namespace DT
 
             while (Window::window.isOpen())
             {
+                Window::Clear();
                 Input::Tick();
 
                 scene.Tick();
 
                 Editor::Tick();
+                Window::Tick();
             }
         }
         catch (const std::exception &e)

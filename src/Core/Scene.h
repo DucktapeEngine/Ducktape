@@ -27,7 +27,6 @@ aryanbaburajan2007@gmail.com
 
 #include <entt/entt.hpp>
 
-#include <Components/Component.h>
 #include <Core/Macro.h>
 
 namespace DT

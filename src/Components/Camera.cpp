@@ -29,4 +29,41 @@ namespace DT
         FT("Camera::Camera()");
         activeCamera = this;
     }
+
+    void Camera::Init()
+    {
+        transform = &Entity::FromComponent(*this).RequireComponent<Transform>();
+    }
+
+    void Camera::Tick()
+    {
+        glm::vec2 pos = UnitToPixel(transform->position);
+        pos -= glm::vec2(Window::GetResolution().x / 2, Window::GetResolution().y / 2);
+
+        Window::view.setCenter(pos.x, pos.y);
+        Window::view.setRotation(transform->rotation);
+        Window::window.setView(Window::view);
+    }
+
+    glm::vec2 Camera::UnitToPixel(glm::vec2 pos)
+    {
+        return glm::vec2(pos.x * (Window::PIXEL_PER_UNIT), pos.y * (Window::PIXEL_PER_UNIT));
+    }
+
+    glm::vec2 Camera::PixelToUnit(glm::vec2 pos)
+    {
+        return glm::vec2(pos.x / (Window::PIXEL_PER_UNIT), pos.y / (Window::PIXEL_PER_UNIT));
+    }
+
+    glm::vec2 Camera::ScreenToWorld(glm::vec2 pos)
+    {
+        sf::Vector2f vec = Window::window.mapPixelToCoords(sf::Vector2i(pos.x, pos.y));
+        return glm::vec2(vec.x, vec.y);
+    }
+
+    glm::vec2 Camera::WorldToScreen(glm::vec2 pos)
+    {
+        sf::Vector2i vec = Window::window.mapCoordsToPixel(sf::Vector2f(pos.x, pos.y));
+        return glm::vec2(vec.x, vec.y);
+    }
 }

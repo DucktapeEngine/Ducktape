@@ -20,42 +20,20 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Window.h>
+#include <Components/SpriteRenderer.h>
 
 namespace DT
 {
-    void Window::Init()
+    void SpriteRenderer::Init()
     {
-        FT("Window::Init()");
-
-        window.create(sf::VideoMode(Configuration::windowSize.x, Configuration::windowSize.y), Configuration::windowTitle, sf::Style::Default);
+        transform = &Entity::FromComponent(*this).RequireComponent<Transform>();
     }
 
-    void Window::Clear()
+    void SpriteRenderer::Tick()
     {
-        window.clear(sf::Color::Black);
-    }
-
-    void Window::Tick()
-    {
-        FT("Window::Tick()");
-
-        window.display();
-    }
-
-    glm::vec2 Window::GetResolution()
-    {
-        FT("Window::GetResolution()");
-
-        return glm::vec2(window.getSize().x, window.getSize().y);
-    }
-
-    void Window::SetResolution(glm::vec2 resolution)
-    {
-        FT("Window::SetResolution()");
-
-        window.setSize(sf::Vector2u(resolution.x, resolution.y));
-        view.setSize(sf::Vector2f(resolution.x, resolution.y));
-        window.setView(view);
+        if (spritePath != "")
+        {
+            Renderer::DrawSprite(spritePath, Camera::WorldToScreen(transform->position), transform->rotation, transform->scale, pixelPerUnit, color);
+        }
     }
 }
