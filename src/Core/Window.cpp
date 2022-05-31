@@ -28,34 +28,47 @@ namespace DT
     {
         FT("Window::Init()");
 
-        window.create(sf::VideoMode(Configuration::windowSize.x, Configuration::windowSize.y), Configuration::windowTitle, sf::Style::Default);
-    }
+        glfwInit();
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    void Window::Clear()
-    {
-        window.clear(sf::Color::Black);
+        window = glfwCreateWindow(Configuration::windowSize.x, Configuration::windowSize.y, Configuration::windowTitle.c_str(), nullptr, nullptr);
+        if (window == nullptr)
+        {
+            throw std::runtime_error("Failed to create GLFW window");
+        }
+
+        glfwMakeContextCurrent(window);
+
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        {
+            throw std::runtime_error("Failed to initialize GLAD");
+        }
+
+        glViewport(0, 0, Configuration::windowSize.x, Configuration::windowSize.y);
+        glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
     }
 
     void Window::Tick()
     {
         FT("Window::Tick()");
 
-        window.display();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 
-    glm::vec2 Window::GetResolution()
+    void Window::Destroy()
     {
-        FT("Window::GetResolution()");
+        FT("Window::Destroy()");
 
-        return glm::vec2(window.getSize().x, window.getSize().y);
+        glfwTerminate();
     }
 
-    void Window::SetResolution(glm::vec2 resolution)
+    void Window::FramebufferSizeCallback(GLFWwindow *window, int width, int height)
     {
-        FT("Window::SetResolution()");
+        FT("Window::FramebufferSizeCallback()");
 
-        window.setSize(sf::Vector2u(resolution.x, resolution.y));
-        view.setSize(sf::Vector2f(resolution.x, resolution.y));
-        window.setView(view);
+        glViewport(0, 0, width, height);
     }
 }

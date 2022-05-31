@@ -26,7 +26,6 @@ aryanbaburajan2007@gmail.com
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
-#include <SFML/Graphics.hpp>
 
 #include <Core/Macro.h>
 
@@ -54,11 +53,6 @@ namespace DT
         operator glm::vec4() const
         {
             return glm::vec4(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
-        }
-
-        operator sf::Color() const
-        {
-            return sf::Color(r, g, b, a);
         }
     };
 }

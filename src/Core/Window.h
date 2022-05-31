@@ -28,8 +28,8 @@ aryanbaburajan2007@gmail.com
 
 #include <imgui/imgui.h>
 #include <glm/glm.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #include <Core/Configuration.h>
 #include <Core/Macro.h>
@@ -38,17 +38,12 @@ namespace DT
 {
     namespace Window
     {
-        inline sf::RenderWindow window;
-        inline sf::View view;
-
-        inline const float PIXEL_PER_UNIT = 10.0f;
-
-        glm::vec2 GetResolution();
-        void SetResolution(glm::vec2 resolution);
+        inline GLFWwindow *window;
 
         void Init();
         void Tick();
+        void Destroy();
 
-        void Clear();
+        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
     };
 }

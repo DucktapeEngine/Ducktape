@@ -38,16 +38,15 @@ namespace DT
             Scene::activeScene = &scene;
             scene.Init();
 
-            while (Window::window.isOpen())
+            while (!glfwWindowShouldClose(Window::window))
             {
-                Window::Clear();
-                Input::Tick();
-
                 scene.Tick();
 
                 Editor::Tick();
                 Window::Tick();
             }
+
+            Window::Destroy();
         }
         catch (const std::exception &e)
         {

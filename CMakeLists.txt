@@ -10,12 +10,14 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Ducktape
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cpp")
+set(glad_source_list "${PROJECT_SOURCE_DIR}/extern/glad/src/glad.c" "${PROJECT_SOURCE_DIR}/extern/glad/include/glad/glad.h")
 file(GLOB_RECURSE imgui_source_list "${PROJECT_SOURCE_DIR}/extern/imgui/*.cpp")
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
 add_executable (Ducktape
     ${source_list}
+    ${glad_source_list}
     ${imgui_source_list}
 )
 
@@ -30,6 +32,15 @@ target_compile_features(Ducktape PRIVATE cxx_std_17)
 # Extern
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/")
 
+# OpenGL
+find_package(OpenGL REQUIRED)
+if (OPENGL_FOUND)
+    message("OpenGL found.")
+else (OPENGL_FOUND)
+    message("OpenGL not found.")
+endif()
+target_link_libraries(Ducktape PUBLIC ${OPENGL_gl_LIBRARY})
+
 # GLM
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glm/")
 
@@ -39,20 +50,10 @@ target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/entt/si
 # ImGUI
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/imgui/")
 
-# SFML
-set(BUILD_SHARED_LIBS OFF)
-set(SFML_STATIC_LIBRARY TRUE)
-add_subdirectory(${PROJECT_SOURCE_DIR}/extern/SFML)
-set(SFML_DIR ${PROJECT_SOURCE_DIR}/extern/SFML/cmake/)
+# GLFW
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/glfw")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glfw/include")
+target_link_libraries(Ducktape PUBLIC glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIES})
 
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/SFML/include")
-target_link_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/build/extern/SFML/lib")
-
-target_link_libraries(Ducktape PRIVATE
-    sfml-window
-    sfml-system
-    sfml-graphics
-    sfml-audio
-    sfml-system
-    sfml-network
-)
+# GLAD
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glad/include/")

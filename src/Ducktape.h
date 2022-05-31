@@ -30,8 +30,6 @@ aryanbaburajan2007@gmail.com
 #include <Components/Component.h>
 #include <Components/Tag.h>
 #include <Components/Transform.h>
-#include <Components/Camera.h>
-#include <Components/SpriteRenderer.h>
 #include <Core/Macro.h>
 #include <Core/Configuration.h>
 #include <Core/Engine.h>
@@ -39,6 +37,4 @@ aryanbaburajan2007@gmail.com
 #include <Core/Scene.h>
 #include <Core/Window.h>
 #include <Editor/Editor.h>
-#include <Input/Input.h>
 #include <Renderer/Color.h>
-#include <Renderer/Renderer.h>
