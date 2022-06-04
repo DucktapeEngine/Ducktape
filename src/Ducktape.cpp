@@ -25,10 +25,34 @@ aryanbaburajan2007@gmail.com
 
 using namespace DT;
 
+class PlayerController : public Component
+{
+public:
+	void Init()
+	{
+		Camera::transform.position = {0.0f, 0.0f, 3.0f};
+		Camera::transform.rotation = {0.0f, 0.0f, -1.0f};
+	}
+
+	void Tick()
+	{
+		const float cameraSpeed = 2.5f * Time::deltaTime;
+		if (glfwGetKey(Window::window, GLFW_KEY_W) == GLFW_PRESS)
+			Camera::transform.position += cameraSpeed * Camera::transform.rotation;
+		if (glfwGetKey(Window::window, GLFW_KEY_S) == GLFW_PRESS)
+			Camera::transform.position -= cameraSpeed * Camera::transform.rotation;
+		if (glfwGetKey(Window::window, GLFW_KEY_A) == GLFW_PRESS)
+			Camera::transform.position -= glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
+		if (glfwGetKey(Window::window, GLFW_KEY_D) == GLFW_PRESS)
+			Camera::transform.position += glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
+	}
+};
+
 void MainScene(Scene &scene)
 {
 	scene.Call<Tag>();
 	scene.Call<Transform>();
+	scene.Call<PlayerController>();
 }
 
 int main()
@@ -44,6 +68,11 @@ int main()
 		Configuration::windowTitle = "DucktapeTest";
 
 		Scene mainScene = Scene(MainScene);
+
+		Entity player = mainScene.CreateEntity();
+		player.AddComponent<Tag>();
+		player.AddComponent<Transform>();
+		player.AddComponent<PlayerController>();
 
 		Engine::Run(mainScene);
 	}

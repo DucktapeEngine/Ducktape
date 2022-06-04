@@ -22,10 +22,6 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-// External includes
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 // Ducktape includes
 #include <Components/Component.h>
 #include <Components/Tag.h>
@@ -36,5 +32,9 @@ aryanbaburajan2007@gmail.com
 #include <Core/Entity.h>
 #include <Core/Scene.h>
 #include <Core/Window.h>
+#include <Core/Time.h>
 #include <Editor/Editor.h>
 #include <Renderer/Color.h>
+#include <Renderer/Shader.h>
+#include <Renderer/Texture.h>
+#include <Renderer/Camera.h>

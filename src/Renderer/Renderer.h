@@ -22,21 +22,40 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-#include <Components/Component.h>
-#include <Core/Macro.h>
+#include <Renderer/Shader.h>
+#include <Renderer/Texture.h>
+#include <Core/Configuration.h>
+#include <Renderer/Camera.h>
 
 namespace DT
 {
-    class Transform : public Component
+    namespace Renderer
     {
-    public:
-        glm::vec3 position = glm::vec3(0.0f);
-        glm::vec3 rotation = glm::vec3(0.0f);
-        glm::vec3 scale = glm::vec3(1.0f);
-    };
+        inline Shader shader;
+        inline Texture texture1, texture2;
+        inline bool isOrtho = false;
+        inline float fov = 45.0f;
+
+        inline unsigned int VBO, VAO;
+
+        inline glm::vec3 cubePositions[] = {
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(2.0f, 5.0f, -15.0f),
+            glm::vec3(-1.5f, -2.2f, -2.5f),
+            glm::vec3(-3.8f, -2.0f, -12.3f),
+            glm::vec3(2.4f, -0.4f, -3.5f),
+            glm::vec3(-1.7f, 3.0f, -7.5f),
+            glm::vec3(1.3f, -2.0f, -2.5f),
+            glm::vec3(1.5f, 2.0f, -2.5f),
+            glm::vec3(1.5f, 0.2f, -1.5f),
+            glm::vec3(-1.3f, 1.0f, -1.5f)};
+
+        void Init();
+        void Render();
+        void Destroy();
+    }
 }

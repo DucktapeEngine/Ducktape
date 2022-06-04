@@ -22,23 +22,17 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Core/Macro.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
+// #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace DT
 {
-    namespace Engine
+    namespace Time
     {
-        void Run(Scene &scene);
-    };
+        inline float deltaTime;
+        inline float elapsedTime = 0.0f;
+        inline float fps;
+
+        void Update();
+    }
 }

@@ -20,25 +20,14 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Core/Macro.h>
-#include <Renderer/Renderer.h>
 #include <Core/Time.h>
 
 namespace DT
 {
-    namespace Engine
+    void Time::Update()
     {
-        void Run(Scene &scene);
-    };
+        deltaTime = glfwGetTime() - elapsedTime;
+        elapsedTime = glfwGetTime();
+        fps = 1.0f / deltaTime;
+    }
 }

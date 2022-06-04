@@ -20,25 +20,5 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Core/Macro.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
-
-namespace DT
-{
-    namespace Engine
-    {
-        void Run(Scene &scene);
-    };
-}
+#define STB_IMAGE_IMPLEMENTATION
+#include <utils/stb_image.h>

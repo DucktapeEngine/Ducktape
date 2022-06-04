@@ -48,14 +48,36 @@ namespace DT
 
         glViewport(0, 0, Configuration::windowSize.x, Configuration::windowSize.y);
         glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
+
+        if (Configuration::drawWireframe)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+        // copilot do the trick, make a vsync
+        if (Configuration::vsync)
+            glfwSwapInterval(1);
     }
 
-    void Window::Tick()
+    void Window::Clear(Color color)
     {
-        FT("Window::Tick()");
+        FT("Window::Clear()");
+
+        glm::vec4 clearColor = glm::vec4(color.r, color.g, color.b, color.a);
+        glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    void Window::PollEvents()
+    {
+        FT("Window::PollEvents()");
+
+        glfwPollEvents();
+    }
+
+    void Window::Display()
+    {
+        FT("Window::Display()");
 
         glfwSwapBuffers(window);
-        glfwPollEvents();
     }
 
     void Window::Destroy()

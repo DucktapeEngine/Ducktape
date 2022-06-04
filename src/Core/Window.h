@@ -33,6 +33,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Configuration.h>
 #include <Core/Macro.h>
+#include <Renderer/Color.h>
 
 namespace DT
 {
@@ -41,7 +42,11 @@ namespace DT
         inline GLFWwindow *window;
 
         void Init();
-        void Tick();
+
+        void Clear(Color color);
+        void PollEvents();
+        void Display();
+
         void Destroy();
 
         static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);

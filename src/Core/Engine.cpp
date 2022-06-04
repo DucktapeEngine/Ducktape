@@ -33,6 +33,7 @@ namespace DT
             // Rendering
             Window::Init();
             Editor::Init();
+            Renderer::Init();
 
             // Logic
             Scene::activeScene = &scene;
@@ -40,10 +41,16 @@ namespace DT
 
             while (!glfwWindowShouldClose(Window::window))
             {
+                Time::Update();
+
+                Window::PollEvents();
+                Window::Clear(Color(0.2f, 0.3f, 0.3f, 1.0f));
+
                 scene.Tick();
 
                 Editor::Tick();
-                Window::Tick();
+                Renderer::Render();
+                Window::Display();
             }
 
             Window::Destroy();

@@ -34,5 +34,7 @@ namespace DT
         inline std::string windowTitle;
         inline glm::vec3 version;
         inline int targetFPS;
+        inline bool drawWireframe = false;
+        inline bool vsync = true;
     };
 }

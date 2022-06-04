@@ -23,22 +23,30 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <string>
+#include <stdexcept>
 #include <iostream>
-#include <functional>
 
-#include <entt/entt.hpp>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <utils/stb_image.h>
 
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
 #include <Core/Macro.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
 
 namespace DT
 {
-    namespace Engine
+    class Texture
     {
-        void Run(Scene &scene);
+    public:
+        int width, height, nrChannels;
+        unsigned char *data;
+        unsigned int id;
+        int mipmapLevel = 0;
+        bool loaded = false;
+
+        Texture();
+        Texture(const std::string &path);
+
+        void Load(const std::string &path);
+        void Bind(unsigned int slot = 0);
     };
 }
