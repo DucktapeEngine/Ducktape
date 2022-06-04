@@ -20,25 +20,18 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-
-#include <Components/Component.h>
-#include <Core/Macro.h>
+#include <Input/Input.h>
 
 namespace DT
 {
-    class Transform : public Component
+    void Input::Process()
     {
-    public:
-        glm::vec3 position = glm::vec3(0.0f);
-        glm::vec3 rotation = glm::vec3(0.0f);
-        glm::vec3 scale = glm::vec3(1.0f);
+        double curPosX, curPosY;
+        glfwGetCursorPos(Window::window, &curPosX, &curPosY);
 
-        void SetEulerAngles(const glm::vec3 &eulerAngles);
-    };
+        mouseDelta = glm::vec2(curPosX - mousePosition.x, curPosY - mousePosition.y);
+        mouseDelta.y = -mouseDelta.y;
+
+        mousePosition = glm::vec2(curPosX, curPosY);
+    }
 }

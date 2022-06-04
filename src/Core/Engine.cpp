@@ -42,6 +42,7 @@ namespace DT
             while (!glfwWindowShouldClose(Window::window))
             {
                 Time::Update();
+                Input::Process();
 
                 Window::PollEvents();
                 Window::Clear(Color(0.2f, 0.3f, 0.3f, 1.0f));

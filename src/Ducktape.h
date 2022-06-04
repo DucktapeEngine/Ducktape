@@ -34,6 +34,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Window.h>
 #include <Core/Time.h>
 #include <Editor/Editor.h>
+#include <Input/Input.h>
 #include <Renderer/Color.h>
 #include <Renderer/Shader.h>
 #include <Renderer/Texture.h>

@@ -22,23 +22,19 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include <glad/glad.h>
+#include <glfw/glfw3.h>
 
-#include <Components/Component.h>
-#include <Core/Macro.h>
+#include <Core/Window.h>
 
 namespace DT
 {
-    class Transform : public Component
+    namespace Input
     {
-    public:
-        glm::vec3 position = glm::vec3(0.0f);
-        glm::vec3 rotation = glm::vec3(0.0f);
-        glm::vec3 scale = glm::vec3(1.0f);
+        inline glm::vec2 mousePosition;
+        inline glm::vec2 mouseDelta;
 
-        void SetEulerAngles(const glm::vec3 &eulerAngles);
-    };
+        void Process();
+    }
 }

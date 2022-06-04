@@ -28,15 +28,21 @@ using namespace DT;
 class PlayerController : public Component
 {
 public:
+	float yaw, pitch;
+
 	void Init()
 	{
 		Camera::transform.position = {0.0f, 0.0f, 3.0f};
 		Camera::transform.rotation = {0.0f, 0.0f, -1.0f};
+
+		glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
 	void Tick()
 	{
+		// Move
 		const float cameraSpeed = 2.5f * Time::deltaTime;
+
 		if (glfwGetKey(Window::window, GLFW_KEY_W) == GLFW_PRESS)
 			Camera::transform.position += cameraSpeed * Camera::transform.rotation;
 		if (glfwGetKey(Window::window, GLFW_KEY_S) == GLFW_PRESS)
@@ -45,6 +51,19 @@ public:
 			Camera::transform.position -= glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
 		if (glfwGetKey(Window::window, GLFW_KEY_D) == GLFW_PRESS)
 			Camera::transform.position += glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
+
+		// Look
+		float sensitivity = 1.0f * Time::deltaTime;
+
+		yaw += Input::mouseDelta.x;
+		pitch += Input::mouseDelta.y;
+
+		if (pitch > 89.0f)
+			pitch = 89.0f;
+		if (pitch < -89.0f)
+			pitch = -89.0f;
+
+		Camera::transform.SetEulerAngles({yaw, pitch, 0.0f});
 	}
 };
 
