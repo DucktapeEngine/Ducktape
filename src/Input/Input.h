@@ -22,11 +22,14 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <vector>
+
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
 #include <Core/Window.h>
+#include <Input/Key.h>
 
 namespace DT
 {
@@ -35,6 +38,15 @@ namespace DT
         inline glm::vec2 mousePosition;
         inline glm::vec2 mouseDelta;
 
+        inline std::vector<int> keysDown;
+        inline std::vector<int> keysUp;
+
+        bool GetKey(int key);
+        bool GetKeyPressed(int key);
+        bool GetKeyReleased(int key);
+
+        void Init();
         void Process();
+        void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
     }
 }

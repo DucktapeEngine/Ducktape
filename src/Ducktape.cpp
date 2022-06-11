@@ -34,8 +34,6 @@ public:
 	{
 		Camera::transform.position = {0.0f, 0.0f, 3.0f};
 		Camera::transform.rotation = {0.0f, 0.0f, -1.0f};
-
-		glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
 	void Tick()
@@ -63,7 +61,8 @@ public:
 		if (pitch < -89.0f)
 			pitch = -89.0f;
 
-		Camera::transform.SetEulerAngles({yaw, pitch, 0.0f});
+		if (Editor::mouseLock)
+			Camera::transform.SetEulerAngles({yaw, pitch, 0.0f});
 	}
 };
 

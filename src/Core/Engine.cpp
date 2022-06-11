@@ -34,6 +34,7 @@ namespace DT
             Window::Init();
             Editor::Init();
             Renderer::Init();
+            Input::Init();
 
             // Logic
             Scene::activeScene = &scene;
@@ -49,12 +50,13 @@ namespace DT
 
                 scene.Tick();
 
-                Editor::Tick();
                 Renderer::Render();
+                Editor::Render();
                 Window::Display();
             }
 
             Window::Destroy();
+            Editor::Destroy();
         }
         catch (const std::exception &e)
         {

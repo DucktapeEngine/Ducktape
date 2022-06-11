@@ -25,17 +25,24 @@ aryanbaburajan2007@gmail.com
 #include <iostream>
 
 #include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 
 #include <Core/Window.h>
 #include <Core/Macro.h>
+#include <Input/Input.h>
 
 namespace DT
 {
     namespace Editor
     {
+        inline bool showDemoWindow = true;
+
+        inline bool mouseLock = false;
+
         void Init();
         void SetStyle();
-        void Tick();
-        void Cleanup();
+        void Render();
+        void Destroy();
     }
 }
