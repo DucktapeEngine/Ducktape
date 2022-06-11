@@ -35,7 +35,9 @@ namespace DT
 {
     namespace Renderer
     {
+        inline Texture diffuseMap, specularMap;
         inline Shader lightingShader, lightingCubeShader;
+
         inline bool isOrtho = false;
         inline float fov = 45.0f;
 

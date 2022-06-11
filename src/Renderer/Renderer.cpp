@@ -30,47 +30,48 @@ namespace DT
         lightingCubeShader.Load("../resources/shaders/light_cube.vs", "../resources/shaders/light_cube.fs");
 
         float vertices[] = {
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f,
+            // positions          // normals           // texture coords
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
 
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 
-            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
 
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f};
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f};
 
         glEnable(GL_DEPTH_TEST);
 
@@ -83,13 +84,12 @@ namespace DT
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         glBindVertexArray(cubeVAO);
-
-        // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
         glEnableVertexAttribArray(0);
-        // normal attribute
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
         glEnableVertexAttribArray(1);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+        glEnableVertexAttribArray(2);
 
         /* lightCube configuration */
         // unsigned int lightCubeVAO;
@@ -99,8 +99,15 @@ namespace DT
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
         // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
         glEnableVertexAttribArray(0);
+
+        diffuseMap.Load("../resources/textures/container.png");
+        specularMap.Load("../resources/textures/container_specular.png");
+
+        lightingShader.Use();
+        lightingShader.SetInt("material.diffuse", 0);
+        lightingShader.SetInt("material.specular", 1);
     }
 
     void Renderer::Render()
@@ -118,28 +125,27 @@ namespace DT
         lightingShader.SetVec3("light.position", lightPos);
         lightingShader.SetVec3("viewPos", Camera::transform.position);
 
-        glm::vec3 lightColor;
-        lightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0));
-        lightColor.y = static_cast<float>(sin(glfwGetTime() * 0.7));
-        lightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3));
-        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);   // decrease the influence
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-        lightingShader.SetVec3("light.ambient", ambientColor);
-        lightingShader.SetVec3("light.diffuse", diffuseColor);
+        // light properties
+        lightingShader.SetVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+        lightingShader.SetVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
         lightingShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
         // material properties
-        lightingShader.SetVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-        lightingShader.SetVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-        lightingShader.SetVec3("material.specular", 0.5f, 0.5f, 0.5f); // specular lighting doesn't have full effect on this object's material
-        lightingShader.SetFloat("material.shininess", 32.0f);
-
+        lightingShader.SetVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        lightingShader.SetFloat("material.shininess", 64.0f);
         lightingShader.SetMat4("projection", Camera::projection);
         lightingShader.SetMat4("view", Camera::view);
 
         // world transformation
         glm::mat4 model = glm::mat4(1.0f);
         lightingShader.SetMat4("model", model);
+
+        // bind diffuse map
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, diffuseMap.id);
+        // bind specular map
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, specularMap.id);
 
         // render the cube
         glBindVertexArray(cubeVAO);
