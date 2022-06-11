@@ -53,7 +53,7 @@ public:
 			Camera::transform.position += glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
 
 		// Look
-		float sensitivity = 1.0f * Time::deltaTime;
+		float sensitivity = 0.5f * Time::deltaTime;
 
 		yaw += Input::mouseDelta.x;
 		pitch += Input::mouseDelta.y;

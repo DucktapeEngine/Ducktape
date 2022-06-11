@@ -32,5 +32,6 @@ namespace DT
         inline Transform transform;
 
         inline glm::mat4 view;
+        inline glm::mat4 projection;
     }
 }
