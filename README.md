@@ -39,7 +39,7 @@
 > **Note: The original Ducktape engine is going under a rewrite with a completely different goal in mind.**
 
 # Ducktape
-An open source C++ 2D & 3D game engine that focuses on being fast, and powerful, using OpenGL for rendering. As the engine is currently work in progress, it only supports an ECS. Rendering powered by OpenGL, Audio powered by OpenAL, and Physics powered by PhysX are yet to be made.
+An open source C++ 2D & 3D game engine that focuses on being fast, and powerful, using OpenGL for rendering. As the engine is currently work in progress, it only supports an ECS. Rendering powered by OpenGL, Audio powered by OpenAL, and Physics powered by Bullet3D are yet to be made.
 
 **If you like what you see, consider starring the repo, it helps!**
 
@@ -55,4 +55,4 @@ Documentation is still in the works.
 Refer to [CONTRIBUTING.md](CONTRIBUTING.md)
     
 ## License
-This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
+This project is licensed under the GPL-3.0 License - see the [`LICENSE`](LICENSE) file for details.
