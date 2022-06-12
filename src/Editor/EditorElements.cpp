@@ -24,6 +24,57 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    void EditorElements::MenuBar()
+    {
+        ImGui::BeginMainMenuBar();
+
+        if (ImGui::BeginMenu("Layout"))
+        {
+            ImGui::InputText("Layout name", &layoutName);
+
+            if (ImGui::Button("Save Layout"))
+            {
+                std::string layoutPath = "./editor/layouts/" + layoutName + ".ini";
+                std::string imguiPath = "./imgui.ini";
+
+                std::filesystem::create_directories("./editor/layouts/");
+                std::filesystem::remove(layoutPath);
+                std::filesystem::copy_file(imguiPath, layoutPath);
+
+                debug << "Saved Layout at " << layoutPath << "\n";
+            }
+
+            if (ImGui::BeginMenu("Load Layout"))
+            {
+                std::vector<std::string> layouts;
+
+                for (auto &p : std::filesystem::directory_iterator("./editor/layouts/"))
+                {
+                    layouts.push_back(p.path().filename().string());
+                }
+
+                for (auto &layout : layouts)
+                {
+                    if (ImGui::MenuItem(layout.c_str()))
+                    {
+                        std::string layoutPath = "./editor/layouts/" + layout;
+                        std::string imguiPath = "./imgui.ini";
+
+                        std::filesystem::remove(imguiPath);
+                        std::filesystem::copy_file(layoutPath, imguiPath);
+
+                        debug << "Loaded Layout from " << layoutPath << "\n";
+                    }
+                }
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
+    }
+
     void EditorElements::SceneView()
     {
         ImGui::Begin("Scene View");

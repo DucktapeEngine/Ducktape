@@ -51,7 +51,7 @@ public:
 			Camera::transform.position += glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
 
 		// Look
-		float sensitivity = 0.5f * Time::deltaTime;
+		float sensitivity = 0.25f * Time::deltaTime;
 
 		yaw += Input::mouseDelta.x;
 		pitch += Input::mouseDelta.y;
@@ -63,12 +63,6 @@ public:
 
 		if (Editor::mouseLock)
 			Camera::transform.SetEulerAngles({yaw, pitch, 0.0f});
-
-		if (Input::GetKeyPressed(KEY_SPACE))
-		{
-			debug << glm::vec3(1.0) << glm::vec2(2.0) << "\n";
-			debug << glm::vec3(3.0) << glm::vec2(4.0) << "\n";
-		}
 	}
 
 	void OnGUI()

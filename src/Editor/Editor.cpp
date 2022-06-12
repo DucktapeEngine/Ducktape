@@ -114,6 +114,7 @@ namespace DT
         // dockspace
         ImGui::DockSpaceOverViewport();
 
+        EditorElements::MenuBar();
         EditorElements::SceneView();
         EditorElements::Inspector();
         EditorElements::Console();

@@ -22,6 +22,9 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <fstream>
+#include <filesystem>
+
 #include <imgui/imgui.h>
 
 #include <Core/Scene.h>
@@ -32,6 +35,11 @@ namespace DT
 {
     namespace EditorElements
     {
+        // MenuBar
+        inline std::string layoutName = "";
+
+        void MenuBar();
+
         // Scene View
         inline entt::entity selectedEntity = entt::null;
 
