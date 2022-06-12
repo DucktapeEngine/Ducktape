@@ -83,6 +83,5 @@ namespace DT
     {
         glViewport(0, 0, width, height);
         Window::windowSize = glm::vec2(width, height);
-        std::cout << "Window size changed to: " << width << "x" << height << std::endl;
     }
 }
