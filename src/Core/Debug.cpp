@@ -20,25 +20,27 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
-#include <Input/Input.h>
+#include <Core/Debug.h>
 
 namespace DT
 {
-    namespace Engine
+    std::string ToDebug(const int &object)
     {
-        void Run(Scene &scene);
-    };
+        return std::to_string(object);
+    }
+
+    std::string ToDebug(const std::string &object)
+    {
+        return object;
+    }
+
+    std::string ToDebug(const char *object)
+    {
+        return std::string(object);
+    }
+
+    std::string ToDebug(const float &object)
+    {
+        return std::to_string(object);
+    }
 }

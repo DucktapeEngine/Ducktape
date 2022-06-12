@@ -31,6 +31,8 @@ namespace DT
     class Tag : public Component
     {
     public:
-        std::string name = "Untitled";
+        std::string name = "Unnamed";
+
+        void OnGUI();
     };
 }

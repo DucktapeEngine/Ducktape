@@ -26,12 +26,18 @@ aryanbaburajan2007@gmail.com
 #include <iostream>
 
 #include <entt/entt.hpp>
-
-#include <Core/Macro.h>
+#include <imgui/imgui.h>
 
 namespace DT
 {
     class Entity;
+
+    enum CallState
+    {
+        Init,
+        Tick,
+        OnGUI,
+    };
 
     class Scene
     {
@@ -39,8 +45,8 @@ namespace DT
         entt::registry sceneRegistry;
         static inline Scene *activeScene;
         std::function<void(Scene &)> tickFunction;
-
-        bool initCalled = 0;
+        CallState callState = CallState::Init;
+        entt::entity selectedEntity = entt::null;
 
         Scene(std::function<void(Scene &)> function);
 
@@ -59,10 +65,15 @@ namespace DT
 
             for (auto entity : view)
             {
-                if (!initCalled)
+                if (callState == CallState::Init)
                     view.template get<T>(entity).Init();
-                else
+                else if (callState == CallState::Tick)
                     view.template get<T>(entity).Tick();
+                else if (callState == CallState::OnGUI && entity == selectedEntity)
+                {
+                    view.template get<T>(entity).OnGUI();
+                    return;
+                }
             }
         }
     };

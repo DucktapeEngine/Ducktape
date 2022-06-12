@@ -20,25 +20,17 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
-#include <Input/Input.h>
+#include <Components/Tag.h>
 
 namespace DT
 {
-    namespace Engine
+    void Tag::OnGUI()
     {
-        void Run(Scene &scene);
-    };
+        if (ImGui::CollapsingHeader("Tag"))
+        {
+            ImGui::InputText("Name", &name);
+
+            EndGUI();
+        }
+    }
 }

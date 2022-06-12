@@ -22,23 +22,25 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
+#include <imgui/imgui.h>
 
 #include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
-#include <Input/Input.h>
+#include <Components/Tag.h>
+#include <Core/Debug.h>
 
 namespace DT
 {
-    namespace Engine
+    namespace EditorElements
     {
-        void Run(Scene &scene);
-    };
+        // Scene View
+        inline entt::entity selectedEntity = entt::null;
+
+        void SceneView();
+
+        // Inspector
+        void Inspector();
+
+        // Console
+        void Console();
+    }
 }

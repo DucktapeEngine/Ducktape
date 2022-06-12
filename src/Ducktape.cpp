@@ -63,6 +63,21 @@ public:
 
 		if (Editor::mouseLock)
 			Camera::transform.SetEulerAngles({yaw, pitch, 0.0f});
+
+		if (Input::GetKeyPressed(KEY_SPACE))
+		{
+			debug << glm::vec3(1.0) << glm::vec2(2.0) << "\n";
+			debug << glm::vec3(3.0) << glm::vec2(4.0) << "\n";
+		}
+	}
+
+	void OnGUI()
+	{
+		if (ImGui::CollapsingHeader("PlayerController"))
+		{
+			ImGui::DragFloat("yaw", &yaw, 0.1f, 0.0f, 360.0f);
+			ImGui::DragFloat("pitch", &pitch, 0.1f, 0.0f, 360.0f);
+		}
 	}
 };
 
@@ -88,9 +103,13 @@ int main()
 		Scene mainScene = Scene(MainScene);
 
 		Entity player = mainScene.CreateEntity();
-		player.AddComponent<Tag>();
+		player.AddComponent<Tag>().name = "Player";
 		player.AddComponent<Transform>();
 		player.AddComponent<PlayerController>();
+
+		Entity light = mainScene.CreateEntity();
+		light.AddComponent<Tag>().name = "Light";
+		light.AddComponent<Transform>();
 
 		Engine::Run(mainScene);
 	}

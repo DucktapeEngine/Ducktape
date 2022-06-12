@@ -31,4 +31,24 @@ namespace DT
         rotation.z = sin(glm::radians(eulerAngles.x)) * cos(glm::radians(eulerAngles.y));
         rotation = glm::normalize(rotation);
     }
+
+    void Transform::OnGUI()
+    {
+        if (ImGui::CollapsingHeader("Transform"))
+        {
+            ImGui::Text("Position");
+            ImGui::SameLine();
+            ImGui::InputFloat3("##Position", &position[0]);
+
+            ImGui::Text("Rotation");
+            ImGui::SameLine();
+            ImGui::InputFloat3("##Rotation", &rotation[0]);
+
+            ImGui::Text("Scale");
+            ImGui::SameLine();
+            ImGui::InputFloat3("##Scale", &scale[0]);
+
+            EndGUI();
+        }
+    }
 }

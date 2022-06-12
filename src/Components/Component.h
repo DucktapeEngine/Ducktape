@@ -22,6 +22,9 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_stdlib.h>
+
 #include <Core/Entity.h>
 
 namespace DT
@@ -31,6 +34,9 @@ namespace DT
     public:
         virtual void Init() {}
         virtual void Tick() {}
+        virtual void OnGUI() {}
         virtual void OnDestroy() {}
+
+        void EndGUI();
     };
 }

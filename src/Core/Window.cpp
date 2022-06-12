@@ -26,8 +26,6 @@ namespace DT
 {
     void Window::Init()
     {
-        FT("Window::Init()");
-
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -59,8 +57,6 @@ namespace DT
 
     void Window::Clear(Color color)
     {
-        FT("Window::Clear()");
-
         glm::vec4 clearColor = glm::vec4(color.r, color.g, color.b, color.a);
         glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -68,29 +64,21 @@ namespace DT
 
     void Window::PollEvents()
     {
-        FT("Window::PollEvents()");
-
         glfwPollEvents();
     }
 
     void Window::Display()
     {
-        FT("Window::Display()");
-
         glfwSwapBuffers(window);
     }
 
     void Window::Destroy()
     {
-        FT("Window::Destroy()");
-
         glfwTerminate();
     }
 
     void Window::FramebufferSizeCallback(GLFWwindow *window, int width, int height)
     {
-        FT("Window::FramebufferSizeCallback()");
-
         glViewport(0, 0, width, height);
     }
 }

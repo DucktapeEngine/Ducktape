@@ -76,6 +76,7 @@ namespace DT
         T &GetComponent()
         {
             DT_ASSERT(HasComponent<T>(), "Entity does not have component.");
+
             return scene->sceneRegistry.get<T>(handle);
         }
 
@@ -83,6 +84,7 @@ namespace DT
         void RemoveComponent()
         {
             DT_ASSERT(HasComponent<T>(), "Entity does not have component.");
+
             scene->sceneRegistry.get<T>(handle).OnDestroy();
             scene->sceneRegistry.remove<T>(handle);
         }

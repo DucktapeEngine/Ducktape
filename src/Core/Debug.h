@@ -24,21 +24,44 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <iostream>
-#include <functional>
 
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
-#include <Input/Input.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 namespace DT
 {
-    namespace Engine
+    // Debug casts
+    std::string ToDebug(const int &object);
+    std::string ToDebug(const std::string &object);
+    std::string ToDebug(const char *object);
+    std::string ToDebug(const float &object);
+
+    template <int N, typename T>
+    std::string ToDebug(const glm::vec<N, T> &object)
     {
-        void Run(Scene &scene);
+        return glm::to_string(object);
+    }
+
+    template <int N, typename T>
+    std::string ToDebug(const glm::mat<N, N, T> &object)
+    {
+        return glm::to_string(object);
+    }
+
+    class DebugHandler
+    {
+    public:
+        std::string log;
     };
+
+    template <typename T>
+    DebugHandler &operator<<(DebugHandler &target, const T &object)
+    {
+        std::string _object = ToDebug(object);
+        target.log += _object;
+        std::cout << _object;
+        return target;
+    }
+
+    inline DebugHandler debug;
 }

@@ -26,8 +26,6 @@ namespace DT
 {
     void Engine::Run(Scene &scene)
     {
-        FT("Engine::Run()");
-
         try
         {
             // Rendering

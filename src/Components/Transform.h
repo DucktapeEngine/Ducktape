@@ -28,7 +28,6 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtc/quaternion.hpp>
 
 #include <Components/Component.h>
-#include <Core/Macro.h>
 
 namespace DT
 {
@@ -40,5 +39,7 @@ namespace DT
         glm::vec3 scale = glm::vec3(1.0f);
 
         void SetEulerAngles(const glm::vec3 &eulerAngles);
+
+        void OnGUI();
     };
 }

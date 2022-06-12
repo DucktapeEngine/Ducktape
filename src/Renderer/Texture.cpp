@@ -26,22 +26,16 @@ namespace DT
 {
     Texture::Texture()
     {
-        FT("Texture::Texture()");
-
         stbi_set_flip_vertically_on_load(true);
     }
 
     Texture::Texture(const std::string &path)
     {
-        FT("Texture::Texture()");
-
         Load(path);
     }
 
     void Texture::Load(const std::string &path)
     {
-        FT("Texture::Load()");
-
         glGenTextures(1, &id);
         glBindTexture(GL_TEXTURE_2D, id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -72,8 +66,6 @@ namespace DT
 
     void Texture::Bind(unsigned int slot)
     {
-        FT("Texture::Bind()");
-
         glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, id);
     }

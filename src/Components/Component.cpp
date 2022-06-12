@@ -20,25 +20,14 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
-#include <Input/Input.h>
+#include <Components/Component.h>
 
 namespace DT
 {
-    namespace Engine
+    void Component::EndGUI()
     {
-        void Run(Scene &scene);
-    };
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(64, 64, 64, 255));
+        ImGui::Text("_______________________________________________________________");
+        ImGui::PopStyleColor();
+    }
 }

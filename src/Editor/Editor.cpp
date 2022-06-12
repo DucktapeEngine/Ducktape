@@ -26,8 +26,6 @@ namespace DT
 {
     void Editor::Init()
     {
-        FT("Editor::Init()");
-
         ImGui::CreateContext();
         ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
@@ -37,8 +35,6 @@ namespace DT
 
     void Editor::SetStyle()
     {
-        FT("Editor::SetStyle()");
-
         ImGui::StyleColorsDark();
 
         ImGuiStyle &style = ImGui::GetStyle();
@@ -95,8 +91,6 @@ namespace DT
 
     void Editor::Render()
     {
-        FT("Editor::Tick()");
-
         if (Input::GetKeyPressed(KEY_ESCAPE))
         {
             if (mouseLock)
@@ -114,7 +108,9 @@ namespace DT
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        ImGui::ShowDemoWindow(&showDemoWindow);
+        EditorElements::SceneView();
+        EditorElements::Inspector();
+        EditorElements::Console();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

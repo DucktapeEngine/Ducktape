@@ -30,8 +30,6 @@ aryanbaburajan2007@gmail.com
 #include <GLFW/glfw3.h>
 #include <utils/stb_image.h>
 
-#include <Core/Macro.h>
-
 namespace DT
 {
     class Texture
