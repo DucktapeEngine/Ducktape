@@ -30,6 +30,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Texture.h>
 #include <Core/Configuration.h>
 #include <Renderer/Camera.h>
+#include <Core/Window.h>
 
 namespace DT
 {

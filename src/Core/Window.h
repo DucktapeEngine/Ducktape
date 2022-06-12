@@ -39,6 +39,7 @@ namespace DT
     namespace Window
     {
         inline GLFWwindow *window;
+        inline glm::vec2 windowSize;
 
         void Init();
 

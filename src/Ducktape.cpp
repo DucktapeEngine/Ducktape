@@ -41,13 +41,13 @@ public:
 		// Move
 		const float cameraSpeed = 2.5f * Time::deltaTime;
 
-		if (glfwGetKey(Window::window, GLFW_KEY_W) == GLFW_PRESS)
+		if (Input::GetKey(KEY_W))
 			Camera::transform.position += cameraSpeed * Camera::transform.rotation;
-		if (glfwGetKey(Window::window, GLFW_KEY_S) == GLFW_PRESS)
+		if (Input::GetKey(KEY_S))
 			Camera::transform.position -= cameraSpeed * Camera::transform.rotation;
-		if (glfwGetKey(Window::window, GLFW_KEY_A) == GLFW_PRESS)
+		if (Input::GetKey(KEY_A))
 			Camera::transform.position -= glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
-		if (glfwGetKey(Window::window, GLFW_KEY_D) == GLFW_PRESS)
+		if (Input::GetKey(KEY_D))
 			Camera::transform.position += glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
 
 		// Look

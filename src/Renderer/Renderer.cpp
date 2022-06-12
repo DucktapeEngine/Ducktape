@@ -116,9 +116,9 @@ namespace DT
         Camera::view = glm::lookAt(Camera::transform.position, Camera::transform.position + Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f));
 
         if (isOrtho)
-            Camera::projection = glm::ortho(0.f, Configuration::windowSize.x, 0.f, Configuration::windowSize.y, 0.1f, 100.0f);
+            Camera::projection = glm::ortho(0.f, Window::windowSize.x, 0.f, Window::windowSize.y, 0.1f, 100.0f);
         else
-            Camera::projection = glm::perspective(glm::radians(fov), Configuration::windowSize.x / Configuration::windowSize.y, 0.1f, 100.0f);
+            Camera::projection = glm::perspective(glm::radians(fov), Window::windowSize.x / Window::windowSize.y, 0.1f, 100.0f);
 
         // lightingShader
         lightingShader.Use();
