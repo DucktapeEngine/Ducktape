@@ -35,6 +35,9 @@ namespace DT
 
     void Editor::SetStyle()
     {
+        ImGuiIO &io = ImGui::GetIO();
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
         ImGui::StyleColorsDark();
 
         ImGuiStyle &style = ImGui::GetStyle();
@@ -107,6 +110,9 @@ namespace DT
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+
+        // dockspace
+        ImGui::DockSpaceOverViewport();
 
         EditorElements::SceneView();
         EditorElements::Inspector();
