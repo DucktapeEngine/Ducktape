@@ -31,6 +31,8 @@ namespace DT
 
     void Shader::Load(const char *vertexPath, const char *fragmentPath)
     {
+        loaded = true;
+
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
         std::string fragmentCode;

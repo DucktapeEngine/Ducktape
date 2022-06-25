@@ -38,6 +38,7 @@ namespace DT
     {
     public:
         unsigned int id;
+        bool loaded = false;
 
         Shader() {}
         ~Shader();

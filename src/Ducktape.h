@@ -43,3 +43,5 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Renderer.h>
 #include <Renderer/Shader.h>
 #include <Renderer/Texture.h>
+#include <Renderer/Vertex.h>
+#include <Renderer/Mesh.h>

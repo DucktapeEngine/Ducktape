@@ -31,11 +31,14 @@ namespace DT
 
     Texture::Texture(const std::string &path)
     {
+        stbi_set_flip_vertically_on_load(true);
         Load(path);
     }
 
     void Texture::Load(const std::string &path)
     {
+        this->path = path;
+
         glGenTextures(1, &id);
         glBindTexture(GL_TEXTURE_2D, id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -51,7 +54,7 @@ namespace DT
         }
         else
         {
-            // determine if imae is RGB or RGBA
+            // determine if image is RGB or RGBA
             if (nrChannels == 3)
                 glTexImage2D(GL_TEXTURE_2D, mipmapLevel, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
             else if (nrChannels == 4)

@@ -57,3 +57,20 @@ target_link_libraries(Ducktape PUBLIC glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIE
 
 # GLAD
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glad/include/")
+
+# Assimp
+set(ZLIB_LIBRARIES zlibstatic)
+set(ENABLE_BOOST_WORKAROUND ON)
+set(BUILD_STATIC_LIB ON)
+set(BUILD_ASSIMP_TOOLS  ON)
+set(ASSIMP_BUILD_STATIC_LIB ON)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF)
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/extern/assimp/cmake-modules/;${CMAKE_MODULE_PATH}")
+
+find_package(assimp REQUIRED)
+target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/lib)
+target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/contrib/zlib)
+target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/extern/assimp/include)
+target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/include/)
+target_link_libraries (Ducktape PUBLIC assimp)
