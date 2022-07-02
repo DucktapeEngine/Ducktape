@@ -1,7 +1,4 @@
-﻿# CMakeList.txt : CMake project for Ducktape, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
 
 project ("Ducktape")
 set(CMAKE_CURRENT_BINARY_DIR "${PROJECT_SOURCE_DIR}/build/")
@@ -22,6 +19,15 @@ set(imgui_source_list
 )
 
 set(CMAKE_CXX_FLAGS "-fPIC")
+
+# Assimp
+set(ASSIMP_BUILD_ZLIB ON)
+set(BUILD_SHARED_LIBS ON)
+set(BUILD_ASSIMP_TOOLS OFF)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF)
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/extern/assimp/cmake-modules/;${CMAKE_MODULE_PATH}")
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/assimp")
 
 add_executable (Ducktape
     ${source_list}
@@ -68,18 +74,8 @@ target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glad/in
 target_link_libraries(Ducktape PUBLIC glad)
 
 # Assimp
-set(ZLIB_LIBRARIES zlibstatic)
-set(ENABLE_BOOST_WORKAROUND ON)
-set(BUILD_STATIC_LIB ON)
-set(BUILD_ASSIMP_TOOLS  ON)
-set(ASSIMP_BUILD_STATIC_LIB ON)
-set(ASSIMP_WARNINGS_AS_ERRORS OFF)
-
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/extern/assimp/cmake-modules/;${CMAKE_MODULE_PATH}")
-
-find_package(assimp REQUIRED)
-target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/lib)
+target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/bin)
 target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/contrib/zlib)
 target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/extern/assimp/include)
 target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/include/)
-target_link_libraries (Ducktape PUBLIC assimp)
+target_link_libraries(Ducktape PUBLIC assimp zlibstatic)

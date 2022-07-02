@@ -20,13 +20,13 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Renderer/ModelRenderer.h>
+#include <Components/ModelRenderer.h>
 
 namespace DT
 {
     void ModelRenderer::Init()
     {
-        transform = Entity::FromComponent(*this).GetComponent<Transform>();
+        transform = &Entity::FromComponent(*this).RequireComponent<Transform>();
 
         LoadModel(path);
     }

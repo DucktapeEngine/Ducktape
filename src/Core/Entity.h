@@ -25,9 +25,6 @@ aryanbaburajan2007@gmail.com
 #include <functional>
 #include <iostream>
 
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-
 #include <entt/entt.hpp>
 
 #include <Core/Scene.h>

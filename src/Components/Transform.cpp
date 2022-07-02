@@ -33,6 +33,21 @@ namespace DT
         return trans * rot * scl;
     }
 
+    glm::vec3 Transform::Right()
+    {
+        return rotation * glm::vec3(1.f, 0.f, 0.f);
+    }
+
+    glm::vec3 Transform::Forward()
+    {
+        return rotation * glm::vec3(0.f, 0.f, 1.f);
+    }
+
+    glm::vec3 Transform::Up()
+    {
+        return rotation * glm::vec3(0.f, 1.f, 0.f);
+    }
+
     void Transform::OnGUI()
     {
         if (ImGui::CollapsingHeader("Transform"))

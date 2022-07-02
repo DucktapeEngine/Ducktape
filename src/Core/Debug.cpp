@@ -43,4 +43,9 @@ namespace DT
     {
         return std::to_string(object);
     }
+
+    std::string ToDebug(const glm::quat &object)
+    {
+        return glm::to_string(object);
+    }
 }

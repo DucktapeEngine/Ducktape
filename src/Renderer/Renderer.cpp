@@ -34,7 +34,7 @@ namespace DT
     void Renderer::Render()
     {
         // Projection and View
-        Camera::view = glm::lookAt(Camera::transform.position, Camera::transform.position + Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f));
+        Camera::view = glm::lookAt(Camera::transform.position, Camera::transform.position + Camera::transform.Forward(), glm::vec3(0.0f, 1.0f, 0.0f));
 
         if (isOrtho)
             Camera::projection = glm::ortho(0.f, Window::windowSize.x, 0.f, Window::windowSize.y, 0.1f, 100.0f);

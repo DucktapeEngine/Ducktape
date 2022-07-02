@@ -30,25 +30,19 @@ class PlayerController : public Component
 public:
 	float yaw, pitch;
 
-	void Init()
-	{
-		Camera::transform.position = {0.0f, 0.0f, 3.0f};
-		Camera::transform.rotation = {0.0f, 0.0f, -1.0f};
-	}
-
 	void Tick()
 	{
 		// Move
 		const float cameraSpeed = 2.5f * Time::deltaTime;
 
 		if (Input::GetKey(KEY_W))
-			Camera::transform.position += cameraSpeed * Camera::transform.rotation;
+			Camera::transform.position += cameraSpeed * Camera::transform.Forward();
 		if (Input::GetKey(KEY_S))
-			Camera::transform.position -= cameraSpeed * Camera::transform.rotation;
+			Camera::transform.position -= cameraSpeed * Camera::transform.Forward();
 		if (Input::GetKey(KEY_A))
-			Camera::transform.position -= glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
+			Camera::transform.position -= cameraSpeed * Camera::transform.Right();
 		if (Input::GetKey(KEY_D))
-			Camera::transform.position += glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
+			Camera::transform.position += cameraSpeed * Camera::transform.Right();
 
 		// Look
 		float sensitivity = 0.25f * Time::deltaTime;
@@ -62,7 +56,9 @@ public:
 			pitch = -89.0f;
 
 		if (Editor::mouseLock)
-			Camera::transform.SetEulerAngles({yaw, pitch, 0.0f});
+			Camera::transform.rotation = glm::quat({yaw, pitch, 0.0f});
+
+		debug << "hello\n";
 	}
 
 	void OnGUI()
@@ -79,6 +75,7 @@ void MainScene(Scene &scene)
 {
 	scene.Call<Tag>();
 	scene.Call<Transform>();
+	scene.Call<ModelRenderer>();
 	scene.Call<PlayerController>();
 }
 
@@ -107,6 +104,7 @@ int main()
 
 		Entity bag = mainScene.CreateEntity();
 		bag.AddComponent<Tag>().name = "Bag";
+		bag.AddComponent<Transform>();
 		bag.AddComponent<ModelRenderer>().path = "../resources/models/backpack/backpack.obj";
 
 		Engine::Run(mainScene);

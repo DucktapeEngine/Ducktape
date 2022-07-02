@@ -32,15 +32,6 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    struct DecomposedTransform
-    {
-        glm::vec3 position;
-        glm::quat rotation;
-        glm::vec3 scale;
-        glm::vec3 skew;
-        glm::vec4 perspective;
-    };
-
     class Transform : public Component
     {
     public:
@@ -49,6 +40,10 @@ namespace DT
         glm::vec3 scale;
 
         glm::mat4 GetModelMatrix();
+
+        glm::vec3 Right();
+        glm::vec3 Forward();
+        glm::vec3 Up();
 
         void OnGUI();
     };
