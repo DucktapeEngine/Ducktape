@@ -26,115 +26,23 @@ namespace DT
 {
     void Renderer::Init()
     {
-        shader.Load("../resources/shaders/vertex.glsl", "../resources/shaders/fragment.glsl");
-        texture1.Load("../resources/textures/container.jpg");
-        texture2.Load("../resources/textures/awesomeface.png");
-
-        float vertices[] = {
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-
-            -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f};
-
         glEnable(GL_DEPTH_TEST);
 
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-
-        glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
-        glEnableVertexAttribArray(0);
-        // texture coord attribute
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
-
-        shader.Use();
-        shader.SetInt("texture1", 0);
-        shader.SetInt("texture2", 1);
-
-        glm::mat4 projection = glm::mat4(1.0f);
-
-        if (isOrtho)
-            projection = glm::ortho(0.f, Configuration::windowSize.x, 0.f, Configuration::windowSize.y, 0.1f, 100.0f);
-        else
-            projection = glm::perspective(glm::radians(fov), Configuration::windowSize.x / Configuration::windowSize.y, 0.1f, 100.0f);
-
-        shader.SetMat4("projection", projection);
+        shader.Load("../resources/shaders/vertex.glsl", "../resources/shaders/fragment.glsl");
     }
 
     void Renderer::Render()
     {
-        // bind textures on corresponding texture units
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture1.id);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2.id);
+        // Projection and View
+        Camera::view = glm::lookAt(Camera::transform.position, Camera::transform.position + Camera::transform.Forward(), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        if (isOrtho)
+            Camera::projection = glm::ortho(0.f, Window::windowSize.x, 0.f, Window::windowSize.y, 0.1f, 100.0f);
+        else
+            Camera::projection = glm::perspective(glm::radians(fov), Window::windowSize.x / Window::windowSize.y, 0.1f, 100.0f);
 
         shader.Use();
-
-        Camera::view = glm::lookAt(Camera::transform.position, Camera::transform.position + Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f));
-
+        shader.SetMat4("projection", Camera::projection);
         shader.SetMat4("view", Camera::view);
-
-        glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < 10; i++)
-        {
-            // calculate the model matrix for each object and pass it to shader before drawing
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            shader.SetMat4("model", model);
-
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
-    }
-
-    void Renderer::Destroy()
-    {
-        glDeleteVertexArrays(1, &VAO);
-        glDeleteBuffers(1, &VBO);
     }
 }

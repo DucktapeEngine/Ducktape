@@ -36,9 +36,3 @@ aryanbaburajan2007@gmail.com
             exit(1);                                                                                      \
         }                                                                                                 \
     } while (0)
-
-#if defined(NDEBUG) || !defined(FUNCTION_TRACE)
-#define FT(name)
-#else
-#define FT(name) std::cout << name << '\n';
-#endif

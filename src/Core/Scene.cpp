@@ -26,23 +26,18 @@ namespace DT
 {
     Scene::Scene(std::function<void(Scene &)> function)
     {
-        FT("Scene::Scene()");
-
         tickFunction = function;
     }
 
     void Scene::Init()
     {
-        FT("Scene::Init()");
-
+        callState = CallState::Init;
         tickFunction(*this);
-        initCalled = true;
     }
 
     void Scene::Tick()
     {
-        FT("Scene::Tick()");
-
+        callState = CallState::Tick;
         tickFunction(*this);
     }
 }

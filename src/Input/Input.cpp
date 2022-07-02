@@ -24,8 +24,29 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    bool Input::GetKey(int key)
+    {
+        return glfwGetKey(Window::window, key) == GLFW_PRESS;
+    }
+
+    bool Input::GetKeyPressed(int key)
+    {
+        return std::find(keysDown.begin(), keysDown.end(), key) != keysDown.end();
+    }
+
+    bool Input::GetKeyReleased(int key)
+    {
+        return std::find(keysUp.begin(), keysUp.end(), key) != keysUp.end();
+    }
+
+    void Input::Init()
+    {
+        glfwSetKeyCallback(Window::window, KeyCallback);
+    }
+
     void Input::Process()
     {
+        // Mouse
         double curPosX, curPosY;
         glfwGetCursorPos(Window::window, &curPosX, &curPosY);
 
@@ -33,5 +54,21 @@ namespace DT
         mouseDelta.y = -mouseDelta.y;
 
         mousePosition = glm::vec2(curPosX, curPosY);
+
+        // Keyboard
+        keysUp.clear();
+        keysDown.clear();
+    }
+
+    void Input::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+    {
+        if (action == GLFW_PRESS)
+        {
+            keysDown.push_back(key);
+        }
+        else if (action == GLFW_RELEASE)
+        {
+            keysUp.push_back(key);
+        }
     }
 }

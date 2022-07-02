@@ -26,14 +26,13 @@ namespace DT
 {
     void Engine::Run(Scene &scene)
     {
-        FT("Engine::Run()");
-
         try
         {
             // Rendering
             Window::Init();
             Editor::Init();
             Renderer::Init();
+            Input::Init();
 
             // Logic
             Scene::activeScene = &scene;
@@ -47,14 +46,17 @@ namespace DT
                 Window::PollEvents();
                 Window::Clear(Color(0.2f, 0.3f, 0.3f, 1.0f));
 
+                Renderer::Render();
+
                 scene.Tick();
 
-                Editor::Tick();
-                Renderer::Render();
+                Editor::Render();
                 Window::Display();
+                // haha
             }
 
             Window::Destroy();
+            Editor::Destroy();
         }
         catch (const std::exception &e)
         {

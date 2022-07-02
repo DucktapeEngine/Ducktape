@@ -32,7 +32,6 @@ aryanbaburajan2007@gmail.com
 #include <GLFW/glfw3.h>
 
 #include <Core/Configuration.h>
-#include <Core/Macro.h>
 #include <Renderer/Color.h>
 
 namespace DT
@@ -40,6 +39,7 @@ namespace DT
     namespace Window
     {
         inline GLFWwindow *window;
+        inline glm::vec2 windowSize;
 
         void Init();
 

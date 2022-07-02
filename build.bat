@@ -24,8 +24,17 @@ echo (You may enter a path to your compiler or just the compiler's command name 
 set /P compiler=""
 cls
 
+echo Choose the build type:
+echo 1) Debug
+echo 2) Release
+set /P idx=Enter your option (1,2):
+if %idx%==1 set build=DEBUG
+if %idx%==2 set build=RELEASE
+
 mkdir build
 cls
 cd build
-cmake -G "%generator%" -D CMAKE_CXX_COMPILER=%compiler% ..
+cmake -G "%generator%" -DCMAKE_CXX_COMPILER=%compiler% -DCMAKE_BUILD_TYPE=%build% ..
 make
+
+copy .\extern\assimp\bin\libassimp-5.dll .\

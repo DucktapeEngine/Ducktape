@@ -32,14 +32,13 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <Core/Macro.h>
-
 namespace DT
 {
     class Shader
     {
     public:
         unsigned int id;
+        bool loaded = false;
 
         Shader() {}
         ~Shader();

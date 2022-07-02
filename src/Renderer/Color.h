@@ -27,8 +27,6 @@ aryanbaburajan2007@gmail.com
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 
-#include <Core/Macro.h>
-
 namespace DT
 {
     class Color

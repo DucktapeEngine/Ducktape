@@ -30,8 +30,6 @@ aryanbaburajan2007@gmail.com
 #include <GLFW/glfw3.h>
 #include <utils/stb_image.h>
 
-#include <Core/Macro.h>
-
 namespace DT
 {
     class Texture
@@ -42,6 +40,8 @@ namespace DT
         unsigned int id;
         int mipmapLevel = 0;
         bool loaded = false;
+        std::string type;
+        std::string path;
 
         Texture();
         Texture(const std::string &path);

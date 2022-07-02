@@ -30,30 +30,22 @@ class PlayerController : public Component
 public:
 	float yaw, pitch;
 
-	void Init()
-	{
-		Camera::transform.position = {0.0f, 0.0f, 3.0f};
-		Camera::transform.rotation = {0.0f, 0.0f, -1.0f};
-
-		glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	}
-
 	void Tick()
 	{
 		// Move
 		const float cameraSpeed = 2.5f * Time::deltaTime;
 
-		if (glfwGetKey(Window::window, GLFW_KEY_W) == GLFW_PRESS)
-			Camera::transform.position += cameraSpeed * Camera::transform.rotation;
-		if (glfwGetKey(Window::window, GLFW_KEY_S) == GLFW_PRESS)
-			Camera::transform.position -= cameraSpeed * Camera::transform.rotation;
-		if (glfwGetKey(Window::window, GLFW_KEY_A) == GLFW_PRESS)
-			Camera::transform.position -= glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
-		if (glfwGetKey(Window::window, GLFW_KEY_D) == GLFW_PRESS)
-			Camera::transform.position += glm::normalize(glm::cross(Camera::transform.rotation, glm::vec3(0.0f, 1.0f, 0.0f))) * cameraSpeed;
+		if (Input::GetKey(KEY_W))
+			Camera::transform.position += cameraSpeed * Camera::transform.Forward();
+		if (Input::GetKey(KEY_S))
+			Camera::transform.position -= cameraSpeed * Camera::transform.Forward();
+		if (Input::GetKey(KEY_A))
+			Camera::transform.position -= cameraSpeed * Camera::transform.Right();
+		if (Input::GetKey(KEY_D))
+			Camera::transform.position += cameraSpeed * Camera::transform.Right();
 
 		// Look
-		float sensitivity = 1.0f * Time::deltaTime;
+		float sensitivity = 0.25f * Time::deltaTime;
 
 		yaw += Input::mouseDelta.x;
 		pitch += Input::mouseDelta.y;
@@ -63,7 +55,19 @@ public:
 		if (pitch < -89.0f)
 			pitch = -89.0f;
 
-		Camera::transform.SetEulerAngles({yaw, pitch, 0.0f});
+		if (Editor::mouseLock)
+			Camera::transform.rotation = glm::quat({yaw, pitch, 0.0f});
+
+		debug << "hello\n";
+	}
+
+	void OnGUI()
+	{
+		if (ImGui::CollapsingHeader("PlayerController"))
+		{
+			ImGui::DragFloat("yaw", &yaw, 0.1f, 0.0f, 360.0f);
+			ImGui::DragFloat("pitch", &pitch, 0.1f, 0.0f, 360.0f);
+		}
 	}
 };
 
@@ -71,6 +75,7 @@ void MainScene(Scene &scene)
 {
 	scene.Call<Tag>();
 	scene.Call<Transform>();
+	scene.Call<ModelRenderer>();
 	scene.Call<PlayerController>();
 }
 
@@ -89,9 +94,18 @@ int main()
 		Scene mainScene = Scene(MainScene);
 
 		Entity player = mainScene.CreateEntity();
-		player.AddComponent<Tag>();
+		player.AddComponent<Tag>().name = "Player";
 		player.AddComponent<Transform>();
 		player.AddComponent<PlayerController>();
+
+		// Entity light = mainScene.CreateEntity();
+		// light.AddComponent<Tag>().name = "Light";
+		// light.AddComponent<Transform>();
+
+		Entity bag = mainScene.CreateEntity();
+		bag.AddComponent<Tag>().name = "Bag";
+		bag.AddComponent<Transform>();
+		bag.AddComponent<ModelRenderer>().path = "../resources/models/backpack/backpack.obj";
 
 		Engine::Run(mainScene);
 	}

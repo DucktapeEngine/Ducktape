@@ -26,19 +26,25 @@ aryanbaburajan2007@gmail.com
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 
 #include <Components/Component.h>
-#include <Core/Macro.h>
 
 namespace DT
 {
     class Transform : public Component
     {
     public:
-        glm::vec3 position = glm::vec3(0.0f);
-        glm::vec3 rotation = glm::vec3(0.0f);
-        glm::vec3 scale = glm::vec3(1.0f);
+        glm::vec3 position;
+        glm::quat rotation;
+        glm::vec3 scale;
 
-        void SetEulerAngles(const glm::vec3 &eulerAngles);
+        glm::mat4 GetModelMatrix();
+
+        glm::vec3 Right();
+        glm::vec3 Forward();
+        glm::vec3 Up();
+
+        void OnGUI();
     };
 }

@@ -24,11 +24,47 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Transform::SetEulerAngles(const glm::vec3 &eulerAngles)
+    glm::mat4 Transform::GetModelMatrix()
     {
-        rotation.x = cos(glm::radians(eulerAngles.x)) * cos(glm::radians(eulerAngles.y));
-        rotation.y = sin(glm::radians(eulerAngles.y));
-        rotation.z = sin(glm::radians(eulerAngles.x)) * cos(glm::radians(eulerAngles.y));
-        rotation = glm::normalize(rotation);
+        glm::mat4 trans = glm::translate(glm::mat4(1.0), position);
+        glm::mat4 rot = glm::mat4_cast(rotation);
+        glm::mat4 scl = glm::scale(glm::mat4(1.0), scale);
+
+        return trans * rot * scl;
+    }
+
+    glm::vec3 Transform::Right()
+    {
+        return rotation * glm::vec3(1.f, 0.f, 0.f);
+    }
+
+    glm::vec3 Transform::Forward()
+    {
+        return rotation * glm::vec3(0.f, 0.f, 1.f);
+    }
+
+    glm::vec3 Transform::Up()
+    {
+        return rotation * glm::vec3(0.f, 1.f, 0.f);
+    }
+
+    void Transform::OnGUI()
+    {
+        if (ImGui::CollapsingHeader("Transform"))
+        {
+            ImGui::Text("Position");
+            ImGui::SameLine();
+            ImGui::InputFloat3("##Position", &position[0]);
+
+            ImGui::Text("Rotation");
+            ImGui::SameLine();
+            ImGui::InputFloat3("##Rotation", &rotation[0]);
+
+            ImGui::Text("Scale");
+            ImGui::SameLine();
+            ImGui::InputFloat3("##Scale", &scale[0]);
+
+            EndGUI();
+        }
     }
 }

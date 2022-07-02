@@ -26,14 +26,14 @@ namespace DT
 {
     void Window::Init()
     {
-        FT("Window::Init()");
-
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        window = glfwCreateWindow(Configuration::windowSize.x, Configuration::windowSize.y, Configuration::windowTitle.c_str(), nullptr, nullptr);
+        windowSize = Configuration::windowSize;
+
+        window = glfwCreateWindow(windowSize.x, windowSize.y, Configuration::windowTitle.c_str(), nullptr, nullptr);
         if (window == nullptr)
         {
             throw std::runtime_error("Failed to create GLFW window");
@@ -46,7 +46,7 @@ namespace DT
             throw std::runtime_error("Failed to initialize GLAD");
         }
 
-        glViewport(0, 0, Configuration::windowSize.x, Configuration::windowSize.y);
+        glViewport(0, 0, windowSize.x, windowSize.y);
         glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
         if (Configuration::drawWireframe)
@@ -59,8 +59,6 @@ namespace DT
 
     void Window::Clear(Color color)
     {
-        FT("Window::Clear()");
-
         glm::vec4 clearColor = glm::vec4(color.r, color.g, color.b, color.a);
         glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -68,29 +66,22 @@ namespace DT
 
     void Window::PollEvents()
     {
-        FT("Window::PollEvents()");
-
         glfwPollEvents();
     }
 
     void Window::Display()
     {
-        FT("Window::Display()");
-
         glfwSwapBuffers(window);
     }
 
     void Window::Destroy()
     {
-        FT("Window::Destroy()");
-
         glfwTerminate();
     }
 
     void Window::FramebufferSizeCallback(GLFWwindow *window, int width, int height)
     {
-        FT("Window::FramebufferSizeCallback()");
-
         glViewport(0, 0, width, height);
+        Window::windowSize = glm::vec2(width, height);
     }
 }

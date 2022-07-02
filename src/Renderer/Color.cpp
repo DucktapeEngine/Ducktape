@@ -26,8 +26,6 @@ namespace DT
 {
     Color::Color(float red, float green, float blue)
     {
-        FT("Color::Color()");
-
         r = red;
         b = blue;
         g = green;
@@ -36,8 +34,6 @@ namespace DT
 
     Color::Color(float red, float green, float blue, float alpha)
     {
-        FT("Color::Color()");
-
         r = red;
         b = blue;
         g = green;
@@ -46,8 +42,6 @@ namespace DT
 
     Color Color::Lerp(Color initialColor, Color targetColor, float delta)
     {
-        FT("Color::Lerp");
-
         return Color(
             initialColor.r + (targetColor.r - initialColor.r) * delta,
             initialColor.g + (targetColor.g - initialColor.g) * delta,
