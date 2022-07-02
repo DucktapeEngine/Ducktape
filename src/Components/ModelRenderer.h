@@ -30,23 +30,31 @@ aryanbaburajan2007@gmail.com
 #include <assimp/postprocess.h>
 
 #include <Renderer/Mesh.h>
+#include <Components/Transform.h>
+#include <Renderer/Renderer.h>
 
 namespace DT
 {
     unsigned int TextureFromFile(const std::string &path, const std::string &directory, bool gamma = false);
 
-    class Model
+    class ModelRenderer : public Component
     {
     public:
-        std::vector<Texture> textures_loaded; // stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+        std::vector<Texture> textures_loaded;
         std::vector<Mesh> meshes;
-        std::string directory;
+        std::string path;
         bool gammaCorrection;
         bool loaded = false;
 
-        void Draw(Shader &shader);
+        void Init();
+        void Tick();
 
         void LoadModel(std::string const &path);
+
+    private:
+        Transform *transform;
+        std::string directory;
+
         void ProcessNode(aiNode *node, const aiScene *scene);
         Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
         std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);

@@ -24,12 +24,13 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Transform::SetEulerAngles(const glm::vec3 &eulerAngles)
+    glm::mat4 Transform::GetModelMatrix()
     {
-        rotation.x = cos(glm::radians(eulerAngles.x)) * cos(glm::radians(eulerAngles.y));
-        rotation.y = sin(glm::radians(eulerAngles.y));
-        rotation.z = sin(glm::radians(eulerAngles.x)) * cos(glm::radians(eulerAngles.y));
-        rotation = glm::normalize(rotation);
+        glm::mat4 trans = glm::translate(glm::mat4(1.0), position);
+        glm::mat4 rot = glm::mat4_cast(rotation);
+        glm::mat4 scl = glm::scale(glm::mat4(1.0), scale);
+
+        return trans * rot * scl;
     }
 
     void Transform::OnGUI()

@@ -26,6 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <Components/Component.h>
 #include <Components/Tag.h>
 #include <Components/Transform.h>
+#include <Components/ModelRenderer.h>
 #include <Core/Configuration.h>
 #include <Core/Debug.h>
 #include <Core/Engine.h>

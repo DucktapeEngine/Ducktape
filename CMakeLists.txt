@@ -10,14 +10,21 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Ducktape
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/src/**/*.cpp" "${PROJECT_SOURCE_DIR}/src/*.cpp")
-set(glad_source_list "${PROJECT_SOURCE_DIR}/extern/glad/src/glad.c" "${PROJECT_SOURCE_DIR}/extern/glad/include/glad/glad.h")
-file(GLOB_RECURSE imgui_source_list "${PROJECT_SOURCE_DIR}/extern/imgui/*.cpp")
+set(imgui_source_list
+    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui.cpp"
+    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_demo.cpp"
+    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_draw.cpp"
+    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_tables.cpp"
+    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_widgets.cpp"
+    "${PROJECT_SOURCE_DIR}/extern/imgui/backends/imgui_impl_glfw.cpp"
+    "${PROJECT_SOURCE_DIR}/extern/imgui/backends/imgui_impl_opengl3.cpp"
+    "${PROJECT_SOURCE_DIR}/extern/imgui/misc/cpp/imgui_stdlib.cpp"
+)
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
 add_executable (Ducktape
     ${source_list}
-    ${glad_source_list}
     ${imgui_source_list}
 )
 
@@ -56,7 +63,9 @@ target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glfw/in
 target_link_libraries(Ducktape PUBLIC glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIES})
 
 # GLAD
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/glad")
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glad/include/")
+target_link_libraries(Ducktape PUBLIC glad)
 
 # Assimp
 set(ZLIB_LIBRARIES zlibstatic)

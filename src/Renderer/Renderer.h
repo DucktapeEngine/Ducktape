@@ -31,14 +31,12 @@ aryanbaburajan2007@gmail.com
 #include <Core/Configuration.h>
 #include <Renderer/Camera.h>
 #include <Core/Window.h>
-#include <Renderer/Model.h>
 
 namespace DT
 {
     namespace Renderer
     {
         inline Shader shader;
-        inline Model model;
 
         inline bool isOrtho = false;
         inline float fov = 45.0f;

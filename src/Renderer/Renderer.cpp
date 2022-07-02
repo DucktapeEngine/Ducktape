@@ -28,7 +28,6 @@ namespace DT
     {
         glEnable(GL_DEPTH_TEST);
 
-        model.LoadModel("../resources/models/backpack/backpack.obj");
         shader.Load("../resources/shaders/vertex.glsl", "../resources/shaders/fragment.glsl");
     }
 
@@ -45,11 +44,5 @@ namespace DT
         shader.Use();
         shader.SetMat4("projection", Camera::projection);
         shader.SetMat4("view", Camera::view);
-
-        glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::translate(trans, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        trans = glm::scale(trans, glm::vec3(1.0f, 1.0f, 1.0f));     // it's a bit too big for our scene, so scale it down
-        shader.SetMat4("model", trans);
-        model.Draw(shader);
     }
 }

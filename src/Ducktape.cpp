@@ -101,9 +101,13 @@ int main()
 		player.AddComponent<Transform>();
 		player.AddComponent<PlayerController>();
 
-		Entity light = mainScene.CreateEntity();
-		light.AddComponent<Tag>().name = "Light";
-		light.AddComponent<Transform>();
+		// Entity light = mainScene.CreateEntity();
+		// light.AddComponent<Tag>().name = "Light";
+		// light.AddComponent<Transform>();
+
+		Entity bag = mainScene.CreateEntity();
+		bag.AddComponent<Tag>().name = "Bag";
+		bag.AddComponent<ModelRenderer>().path = "../resources/models/backpack/backpack.obj";
 
 		Engine::Run(mainScene);
 	}

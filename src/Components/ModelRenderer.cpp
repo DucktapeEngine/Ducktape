@@ -20,21 +20,33 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Renderer/Model.h>
+#include <Renderer/ModelRenderer.h>
 
 namespace DT
 {
-    void Model::Draw(Shader &shader)
+    void ModelRenderer::Init()
+    {
+        transform = Entity::FromComponent(*this).GetComponent<Transform>();
+
+        LoadModel(path);
+    }
+
+    void ModelRenderer::Tick()
     {
         if (!loaded)
             return;
 
+        Renderer::shader.SetMat4("model", transform->GetModelMatrix());
+
         for (unsigned int i = 0; i < meshes.size(); i++)
-            meshes[i].Draw(shader);
+            meshes[i].Draw(Renderer::shader);
     }
 
-    void Model::LoadModel(std::string const &path)
+    void ModelRenderer::LoadModel(std::string const &path)
     {
+        if (path == "")
+            return;
+
         Assimp::Importer importer;
         const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
         // check for errors
@@ -52,7 +64,7 @@ namespace DT
         loaded = true;
     }
 
-    void Model::ProcessNode(aiNode *node, const aiScene *scene)
+    void ModelRenderer::ProcessNode(aiNode *node, const aiScene *scene)
     {
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
@@ -68,7 +80,7 @@ namespace DT
         }
     }
 
-    Mesh Model::ProcessMesh(aiMesh *mesh, const aiScene *scene)
+    Mesh ModelRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene)
     {
         // data to fill
         std::vector<Vertex> vertices;
@@ -152,7 +164,7 @@ namespace DT
         return Mesh(vertices, indices, textures);
     }
 
-    std::vector<Texture> Model::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+    std::vector<Texture> ModelRenderer::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {
         std::vector<Texture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)

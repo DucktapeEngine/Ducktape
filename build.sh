@@ -47,8 +47,23 @@ echo \(You may enter a path to your compiler or just the compiler\'s command nam
 read compiler
 clear
 
+echo Choose the build type:
+echo 1\) Debug
+echo 2\) Release
+echo -n Enter your option (1,2):
+set build=None
+read build
+if [ ${idx} = 1 ]
+then
+	generator="DEBUG"
+fi
+if [ ${idx} = 2 ]
+then
+	generator="RELEASE"
+fi
+
 mkdir build
 clear
 cd build
-cmake -G "${generator}" -D CMAKE_CXX_COMPILER=${compiler} ..
+cmake -G "${generator}" -DCMAKE_CXX_COMPILER=${compiler} -DCMAKE_BUILD_TYPE=${generator} ..
 make
