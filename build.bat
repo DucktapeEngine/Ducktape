@@ -36,3 +36,5 @@ cls
 cd build
 cmake -G "%generator%" -DCMAKE_CXX_COMPILER=%compiler% -DCMAKE_BUILD_TYPE=%build% ..
 make
+
+copy .\extern\assimp\bin\libassimp-5.dll .\

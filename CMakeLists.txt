@@ -29,6 +29,8 @@ set(ASSIMP_WARNINGS_AS_ERRORS OFF)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/extern/assimp/cmake-modules/;${CMAKE_MODULE_PATH}")
 add_subdirectory("${PROJECT_SOURCE_DIR}/extern/assimp")
 
+set(BUILD_SHARED_LIBS OFF)
+
 add_executable (Ducktape
     ${source_list}
     ${imgui_source_list}
