@@ -51,7 +51,6 @@ namespace DT
         glfwGetCursorPos(Window::window, &curPosX, &curPosY);
 
         mouseDelta = glm::vec2(curPosX - mousePosition.x, curPosY - mousePosition.y);
-        mouseDelta.y = -mouseDelta.y;
 
         mousePosition = glm::vec2(curPosX, curPosY);
 

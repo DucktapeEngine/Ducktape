@@ -28,7 +28,7 @@ using namespace DT;
 class PlayerController : public Component
 {
 public:
-	float yaw, pitch;
+	float yaw = 0.f, pitch = 0.f;
 
 	void Tick()
 	{
@@ -40,12 +40,12 @@ public:
 		if (Input::GetKey(KEY_S))
 			Camera::transform.position -= cameraSpeed * Camera::transform.Forward();
 		if (Input::GetKey(KEY_A))
-			Camera::transform.position -= cameraSpeed * Camera::transform.Right();
-		if (Input::GetKey(KEY_D))
 			Camera::transform.position += cameraSpeed * Camera::transform.Right();
+		if (Input::GetKey(KEY_D))
+			Camera::transform.position -= cameraSpeed * Camera::transform.Right();
 
 		// Look
-		float sensitivity = 0.25f * Time::deltaTime;
+		float sensitivity = 25.f * Time::deltaTime;
 
 		yaw += -Input::mouseDelta.x * sensitivity;
 		pitch += Input::mouseDelta.y * sensitivity;
@@ -55,8 +55,15 @@ public:
 		if (pitch < -89.0f)
 			pitch = -89.0f;
 
+		ImGui::Begin("Player Controller");
+		{
+			ImGui::InputFloat("Yaw", &yaw);
+			ImGui::InputFloat("Pitch", &pitch);
+		}
+		ImGui::End();
+
 		if (Editor::mouseLock)
-			Camera::transform.rotation = glm::quat({pitch, yaw, 0.0f});
+			Camera::transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
 	}
 
 	void OnGUI()
