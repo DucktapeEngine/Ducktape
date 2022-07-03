@@ -27,6 +27,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Vertex.h>
 #include <Renderer/Texture.h>
 #include <Renderer/Shader.h>
+#include <Core/Debug.h>
 
 namespace DT
 {

@@ -92,7 +92,7 @@ namespace DT
         style.GrabRounding = style.FrameRounding = 2.3f;
     }
 
-    void Editor::Render()
+    void Editor::NewFrame()
     {
         if (Input::GetKeyPressed(KEY_ESCAPE))
         {
@@ -104,12 +104,15 @@ namespace DT
             mouseLock = !mouseLock;
         }
 
-        if (mouseLock)
-            return;
-
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+    }
+
+    void Editor::Render()
+    {
+        if (mouseLock)
+            return;
 
         // dockspace
         ImGui::DockSpaceOverViewport();
@@ -118,7 +121,10 @@ namespace DT
         EditorElements::SceneView();
         EditorElements::Inspector();
         EditorElements::Console();
+    }
 
+    void Editor::EndFrame()
+    {
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }

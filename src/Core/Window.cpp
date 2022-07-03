@@ -34,6 +34,7 @@ namespace DT
         windowSize = Configuration::windowSize;
 
         window = glfwCreateWindow(windowSize.x, windowSize.y, Configuration::windowTitle.c_str(), nullptr, nullptr);
+
         if (window == nullptr)
         {
             throw std::runtime_error("Failed to create GLFW window");
@@ -52,7 +53,6 @@ namespace DT
         if (Configuration::drawWireframe)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        // copilot do the trick, make a vsync
         if (Configuration::vsync)
             glfwSwapInterval(1);
     }

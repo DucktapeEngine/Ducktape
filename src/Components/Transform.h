@@ -26,6 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include <Components/Component.h>
@@ -36,7 +37,7 @@ namespace DT
     {
     public:
         glm::vec3 position;
-        glm::quat rotation;
+        glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
         glm::vec3 scale;
 
         glm::mat4 GetModelMatrix();

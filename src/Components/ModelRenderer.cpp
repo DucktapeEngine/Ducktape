@@ -37,6 +37,7 @@ namespace DT
             return;
 
         Renderer::shader.SetMat4("model", transform->GetModelMatrix());
+        // debug << transform->GetModelMatrix() << "\n";
 
         for (unsigned int i = 0; i < meshes.size(); i++)
             meshes[i].Draw(Renderer::shader);
