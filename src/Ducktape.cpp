@@ -47,8 +47,8 @@ public:
 		// Look
 		float sensitivity = 0.25f * Time::deltaTime;
 
-		yaw += Input::mouseDelta.x;
-		pitch += Input::mouseDelta.y;
+		yaw += -Input::mouseDelta.x * sensitivity;
+		pitch += Input::mouseDelta.y * sensitivity;
 
 		if (pitch > 89.0f)
 			pitch = 89.0f;
@@ -56,9 +56,7 @@ public:
 			pitch = -89.0f;
 
 		if (Editor::mouseLock)
-			Camera::transform.rotation = glm::quat({yaw, pitch, 0.0f});
-
-		debug << "hello\n";
+			Camera::transform.rotation = glm::quat({pitch, yaw, 0.0f});
 	}
 
 	void OnGUI()

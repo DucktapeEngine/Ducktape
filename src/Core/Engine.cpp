@@ -46,13 +46,14 @@ namespace DT
                 Window::PollEvents();
                 Window::Clear(Color(0.2f, 0.3f, 0.3f, 1.0f));
 
+                Editor::NewFrame();
                 Renderer::Render();
 
                 scene.Tick();
 
                 Editor::Render();
+                Editor::EndFrame();
                 Window::Display();
-                // haha
             }
 
             Window::Destroy();

@@ -31,6 +31,10 @@ aryanbaburajan2007@gmail.com
 #include <Core/Configuration.h>
 #include <Renderer/Camera.h>
 #include <Core/Window.h>
+#include <Core/Debug.h>
+
+GLenum glCheckError_(const char *file, int line);
+#define glCheckError() glCheckError_(__FILE__, __LINE__)
 
 namespace DT
 {
@@ -40,6 +44,8 @@ namespace DT
 
         inline bool isOrtho = false;
         inline float fov = 45.0f;
+
+        inline unsigned int VAO, VBO;
 
         void Init();
         void Render();

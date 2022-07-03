@@ -40,7 +40,9 @@ namespace DT
 
         void Init();
         void SetStyle();
+        void NewFrame();
         void Render();
+        void EndFrame();
         void Destroy();
     }
 }
