@@ -36,6 +36,7 @@ namespace DT
     std::string ToDebug(const char *object);
     std::string ToDebug(const float &object);
     std::string ToDebug(const glm::quat &object);
+    std::string ToDebug(const bool &object);
 
     template <int N, typename T>
     std::string ToDebug(const glm::vec<N, T> &object)

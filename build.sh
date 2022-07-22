@@ -50,7 +50,7 @@ clear
 echo Choose the build type:
 echo 1\) Debug
 echo 2\) Release
-echo -n Enter your option (1,2):
+echo -n Enter your option \(1,2\):
 set build=None
 read build
 if [ ${idx} = 1 ]

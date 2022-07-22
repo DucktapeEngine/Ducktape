@@ -36,11 +36,11 @@ namespace DT
         if (!loaded)
             return;
 
-        Renderer::shader.SetMat4("model", transform->GetModelMatrix());
-        // debug << transform->GetModelMatrix() << "\n";
+        defaultShader.Use();
+        defaultShader.SetMat4("model", transform->GetModelMatrix());
 
         for (unsigned int i = 0; i < meshes.size(); i++)
-            meshes[i].Draw(Renderer::shader);
+            meshes[i].Draw(defaultShader);
     }
 
     void ModelRenderer::LoadModel(std::string const &path)

@@ -32,6 +32,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Camera.h>
 #include <Core/Window.h>
 #include <Core/Debug.h>
+#include <Components/ModelRenderer.h>
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
@@ -40,7 +41,7 @@ namespace DT
 {
     namespace Renderer
     {
-        inline Shader shader;
+        inline ModelRenderer model;
 
         inline bool isOrtho = false;
         inline float fov = 45.0f;

@@ -19,7 +19,7 @@ git clone https://github.com/<username>/Ducktape.git
 Execute the build script (`build.bat` if you're on Windows, `build.sh` if you're on Linux):
 ```
 cd Ducktape
-build.bat
+build
 ```
 Select the generator for CMake
 ```
@@ -41,6 +41,13 @@ Like, `g++` if you have the GNU compiler installed.
 Specify your compiler:
 (You may enter a path to your compiler or just the compiler's command name if th
 e compiler path is already in your PATH environment variable)
+```
+Select the build type:
+```
+Choose the build type:
+1) Debug
+2) Release
+Enter your option (1,2):
 ```
 
 Then run 

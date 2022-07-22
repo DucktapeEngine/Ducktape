@@ -31,8 +31,6 @@ namespace DT
 
     void Shader::Load(const char *vertexPath, const char *fragmentPath)
     {
-        loaded = true;
-
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
         std::string fragmentCode;
@@ -93,6 +91,8 @@ namespace DT
         // delete the shaders as they're linked into our program now and no longer necessary
         glDeleteShader(vertex);
         glDeleteShader(fragment);
+
+        loaded = true;
     }
 
     void Shader::Use()

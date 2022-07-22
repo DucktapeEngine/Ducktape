@@ -55,13 +55,6 @@ public:
 		if (pitch < -89.0f)
 			pitch = -89.0f;
 
-		ImGui::Begin("Player Controller");
-		{
-			ImGui::InputFloat("Yaw", &yaw);
-			ImGui::InputFloat("Pitch", &pitch);
-		}
-		ImGui::End();
-
 		if (Editor::mouseLock)
 			Camera::transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
 	}
@@ -111,6 +104,11 @@ int main()
 		bag.AddComponent<Tag>().name = "Bag";
 		bag.AddComponent<Transform>();
 		bag.AddComponent<ModelRenderer>().path = "../resources/models/backpack/backpack.obj";
+
+		Entity m9 = mainScene.CreateEntity();
+		m9.AddComponent<Tag>().name = "M9";
+		m9.AddComponent<Transform>().position = {5.0f, 0.0f, 0.0f};
+		m9.AddComponent<ModelRenderer>().path = "../resources/models/m9.obj";
 
 		Engine::Run(mainScene);
 	}

@@ -48,4 +48,12 @@ namespace DT
     {
         return glm::to_string(object);
     }
+
+    std::string ToDebug(const bool &object)
+    {
+        if (object)
+            return "true";
+        else
+            return "false";
+    }
 }
