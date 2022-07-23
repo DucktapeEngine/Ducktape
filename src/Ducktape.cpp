@@ -69,27 +69,14 @@ public:
 	}
 };
 
-void MainScene(Scene &scene)
-{
-	scene.Call<Tag>();
-	scene.Call<Transform>();
-	scene.Call<ModelRenderer>();
-	scene.Call<PlayerController>();
-}
-
 int main()
 {
 	try
 	{
-		std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
-					 "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
-					 "This is free software, and you are welcome to redistribute it\n"
-					 "under certain conditions; type `show c' for details.\n";
-
 		Configuration::windowSize = {800, 600};
 		Configuration::windowTitle = "DucktapeTest";
 
-		Scene mainScene = Scene(MainScene);
+		Scene mainScene;
 
 		Entity player = mainScene.CreateEntity();
 		player.AddComponent<Tag>().name = "Player";

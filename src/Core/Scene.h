@@ -32,49 +32,24 @@ namespace DT
 {
     class Entity;
 
-    enum CallState
-    {
-        Init,
-        Tick,
-        OnGUI,
-    };
-
     class Scene
     {
     public:
         entt::registry sceneRegistry;
         static inline Scene *activeScene;
-        std::function<void(Scene &)> tickFunction;
-        CallState callState = CallState::Init;
         entt::entity selectedEntity = entt::null;
 
-        Scene(std::function<void(Scene &)> function);
+        std::vector<std::function<void()>> initCallbacks;
+        std::vector<std::function<void()>> tickCallbacks;
+        std::vector<std::function<void()>> onGuiCallbacks;
 
         void Init();
         void Tick();
+        void OnGUI();
 
         // Defined in Entity.cpp
         Entity CreateEntity();
         // Defined in Entity.cpp
         void DestroyEntity(Entity entity);
-
-        template <typename T>
-        void Call()
-        {
-            entt::view view = sceneRegistry.view<T>();
-
-            for (auto entity : view)
-            {
-                if (callState == CallState::Init)
-                    view.template get<T>(entity).Init();
-                else if (callState == CallState::Tick)
-                    view.template get<T>(entity).Tick();
-                else if (callState == CallState::OnGUI && entity == selectedEntity)
-                {
-                    view.template get<T>(entity).OnGUI();
-                    return;
-                }
-            }
-        }
     };
 }

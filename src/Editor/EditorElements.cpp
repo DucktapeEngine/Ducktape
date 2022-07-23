@@ -103,9 +103,7 @@ namespace DT
     {
         ImGui::Begin("Inspector");
 
-        Scene::activeScene->callState = CallState::OnGUI;
-        Scene::activeScene->selectedEntity = selectedEntity;
-        Scene::activeScene->tickFunction(*Scene::activeScene);
+        Scene::activeScene->OnGUI();
 
         ImGui::End();
     }

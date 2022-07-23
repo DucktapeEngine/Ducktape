@@ -24,20 +24,21 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Scene::Scene(std::function<void(Scene &)> function)
-    {
-        tickFunction = function;
-    }
-
     void Scene::Init()
     {
-        callState = CallState::Init;
-        tickFunction(*this);
+        for (std::function<void()> function : initCallbacks)
+            function();
     }
 
     void Scene::Tick()
     {
-        callState = CallState::Tick;
-        tickFunction(*this);
+        for (std::function<void()> function : tickCallbacks)
+            function();
+    }
+
+    void Scene::OnGUI()
+    {
+        for (std::function<void()> function : onGuiCallbacks)
+            function();
     }
 }
