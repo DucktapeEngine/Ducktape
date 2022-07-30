@@ -37,8 +37,6 @@ aryanbaburajan2007@gmail.com
 #include <Core/Scene.h>
 #include <Core/Time.h>
 #include <Core/Window.h>
-#include <Editor/Editor.h>
-#include <Editor/EditorElements.h>
 #include <Input/Input.h>
 #include <Input/Key.h>
 #include <Renderer/Camera.h>

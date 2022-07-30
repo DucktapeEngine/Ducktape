@@ -22,34 +22,34 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
+#include <vector>
+#include <stdexcept>
 #include <iostream>
 
-#include <entt/entt.hpp>
 #include <imgui/imgui.h>
+#include <glm/glm.hpp>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include <Core/Configuration.h>
+#include <Renderer/Color.h>
 
 namespace DT
 {
-    class Entity;
-
-    class Scene
+    namespace Window
     {
-    public:
-        entt::registry sceneRegistry;
-        static inline Scene *activeScene;
-        entt::entity selectedEntity = entt::null;
-
-        std::vector<std::function<void()>> initCallbacks;
-        std::vector<std::function<void()>> tickCallbacks;
-        std::vector<std::function<void()>> onGuiCallbacks;
+        inline GLFWwindow *window;
 
         void Init();
-        void Tick();
-        void OnGUI();
 
-        // Defined in Entity.cpp
-        Entity CreateEntity();
-        // Defined in Entity.cpp
-        void DestroyEntity(Entity entity);
+        void Clear(Color color);
+        void PollEvents();
+        void Display();
+        void Terminate();
+
+        glm::vec2 GetSize();
+        void SetSize(glm::vec2 size);
+
+        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
     };
 }

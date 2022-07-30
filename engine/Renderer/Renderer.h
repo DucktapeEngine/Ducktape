@@ -20,17 +20,37 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Components/Tag.h>
+#pragma once
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <Renderer/Shader.h>
+#include <Renderer/Texture.h>
+#include <Core/Configuration.h>
+#include <Renderer/Camera.h>
+#include <Core/Window.h>
+#include <Core/Debug.h>
+#include <Components/ModelRenderer.h>
+
+GLenum glCheckError_(const char *file, int line);
+#define glCheckError() glCheckError_(__FILE__, __LINE__)
 
 namespace DT
 {
-    void Tag::OnGUI()
+    namespace Renderer
     {
-        if (ImGui::CollapsingHeader("Tag"))
-        {
-            ImGui::InputText("Name", &name);
+        inline ModelRenderer model;
 
-            EndGUI();
-        }
+        inline bool isOrtho = false;
+        inline float fov = 45.0f;
+
+        inline unsigned int FBO, RBO, renderTexture;
+        inline unsigned int quadVAO, quadVBO;
+
+        void Init();
+        void Render();
+        void Terminate();
     }
 }

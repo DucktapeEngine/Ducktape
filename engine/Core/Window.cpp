@@ -31,9 +31,7 @@ namespace DT
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        windowSize = Configuration::windowSize;
-
-        window = glfwCreateWindow(windowSize.x, windowSize.y, Configuration::windowTitle.c_str(), nullptr, nullptr);
+        window = glfwCreateWindow(Configuration::windowSize.x, Configuration::windowSize.y, Configuration::windowTitle.c_str(), nullptr, nullptr);
 
         if (window == nullptr)
         {
@@ -47,7 +45,7 @@ namespace DT
             throw std::runtime_error("Failed to initialize GLAD");
         }
 
-        glViewport(0, 0, windowSize.x, windowSize.y);
+        glViewport(0, 0, Configuration::windowSize.x, Configuration::windowSize.y);
         glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
         if (Configuration::drawWireframe)
@@ -74,7 +72,7 @@ namespace DT
         glfwSwapBuffers(window);
     }
 
-    void Window::Destroy()
+    void Window::Terminate()
     {
         glfwTerminate();
     }
@@ -82,6 +80,17 @@ namespace DT
     void Window::FramebufferSizeCallback(GLFWwindow *window, int width, int height)
     {
         glViewport(0, 0, width, height);
-        Window::windowSize = glm::vec2(width, height);
+    }
+
+    glm::vec2 Window::GetSize()
+    {
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
+        return glm::vec2(width, height);
+    }
+
+    void Window::SetSize(glm::vec2 size)
+    {
+        glfwSetWindowSize(window, size.x, size.y);
     }
 }

@@ -22,23 +22,25 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
 #include <iostream>
-#include <functional>
 
-#include <entt/entt.hpp>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Editor/Editor.h>
+#include <Core/Application.h>
 #include <Renderer/Renderer.h>
-#include <Core/Time.h>
-#include <Input/Input.h>
 
 namespace DT
 {
-    namespace Engine
+    namespace Editor
     {
-        void Run(Scene &scene);
-    };
+        inline bool showDemoWindow = true;
+
+        void Init();
+        void NewFrame();
+        void Render();
+        void EndFrame();
+        void Terminate();
+    }
 }

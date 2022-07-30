@@ -22,21 +22,27 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <imgui/imgui.h>
-#include <imgui/misc/cpp/imgui_stdlib.h>
+#include <string>
+#include <iostream>
+#include <functional>
 
-#include <Core/Entity.h>
+#include <entt/entt.hpp>
+
+#include <Core/Scene.h>
+#include <Core/Window.h>
+#include <Renderer/Renderer.h>
+#include <Core/Time.h>
+#include <Input/Input.h>
 
 namespace DT
 {
-    class Component
+    namespace Engine
     {
-    public:
-        virtual void Init() {}
-        virtual void Tick() {}
-        virtual void OnGUI() {}
-        virtual void OnDestroy() {}
-
-        void EndGUI();
+        void Init(Scene &scene);
+        bool IsOpen();
+        void StartFrame();
+        void EndFrame();
+        void Terminate();
+        void Run(Scene &scene);
     };
 }

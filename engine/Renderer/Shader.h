@@ -63,5 +63,5 @@ namespace DT
         void CheckCompileErrors(unsigned int shader, std::string type);
     };
 
-    inline Shader defaultShader;
+    inline Shader defaultShader, screenShader;
 }

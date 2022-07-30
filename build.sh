@@ -67,5 +67,3 @@ clear
 cd build
 cmake -G "${generator}" -DCMAKE_CXX_COMPILER=${compiler} -DCMAKE_BUILD_TYPE=${generator} ..
 make
-
-cp ./extern/assimp/bin/libassimp-5.dll ./

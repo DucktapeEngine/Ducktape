@@ -22,27 +22,28 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <iostream>
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 
-#include <imgui/imgui.h>
-#include <imgui/backends/imgui_impl_glfw.h>
-#include <imgui/backends/imgui_impl_opengl3.h>
-
-#include <Core/Window.h>
-#include <Input/Input.h>
-#include <Editor/EditorElements.h>
+#include <Components/Component.h>
 
 namespace DT
 {
-    namespace Editor
+    class Transform : public Component
     {
-        inline bool mouseLock = false;
+    public:
+        glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+        glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);
+        glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
-        void Init();
-        void SetStyle();
-        void NewFrame();
-        void Render();
-        void EndFrame();
-        void Destroy();
-    }
+        glm::mat4 GetModelMatrix();
+
+        glm::vec3 Right();
+        glm::vec3 Forward();
+        glm::vec3 Up();
+    };
 }

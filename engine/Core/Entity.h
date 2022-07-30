@@ -61,8 +61,6 @@ namespace DT
                                            { component.Init(); });
             scene->tickCallbacks.push_back([&]()
                                            { component.Tick(); });
-            scene->onGuiCallbacks.push_back([&]()
-                                            { component.OnGUI(); });
             return component;
         }
 
@@ -99,11 +97,6 @@ namespace DT
                                                       { return function == [this]()
                                                         { GetComponent<T>().Tick(); }; }),
                                        scene->tickCallbacks.end());
-
-            scene->onGuiCallbacks.erase(std::remove_if(scene->onGuiCallbacks.begin(), scene->onGuiCallbacks.end(), [this](std::function<void()> function)
-                                                       { return function == [this]()
-                                                         { GetComponent<T>().OnGUI(); }; }),
-                                        scene->onGuiCallbacks.end());
         }
 
         template <typename T>

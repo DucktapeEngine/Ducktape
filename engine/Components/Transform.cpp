@@ -20,14 +20,31 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Components/Component.h>
+#include <Components/Transform.h>
 
 namespace DT
 {
-    void Component::EndGUI()
+    glm::mat4 Transform::GetModelMatrix()
     {
-        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(64, 64, 64, 255));
-        ImGui::Text("_______________________________________________________________");
-        ImGui::PopStyleColor();
+        glm::mat4 trans = glm::translate(glm::mat4(1.0), position);
+        glm::mat4 rot = glm::toMat4(rotation);
+        glm::mat4 scl = glm::scale(glm::mat4(1.0), scale);
+
+        return scl * rot * trans;
+    }
+
+    glm::vec3 Transform::Right()
+    {
+        return rotation * glm::vec3(1.f, 0.f, 0.f);
+    }
+
+    glm::vec3 Transform::Forward()
+    {
+        return rotation * glm::vec3(0.f, 0.f, 1.f);
+    }
+
+    glm::vec3 Transform::Up()
+    {
+        return rotation * glm::vec3(0.f, 1.f, 0.f);
     }
 }

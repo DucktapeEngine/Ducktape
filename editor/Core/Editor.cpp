@@ -20,21 +20,16 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Editor/Editor.h>
+#include <Core/Editor.h>
 
 namespace DT
 {
     void Editor::Init()
     {
         ImGui::CreateContext();
-        ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
+        ImGui_ImplGlfw_InitForOpenGL(Application::window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
-        SetStyle();
-    }
-
-    void Editor::SetStyle()
-    {
         ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
@@ -94,16 +89,6 @@ namespace DT
 
     void Editor::NewFrame()
     {
-        if (Input::GetKeyPressed(KEY_ESCAPE))
-        {
-            if (mouseLock)
-                glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            else
-                glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-            mouseLock = !mouseLock;
-        }
-
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -111,16 +96,17 @@ namespace DT
 
     void Editor::Render()
     {
-        if (mouseLock)
-            return;
+        ImGui::Begin("Scene View");
 
-        // dockspace
-        ImGui::DockSpaceOverViewport();
+        ImVec2 pos = ImGui::GetCursorScreenPos();
+        ImVec2 windowSize = ImGui::GetWindowSize();
 
-        EditorElements::MenuBar();
-        EditorElements::SceneView();
-        EditorElements::Inspector();
-        EditorElements::Console();
+        ImGui::GetWindowDrawList()->AddImage(
+            (ImTextureID)Renderer::renderTexture,
+            ImVec2(pos), ImVec2(pos.x + windowSize.x, pos.y + windowSize.y),
+            ImVec2(-1, 0), ImVec2(0, 1));
+
+        ImGui::End();
     }
 
     void Editor::EndFrame()
@@ -129,7 +115,7 @@ namespace DT
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void Editor::Destroy()
+    void Editor::Terminate()
     {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();

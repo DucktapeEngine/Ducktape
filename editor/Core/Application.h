@@ -22,33 +22,25 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <iostream>
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <Renderer/Shader.h>
-#include <Renderer/Texture.h>
-#include <Core/Configuration.h>
-#include <Renderer/Camera.h>
-#include <Core/Window.h>
-#include <Core/Debug.h>
-#include <Components/ModelRenderer.h>
-
-GLenum glCheckError_(const char *file, int line);
-#define glCheckError() glCheckError_(__FILE__, __LINE__)
 
 namespace DT
 {
-    namespace Renderer
+    namespace Application
     {
-        inline ModelRenderer model;
-
-        inline bool isOrtho = false;
-        inline float fov = 45.0f;
-
-        inline unsigned int VAO, VBO;
+        inline GLFWwindow *window;
+        inline glm::vec2 windowSize;
 
         void Init();
-        void Render();
+        void PollEvents();
+        void Clear(float r, float g, float b, float a);
+        void Display();
+        void Terminate();
+
+        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
     }
 }

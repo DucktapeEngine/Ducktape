@@ -20,19 +20,19 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <string>
-
-#include <Components/Component.h>
+#include <Core/Scene.h>
 
 namespace DT
 {
-    class Tag : public Component
+    void Scene::Init()
     {
-    public:
-        std::string name = "Unnamed";
+        for (std::function<void()> function : initCallbacks)
+            function();
+    }
 
-        void OnGUI();
-    };
+    void Scene::Tick()
+    {
+        for (std::function<void()> function : tickCallbacks)
+            function();
+    }
 }

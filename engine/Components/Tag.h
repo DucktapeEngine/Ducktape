@@ -22,33 +22,15 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <vector>
-#include <stdexcept>
-#include <iostream>
+#include <string>
 
-#include <imgui/imgui.h>
-#include <glm/glm.hpp>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <Core/Configuration.h>
-#include <Renderer/Color.h>
+#include <Components/Component.h>
 
 namespace DT
 {
-    namespace Window
+    class Tag : public Component
     {
-        inline GLFWwindow *window;
-        inline glm::vec2 windowSize;
-
-        void Init();
-
-        void Clear(Color color);
-        void PollEvents();
-        void Display();
-
-        void Destroy();
-
-        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
+    public:
+        std::string name = "Unnamed";
     };
 }

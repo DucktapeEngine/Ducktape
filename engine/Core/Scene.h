@@ -20,25 +20,34 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Scene.h>
+#pragma once
+
+#include <string>
+#include <iostream>
+
+#include <entt/entt.hpp>
+#include <imgui/imgui.h>
 
 namespace DT
 {
-    void Scene::Init()
-    {
-        for (std::function<void()> function : initCallbacks)
-            function();
-    }
+    class Entity;
 
-    void Scene::Tick()
+    class Scene
     {
-        for (std::function<void()> function : tickCallbacks)
-            function();
-    }
+    public:
+        entt::registry sceneRegistry;
+        static inline Scene *activeScene;
+        entt::entity selectedEntity = entt::null;
 
-    void Scene::OnGUI()
-    {
-        for (std::function<void()> function : onGuiCallbacks)
-            function();
-    }
+        std::vector<std::function<void()>> initCallbacks;
+        std::vector<std::function<void()>> tickCallbacks;
+
+        void Init();
+        void Tick();
+
+        // Defined in Entity.cpp
+        Entity CreateEntity();
+        // Defined in Entity.cpp
+        void DestroyEntity(Entity entity);
+    };
 }
