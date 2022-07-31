@@ -42,5 +42,7 @@ namespace DT
         void Render();
         void EndFrame();
         void Terminate();
+
+        static void RenderSceneViewCallback(const ImDrawList *parentList, const ImDrawCmd *cmd);
     }
 }

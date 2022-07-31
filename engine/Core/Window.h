@@ -30,6 +30,7 @@ aryanbaburajan2007@gmail.com
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <utils/stb_image.h>
 
 #include <Core/Configuration.h>
 #include <Renderer/Color.h>
@@ -44,11 +45,30 @@ namespace DT
 
         void Clear(Color color);
         void PollEvents();
-        void Display();
+        void SwapBuffers();
         void Terminate();
 
-        glm::vec2 GetSize();
-        void SetSize(glm::vec2 size);
+        void Close();
+        void SetTitle(const std::string &title);
+        void SetIcon(const std::string &path);
+        glm::vec2 GetWindowPos();
+        void SetWindowPos(const glm::vec2 &pos);
+        glm::vec2 GetWindowSize();
+        void SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize);
+        void SetWindowAspectRatio(const int &numerator, const int &denominator);
+        void SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize);
+        void SetWindowAspectRatio(const int &numerator, const int &denominator);
+        void SetWindowSize(const glm::vec2 &size);
+        glm::vec2 GetWindowContentScale();
+        float GetWindowOpacity();
+        void SetWindowOpacity(const float &opacity);
+        void IconifyWindow();
+        void RestoreWindow();
+        void MaximizeWindow();
+        void ShowWindow();
+        void HideWindow();
+        void FocusWindow();
+        void RequestWindowAttention();
 
         static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
     };

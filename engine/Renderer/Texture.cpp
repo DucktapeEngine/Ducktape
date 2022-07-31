@@ -66,10 +66,4 @@ namespace DT
 
         loaded = true;
     }
-
-    void Texture::Bind(unsigned int slot)
-    {
-        glActiveTexture(GL_TEXTURE0 + slot);
-        glBindTexture(GL_TEXTURE_2D, id);
-    }
 }

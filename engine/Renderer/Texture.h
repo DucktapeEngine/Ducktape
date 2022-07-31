@@ -47,6 +47,5 @@ namespace DT
         Texture(const std::string &path);
 
         void Load(const std::string &path);
-        void Bind(unsigned int slot = 0);
     };
 }

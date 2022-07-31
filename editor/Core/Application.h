@@ -28,6 +28,8 @@ aryanbaburajan2007@gmail.com
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include <Core/Window.h>
+
 namespace DT
 {
     namespace Application

@@ -50,6 +50,7 @@ namespace DT
     void Engine::StartFrame()
     {
         glfwMakeContextCurrent(Window::window);
+
         Time::Update();
         Input::Process();
 
@@ -63,7 +64,7 @@ namespace DT
 
     void Engine::EndFrame()
     {
-        Window::Display();
+        Window::SwapBuffers();
     }
 
     void Engine::Run(Scene &scene)

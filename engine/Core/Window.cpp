@@ -31,7 +31,17 @@ namespace DT
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        window = glfwCreateWindow(Configuration::windowSize.x, Configuration::windowSize.y, Configuration::windowTitle.c_str(), nullptr, nullptr);
+        if (Configuration::hideWindow)
+            glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+
+        window = glfwCreateWindow(Configuration::windowSize.x, Configuration::windowSize.y, Configuration::windowTitle.c_str(), nullptr, (Configuration::shareContextWith != nullptr) ? Configuration::shareContextWith : nullptr);
+
+        if (Configuration::windowIconPath != "")
+        {
+            SetIcon(Configuration::windowIconPath);
+        }
+
+        glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
 
         if (window == nullptr)
         {
@@ -67,7 +77,7 @@ namespace DT
         glfwPollEvents();
     }
 
-    void Window::Display()
+    void Window::SwapBuffers()
     {
         glfwSwapBuffers(window);
     }
@@ -82,15 +92,118 @@ namespace DT
         glViewport(0, 0, width, height);
     }
 
-    glm::vec2 Window::GetSize()
+    void Window::Close()
+    {
+        glfwSetWindowShouldClose(window, true);
+    }
+
+    void Window::SetTitle(const std::string &title)
+    {
+        glfwSetWindowTitle(window, title.c_str());
+    }
+
+    void Window::SetIcon(const std::string &path)
+    {
+        int width, height, nrChannels;
+        unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            GLFWimage image;
+            image.width = width;
+            image.height = height;
+            image.pixels = data;
+            glfwSetWindowIcon(window, 1, &image);
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Failed to load icon." << std::endl;
+        }
+    }
+
+    glm::vec2 Window::GetWindowPos()
+    {
+        int x, y;
+        glfwGetWindowPos(window, &x, &y);
+        return glm::vec2(x, y);
+    }
+
+    void Window::SetWindowPos(const glm::vec2 &pos)
+    {
+        glfwSetWindowPos(window, pos.x, pos.y);
+    }
+
+    glm::vec2 Window::GetWindowSize()
     {
         int width, height;
         glfwGetWindowSize(window, &width, &height);
         return glm::vec2(width, height);
     }
 
-    void Window::SetSize(glm::vec2 size)
+    void Window::SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize)
+    {
+        glfwSetWindowSizeLimits(window, minSize.x, minSize.y, maxSize.x, maxSize.y);
+    }
+
+    void Window::SetWindowAspectRatio(const int &numerator, const int &denominator)
+    {
+        glfwSetWindowAspectRatio(window, numerator, denominator);
+    }
+
+    void Window::SetWindowSize(const glm::vec2 &size)
     {
         glfwSetWindowSize(window, size.x, size.y);
+    }
+
+    glm::vec2 Window::GetWindowContentScale()
+    {
+        float x, y;
+        glfwGetWindowContentScale(window, &x, &y);
+        return glm::vec2(x, y);
+    }
+
+    float Window::GetWindowOpacity()
+    {
+        return glfwGetWindowOpacity(window);
+    }
+
+    void Window::SetWindowOpacity(const float &opacity)
+    {
+        glfwSetWindowOpacity(window, opacity);
+    }
+
+    void Window::IconifyWindow()
+    {
+        glfwIconifyWindow(window);
+    }
+
+    void Window::RestoreWindow()
+    {
+        glfwRestoreWindow(window);
+    }
+
+    void Window::MaximizeWindow()
+    {
+        glfwMaximizeWindow(window);
+    }
+
+    void Window::ShowWindow()
+    {
+        glfwShowWindow(window);
+    }
+
+    void Window::HideWindow()
+    {
+        glfwHideWindow(window);
+    }
+
+    void Window::FocusWindow()
+    {
+        glfwFocusWindow(window);
+    }
+
+    void Window::RequestWindowAttention()
+    {
+        glfwRequestWindowAttention(window);
     }
 }

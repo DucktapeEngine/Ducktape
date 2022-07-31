@@ -66,6 +66,7 @@ int main()
     {
         Configuration::windowSize = {800, 600};
         Configuration::windowTitle = "DucktapeTest";
+        Configuration::hideWindow = true;
 
         Scene mainScene;
 
@@ -75,6 +76,8 @@ int main()
         player.AddComponent<PlayerController>();
 
         Application::Init();
+        Configuration::shareContextWith = Application::window;
+
         Editor::Init();
 
         Engine::Init(mainScene);

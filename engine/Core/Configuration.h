@@ -25,6 +25,8 @@ aryanbaburajan2007@gmail.com
 #include <string>
 
 #include <glm/glm.hpp>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace DT
 {
@@ -33,8 +35,11 @@ namespace DT
         inline glm::vec2 windowSize;
         inline std::string windowTitle;
         inline glm::vec3 version;
+        inline std::string windowIconPath;
         inline int targetFPS;
         inline bool drawWireframe = false;
         inline bool vsync = true;
+        inline GLFWwindow *shareContextWith = nullptr;
+        inline bool hideWindow = false;
     };
 }

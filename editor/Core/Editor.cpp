@@ -96,15 +96,12 @@ namespace DT
 
     void Editor::Render()
     {
+        ImGui::DockSpaceOverViewport();
+
         ImGui::Begin("Scene View");
 
-        ImVec2 pos = ImGui::GetCursorScreenPos();
-        ImVec2 windowSize = ImGui::GetWindowSize();
-
-        ImGui::GetWindowDrawList()->AddImage(
-            (ImTextureID)Renderer::renderTexture,
-            ImVec2(pos), ImVec2(pos.x + windowSize.x, pos.y + windowSize.y),
-            ImVec2(-1, 0), ImVec2(0, 1));
+        ImVec2 wsize = ImGui::GetWindowSize();
+        ImGui::Image((ImTextureID)Renderer::renderTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();
     }

@@ -92,7 +92,7 @@ namespace DT
         // Texture
         glGenTextures(1, &renderTexture);
         glBindTexture(GL_TEXTURE_2D, renderTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Window::GetSize().x, Window::GetSize().y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Window::GetWindowSize().x, Window::GetWindowSize().y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderTexture, 0);
@@ -100,7 +100,7 @@ namespace DT
         // RBO
         glGenRenderbuffers(1, &RBO);
         glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Window::GetSize().x, Window::GetSize().y);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Window::GetWindowSize().x, Window::GetWindowSize().y);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -137,9 +137,9 @@ namespace DT
         Camera::view = glm::lookAt(Camera::transform.position, Camera::transform.position + Camera::transform.Forward(), glm::vec3(0.0f, 1.0f, 0.0f));
 
         if (isOrtho)
-            Camera::projection = glm::ortho(0.f, Window::GetSize().x, 0.f, Window::GetSize().y, 0.1f, 100.0f);
+            Camera::projection = glm::ortho(0.f, Window::GetWindowSize().x, 0.f, Window::GetWindowSize().y, 0.1f, 100.0f);
         else
-            Camera::projection = glm::perspective(glm::radians(fov), Window::GetSize().x / Window::GetSize().y, 0.1f, 100.0f);
+            Camera::projection = glm::perspective(glm::radians(fov), Window::GetWindowSize().x / Window::GetWindowSize().y, 0.1f, 100.0f);
 
         defaultShader.Use();
         defaultShader.SetMat4("projection", Camera::projection);
