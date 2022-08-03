@@ -32,6 +32,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Mesh.h>
 #include <Components/Transform.h>
 #include <Core/Debug.h>
+#include <Core/Entity.h>
 
 namespace DT
 {

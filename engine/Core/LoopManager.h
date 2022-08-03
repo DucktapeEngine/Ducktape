@@ -22,27 +22,12 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <iostream>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-
-#include <Core/Window.h>
-
 namespace DT
 {
-    namespace Application
+    namespace LoopManager
     {
-        inline GLFWwindow *window;
-        inline glm::vec2 windowSize;
-
-        void Init();
-        void PollEvents();
-        void Clear(float r, float g, float b, float a);
-        void Display();
-        void Terminate();
-
-        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
-    }
+        inline bool sceneTick = true;
+        inline bool sceneOnInspect = false;
+        inline bool sceneOnSceneView = false;
+    };
 }

@@ -33,6 +33,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Renderer.h>
 #include <Core/Time.h>
 #include <Input/Input.h>
+#include <Core/LoopManager.h>
 
 namespace DT
 {

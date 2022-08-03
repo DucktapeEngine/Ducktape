@@ -49,8 +49,6 @@ namespace DT
 
     void Engine::StartFrame()
     {
-        glfwMakeContextCurrent(Window::window);
-
         Time::Update();
         Input::Process();
 

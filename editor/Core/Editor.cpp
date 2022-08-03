@@ -27,7 +27,7 @@ namespace DT
     void Editor::Init()
     {
         ImGui::CreateContext();
-        ImGui_ImplGlfw_InitForOpenGL(Application::window, true);
+        ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
         ImGuiIO &io = ImGui::GetIO();
@@ -98,12 +98,7 @@ namespace DT
     {
         ImGui::DockSpaceOverViewport();
 
-        ImGui::Begin("Scene View");
-
-        ImVec2 wsize = ImGui::GetWindowSize();
-        ImGui::Image((ImTextureID)Renderer::renderTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
-
-        ImGui::End();
+        EditorModules::SceneView();
     }
 
     void Editor::EndFrame()

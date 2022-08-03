@@ -26,13 +26,21 @@ namespace DT
 {
     void Scene::Init()
     {
-        for (std::function<void()> function : initCallbacks)
-            function();
+        auto view = sceneRegistry.view<NativeScriptComponent>();
+        for (auto entity : view)
+        {
+            NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);
+            nativeScriptComponent.Init();
+        }
     }
 
     void Scene::Tick()
     {
-        for (std::function<void()> function : tickCallbacks)
-            function();
+        auto view = sceneRegistry.view<NativeScriptComponent>();
+        for (auto entity : view)
+        {
+            NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);
+            nativeScriptComponent.Tick();
+        }
     }
 }

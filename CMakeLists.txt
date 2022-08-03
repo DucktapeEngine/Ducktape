@@ -14,3 +14,4 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/extern/glad")
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/engine/")
 add_subdirectory("${PROJECT_SOURCE_DIR}/editor/")
+add_subdirectory("${PROJECT_SOURCE_DIR}/resources/scripts/")

@@ -25,8 +25,6 @@ aryanbaburajan2007@gmail.com
 #include <imgui/imgui.h>
 #include <imgui/misc/cpp/imgui_stdlib.h>
 
-#include <Core/Entity.h>
-
 namespace DT
 {
     class Component
@@ -35,7 +33,5 @@ namespace DT
         virtual void Init() {}
         virtual void Tick() {}
         virtual void OnDestroy() {}
-
-        void EndGUI();
     };
 }

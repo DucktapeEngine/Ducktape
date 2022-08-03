@@ -39,7 +39,7 @@ namespace DT
 {
     namespace Window
     {
-        inline GLFWwindow *window;
+        inline GLFWwindow *window = nullptr;
 
         void Init();
 

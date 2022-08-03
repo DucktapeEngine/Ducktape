@@ -41,5 +41,6 @@ namespace DT
         inline bool vsync = true;
         inline GLFWwindow *shareContextWith = nullptr;
         inline bool hideWindow = false;
+        inline bool drawToQuad = true;
     };
 }

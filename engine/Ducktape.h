@@ -29,6 +29,7 @@ aryanbaburajan2007@gmail.com
 #include <Components/Tag.h>
 #include <Components/Transform.h>
 #include <Components/ModelRenderer.h>
+#include <Components/NativeScriptComponent.h>
 #include <Core/Configuration.h>
 #include <Core/Debug.h>
 #include <Core/Engine.h>
@@ -37,6 +38,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Scene.h>
 #include <Core/Time.h>
 #include <Core/Window.h>
+#include <Core/LoopManager.h>
 #include <Input/Input.h>
 #include <Input/Key.h>
 #include <Renderer/Camera.h>

@@ -22,43 +22,8 @@ aryanbaburajan2007@gmail.com
 
 #include <Ducktape.h>
 
-#include <Core/Application.h>
 #include <Core/Editor.h>
 using namespace DT;
-
-class PlayerController : public Component
-{
-public:
-    float yaw = 0.f, pitch = 0.f;
-
-    void Tick()
-    {
-        // Move
-        const float cameraSpeed = 2.5f * Time::deltaTime;
-
-        if (Input::GetKey(KEY_W))
-            Camera::transform.position += cameraSpeed * Camera::transform.Forward();
-        if (Input::GetKey(KEY_S))
-            Camera::transform.position -= cameraSpeed * Camera::transform.Forward();
-        if (Input::GetKey(KEY_A))
-            Camera::transform.position += cameraSpeed * Camera::transform.Right();
-        if (Input::GetKey(KEY_D))
-            Camera::transform.position -= cameraSpeed * Camera::transform.Right();
-
-        // Look
-        float sensitivity = 25.f * Time::deltaTime;
-
-        yaw += -Input::mouseDelta.x * sensitivity;
-        pitch += Input::mouseDelta.y * sensitivity;
-
-        if (pitch > 89.0f)
-            pitch = 89.0f;
-        if (pitch < -89.0f)
-            pitch = -89.0f;
-
-        Camera::transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
-    }
-};
 
 int main()
 {
@@ -66,41 +31,31 @@ int main()
     {
         Configuration::windowSize = {800, 600};
         Configuration::windowTitle = "DucktapeTest";
-        Configuration::hideWindow = true;
+        // Configuration::hideWindow = true;
+        Configuration::drawToQuad = false;
+        Configuration::windowIconPath = "../resources/textures/logo.png";
 
         Scene mainScene;
 
         Entity player = mainScene.CreateEntity();
         player.AddComponent<Tag>().name = "Player";
         player.AddComponent<Transform>();
-        player.AddComponent<PlayerController>();
-
-        Application::Init();
-        Configuration::shareContextWith = Application::window;
-
-        Editor::Init();
+        player.AddComponent<NativeScriptComponent>().dllPath = "./resources/scripts/libPlayerController.dll";
 
         Engine::Init(mainScene);
 
-        while (!glfwWindowShouldClose(Application::window) && Engine::IsOpen())
+        Editor::Init();
+
+        while (Engine::IsOpen())
         {
             Engine::StartFrame();
-
-            glfwMakeContextCurrent(Application::window);
-
-            Application::PollEvents();
-            Application::Clear(0.f, 0.f, 0.f, 1.f);
             Editor::NewFrame();
 
             Editor::Render();
 
             Editor::EndFrame();
-            Application::Display();
-
             Engine::EndFrame();
         }
-
-        Application::Terminate();
     }
     catch (const std::exception &e)
     {

@@ -26,6 +26,7 @@ namespace DT
 {
     bool Input::GetKey(int key)
     {
+        assert(Window::window != nullptr);
         return glfwGetKey(Window::window, key) == GLFW_PRESS;
     }
 

@@ -154,19 +154,22 @@ namespace DT
         glCheckError();
 
         // Draw render texture on to a quad
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glDisable(GL_DEPTH_TEST);
+        if (Configuration::drawToQuad)
+        {
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            glDisable(GL_DEPTH_TEST);
 
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
 
-        screenShader.Use();
-        glBindVertexArray(quadVAO);
-        glBindTexture(GL_TEXTURE_2D, renderTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+            screenShader.Use();
+            glBindVertexArray(quadVAO);
+            glBindTexture(GL_TEXTURE_2D, renderTexture);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-        glEnable(GL_DEPTH_TEST);
+            glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+            glEnable(GL_DEPTH_TEST);
+        }
     }
 
     void Renderer::Terminate()

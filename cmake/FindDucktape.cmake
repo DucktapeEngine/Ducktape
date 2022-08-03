@@ -25,7 +25,6 @@ Documentation for using find_package() to find the Ducktape library.
 #]=======================================================================]
 
 set (Ducktape_FOUND true)
-get_filename_component (Ducktape_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 
 # OpenGL
 find_package (OpenGL REQUIRED)

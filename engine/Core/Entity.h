@@ -57,10 +57,6 @@ namespace DT
             DT_ASSERT(!HasComponent<T>(), "Entity already has component.");
 
             T &component = scene->sceneRegistry.emplace<T>(handle, std::forward<Args>(args)...);
-            scene->initCallbacks.push_back([&]()
-                                           { component.Init(); });
-            scene->tickCallbacks.push_back([&]()
-                                           { component.Tick(); });
             return component;
         }
 
@@ -88,15 +84,6 @@ namespace DT
 
             scene->sceneRegistry.get<T>(handle).OnDestroy();
             scene->sceneRegistry.remove<T>(handle);
-
-            scene->initCallbacks.erase(std::remove_if(scene->initCallbacks.begin(), scene->initCallbacks.end(), [this](std::function<void()> function)
-                                                      { return function == [this]()
-                                                        { GetComponent<T>().Init(); }; }),
-                                       scene->initCallbacks.end());
-            scene->tickCallbacks.erase(std::remove_if(scene->tickCallbacks.begin(), scene->tickCallbacks.end(), [this](std::function<void()> function)
-                                                      { return function == [this]()
-                                                        { GetComponent<T>().Tick(); }; }),
-                                       scene->tickCallbacks.end());
         }
 
         template <typename T>

@@ -28,6 +28,8 @@ aryanbaburajan2007@gmail.com
 #include <entt/entt.hpp>
 #include <imgui/imgui.h>
 
+#include <Components/NativeScriptComponent.h>
+
 namespace DT
 {
     class Entity;
@@ -37,10 +39,6 @@ namespace DT
     public:
         entt::registry sceneRegistry;
         static inline Scene *activeScene;
-        entt::entity selectedEntity = entt::null;
-
-        std::vector<std::function<void()>> initCallbacks;
-        std::vector<std::function<void()>> tickCallbacks;
 
         void Init();
         void Tick();

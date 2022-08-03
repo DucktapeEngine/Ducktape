@@ -22,38 +22,25 @@ cmake_minimum_required (VERSION 3.8)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Editor
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/editor/**/*.cpp" "${PROJECT_SOURCE_DIR}/editor/*.cpp")
-set(imgui_source_list
-    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui.cpp"
-    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_demo.cpp"
-    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_draw.cpp"
-    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_tables.cpp"
-    "${PROJECT_SOURCE_DIR}/extern/imgui/imgui_widgets.cpp"
-    "${PROJECT_SOURCE_DIR}/extern/imgui/backends/imgui_impl_glfw.cpp"
-    "${PROJECT_SOURCE_DIR}/extern/imgui/backends/imgui_impl_opengl3.cpp"
-    "${PROJECT_SOURCE_DIR}/extern/imgui/misc/cpp/imgui_stdlib.cpp"
-)
+# Scripts
+file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/resources/scripts/*.cpp")
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
-add_executable (Editor
+add_library (PlayerController SHARED
     ${source_list}
-    ${imgui_source_list}
 )
 
-set_target_properties (Editor PROPERTIES
+set_target_properties (PlayerController PROPERTIES
     CXX_STANDARD 20
     CXX_EXTENSIONS OFF
 )
 
-target_compile_features (Editor PRIVATE cxx_std_17)
-
-target_include_directories(Editor PUBLIC "${PROJECT_SOURCE_DIR}/editor")
+target_compile_features (PlayerController PRIVATE cxx_std_17)
 
 # Ducktape
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/;${CMAKE_MODULE_PATH}")
-set(TARGET Editor)
+set(TARGET PlayerController)
 set(Ducktape_ROOT_DIR "${PROJECT_SOURCE_DIR}")
 find_package (Ducktape REQUIRED)
 
@@ -63,8 +50,8 @@ else (Ducktape_FOUND)
     message ("-- Ducktape not found.")
 endif ()
 
-target_include_directories (Editor PUBLIC ${Ducktape_INCLUDE_DIR})
-target_link_directories (Editor PUBLIC ${Ducktape_LIBRARY_DIR})
-target_link_libraries (Editor PUBLIC ${Ducktape_LIBRARY})
+target_include_directories (PlayerController PUBLIC ${Ducktape_INCLUDE_DIR})
+target_link_directories (PlayerController PUBLIC ${Ducktape_LIBRARY_DIR})
+target_link_libraries (PlayerController PUBLIC ${Ducktape_LIBRARY})
 
-target_include_directories (Editor PUBLIC "${PROJECT_SOURCE_DIR}/extern/imgui/;${PROJECT_SOURCE_DIR}/extern/imgui/backends/")
+target_include_directories (PlayerController PUBLIC "${PROJECT_SOURCE_DIR}/extern/imgui/;${PROJECT_SOURCE_DIR}/extern/imgui/backends/")

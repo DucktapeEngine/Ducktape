@@ -22,28 +22,18 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <iostream>
-
 #include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 
 #include <Renderer/Renderer.h>
-#include <Core/EditorModules.h>
-#include <Core/Window.h>
+#include <Input/Input.h>
+#include <Core/Time.h>
+
+#define DEG2RAD 0.0174533f
 
 namespace DT
 {
-    namespace Editor
+    namespace EditorModules
     {
-        inline bool showDemoWindow = true;
-
-        void Init();
-        void NewFrame();
-        void Render();
-        void EndFrame();
-        void Terminate();
-
-        static void RenderSceneViewCallback(const ImDrawList *parentList, const ImDrawCmd *cmd);
+        void SceneView();
     }
 }
