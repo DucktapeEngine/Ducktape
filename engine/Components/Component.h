@@ -27,9 +27,13 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    class Engine;
+
     class Component
     {
     public:
+        Engine *engine;
+
         virtual void Init() {}
         virtual void Tick() {}
         virtual void OnDestroy() {}

@@ -20,12 +20,16 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
 #include <Components/NativeScriptComponent.h>
 
 namespace DT
 {
+    NativeScriptComponent::~NativeScriptComponent()
+    {
+        if (component)
+            delete component;
+    }
+
     void NativeScriptComponent::Load(const std::string &path)
     {
         HINSTANCE hInstance = LoadLibrary(path.c_str());
@@ -48,7 +52,7 @@ namespace DT
         isLoaded = true;
     }
 
-    void NativeScriptComponent::Init(Engine &e)
+    void NativeScriptComponent::Init()
     {
         if (!isLoaded)
             Load(dllPath);
@@ -56,13 +60,13 @@ namespace DT
         component->Init();
     }
 
-    void NativeScriptComponent::Tick(Engine &e)
+    void NativeScriptComponent::Tick()
     {
         if (isLoaded)
             component->Tick();
     }
 
-    void NativeScriptComponent::OnDestroy(Engine &e)
+    void NativeScriptComponent::OnDestroy()
     {
         if (isLoaded)
             component->OnDestroy();

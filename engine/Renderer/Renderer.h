@@ -39,18 +39,18 @@ GLenum glCheckError_(const char *file, int line);
 
 namespace DT
 {
-    namespace Renderer
+    class Renderer
     {
-        inline ModelRenderer model;
+    public:
+        ModelRenderer model;
 
-        inline bool isOrtho = false;
-        inline float fov = 45.0f;
+        unsigned int FBO, RBO, renderTexture;
+        unsigned int quadVAO, quadVBO;
 
-        inline unsigned int FBO, RBO, renderTexture;
-        inline unsigned int quadVAO, quadVBO;
-
-        void Init();
-        void Render();
+        void Init(Window &window);
+        void Render(Camera &camera, Window &window, Configuration &config);
         void Terminate();
-    }
+
+        void BindToFrameBuffer(bool bind);
+    };
 }

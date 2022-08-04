@@ -27,12 +27,13 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    namespace Time
+    class Time
     {
-        inline float deltaTime;
-        inline float elapsedTime = 0.0f;
-        inline float fps;
+    public:
+        float deltaTime;
+        float elapsedTime = 0.0f;
+        float fps;
 
         void Update();
-    }
+    };
 }

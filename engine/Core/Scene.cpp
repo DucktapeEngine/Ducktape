@@ -24,13 +24,16 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Scene::Init()
+    void Scene::Init(Engine *engine)
     {
         auto view = sceneRegistry.view<NativeScriptComponent>();
         for (auto entity : view)
         {
             NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);
-            nativeScriptComponent.Init();
+
+            nativeScriptComponent.Load(nativeScriptComponent.dllPath);
+            nativeScriptComponent.component->engine = engine;
+            nativeScriptComponent.component->Init();
         }
     }
 

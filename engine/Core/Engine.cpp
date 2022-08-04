@@ -32,37 +32,39 @@ namespace DT
                      "This is free software, and you are welcome to redistribute it\n"
                      "under certain conditions; type `show c' for details.\n";
 
+        activeContext = this;
+
         // Rendering
-        Window::Init();
-        Renderer::Init();
-        Input::Init();
+        window.Init(config);
+        renderer.Init(window);
+        input.Init(window.window);
 
         // Logic
         Scene::activeScene = &scene;
-        scene.Init();
+        scene.Init(this);
     }
 
     bool Engine::IsOpen()
     {
-        return !glfwWindowShouldClose(Window::window);
+        return !glfwWindowShouldClose(window.window);
     }
 
     void Engine::StartFrame()
     {
-        Time::Update();
-        Input::Process();
+        time.Update();
+        input.Process();
 
-        Window::PollEvents();
-        Window::Clear(Color(0.2f, 0.3f, 0.3f, 1.0f));
+        window.PollEvents();
+        window.Clear(Color(0.2f, 0.3f, 0.3f, 1.0f));
 
-        Renderer::Render();
+        renderer.Render(camera, window, config);
 
         Scene::activeScene->Tick();
     }
 
     void Engine::EndFrame()
     {
-        Window::SwapBuffers();
+        window.SwapBuffers();
     }
 
     void Engine::Run(Scene &scene)
@@ -78,7 +80,7 @@ namespace DT
 
     void Engine::Terminate()
     {
-        Window::Terminate();
-        Renderer::Terminate();
+        window.Terminate();
+        renderer.Terminate();
     }
 }

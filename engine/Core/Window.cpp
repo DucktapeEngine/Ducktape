@@ -24,22 +24,17 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Window::Init()
+    void Window::Init(const Configuration &config)
     {
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        if (Configuration::hideWindow)
+        if (config.hideWindow)
             glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
 
-        window = glfwCreateWindow(Configuration::windowSize.x, Configuration::windowSize.y, Configuration::windowTitle.c_str(), nullptr, (Configuration::shareContextWith != nullptr) ? Configuration::shareContextWith : nullptr);
-
-        if (Configuration::windowIconPath != "")
-        {
-            SetIcon(Configuration::windowIconPath);
-        }
+        window = glfwCreateWindow(config.windowSize.x, config.windowSize.y, config.windowTitle.c_str(), nullptr, (config.shareContextWith != nullptr) ? config.shareContextWith : nullptr);
 
         glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
 
@@ -55,13 +50,16 @@ namespace DT
             throw std::runtime_error("Failed to initialize GLAD");
         }
 
-        glViewport(0, 0, Configuration::windowSize.x, Configuration::windowSize.y);
+        glViewport(0, 0, config.windowSize.x, config.windowSize.y);
         glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
-        if (Configuration::drawWireframe)
+        if (config.drawWireframe)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        if (Configuration::vsync)
+        if (config.windowIconPath != "")
+            SetIcon(config.windowIconPath);
+
+        if (config.vsync)
             glfwSwapInterval(1);
     }
 
@@ -205,5 +203,13 @@ namespace DT
     void Window::RequestWindowAttention()
     {
         glfwRequestWindowAttention(window);
+    }
+
+    void Window::SetVSync(const bool &vsync)
+    {
+        if (vsync)
+            glfwSwapInterval(1);
+        else
+            glfwSwapInterval(0);
     }
 }

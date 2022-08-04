@@ -24,10 +24,10 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Editor::Init()
+    void Editor::Init(GLFWwindow *window)
     {
         ImGui::CreateContext();
-        ImGui_ImplGlfw_InitForOpenGL(Window::window, true);
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
         ImGuiIO &io = ImGui::GetIO();
@@ -101,10 +101,13 @@ namespace DT
         EditorModules::SceneView();
     }
 
-    void Editor::EndFrame()
+    void Editor::EndFrame(Renderer &renderer)
     {
+        renderer.BindToFrameBuffer(0);
+        ImGui::EndFrame();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        renderer.BindToFrameBuffer(1);
     }
 
     void Editor::Terminate()

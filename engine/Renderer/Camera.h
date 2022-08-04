@@ -27,11 +27,15 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    namespace Camera
+    class Camera
     {
-        inline Transform transform;
+    public:
+        Transform transform;
 
-        inline glm::mat4 view;
-        inline glm::mat4 projection;
-    }
+        glm::mat4 view;
+        glm::mat4 projection;
+
+        bool isOrtho = false;
+        float fov = 45.0f;
+    };
 }

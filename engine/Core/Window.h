@@ -37,11 +37,12 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    namespace Window
+    class Window
     {
-        inline GLFWwindow *window = nullptr;
+    public:
+        GLFWwindow *window = nullptr;
 
-        void Init();
+        void Init(const Configuration &config);
 
         void Clear(Color color);
         void PollEvents();
@@ -56,8 +57,6 @@ namespace DT
         glm::vec2 GetWindowSize();
         void SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize);
         void SetWindowAspectRatio(const int &numerator, const int &denominator);
-        void SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize);
-        void SetWindowAspectRatio(const int &numerator, const int &denominator);
         void SetWindowSize(const glm::vec2 &size);
         glm::vec2 GetWindowContentScale();
         float GetWindowOpacity();
@@ -69,6 +68,7 @@ namespace DT
         void HideWindow();
         void FocusWindow();
         void RequestWindowAttention();
+        void SetVSync(const bool &vsync);
 
         static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
     };

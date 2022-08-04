@@ -26,8 +26,7 @@ namespace DT
 {
     bool Input::GetKey(int key)
     {
-        assert(Window::window != nullptr);
-        return glfwGetKey(Window::window, key) == GLFW_PRESS;
+        return glfwGetKey(window, key) == GLFW_PRESS;
     }
 
     bool Input::GetKeyPressed(int key)
@@ -40,16 +39,18 @@ namespace DT
         return std::find(keysUp.begin(), keysUp.end(), key) != keysUp.end();
     }
 
-    void Input::Init()
+    void Input::Init(GLFWwindow *_window)
     {
-        glfwSetKeyCallback(Window::window, KeyCallback);
+        window = _window;
+        glfwSetKeyCallback(window, KeyCallback);
+        glfwSetWindowUserPointer(window, reinterpret_cast<void *>(this));
     }
 
     void Input::Process()
     {
         // Mouse
         double curPosX, curPosY;
-        glfwGetCursorPos(Window::window, &curPosX, &curPosY);
+        glfwGetCursorPos(window, &curPosX, &curPosY);
 
         mouseDelta = glm::vec2(curPosX - mousePosition.x, curPosY - mousePosition.y);
 
@@ -62,13 +63,14 @@ namespace DT
 
     void Input::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
+        Input *input = reinterpret_cast<Input *>(glfwGetWindowUserPointer(window));
         if (action == GLFW_PRESS)
         {
-            keysDown.push_back(key);
+            input->keysDown.push_back(key);
         }
         else if (action == GLFW_RELEASE)
         {
-            keysUp.push_back(key);
+            input->keysUp.push_back(key);
         }
     }
 }

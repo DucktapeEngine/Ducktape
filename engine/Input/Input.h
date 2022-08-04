@@ -33,20 +33,23 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    namespace Input
+    class Input
     {
-        inline glm::vec2 mousePosition;
-        inline glm::vec2 mouseDelta;
+    public:
+        glm::vec2 mousePosition;
+        glm::vec2 mouseDelta;
 
-        inline std::vector<int> keysDown;
-        inline std::vector<int> keysUp;
+        std::vector<int> keysDown;
+        std::vector<int> keysUp;
+
+        GLFWwindow *window;
 
         bool GetKey(int key);
         bool GetKeyPressed(int key);
         bool GetKeyReleased(int key);
 
-        void Init();
+        void Init(GLFWwindow *_window);
         void Process();
-        void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
-    }
+        static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+    };
 }

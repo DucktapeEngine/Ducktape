@@ -29,11 +29,11 @@ int main()
 {
     try
     {
-        Configuration::windowSize = {800, 600};
-        Configuration::windowTitle = "DucktapeTest";
-        // Configuration::hideWindow = true;
-        Configuration::drawToQuad = false;
-        Configuration::windowIconPath = "../resources/textures/logo.png";
+        Engine e;
+        e.config.windowSize = {800, 600};
+        e.config.windowTitle = "DucktapeTest";
+        e.config.drawToQuad = false;
+        e.config.windowIconPath = "../resources/textures/logo.png";
 
         Scene mainScene;
 
@@ -42,20 +42,23 @@ int main()
         player.AddComponent<Transform>();
         player.AddComponent<NativeScriptComponent>().dllPath = "./resources/scripts/libPlayerController.dll";
 
-        Engine::Init(mainScene);
+        e.Init(mainScene);
 
-        Editor::Init();
+        Editor::Init(e.window.window);
 
-        while (Engine::IsOpen())
+        while (e.IsOpen())
         {
-            Engine::StartFrame();
+            e.StartFrame();
             Editor::NewFrame();
 
             Editor::Render();
 
-            Editor::EndFrame();
-            Engine::EndFrame();
+            Editor::EndFrame(e.renderer);
+            e.EndFrame();
         }
+
+        Editor::Terminate();
+        e.Terminate();
     }
     catch (const std::exception &e)
     {

@@ -23,6 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <windows.h>
+#include <iostream>
 
 #include <Components/Component.h>
 
@@ -37,46 +38,11 @@ namespace DT
         Component *component = nullptr;
         bool isLoaded = false;
 
-        void Load(const std::string &path)
-        {
-            HINSTANCE hInstance = LoadLibrary(path.c_str());
+        ~NativeScriptComponent();
 
-            if (!hInstance)
-            {
-                std::cout << "Failed to load DLL: " << dllPath << std::endl;
-                return;
-            }
-
-            CreateModuleFunc createModule = (CreateModuleFunc)GetProcAddress(hInstance, "CreateModule");
-
-            if (!createModule)
-            {
-                std::cout << "Failed to get CreateModule function from DLL: " << dllPath << std::endl;
-                return;
-            }
-
-            component = createModule();
-            isLoaded = true;
-        }
-
-        void Init()
-        {
-            if (!isLoaded)
-                Load(dllPath);
-
-            component->Init();
-        }
-
-        void Tick()
-        {
-            if (isLoaded)
-                component->Tick();
-        }
-
-        void OnDestroy()
-        {
-            if (isLoaded)
-                component->OnDestroy();
-        }
+        void Load(const std::string &path);
+        void Init();
+        void Tick();
+        void OnDestroy();
     };
 }

@@ -34,11 +34,24 @@ aryanbaburajan2007@gmail.com
 #include <Core/Time.h>
 #include <Input/Input.h>
 #include <Core/LoopManager.h>
+#include <Core/Debug.h>
 
 namespace DT
 {
-    namespace Engine
+    class Engine
     {
+    public:
+        Configuration config;
+        Window window;
+        Renderer renderer;
+        Time time;
+        Input input;
+        LoopManager loopManager;
+        DebugHandler debugHandler;
+        Camera camera;
+
+        static inline Engine *activeContext = nullptr;
+
         void Init(Scene &scene);
         bool IsOpen();
         void StartFrame();

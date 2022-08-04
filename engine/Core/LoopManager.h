@@ -24,10 +24,11 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    namespace LoopManager
+    class LoopManager
     {
-        inline bool sceneTick = true;
-        inline bool sceneOnInspect = false;
-        inline bool sceneOnSceneView = false;
+    public:
+        bool sceneTick = true;
+        bool sceneOnInspect = false;
+        bool sceneOnSceneView = false;
     };
 }

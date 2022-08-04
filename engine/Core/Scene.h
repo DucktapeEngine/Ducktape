@@ -40,7 +40,7 @@ namespace DT
         entt::registry sceneRegistry;
         static inline Scene *activeScene;
 
-        void Init();
+        void Init(Engine *engine);
         void Tick();
 
         // Defined in Entity.cpp

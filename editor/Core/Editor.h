@@ -38,10 +38,10 @@ namespace DT
     {
         inline bool showDemoWindow = true;
 
-        void Init();
+        void Init(GLFWwindow *window);
         void NewFrame();
         void Render();
-        void EndFrame();
+        void EndFrame(Renderer &renderer);
         void Terminate();
 
         static void RenderSceneViewCallback(const ImDrawList *parentList, const ImDrawCmd *cmd);

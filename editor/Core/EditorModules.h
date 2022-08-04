@@ -27,6 +27,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Renderer.h>
 #include <Input/Input.h>
 #include <Core/Time.h>
+#include <Core/Engine.h>
 
 #define DEG2RAD 0.0174533f
 

@@ -30,17 +30,18 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    namespace Configuration
+    class Configuration
     {
-        inline glm::vec2 windowSize;
-        inline std::string windowTitle;
-        inline glm::vec3 version;
-        inline std::string windowIconPath;
-        inline int targetFPS;
-        inline bool drawWireframe = false;
-        inline bool vsync = true;
-        inline GLFWwindow *shareContextWith = nullptr;
-        inline bool hideWindow = false;
-        inline bool drawToQuad = true;
+    public:
+        glm::vec2 windowSize;
+        std::string windowTitle;
+        glm::vec3 version;
+        std::string windowIconPath;
+        int targetFPS;
+        bool drawWireframe = false;
+        bool vsync = true;
+        GLFWwindow *shareContextWith = nullptr;
+        bool hideWindow = false;
+        bool drawToQuad = true;
     };
 }
