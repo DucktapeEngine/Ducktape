@@ -24,6 +24,11 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    void Window::ErrorCallback(int code, const char *description)
+    {
+        std::cout << "GL::ERROR::" << code << ": " << description << std::endl;
+    }
+
     void Window::Init(const Configuration &config)
     {
         glfwInit();
@@ -40,18 +45,21 @@ namespace DT
 
         if (window == nullptr)
         {
-            throw std::runtime_error("Failed to create GLFW window");
+            std::cout << "Failed to create GLFW window" << std::endl;
+            return;
         }
 
         glfwMakeContextCurrent(window);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            throw std::runtime_error("Failed to initialize GLAD");
+            std::cout << "Failed to initialize GLAD" << std::endl;
+            return;
         }
 
         glViewport(0, 0, config.windowSize.x, config.windowSize.y);
         glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
+        glfwSetErrorCallback((GLFWerrorfun)ErrorCallback);
 
         if (config.drawWireframe)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

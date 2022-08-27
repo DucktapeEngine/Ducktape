@@ -29,6 +29,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Scene.h>
 #include <Core/Macro.h>
+#include <Core/Engine.h>
 
 namespace DT
 {
@@ -84,12 +85,6 @@ namespace DT
 
             scene->sceneRegistry.get<T>(handle).OnDestroy();
             scene->sceneRegistry.remove<T>(handle);
-        }
-
-        template <typename T>
-        static Entity FromComponent(T &component)
-        {
-            return FromComponent<T>(component, Scene::activeScene);
         }
 
         template <typename T>

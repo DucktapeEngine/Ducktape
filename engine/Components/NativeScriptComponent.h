@@ -34,15 +34,35 @@ namespace DT
     class NativeScriptComponent : public Component
     {
     public:
-        std::string dllPath = "";
         Component *component = nullptr;
-        bool isLoaded = false;
+        std::string path;
+        HMODULE dll;
 
+        NativeScriptComponent(const std::string &path);
         ~NativeScriptComponent();
 
+        void Init()
+        {
+            if (!component)
+                Load(path);
+            component->Init();
+        }
+
+        void Tick()
+        {
+            component->Tick();
+        }
+
+        void OnSceneView()
+        {
+            component->OnSceneView();
+        }
+
+        void OnDestroy()
+        {
+            component->OnDestroy();
+        }
+
         void Load(const std::string &path);
-        void Init();
-        void Tick();
-        void OnDestroy();
     };
 }

@@ -57,20 +57,6 @@ GLenum glCheckError_(const char *file, int line)
     return errorCode;
 }
 
-void GLAPIENTRY
-MessageCallback(GLenum source,
-                GLenum type,
-                GLuint id,
-                GLenum severity,
-                GLsizei length,
-                const GLchar *message,
-                const void *userParam)
-{
-    fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
-            type, severity, message);
-}
-
 namespace DT
 {
     void Renderer::Init(Window &window)
@@ -80,10 +66,8 @@ namespace DT
         defaultShader.Load("../resources/shaders/defaultV.glsl", "../resources/shaders/defaultF.glsl");
         screenShader.Load("../resources/shaders/screenV.glsl", "../resources/shaders/screenF.glsl");
 
-        model.path = "../resources/models/backpack/backpack.obj";
-        model.LoadModel(model.path);
-
-        // glDebugMessageCallback(MessageCallback, NULL);
+        // model.path = "../resources/models/backpack/backpack.obj";
+        // model.LoadModel(model.path);
 
         // FBO
         glGenFramebuffers(1, &FBO);
@@ -145,11 +129,11 @@ namespace DT
         defaultShader.SetMat4("projection", camera.projection);
         defaultShader.SetMat4("view", camera.view);
 
-        glm::mat4 trans = glm::mat4(1.0f);
-        defaultShader.SetMat4("model", trans);
+        // glm::mat4 trans = glm::mat4(1.0f);
+        // defaultShader.SetMat4("model", trans);
 
-        for (unsigned int i = 0; i < model.meshes.size(); i++)
-            model.meshes[i].Draw(defaultShader);
+        // for (unsigned int i = 0; i < model.meshes.size(); i++)
+        //     model.meshes[i].Draw(defaultShader);
 
         glCheckError();
 

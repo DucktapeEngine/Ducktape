@@ -24,7 +24,6 @@ aryanbaburajan2007@gmail.com
 
 #include <iostream>
 
-#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 
 namespace DT

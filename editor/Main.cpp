@@ -37,10 +37,15 @@ int main()
 
         Scene mainScene;
 
-        Entity player = mainScene.CreateEntity();
-        player.AddComponent<Tag>().name = "Player";
-        player.AddComponent<Transform>();
-        player.AddComponent<NativeScriptComponent>().dllPath = "./resources/scripts/libPlayerController.dll";
+        Entity camera = mainScene.CreateEntity();
+        camera.AddComponent<Tag>().name = "Camera";
+        camera.AddComponent<Transform>();
+        camera.AddComponent<NativeScriptComponent>("./resources/scripts/libPlayerController.dll");
+
+        Entity model = mainScene.CreateEntity();
+        model.AddComponent<Tag>().name = "Model";
+        model.AddComponent<Transform>();
+        model.AddComponent<NativeScriptComponent>("./resources/scripts/libModelRenderer.dll");
 
         e.Init(mainScene);
 
@@ -50,6 +55,8 @@ int main()
         {
             e.StartFrame();
             Editor::NewFrame();
+
+            DT_SCENE_CALL(e.activeScene, OnSceneView);
 
             Editor::Render();
 

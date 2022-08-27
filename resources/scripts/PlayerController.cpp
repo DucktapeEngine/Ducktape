@@ -30,7 +30,6 @@ public:
 
     void Init()
     {
-        std::cout << "no way this is happening" << std::endl;
     }
 
     void Tick()

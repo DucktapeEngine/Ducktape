@@ -31,19 +31,8 @@ namespace DT
         {
             NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);
 
-            nativeScriptComponent.Load(nativeScriptComponent.dllPath);
-            nativeScriptComponent.component->engine = engine;
-            nativeScriptComponent.component->Init();
-        }
-    }
-
-    void Scene::Tick()
-    {
-        auto view = sceneRegistry.view<NativeScriptComponent>();
-        for (auto entity : view)
-        {
-            NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);
-            nativeScriptComponent.Tick();
+            nativeScriptComponent.engine = engine;
+            nativeScriptComponent.Init();
         }
     }
 }

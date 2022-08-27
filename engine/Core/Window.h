@@ -70,6 +70,7 @@ namespace DT
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
 
+        static void ErrorCallback(int code, const char *description);
         static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
     };
 }

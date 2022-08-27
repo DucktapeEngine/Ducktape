@@ -32,7 +32,6 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Camera.h>
 #include <Core/Window.h>
 #include <Core/Debug.h>
-#include <Components/ModelRenderer.h>
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
@@ -42,10 +41,9 @@ namespace DT
     class Renderer
     {
     public:
-        ModelRenderer model;
-
         unsigned int FBO, RBO, renderTexture;
         unsigned int quadVAO, quadVBO;
+        Shader defaultShader, screenShader;
 
         void Init(Window &window);
         void Render(Camera &camera, Window &window, Configuration &config);

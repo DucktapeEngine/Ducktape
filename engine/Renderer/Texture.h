@@ -46,6 +46,6 @@ namespace DT
         Texture();
         Texture(const std::string &path);
 
-        void Load(const std::string &path);
+        bool Load(const std::string &path);
     };
 }

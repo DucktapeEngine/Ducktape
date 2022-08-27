@@ -28,7 +28,5 @@ namespace DT
     {
     public:
         bool sceneTick = true;
-        bool sceneOnInspect = false;
-        bool sceneOnSceneView = false;
     };
 }

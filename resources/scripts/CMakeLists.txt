@@ -23,24 +23,10 @@ cmake_minimum_required (VERSION 3.8)
 set(CMAKE_CXX_STANDARD 20)
 
 # Scripts
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/resources/scripts/*.cpp")
-
 set(CMAKE_CXX_FLAGS "-fPIC")
-
-add_library (PlayerController SHARED
-    ${source_list}
-)
-
-set_target_properties (PlayerController PROPERTIES
-    CXX_STANDARD 20
-    CXX_EXTENSIONS OFF
-)
-
-target_compile_features (PlayerController PRIVATE cxx_std_17)
 
 # Ducktape
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/;${CMAKE_MODULE_PATH}")
-set(TARGET PlayerController)
 set(Ducktape_ROOT_DIR "${PROJECT_SOURCE_DIR}")
 find_package (Ducktape REQUIRED)
 
@@ -50,8 +36,9 @@ else (Ducktape_FOUND)
     message ("-- Ducktape not found.")
 endif ()
 
-target_include_directories (PlayerController PUBLIC ${Ducktape_INCLUDE_DIR})
-target_link_directories (PlayerController PUBLIC ${Ducktape_LIBRARY_DIR})
-target_link_libraries (PlayerController PUBLIC ${Ducktape_LIBRARY})
+include_directories (${Ducktape_INCLUDE_DIR})
+link_directories (${Ducktape_LIBRARY_DIR})
+link_libraries (${Ducktape_LIBRARY})
 
-target_include_directories (PlayerController PUBLIC "${PROJECT_SOURCE_DIR}/extern/imgui/;${PROJECT_SOURCE_DIR}/extern/imgui/backends/")
+add_library (PlayerController SHARED "${PROJECT_SOURCE_DIR}/resources/scripts/PlayerController.cpp")
+add_library (ModelRenderer SHARED "${PROJECT_SOURCE_DIR}/resources/scripts/ModelRenderer.cpp")

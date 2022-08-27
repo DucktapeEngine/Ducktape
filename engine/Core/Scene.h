@@ -30,6 +30,17 @@ aryanbaburajan2007@gmail.com
 
 #include <Components/NativeScriptComponent.h>
 
+#define DT_SCENE_CALL(scene, func)                                                                      \
+    do                                                                                                  \
+    {                                                                                                   \
+        auto view = scene->sceneRegistry.view<NativeScriptComponent>();                                 \
+        for (auto entity : view)                                                                        \
+        {                                                                                               \
+            NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);     \
+            nativeScriptComponent.component->func();                                                    \
+        }                                                                                               \
+    } while (0)
+
 namespace DT
 {
     class Entity;
@@ -38,10 +49,8 @@ namespace DT
     {
     public:
         entt::registry sceneRegistry;
-        static inline Scene *activeScene;
 
         void Init(Engine *engine);
-        void Tick();
 
         // Defined in Entity.cpp
         Entity CreateEntity();

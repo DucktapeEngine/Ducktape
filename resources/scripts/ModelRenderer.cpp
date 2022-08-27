@@ -20,30 +20,54 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Components/ModelRenderer.h>
+#include <vector>
+#include <string>
 
-namespace DT
+#include <glad/glad.h>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#include <Renderer/Mesh.h>
+#include <Components/Transform.h>
+#include <Core/Debug.h>
+#include <Core/Entity.h>
+using namespace DT;
+
+unsigned int TextureFromFile(const std::string &path, const std::string &directory, bool gamma = false);
+
+class ModelRenderer : public Component
 {
-    void ModelRenderer::Init()
+public:
+    std::vector<Texture> texturesLoaded;
+    std::vector<Mesh> meshes;
+    std::string path = "../resources/models/backpack/backpack.obj";
+    bool gammaCorrection;
+    bool loaded = false;
+    Transform *transform;
+    std::string directory;
+
+    void Init()
     {
-        transform = &Entity::FromComponent(*this).RequireComponent<Transform>();
+        transform = &Entity::FromComponent(*(NativeScriptComponent *)holderComponent, engine->activeScene).RequireComponent<Transform>();
 
         LoadModel(path);
     }
 
-    void ModelRenderer::Tick()
+    void Tick()
     {
         if (!loaded)
             return;
 
-        defaultShader.Use();
-        defaultShader.SetMat4("model", transform->GetModelMatrix());
+        engine->renderer.defaultShader.Use();
+        engine->renderer.defaultShader.SetMat4("model", transform->GetModelMatrix());
 
         for (unsigned int i = 0; i < meshes.size(); i++)
-            meshes[i].Draw(defaultShader);
+            meshes[i].Draw(engine->renderer.defaultShader);
     }
 
-    void ModelRenderer::LoadModel(std::string const &path)
+    void LoadModel(std::string const &path)
     {
         if (path == "")
             return;
@@ -65,7 +89,7 @@ namespace DT
         loaded = true;
     }
 
-    void ModelRenderer::ProcessNode(aiNode *node, const aiScene *scene)
+    void ProcessNode(aiNode *node, const aiScene *scene)
     {
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
@@ -81,7 +105,7 @@ namespace DT
         }
     }
 
-    Mesh ModelRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene)
+    Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene)
     {
         // data to fill
         std::vector<Vertex> vertices;
@@ -165,7 +189,7 @@ namespace DT
         return Mesh(vertices, indices, textures);
     }
 
-    std::vector<Texture> ModelRenderer::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+    std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {
         std::vector<Texture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -174,11 +198,11 @@ namespace DT
             mat->GetTexture(type, i, &str);
             // check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
             bool skip = false;
-            for (unsigned int j = 0; j < textures_loaded.size(); j++)
+            for (unsigned int j = 0; j < texturesLoaded.size(); j++)
             {
-                if (std::strcmp(textures_loaded[j].path.data(), str.C_Str()) == 0)
+                if (std::strcmp(texturesLoaded[j].path.data(), str.C_Str()) == 0)
                 {
-                    textures.push_back(textures_loaded[j]);
+                    textures.push_back(texturesLoaded[j]);
                     skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
                     break;
                 }
@@ -190,49 +214,54 @@ namespace DT
                 texture.type = typeName;
                 texture.path = str.C_Str();
                 textures.push_back(texture);
-                textures_loaded.push_back(texture); // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+                texturesLoaded.push_back(texture); // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
             }
         }
         return textures;
     }
+};
 
-    unsigned int TextureFromFile(const std::string &path, const std::string &directory, bool gamma)
+unsigned int TextureFromFile(const std::string &path, const std::string &directory, bool gamma)
+{
+    std::string filename = path;
+    filename = directory + '/' + filename;
+
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+
+    int width, height, nrComponents;
+    unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    if (data)
     {
-        std::string filename = path;
-        filename = directory + '/' + filename;
+        GLenum format;
+        if (nrComponents == 1)
+            format = GL_RED;
+        else if (nrComponents == 3)
+            format = GL_RGB;
+        else if (nrComponents == 4)
+            format = GL_RGBA;
 
-        unsigned int textureID;
-        glGenTextures(1, &textureID);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
 
-        int width, height, nrComponents;
-        unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-        if (data)
-        {
-            GLenum format;
-            if (nrComponents == 1)
-                format = GL_RED;
-            else if (nrComponents == 3)
-                format = GL_RGB;
-            else if (nrComponents == 4)
-                format = GL_RGBA;
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-            glBindTexture(GL_TEXTURE_2D, textureID);
-            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            stbi_image_free(data);
-        }
-        else
-        {
-            std::cout << "Texture failed to load at path: " << path << std::endl;
-            stbi_image_free(data);
-        }
-
-        return textureID;
+        stbi_image_free(data);
     }
+    else
+    {
+        std::cout << "Texture failed to load at path: " << path << std::endl;
+        stbi_image_free(data);
+    }
+
+    return textureID;
+}
+
+extern "C" __declspec(dllexport) Component *CreateModule()
+{
+    return new ModelRenderer();
 }

@@ -49,6 +49,7 @@ namespace DT
         LoopManager loopManager;
         DebugHandler debugHandler;
         Camera camera;
+        Scene *activeScene;
 
         static inline Engine *activeContext = nullptr;
 

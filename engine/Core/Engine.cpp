@@ -40,7 +40,8 @@ namespace DT
         input.Init(window.window);
 
         // Logic
-        Scene::activeScene = &scene;
+        activeScene = &scene;
+        
         scene.Init(this);
     }
 
@@ -59,7 +60,8 @@ namespace DT
 
         renderer.Render(camera, window, config);
 
-        Scene::activeScene->Tick();
+        if (loopManager.sceneTick)
+            DT_SCENE_CALL(activeScene, Tick);
     }
 
     void Engine::EndFrame()

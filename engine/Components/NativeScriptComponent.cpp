@@ -24,51 +24,49 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    NativeScriptComponent::NativeScriptComponent(const std::string &path)
+    {
+        this->path = path;
+    }
+
     NativeScriptComponent::~NativeScriptComponent()
     {
         if (component)
+        {
             delete component;
+            FreeLibrary(dll);
+        }
     }
 
     void NativeScriptComponent::Load(const std::string &path)
     {
-        HINSTANCE hInstance = LoadLibrary(path.c_str());
+        this->path = path;
 
-        if (!hInstance)
+        if (component)
         {
-            std::cout << "Failed to load DLL: " << dllPath << std::endl;
+            delete component;
+            FreeLibrary(dll);
+        }
+
+        HMODULE dll = LoadLibrary(path.c_str());
+
+        if (!dll)
+        {
+            std::cout << "Failed to load DLL: " << path << std::endl;
             return;
         }
 
-        CreateModuleFunc createModule = (CreateModuleFunc)GetProcAddress(hInstance, "CreateModule");
+        CreateModuleFunc createModule = (CreateModuleFunc)GetProcAddress(dll, "CreateModule");
 
         if (!createModule)
         {
-            std::cout << "Failed to get CreateModule function from DLL: " << dllPath << std::endl;
+            std::cout << "Failed to get CreateModule function from DLL: " << path << std::endl;
+            FreeLibrary(dll);
             return;
         }
 
-        component = createModule();
-        isLoaded = true;
-    }
-
-    void NativeScriptComponent::Init()
-    {
-        if (!isLoaded)
-            Load(dllPath);
-
-        component->Init();
-    }
-
-    void NativeScriptComponent::Tick()
-    {
-        if (isLoaded)
-            component->Tick();
-    }
-
-    void NativeScriptComponent::OnDestroy()
-    {
-        if (isLoaded)
-            component->OnDestroy();
+        component = (*createModule)();
+        component->holderComponent = this;
+        component->engine = engine;
     }
 }
