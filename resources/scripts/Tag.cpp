@@ -20,31 +20,4 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Components/Transform.h>
-
-namespace DT
-{
-    glm::mat4 Transform::GetModelMatrix()
-    {
-        glm::mat4 trans = glm::translate(glm::mat4(1.0), position);
-        glm::mat4 rot = glm::toMat4(rotation);
-        glm::mat4 scl = glm::scale(glm::mat4(1.0), scale);
-
-        return scl * rot * trans;
-    }
-
-    glm::vec3 Transform::Right()
-    {
-        return rotation * glm::vec3(1.f, 0.f, 0.f);
-    }
-
-    glm::vec3 Transform::Forward()
-    {
-        return rotation * glm::vec3(0.f, 0.f, 1.f);
-    }
-
-    glm::vec3 Transform::Up()
-    {
-        return rotation * glm::vec3(0.f, 1.f, 0.f);
-    }
-}
+#include <Tag.h>
