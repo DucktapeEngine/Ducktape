@@ -20,42 +20,18 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <vector>
-#include <string>
+#include <ModelRenderer.h>
 
-#include <glad/glad.h>
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include <Renderer/Mesh.h>
-#include <Components/Transform.h>
-#include <Core/Debug.h>
-#include <Core/Entity.h>
-using namespace DT;
-
-unsigned int TextureFromFile(const std::string &path, const std::string &directory, bool gamma = false);
-
-class ModelRenderer : public Component
+namespace DT
 {
-public:
-    std::vector<Texture> texturesLoaded;
-    std::vector<Mesh> meshes;
-    std::string path = "../resources/models/backpack/backpack.obj";
-    bool gammaCorrection;
-    bool loaded = false;
-    Transform *transform;
-    std::string directory;
-
-    void Init()
+    void ModelRenderer::Init()
     {
         transform = &Entity::FromComponent(*(NativeScriptComponent *)holderComponent, engine->activeScene).RequireComponent<Transform>();
 
         LoadModel(path);
     }
 
-    void Tick()
+    void ModelRenderer::Tick()
     {
         if (!loaded)
             return;
@@ -67,7 +43,7 @@ public:
             meshes[i].Draw(engine->renderer.defaultShader);
     }
 
-    void LoadModel(std::string const &path)
+    void ModelRenderer::LoadModel(std::string const &path)
     {
         if (path == "")
             return;
@@ -89,7 +65,7 @@ public:
         loaded = true;
     }
 
-    void ProcessNode(aiNode *node, const aiScene *scene)
+    void ModelRenderer::ProcessNode(aiNode *node, const aiScene *scene)
     {
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
@@ -105,7 +81,7 @@ public:
         }
     }
 
-    Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene)
+    Mesh ModelRenderer::ProcessMesh(aiMesh *mesh, const aiScene *scene)
     {
         // data to fill
         std::vector<Vertex> vertices;
@@ -189,7 +165,7 @@ public:
         return Mesh(vertices, indices, textures);
     }
 
-    std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+    std::vector<Texture> ModelRenderer::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {
         std::vector<Texture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -219,46 +195,46 @@ public:
         }
         return textures;
     }
-};
 
-unsigned int TextureFromFile(const std::string &path, const std::string &directory, bool gamma)
-{
-    std::string filename = path;
-    filename = directory + '/' + filename;
-
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
-
-    int width, height, nrComponents;
-    unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-    if (data)
+    unsigned int TextureFromFile(const std::string &path, const std::string &directory, bool gamma)
     {
-        GLenum format;
-        if (nrComponents == 1)
-            format = GL_RED;
-        else if (nrComponents == 3)
-            format = GL_RGB;
-        else if (nrComponents == 4)
-            format = GL_RGBA;
+        std::string filename = path;
+        filename = directory + '/' + filename;
 
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
+        unsigned int textureID;
+        glGenTextures(1, &textureID);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        int width, height, nrComponents;
+        unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+        if (data)
+        {
+            GLenum format;
+            if (nrComponents == 1)
+                format = GL_RED;
+            else if (nrComponents == 3)
+                format = GL_RGB;
+            else if (nrComponents == 4)
+                format = GL_RGBA;
 
-        stbi_image_free(data);
+            glBindTexture(GL_TEXTURE_2D, textureID);
+            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Texture failed to load at path: " << path << std::endl;
+            stbi_image_free(data);
+        }
+
+        return textureID;
     }
-    else
-    {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
-        stbi_image_free(data);
-    }
-
-    return textureID;
 }
 
 extern "C" __declspec(dllexport) Component *CreateModule()

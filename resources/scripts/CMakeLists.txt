@@ -24,6 +24,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Scripts
 set(CMAKE_CXX_FLAGS "-fPIC")
+include_directories (${PROJECT_SOURCE_DIR}/resources/scripts/)
 
 # Ducktape
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/;${CMAKE_MODULE_PATH}")
