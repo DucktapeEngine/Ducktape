@@ -29,6 +29,7 @@ aryanbaburajan2007@gmail.com
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <Components/Component.h>
 #include <Renderer/Mesh.h>
 #include <Components/Transform.h>
 #include <Core/Debug.h>

@@ -62,8 +62,8 @@ then
 	generator="RELEASE"
 fi
 
-mkdir build
+mkdir Build
 clear
-cd build
+cd Build
 cmake -G "${generator}" -DCMAKE_CXX_COMPILER=${compiler} -DCMAKE_BUILD_TYPE=${generator} ..
 make

@@ -42,4 +42,3 @@ link_directories (${Ducktape_LIBRARY_DIR})
 link_libraries (${Ducktape_LIBRARY})
 
 add_library (PlayerController SHARED "${PROJECT_SOURCE_DIR}/resources/scripts/PlayerController.cpp")
-add_library (ModelRenderer SHARED "${PROJECT_SOURCE_DIR}/resources/scripts/ModelRenderer.cpp")

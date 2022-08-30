@@ -1,4 +1,4 @@
-# Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
+# Ducktape | An open source C++ 2D & 3D game Engine that focuses on being fast, and powerful.
 # Copyright (C) 2022 Aryan Baburajan
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -35,22 +35,22 @@ else (OPENGL_FOUND)
 endif ()
 
 set (Ducktape_INCLUDE_DIR 
-    ${Ducktape_ROOT_DIR}/engine;
-    ${Ducktape_ROOT_DIR}/extern/;
-    ${Ducktape_ROOT_DIR}/extern/glm/;
-    ${Ducktape_ROOT_DIR}/extern/glfw/include/;
-    ${Ducktape_ROOT_DIR}/extern/glad/include/;
-    ${Ducktape_ROOT_DIR}/extern/assimp/include;
-    ${Ducktape_ROOT_DIR}/build/extern/assimp/include;
-    ${Ducktape_ROOT_DIR}/build/extern/glad/include
+    ${Ducktape_ROOT_DIR}/Engine;
+    ${Ducktape_ROOT_DIR}/Extern/;
+    ${Ducktape_ROOT_DIR}/Extern/glm/;
+    ${Ducktape_ROOT_DIR}/Extern/glfw/include/;
+    ${Ducktape_ROOT_DIR}/Extern/glad/include/;
+    ${Ducktape_ROOT_DIR}/Extern/assimp/include;
+    ${Ducktape_ROOT_DIR}/build/Extern/assimp/include;
+    ${Ducktape_ROOT_DIR}/build/Extern/glad/include
 )
 
 set (Ducktape_LIBRARY_DIR 
-    ${Ducktape_ROOT_DIR}/build/engine/;
-    ${Ducktape_ROOT_DIR}/build/extern/assimp/bin/;
-    ${Ducktape_ROOT_DIR}/build/extern/assimp/contrib/zlib/;
-    ${Ducktape_ROOT_DIR}/build/extern/glad/;
-    ${Ducktape_ROOT_DIR}/build/extern/glfw/src;
+    ${Ducktape_ROOT_DIR}/build/Engine/;
+    ${Ducktape_ROOT_DIR}/build/Extern/assimp/bin/;
+    ${Ducktape_ROOT_DIR}/build/Extern/assimp/contrib/zlib/;
+    ${Ducktape_ROOT_DIR}/build/Extern/glad/;
+    ${Ducktape_ROOT_DIR}/build/Extern/glfw/src;
 )
 
 set (Ducktape_LIBRARY

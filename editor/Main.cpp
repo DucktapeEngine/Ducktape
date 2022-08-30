@@ -38,14 +38,14 @@ int main()
         Scene mainScene;
 
         Entity camera = mainScene.CreateEntity();
-        camera.AddComponent<Tag>().name = "Camera";
-        camera.AddComponent<Transform>();
-        camera.AddComponent<NativeScriptComponent>("./resources/scripts/libPlayerController.dll");
+        camera.AddComponent<NativeScriptComponent>().Load<Tag>().name = "Camera";
+        camera.AddComponent<NativeScriptComponent>().Load<Transform>();
+        camera.AddComponent<NativeScriptComponent>().Load("./resources/scripts/libPlayerController.dll");
 
         Entity model = mainScene.CreateEntity();
-        model.AddComponent<Tag>().name = "Model";
-        model.AddComponent<Transform>();
-        model.AddComponent<NativeScriptComponent>("./resources/scripts/libModelRenderer.dll");
+        model.AddComponent<NativeScriptComponent>().Load<Tag>().name = "Model";
+        model.AddComponent<NativeScriptComponent>().Load<Transform>();
+        model.AddComponent<NativeScriptComponent>().Load("./resources/scripts/libModelRenderer.dll");
 
         e.Init(mainScene);
 

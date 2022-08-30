@@ -24,24 +24,19 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    NativeScriptComponent::NativeScriptComponent(const std::string &path)
-    {
-        this->path = path;
-    }
-
     NativeScriptComponent::~NativeScriptComponent()
     {
         if (component)
         {
             delete component;
-            FreeLibrary(dll);
+
+            if (dll != NULL)
+                FreeLibrary(dll);
         }
     }
 
     void NativeScriptComponent::Load(const std::string &path)
     {
-        this->path = path;
-
         if (component)
         {
             delete component;

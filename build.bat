@@ -31,8 +31,8 @@ set /P idx=Enter your option (1,2):
 if %idx%==1 set build=DEBUG
 if %idx%==2 set build=RELEASE
 
-mkdir build
+mkdir Build
 cls
-cd build
+cd Build
 cmake -G "%generator%" -DCMAKE_CXX_COMPILER=%compiler% -DCMAKE_BUILD_TYPE=%build% ..
 make

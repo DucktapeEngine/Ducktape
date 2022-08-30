@@ -1,4 +1,4 @@
-﻿# Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
+﻿# Ducktape | An open source C++ 2D & 3D game Engine that focuses on being fast, and powerful.
 # Copyright (C) 2022 Aryan Baburajan
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ cmake_minimum_required (VERSION 3.8)
 set(CMAKE_CXX_STANDARD 20)
 
 # Ducktape
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/engine/**/*.cpp" "${PROJECT_SOURCE_DIR}/engine/*.cpp")
+file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/Engine/**/*.cpp" "${PROJECT_SOURCE_DIR}/Engine/*.cpp")
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
@@ -36,11 +36,12 @@ set_target_properties(Ducktape PROPERTIES
     CXX_EXTENSIONS OFF
 )
 
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/engine/")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Engine/")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Resources/Scripts/")
 target_compile_features(Ducktape PRIVATE cxx_std_17)
 
 # Extern
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/")
 
 # OpenGL
 find_package(OpenGL REQUIRED)
@@ -52,22 +53,22 @@ endif()
 target_link_libraries(Ducktape PUBLIC ${OPENGL_gl_LIBRARY})
 
 # GLM
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glm/")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/glm/")
 
 # EnTT
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/entt/single_include")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/entt/single_include")
 
 # GLFW
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glfw/include")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/glfw/include")
 target_link_libraries(Ducktape PUBLIC glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIES})
 
 # GLAD
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/extern/glad/include/")
+target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/glad/include/")
 target_link_libraries(Ducktape PUBLIC glad)
 
 # Assimp
-target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/bin)
-target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/contrib/zlib)
-target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/extern/assimp/include)
-target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/extern/assimp/include/)
+target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/Extern/assimp/bin)
+target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/Extern/assimp/contrib/zlib)
+target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/Extern/assimp/include)
+target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/Extern/assimp/include/)
 target_link_libraries(Ducktape PUBLIC assimp zlibstatic)

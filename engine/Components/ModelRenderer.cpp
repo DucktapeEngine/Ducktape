@@ -20,7 +20,7 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <ModelRenderer.h>
+#include <Components/ModelRenderer.h>
 
 namespace DT
 {
@@ -237,7 +237,7 @@ namespace DT
     }
 }
 
-extern "C" __declspec(dllexport) Component *CreateModule()
+extern "C" __declspec(dllexport) DT::Component *CreateModule()
 {
-    return new ModelRenderer();
+    return new DT::ModelRenderer();
 }

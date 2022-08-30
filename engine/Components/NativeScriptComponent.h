@@ -35,16 +35,13 @@ namespace DT
     {
     public:
         Component *component = nullptr;
-        std::string path;
-        HMODULE dll;
-
-        NativeScriptComponent(const std::string &path);
+        HMODULE dll = NULL;
         ~NativeScriptComponent();
 
         void Init()
         {
             if (!component)
-                Load(path);
+                return;
             component->Init();
         }
 
@@ -64,5 +61,14 @@ namespace DT
         }
 
         void Load(const std::string &path);
+
+        template <typename T>
+        T &Load()
+        {
+            component = new T();
+            component->holderComponent = this;
+            component->engine = engine;
+            return (T &)*component;
+        }
     };
 }

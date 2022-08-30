@@ -36,12 +36,10 @@
     <a href="https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=feature_request.md&title=">Request Feature</a>
 </p>
 
-> **Note: The original Ducktape engine is going under a rewrite with a completely different goal in mind.**
-
 # Ducktape
-An open source C++ 2D & 3D game engine that focuses on being fast, and powerful, using OpenGL for rendering. As the engine is currently work in progress, it only supports an ECS. Rendering powered by OpenGL, Audio powered by OpenAL, and Physics powered by Bullet3D are yet to be made.
+An open source C++ 3D game engine that focuses on being fast, and powerful.
 
-**If you like what you see, consider starring the repo, it helps!**
+**If you like what you see, consider starring the repo, it really helps!**
 
 [![Stargazers repo roster for @Ducktapeengine/Ducktape](https://reporoster.com/stars/Ducktapeengine/Ducktape)](https://github.com/Ducktapeengine/ducktape/stargazers)
 
@@ -52,7 +50,7 @@ The engine is not ready for usage as of now.
 Documentation is still in the works.
     
 ## Contributing
-Refer to [CONTRIBUTING.md](CONTRIBUTING.md)
+We are not as of now accepting contributions, but we plan to do so when the first version of Ducktape is released.
     
 ## License
 This project is licensed under the GPL-3.0 License - see the [`LICENSE`](LICENSE) file for details.
