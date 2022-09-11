@@ -35,6 +35,14 @@ int main()
         e.config.windowTitle = "DucktapeTest";
         e.config.drawToQuad = false;
         e.config.windowIconPath = "../Resources/textures/logo.png";
+        e.config.skyboxCubemapPaths = {
+            "../Resources/Textures/Skybox/right.jpg",
+            "../Resources/Textures/Skybox/left.jpg",
+            "../Resources/Textures/Skybox/top.jpg",
+            "../Resources/Textures/Skybox/bottom.jpg",
+            "../Resources/Textures/Skybox/front.jpg",
+            "../Resources/Textures/Skybox/back.jpg"
+        };
 
         Scene mainScene;
 

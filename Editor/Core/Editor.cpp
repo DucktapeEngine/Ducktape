@@ -103,11 +103,13 @@ namespace DT
 
     void Editor::EndFrame(Renderer &renderer)
     {
-        renderer.BindToFrameBuffer(0);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        
         ImGui::EndFrame();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        renderer.BindToFrameBuffer(1);
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, renderer.FBO);
     }
 
     void Editor::Terminate()

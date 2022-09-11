@@ -32,6 +32,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Camera.h>
 #include <Core/Window.h>
 #include <Core/Debug.h>
+#include <Renderer/Cubemap.h>
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
@@ -43,12 +44,12 @@ namespace DT
     public:
         unsigned int FBO, RBO, renderTexture;
         unsigned int quadVAO, quadVBO;
-        Shader defaultShader, screenShader;
+        unsigned int skyboxVAO, skyboxVBO;
+        Cubemap skyboxCubemap;
+        Shader defaultShader, screenShader, skyboxShader;
 
-        void Init(Window &window);
+        void Init(Window &window, Configuration &config);
         void Render(Camera &camera, Window &window, Configuration &config);
         void Terminate();
-
-        void BindToFrameBuffer(bool bind);
     };
 }

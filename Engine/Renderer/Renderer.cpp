@@ -59,15 +59,13 @@ GLenum glCheckError_(const char *file, int line)
 
 namespace DT
 {
-    void Renderer::Init(Window &window)
+    void Renderer::Init(Window &window, Configuration &config)
     {
         glEnable(GL_DEPTH_TEST);
 
-        defaultShader.Load("../Resources/shaders/defaultV.glsl", "../Resources/shaders/defaultF.glsl");
-        screenShader.Load("../Resources/shaders/screenV.glsl", "../Resources/shaders/screenF.glsl");
-
-        // model.path = "../Resources/models/backpack/backpack.obj";
-        // model.LoadModel(model.path);
+        defaultShader.Load("../Resources/shaders/default.vert", "../Resources/shaders/default.frag");
+        screenShader.Load("../Resources/shaders/screen.vert", "../Resources/shaders/screen.frag");
+        skyboxShader.Load("../Resources/shaders/skybox.vert", "../Resources/shaders/skybox.frag");
 
         // FBO
         glGenFramebuffers(1, &FBO);
@@ -113,6 +111,62 @@ namespace DT
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+
+        // Skybox
+        skyboxCubemap.Load(config.skyboxCubemapPaths);
+
+        float skyboxVertices[] = {
+            // positions          
+            -1.0f,  1.0f, -1.0f,
+            -1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+
+            -1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f, -1.0f,
+            -1.0f,  1.0f,  1.0f,
+            -1.0f, -1.0f,  1.0f,
+
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+
+            -1.0f, -1.0f,  1.0f,
+            -1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f,  1.0f,
+
+            -1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f, -1.0f,
+            1.0f,  1.0f,  1.0f,
+            1.0f,  1.0f,  1.0f,
+            -1.0f,  1.0f,  1.0f,
+            -1.0f,  1.0f, -1.0f,
+
+            -1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f,  1.0f,
+            1.0f, -1.0f,  1.0f
+        };
+
+        glGenVertexArrays(1, &skyboxVAO);
+        glGenBuffers(1, &skyboxVBO);
+        glBindVertexArray(skyboxVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     }
 
     void Renderer::Render(Camera &camera, Window &window, Configuration &config)
@@ -129,18 +183,25 @@ namespace DT
         defaultShader.SetMat4("projection", camera.projection);
         defaultShader.SetMat4("view", camera.view);
 
-        // glm::mat4 trans = glm::mat4(1.0f);
-        // defaultShader.SetMat4("model", trans);
+        // Draw skybox
+        glDepthMask(GL_FALSE);
 
-        // for (unsigned int i = 0; i < model.meshes.size(); i++)
-        //     model.meshes[i].Draw(defaultShader);
+        skyboxShader.Use();
+        skyboxShader.SetMat4("projection", camera.projection);
+        skyboxShader.SetMat4("view", glm::mat4(glm::mat3(camera.view)));
+
+        glBindVertexArray(skyboxVAO);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxCubemap.id);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        glDepthMask(GL_TRUE);
 
         glCheckError();
 
         // Draw render texture on to a quad
         if (config.drawToQuad)
         {
-            BindToFrameBuffer(false);
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
             glDisable(GL_DEPTH_TEST);
 
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -151,7 +212,7 @@ namespace DT
             glBindTexture(GL_TEXTURE_2D, renderTexture);
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
-            BindToFrameBuffer(true);
+            glBindFramebuffer(GL_FRAMEBUFFER, FBO);
             glEnable(GL_DEPTH_TEST);
         }
     }
@@ -159,13 +220,5 @@ namespace DT
     void Renderer::Terminate()
     {
         glDeleteFramebuffers(1, &FBO);
-    }
-    
-    void Renderer::BindToFrameBuffer(bool bind)
-    {
-        if (bind)
-            glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-        else
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 }

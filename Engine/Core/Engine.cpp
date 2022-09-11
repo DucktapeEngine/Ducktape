@@ -35,7 +35,7 @@ namespace DT
 
         // Rendering
         window.Init(config);
-        renderer.Init(window);
+        renderer.Init(window, config);
         input.Init(window.window);
 
         // Logic

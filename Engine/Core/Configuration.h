@@ -23,6 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <string>
+#include <array>
 
 #include <glm/glm.hpp>
 #include <glad/glad.h>
@@ -43,5 +44,6 @@ namespace DT
         GLFWwindow *shareContextWith = nullptr;
         bool hideWindow = false;
         bool drawToQuad = true;
+        std::array<std::string, 6> skyboxCubemapPaths;
     };
 }
