@@ -60,7 +60,7 @@ namespace DT
         renderer.Render(camera, window, config);
 
         if (loopManager.sceneTick)
-            DT_SCENE_CALL(activeScene, Tick);
+            activeScene->Tick();
     }
 
     void Engine::EndFrame()

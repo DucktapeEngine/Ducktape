@@ -47,48 +47,49 @@ namespace DT
         operator bool() const { return handle != entt::null; }
 
         template <typename T>
-        bool HasComponent()
+        bool Has()
         {
             return scene->sceneRegistry.any_of<T>(handle);
         }
 
         template <typename T, typename... Args>
-        T &AddComponent(Args &&...args)
+        T &Assign(Args &&...args)
         {
-            DT_ASSERT(!HasComponent<T>(), "Entity already has component.");
+            DT_ASSERT(!Has<T>(), "Entity already has component.");
 
             T &component = scene->sceneRegistry.emplace<T>(handle, std::forward<Args>(args)...);
+            scene->systems.insert(T::System);
             return component;
         }
 
         template <typename T, typename... Args>
-        T &RequireComponent(Args &&...args)
+        T &Require(Args &&...args)
         {
-            if (HasComponent<T>())
-                return GetComponent<T>();
+            if (Has<T>())
+                return Get<T>();
 
-            return AddComponent<T>(std::forward<Args>(args)...);
+            return Assign<T>(std::forward<Args>(args)...);
         }
 
         template <typename T>
-        T &GetComponent()
+        T &Get()
         {
-            DT_ASSERT(HasComponent<T>(), "Entity does not have component.");
+            DT_ASSERT(Has<T>(), "Entity does not have component.");
 
             return scene->sceneRegistry.get<T>(handle);
         }
 
         template <typename T>
-        void RemoveComponent()
+        void Remove()
         {
-            DT_ASSERT(HasComponent<T>(), "Entity does not have component.");
+            DT_ASSERT(Has<T>(), "Entity does not have component.");
 
             scene->sceneRegistry.get<T>(handle).OnDestroy();
             scene->sceneRegistry.remove<T>(handle);
         }
 
         template <typename T>
-        static Entity FromComponent(T &component, Scene *scene)
+        static Entity From(T &component, Scene *scene)
         {
             return Entity(entt::to_entity(scene->sceneRegistry, component), scene);
         }

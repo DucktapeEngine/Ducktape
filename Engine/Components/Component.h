@@ -34,11 +34,10 @@ namespace DT
     {
     public:
         Engine *engine;
-        Component *holderComponent;
 
         virtual void Init() {}
         virtual void Tick() {}
-        virtual void OnSceneView() {}
-        virtual void OnDestroy() {}
+        virtual void SceneView() {}
+        virtual void Destroy() {}
     };
 }

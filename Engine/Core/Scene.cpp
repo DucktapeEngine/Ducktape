@@ -24,15 +24,37 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Scene::Init(Engine *engine)
+    void Scene::Init(Engine *e)
     {
-        auto view = sceneRegistry.view<NativeScriptComponent>();
-        for (auto entity : view)
-        {
-            NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);
+        engine = engine;
 
-            nativeScriptComponent.engine = engine;
-            nativeScriptComponent.Init();
-        }
+        callState = CallState::EngineAssignment;
+        for (System system : systems)
+            system(this);
+
+        callState = CallState::Init;
+        for (System system : systems)
+            system(this);
+    }
+
+    void Scene::Tick()
+    {
+        callState = CallState::Tick;
+        for (System system : systems)
+            system(this);
+    }
+
+    void Scene::SceneView()
+    {
+        callState = CallState::SceneView;
+        for (System system : systems)
+            system(this);
+    }
+
+    void Scene::Destroy()
+    {
+        callState = CallState::Destroy;
+        for (System system : systems)
+            system(this);
     }
 }

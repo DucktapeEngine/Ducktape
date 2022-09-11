@@ -28,29 +28,65 @@ aryanbaburajan2007@gmail.com
 #include <entt/entt.hpp>
 #include <imgui/imgui.h>
 
-#include <Components/NativeScriptComponent.h>
-
-#define DT_SCENE_CALL(scene, func)                                                                      \
-    do                                                                                                  \
-    {                                                                                                   \
-        auto view = scene->sceneRegistry.view<NativeScriptComponent>();                                 \
-        for (auto entity : view)                                                                        \
-        {                                                                                               \
-            NativeScriptComponent &nativeScriptComponent = view.get<NativeScriptComponent>(entity);     \
-            nativeScriptComponent.component->func();                                                    \
-        }                                                                                               \
-    } while (0)
-
 namespace DT
 {
     class Entity;
+    class Scene;
+    class Engine;
+
+    typedef void (*System)(Scene*);
+
+    enum CallState
+    {
+        EngineAssignment,
+        Init,
+        Tick,
+        SceneView,
+        Destroy
+    };
 
     class Scene
     {
     public:
         entt::registry sceneRegistry;
+        std::unordered_set<System> systems;
+        CallState callState;
+        Engine *engine;
 
-        void Init(Engine *engine);
+        void Init(Engine *e);
+        void Tick();
+        void SceneView();
+        void Destroy();
+
+        template <typename T>
+        void Call()
+        {
+            auto view = sceneRegistry.view<T>();
+
+            for (auto entity : view)
+            {
+                T &component = view. template get<T>(entity);
+
+                switch (callState)
+                {
+                    case CallState::EngineAssignment:
+                        component.engine = engine;
+                        break;
+                    case CallState::Init:
+                        component.Init();
+                        break;
+                    case CallState::Tick:
+                        component.Tick();
+                        break;
+                    case CallState::SceneView:
+                        component.SceneView();
+                        break;
+                    case CallState::Destroy:
+                        component.Destroy();
+                        break;
+                }
+            }            
+        }
 
         // Defined in Entity.cpp
         Entity CreateEntity();

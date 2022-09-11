@@ -52,6 +52,6 @@ namespace DT
         void Render(Camera &camera, Window &window, Configuration &config);
         void Terminate();
 
-        void LoadSkybox(std::array<std::string, 6> paths)
+        void LoadSkybox(std::array<std::string, 6> paths);
     };
 }

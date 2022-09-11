@@ -30,6 +30,7 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include <Components/Component.h>
+#include <Core/Scene.h>
 
 namespace DT
 {
@@ -45,5 +46,7 @@ namespace DT
         glm::vec3 Right();
         glm::vec3 Forward();
         glm::vec3 Up();
+
+        static void System(Scene *scene);
     };
 }

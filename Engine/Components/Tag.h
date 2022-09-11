@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <string>
 
 #include <Components/Component.h>
+#include <Core/Scene.h>
 
 namespace DT
 {
@@ -32,5 +33,7 @@ namespace DT
     {
     public:
         std::string name = "Unnamed";
+
+        static void System(Scene *scene);
     };
 }

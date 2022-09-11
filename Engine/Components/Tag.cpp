@@ -20,51 +20,12 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <windows.h>
-#include <iostream>
-
-#include <Components/Component.h>
-
-typedef DT::Component *(__stdcall *CreateModuleFunc)();
+#include <Components/Tag.h>
 
 namespace DT
 {
-    std::string GetLastErrorAsString();
-
-    class NativeScriptComponent : public Component
+    void Tag::System(Scene *scene)
     {
-    public:
-        Component *component = nullptr;
-        std::string path;
-        HMODULE dll;
-
-        NativeScriptComponent(const std::string &path);
-        ~NativeScriptComponent();
-
-        void Init()
-        {
-            if (!component)
-                Load(path);
-            component->Init();
-        }
-
-        void Tick()
-        {
-            component->Tick();
-        }
-
-        void OnSceneView()
-        {
-            component->OnSceneView();
-        }
-
-        void OnDestroy()
-        {
-            component->OnDestroy();
-        }
-
-        void Load(const std::string &path);
-    };
+        scene->Call<Tag>();
+    }
 }

@@ -47,4 +47,9 @@ namespace DT
     {
         return rotation * glm::vec3(0.f, 1.f, 0.f);
     }
+
+    void Transform::System(Scene *scene)
+    {
+        scene->Call<Transform>();
+    }
 }
