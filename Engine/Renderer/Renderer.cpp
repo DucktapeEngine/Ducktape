@@ -221,4 +221,9 @@ namespace DT
     {
         glDeleteFramebuffers(1, &FBO);
     }
+
+    void Renderer::LoadSkybox(std::array<std::string, 6> paths)
+    {
+        skyboxCubemap.Load(paths);
+    }
 }
