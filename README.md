@@ -1,8 +1,8 @@
 
 <br><br><br>
 <p align="center">
-    <a href="https://ducktapeEngine.github.io/" target="_blank">
-        <img src="https://raw.githubusercontent.com/DucktapeEngine/Branding/main/banner-transparent.png" alt="logo" width="600px"/>
+    <a href="https://ducktapeengine.github.io/" target="_blank">
+        <img src="./Branding/banner-transparent.png" alt="logo" width="600px"/>
     </a>
 <p/>
 <h1 align="center">Convenience, that's Ducktape.</h1>
@@ -39,7 +39,7 @@
 > **Note: The original Ducktape Engine is going under a rewrite with a completely different goal in mind.**
 
 # Ducktape
-An open source C++ 2D & 3D game Engine that focuses on being fast, and powerful, using OpenGL for rendering. As the Engine is currently work in progress, it only supports an ECS. Rendering powered by OpenGL, Audio powered by OpenAL, and Physics powered by Bullet3D are yet to be made.
+An open source C++ 3D game Engine that focuses on being fast, and powerful.
 
 **If you like what you see, consider starring the repo, it helps!**
 
