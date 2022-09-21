@@ -29,10 +29,12 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Scene.h>
 #include <Core/Macro.h>
-#include <Core/Engine.h>
 
 namespace DT
 {
+    class Component;
+    typedef Component *(__stdcall *AssignFunc)(Entity);
+
     class Entity
     {
     public:
@@ -59,7 +61,22 @@ namespace DT
 
             T &component = scene->sceneRegistry.emplace<T>(handle, std::forward<Args>(args)...);
             scene->systems.insert(T::System);
+            component.entity = *this;
+            component.engine = scene->engine;
             return component;
+        }
+
+        Component *Assign(const std::string &name)
+        {
+            AssignFunc assignFunc = (AssignFunc)GetProcAddress(scene->gameModule, ("Assign" + name).c_str());
+
+            if (!assignFunc)
+            {
+                std::cout << "Failed to get Assign" << name << "(Entity entity) function from Game Module." << std::endl;
+                return nullptr;
+            }
+
+            return (*assignFunc)(*this);
         }
 
         template <typename T, typename... Args>
@@ -84,7 +101,7 @@ namespace DT
         {
             DT_ASSERT(Has<T>(), "Entity does not have component.");
 
-            scene->sceneRegistry.get<T>(handle).OnDestroy();
+            scene->sceneRegistry.get<T>(handle).Destroy();
             scene->sceneRegistry.remove<T>(handle);
         }
 

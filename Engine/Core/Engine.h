@@ -36,9 +36,6 @@ aryanbaburajan2007@gmail.com
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
 
-
-#include <assimp/Importer.hpp>
-
 namespace DT
 {
     class Engine

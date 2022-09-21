@@ -34,6 +34,8 @@ namespace DT
     public:
         std::string name = "Unnamed";
 
+        void Inspector();
+
         static void System(Scene *scene);
     };
 }

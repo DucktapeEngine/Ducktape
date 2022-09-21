@@ -43,7 +43,8 @@ set (Ducktape_INCLUDE_DIR
     ${Ducktape_ROOT_DIR}/Extern/entt/single_include;
     ${Ducktape_ROOT_DIR}/Extern/assimp/include;
     ${Ducktape_ROOT_DIR}/Build/Extern/assimp/include;
-    ${Ducktape_ROOT_DIR}/Build/Extern/glad/include
+    ${Ducktape_ROOT_DIR}/Extern/imgui/backends/;
+    ${Ducktape_ROOT_DIR}/Extern/imgui/;
 )
 
 set (Ducktape_LIBRARY_DIR 
@@ -52,6 +53,7 @@ set (Ducktape_LIBRARY_DIR
     ${Ducktape_ROOT_DIR}/Build/Extern/assimp/contrib/zlib/;
     ${Ducktape_ROOT_DIR}/Build/Extern/glad/;
     ${Ducktape_ROOT_DIR}/Build/Extern/glfw/src;
+    ${Ducktape_ROOT_DIR}/Build/Extern/imgui;
 )
 
 set (Ducktape_LIBRARY
@@ -62,4 +64,5 @@ set (Ducktape_LIBRARY
     ${GLFW_LIBRARIES}
     glad
     assimp-5
+    imgui
 )

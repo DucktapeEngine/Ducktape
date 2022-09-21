@@ -28,6 +28,8 @@ aryanbaburajan2007@gmail.com
 #include <Components/Component.h>
 #include <Components/Tag.h>
 #include <Components/Transform.h>
+#include <Components/MeshRenderer.h>
+#include <Components/ModelExtractor.h>
 #include <Core/Configuration.h>
 #include <Core/Debug.h>
 #include <Core/Engine.h>

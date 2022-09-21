@@ -94,11 +94,14 @@ namespace DT
         ImGui::NewFrame();
     }
 
-    void Editor::Render()
+    void Editor::Render(Engine *engine)
     {
         ImGui::DockSpaceOverViewport();
 
-        EditorModules::SceneView();
+        EditorModules::SceneView(engine);
+        EditorModules::Hierarchy(engine);
+        EditorModules::Console(engine);
+        EditorModules::Inspector(engine);
     }
 
     void Editor::EndFrame(Renderer &renderer)

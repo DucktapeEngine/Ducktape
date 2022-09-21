@@ -24,37 +24,24 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Scene::Init(Engine *e)
+    Scene::Scene(Engine *holderEngine)
     {
-        engine = engine;
-
-        callState = CallState::EngineAssignment;
-        for (System system : systems)
-            system(this);
-
-        callState = CallState::Init;
-        for (System system : systems)
-            system(this);
+        engine = holderEngine;
+    }
+    
+    Scene::~Scene()
+    {
+        FreeLibrary(gameModule);
     }
 
-    void Scene::Tick()
+    void Scene::LoadModule(const std::string &path)
     {
-        callState = CallState::Tick;
-        for (System system : systems)
-            system(this);
-    }
+        gameModule = LoadLibrary(path.c_str());
 
-    void Scene::SceneView()
-    {
-        callState = CallState::SceneView;
-        for (System system : systems)
-            system(this);
-    }
-
-    void Scene::Destroy()
-    {
-        callState = CallState::Destroy;
-        for (System system : systems)
-            system(this);
+        if (!gameModule)
+        {
+            std::cout << "Failed to load Module: " << path << std::endl;
+            return;
+        }
     }
 }

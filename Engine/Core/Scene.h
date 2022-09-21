@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <string>
 #include <iostream>
 
+#include <windows.h>
 #include <entt/entt.hpp>
 #include <imgui/imgui.h>
 
@@ -38,11 +39,11 @@ namespace DT
 
     enum CallState
     {
-        EngineAssignment,
         Init,
         Tick,
         SceneView,
-        Destroy
+        Destroy,
+        Inspector
     };
 
     class Scene
@@ -52,11 +53,19 @@ namespace DT
         std::unordered_set<System> systems;
         CallState callState;
         Engine *engine;
+        entt::entity hierarchySelectedEntity = entt::null;
+        HMODULE gameModule;
 
-        void Init(Engine *e);
-        void Tick();
-        void SceneView();
-        void Destroy();
+        Scene(Engine *holderEngine);
+        ~Scene();
+
+        template <typename... Args>
+        void CallLoop(CallState calledState, Args &&...args)
+        {
+            callState = calledState;
+            for (System system : systems)
+                system(this, std::forward<Args>(args)...);
+        }
 
         template <typename T>
         void Call()
@@ -69,9 +78,6 @@ namespace DT
 
                 switch (callState)
                 {
-                    case CallState::EngineAssignment:
-                        component.engine = engine;
-                        break;
                     case CallState::Init:
                         component.Init();
                         break;
@@ -84,6 +90,13 @@ namespace DT
                     case CallState::Destroy:
                         component.Destroy();
                         break;
+                    case CallState::Inspector:
+                        if (entity == hierarchySelectedEntity)
+                        {
+                            component.Inspector();
+                            ImGui::Separator();
+                        }
+                        break;
                 }
             }            
         }
@@ -92,5 +105,7 @@ namespace DT
         Entity CreateEntity();
         // Defined in Entity.cpp
         void DestroyEntity(Entity entity);
+
+        void LoadModule(const std::string &path);
     };
 }

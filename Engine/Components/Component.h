@@ -24,7 +24,9 @@ aryanbaburajan2007@gmail.com
 
 #include <imgui/imgui.h>
 #include <imgui/misc/cpp/imgui_stdlib.h>
+
 #include <Core/Window.h>
+#include <Core/Entity.h>
 
 namespace DT
 {
@@ -33,11 +35,13 @@ namespace DT
     class Component
     {
     public:
-        Engine *engine;
+        Engine *engine = nullptr;
+        Entity entity;
 
         virtual void Init() {}
         virtual void Tick() {}
         virtual void SceneView() {}
         virtual void Destroy() {}
+        virtual void Inspector() {}
     };
 }

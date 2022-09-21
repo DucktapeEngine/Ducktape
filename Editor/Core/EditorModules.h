@@ -28,6 +28,8 @@ aryanbaburajan2007@gmail.com
 #include <Input/Input.h>
 #include <Core/Time.h>
 #include <Core/Engine.h>
+#include <Components/Tag.h>
+#include <Core/Debug.h>
 
 #define DEG2RAD 0.0174533f
 
@@ -35,6 +37,13 @@ namespace DT
 {
     namespace EditorModules
     {
-        void SceneView();
+        void SceneView(Engine *engine);
+
+        inline entt::entity selectedEntity = entt::null;
+        void Hierarchy(Engine *engine);
+
+        void Console(Engine *engine);
+
+        void Inspector(Engine *engine);
     }
 }

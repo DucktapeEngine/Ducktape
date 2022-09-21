@@ -48,6 +48,16 @@ namespace DT
         return rotation * glm::vec3(0.f, 1.f, 0.f);
     }
 
+    void Transform::Inspector()
+    {
+        if (ImGui::CollapsingHeader("Transform"))
+        {
+            ImGui::InputFloat3("position", &position.x);
+            ImGui::InputFloat4("rotation", &rotation.x);
+            ImGui::InputFloat3("scale", &scale.x);
+        }
+    }
+
     void Transform::System(Scene *scene)
     {
         scene->Call<Transform>();

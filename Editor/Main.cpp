@@ -44,15 +44,20 @@ int main()
             "../Resources/Textures/Skybox/back.jpg"
         };
 
-        Scene mainScene;
+        Scene mainScene(&e);
+
+        mainScene.LoadModule("./Resources/Scripts/libGame.dll");
 
         Entity camera = mainScene.CreateEntity();
         camera.Assign<Tag>().name = "Camera";
         camera.Assign<Transform>();
+        camera.Assign("PlayerController");
 
         Entity model = mainScene.CreateEntity();
         model.Assign<Tag>().name = "Model";
         model.Assign<Transform>();
+        // model.Assign<ModelExtractor>().path = "../Resources/Models/cube.obj";
+        model.Assign<ModelExtractor>().path = "../Resources/Models/backpack/backpack.obj";
 
         e.Init(mainScene);
 
@@ -63,9 +68,9 @@ int main()
             e.StartFrame();
             Editor::NewFrame();
 
-            e.activeScene->SceneView();
+            e.activeScene->CallLoop(CallState::SceneView);
 
-            Editor::Render();
+            Editor::Render(&e);
 
             Editor::EndFrame(e.renderer);
             e.EndFrame();

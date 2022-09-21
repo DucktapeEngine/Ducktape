@@ -24,6 +24,12 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    void Tag::Inspector()
+    {
+        if (ImGui::CollapsingHeader("Tag"))
+            ImGui::InputText("name", &name);
+    }
+
     void Tag::System(Scene *scene)
     {
         scene->Call<Tag>();

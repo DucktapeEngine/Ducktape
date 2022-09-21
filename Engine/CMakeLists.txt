@@ -39,35 +39,42 @@ set_target_properties(Ducktape PROPERTIES
 target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Engine/")
 target_compile_features(Ducktape PRIVATE cxx_std_17)
 
-# Extern
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/")
-
-# OpenGL
-find_package(OpenGL REQUIRED)
+# Dependencies
+find_package (OpenGL REQUIRED)
 if (OPENGL_FOUND)
-    message("-- OpenGL found.")
+    message ("-- OpenGL found.")
 else (OPENGL_FOUND)
-    message("-- OpenGL not found.")
-endif()
-target_link_libraries(Ducktape PUBLIC ${OPENGL_gl_LIBRARY})
+    message ("-- OpenGL not found.")
+endif ()
 
-# GLM
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/glm/")
+target_include_directories(Ducktape PUBLIC
+    ${PROJECT_SOURCE_DIR}/Engine;
+    ${PROJECT_SOURCE_DIR}/Extern/;
+    ${PROJECT_SOURCE_DIR}/Extern/glm/;
+    ${PROJECT_SOURCE_DIR}/Extern/glfw/include/;
+    ${PROJECT_SOURCE_DIR}/Extern/glad/include/;
+    ${PROJECT_SOURCE_DIR}/Extern/entt/single_include;
+    ${PROJECT_SOURCE_DIR}/Extern/assimp/include;
+    ${PROJECT_SOURCE_DIR}/Build/Extern/assimp/include;
+    ${PROJECT_SOURCE_DIR}/Extern/imgui/backends/;
+    ${PROJECT_SOURCE_DIR}/Extern/imgui/;
+)
 
-# EnTT
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/entt/single_include")
+target_link_directories(Ducktape PUBLIC
+    ${PROJECT_SOURCE_DIR}/Build/Engine/;
+    ${PROJECT_SOURCE_DIR}/Build/Extern/assimp/bin/;
+    ${PROJECT_SOURCE_DIR}/Build/Extern/assimp/contrib/zlib/;
+    ${PROJECT_SOURCE_DIR}/Build/Extern/glad/;
+    ${PROJECT_SOURCE_DIR}/Build/Extern/glfw/src;
+    ${PROJECT_SOURCE_DIR}/Build/Extern/imgui;
+)
 
-# GLFW
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/glfw/include")
-target_link_libraries(Ducktape PUBLIC glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIES})
-
-# GLAD
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Extern/glad/include/")
-target_link_libraries(Ducktape PUBLIC glad)
-
-# Assimp
-target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/Extern/assimp/bin)
-target_link_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/Extern/assimp/contrib/zlib)
-target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/Extern/assimp/include)
-target_include_directories(Ducktape PUBLIC ${PROJECT_SOURCE_DIR}/build/Extern/assimp/include/)
-target_link_libraries(Ducktape PUBLIC assimp zlibstatic)
+target_link_libraries(Ducktape PUBLIC
+    glfw3
+    ${OPENGL_gl_LIBRARY}
+    ${OPENGL_glu_LIBRARY}
+    ${GLFW_LIBRARIES}
+    glad
+    assimp-5
+    imgui
+)

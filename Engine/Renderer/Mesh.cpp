@@ -24,15 +24,6 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
-    {
-        this->vertices = vertices;
-        this->indices = indices;
-        this->textures = textures;
-
-        SetupMesh();
-    }
-
     void Mesh::Draw(Shader &shader)
     {
         // bind appropriate textures
@@ -69,7 +60,7 @@ namespace DT
         glActiveTexture(GL_TEXTURE0);
     }
 
-    void Mesh::SetupMesh()
+    void Mesh::Setup()
     {
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);

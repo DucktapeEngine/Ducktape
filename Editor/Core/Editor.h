@@ -40,7 +40,7 @@ namespace DT
 
         void Init(GLFWwindow *window);
         void NewFrame();
-        void Render();
+        void Render(Engine *engine);
         void EndFrame(Renderer &renderer);
         void Terminate();
 

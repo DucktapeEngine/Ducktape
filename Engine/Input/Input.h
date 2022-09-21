@@ -36,8 +36,8 @@ namespace DT
     class Input
     {
     public:
-        glm::vec2 mousePosition;
-        glm::vec2 mouseDelta;
+        glm::vec2 mousePosition = glm::vec2(0.f);
+        glm::vec2 mouseDelta = glm::vec2(0.f);
 
         std::vector<int> keysDown;
         std::vector<int> keysUp;

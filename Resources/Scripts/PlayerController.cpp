@@ -27,31 +27,25 @@ class PlayerController : public Component
 {
 public:
     float yaw = 0.f, pitch = 0.f;
-
-    void Init()
-    {
-    }
+    float speed = 2.5f;
+    float sensitivity = 25.f;
 
     void Tick()
     {
         // Move
-        const float cameraSpeed = 2.5f * engine->time.deltaTime;
-
         if (engine->input.GetKey(KEY_W))
-            engine->camera.transform.position += cameraSpeed * engine->camera.transform.Forward();
+            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Forward();
         if (engine->input.GetKey(KEY_S))
-            engine->camera.transform.position -= cameraSpeed * engine->camera.transform.Forward();
+            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Forward();
         if (engine->input.GetKey(KEY_A))
-            engine->camera.transform.position += cameraSpeed * engine->camera.transform.Right();
+            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Right();
         if (engine->input.GetKey(KEY_D))
-            engine->camera.transform.position -= cameraSpeed * engine->camera.transform.Right();
+            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Right();
 
         // Look
-        float sensitivity = 25.f * engine->time.deltaTime;
-
-        yaw += -engine->input.mouseDelta.x * sensitivity;
-        pitch += engine->input.mouseDelta.y * sensitivity;
-
+        yaw += -engine->input.mouseDelta.x * sensitivity * engine->time.deltaTime;
+        pitch += engine->input.mouseDelta.y * sensitivity * engine->time.deltaTime;
+        
         if (pitch > 89.0f)
             pitch = 89.0f;
         if (pitch < -89.0f)
@@ -59,10 +53,26 @@ public:
 
         engine->camera.transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
     }
+
+    void Inspector()
+    {
+        if (ImGui::CollapsingHeader("Player Controller"))
+        {
+            ImGui::InputFloat("speed", &speed);
+            ImGui::InputFloat("sensitivity", &sensitivity);
+            
+            ImGui::InputFloat("yaw", &yaw);
+            ImGui::InputFloat("pitch", &pitch);
+        }
+    }
+
+    static void System(Scene *scene)
+    {
+        scene->Call<PlayerController>();
+    }
 };
 
-extern "C" __declspec(dllexport) Component *CreateModule()
+extern "C" __declspec(dllexport) Component *AssignPlayerController(Entity entity)
 {
-    Component *module = new PlayerController();
-    return module;
+    return &entity.Assign<PlayerController>();
 }

@@ -40,8 +40,7 @@ namespace DT
 
         unsigned int VBO, EBO, VAO;
 
-        Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
         void Draw(Shader &shader);
-        void SetupMesh();
+        void Setup();
     };
 }

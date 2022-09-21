@@ -36,7 +36,6 @@ namespace DT
     {
     public:
         int width, height, nrChannels;
-        unsigned char *data;
         unsigned int id;
         int mipmapLevel = 0;
         bool loaded = false;
@@ -44,7 +43,6 @@ namespace DT
         std::string path;
 
         Texture();
-        Texture(const std::string &path);
 
         bool Load(const std::string &path);
     };

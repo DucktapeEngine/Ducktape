@@ -24,22 +24,11 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Editor
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/Editor/**/*.cpp" "${PROJECT_SOURCE_DIR}/Editor/*.cpp")
-set(imgui_source_list
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/imgui.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/imgui_demo.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/imgui_draw.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/imgui_tables.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/imgui_widgets.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/backends/imgui_impl_glfw.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/backends/imgui_impl_opengl3.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/misc/cpp/imgui_stdlib.cpp"
-)
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
 add_executable (Editor
     ${source_list}
-    ${imgui_source_list}
 )
 
 set_target_properties (Editor PROPERTIES
@@ -66,5 +55,3 @@ endif ()
 target_include_directories (Editor PUBLIC ${Ducktape_INCLUDE_DIR})
 target_link_directories (Editor PUBLIC ${Ducktape_LIBRARY_DIR})
 target_link_libraries (Editor PUBLIC ${Ducktape_LIBRARY})
-
-target_include_directories (Editor PUBLIC "${PROJECT_SOURCE_DIR}/Extern/imgui/;${PROJECT_SOURCE_DIR}/Extern/imgui/backends/")

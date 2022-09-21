@@ -35,7 +35,7 @@ namespace DT
 
         glGenTextures(1, &id);
 
-        data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+        unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 
         if (data)
         {
