@@ -55,7 +55,7 @@ namespace DT
         input.Process();
 
         window.PollEvents();
-        window.Clear(Color(0.2f, 0.3f, 0.3f, 1.0f));
+        window.Clear({0.2f, 0.3f, 0.3f, 1.0f});
 
         renderer.Render(camera, window, config);
 

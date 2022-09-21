@@ -46,6 +46,8 @@ int main()
 
         Scene mainScene(&e);
 
+        e.renderer.lightPos = {2.0f, 2.0f, 2.0f};
+
         mainScene.LoadModule("./Resources/Scripts/libGame.dll");
 
         Entity camera = mainScene.CreateEntity();

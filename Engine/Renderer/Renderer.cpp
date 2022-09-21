@@ -176,6 +176,9 @@ namespace DT
         defaultShader.Use();
         defaultShader.SetMat4("projection", camera.projection);
         defaultShader.SetMat4("view", camera.view);
+        defaultShader.SetVec3("lightColor", lightColor);
+        defaultShader.SetVec3("lightPos", lightPos);
+        defaultShader.SetVec3("viewPos", camera.transform.position);
 
         // Draw skybox
         glDepthMask(GL_FALSE);

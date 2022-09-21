@@ -71,10 +71,9 @@ namespace DT
             glfwSwapInterval(1);
     }
 
-    void Window::Clear(Color color)
+    void Window::Clear(glm::vec4 color)
     {
-        glm::vec4 clearColor = glm::vec4(color.r, color.g, color.b, color.a);
-        glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+        glClearColor(color.r, color.g, color.b, color.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 

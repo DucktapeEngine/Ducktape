@@ -51,6 +51,8 @@ namespace DT
         {
             shader->Use();
             shader->SetMat4("model", transform->GetModelMatrix());
+            // shader->SetVec3("objectColor", {1.0f, 0.5f, 0.31f});
+            shader->SetVec3("objectColor", {1.f, 1.f, 1.f});
 
             mesh.Draw(*shader);
         }

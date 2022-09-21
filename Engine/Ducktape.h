@@ -42,7 +42,6 @@ aryanbaburajan2007@gmail.com
 #include <Input/Input.h>
 #include <Input/Key.h>
 #include <Renderer/Camera.h>
-#include <Renderer/Color.h>
 #include <Renderer/Renderer.h>
 #include <Renderer/Shader.h>
 #include <Renderer/Texture.h>

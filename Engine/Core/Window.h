@@ -33,7 +33,6 @@ aryanbaburajan2007@gmail.com
 #include <utils/stb_image.h>
 
 #include <Core/Configuration.h>
-#include <Renderer/Color.h>
 
 namespace DT
 {
@@ -44,7 +43,7 @@ namespace DT
 
         void Init(const Configuration &config);
 
-        void Clear(Color color);
+        void Clear(glm::vec4 color);
         void PollEvents();
         void SwapBuffers();
         void Terminate();

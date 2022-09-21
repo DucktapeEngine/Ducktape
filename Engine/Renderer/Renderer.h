@@ -48,6 +48,8 @@ namespace DT
         Cubemap skyboxCubemap;
         Shader defaultShader, screenShader, skyboxShader;
 
+        glm::vec3 lightColor = {1.f, 1.f, 1.f}, lightPos = {0.f, 0.f, 0.f};
+
         void Init(Window &window, Configuration &config);
         void Render(Camera &camera, Window &window, Configuration &config);
         void Terminate();
