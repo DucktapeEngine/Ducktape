@@ -31,18 +31,34 @@ namespace DT
 
     bool Input::GetKeyPressed(int key)
     {
-        return std::find(keysDown.begin(), keysDown.end(), key) != keysDown.end();
+        return keysDown.find(key) != keysDown.end();
     }
 
     bool Input::GetKeyReleased(int key)
     {
-        return std::find(keysUp.begin(), keysUp.end(), key) != keysUp.end();
+        return keysUp.find(key) != keysUp.end();
+    }
+
+    bool Input::GetMouseButton(int button)
+    {
+        return glfwGetMouseButton(window, button) == GLFW_PRESS;
+    }
+
+    bool Input::GetMouseButtonPressed(int button)
+    {
+        return mouseButtonsDown.find(button) != mouseButtonsDown.end();
+    }
+
+    bool Input::GetMouseButtonReleased(int button)
+    {
+        return mouseButtonsUp.find(button) != mouseButtonsUp.end();
     }
 
     void Input::Init(GLFWwindow *_window)
     {
         window = _window;
         glfwSetKeyCallback(window, KeyCallback);
+        glfwSetMouseButtonCallback(window, MouseButtonCallback);
         glfwSetWindowUserPointer(window, reinterpret_cast<void *>(this));
     }
 
@@ -59,18 +75,27 @@ namespace DT
         // Keyboard
         keysUp.clear();
         keysDown.clear();
+        mouseButtonsUp.clear();
+        mouseButtonsDown.clear();
     }
 
     void Input::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
         Input *input = reinterpret_cast<Input *>(glfwGetWindowUserPointer(window));
+
         if (action == GLFW_PRESS)
-        {
-            input->keysDown.push_back(key);
-        }
+            input->keysDown.insert(key);
         else if (action == GLFW_RELEASE)
-        {
-            input->keysUp.push_back(key);
-        }
+            input->keysUp.insert(key);
+    }
+
+    void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+    {
+        Input *input = reinterpret_cast<Input *>(glfwGetWindowUserPointer(window));
+
+        if (action == GLFW_PRESS)
+            input->mouseButtonsDown.insert(button);
+        else if (action == GLFW_RELEASE)
+            input->mouseButtonsUp.insert(button);
     }
 }

@@ -38,16 +38,16 @@ namespace DT
 
             std::string number;
             std::string name = textures[i].type;
-            if (name == "texture_diffuse")
+            if (name == "diffuse")
                 number = std::to_string(diffuseNr++);
-            else if (name == "texture_specular")
+            else if (name == "specular")
                 number = std::to_string(specularNr++);
-            else if (name == "texture_normal")
+            else if (name == "normal")
                 number = std::to_string(normalNr++);
-            else if (name == "texture_height")
+            else if (name == "height")
                 number = std::to_string(heightNr++);
 
-            glUniform1i(glGetUniformLocation(shader.id, (name + number).c_str()), i);
+            shader.SetInt(("material." + name + number).c_str(), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].id);
         }
 

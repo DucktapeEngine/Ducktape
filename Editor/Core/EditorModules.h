@@ -39,6 +39,7 @@ namespace DT
     {
         void SceneView(Engine *engine);
 
+        inline float yaw = 0.f, pitch = 0.f;
         inline entt::entity selectedEntity = entt::null;
         void Hierarchy(Engine *engine);
 

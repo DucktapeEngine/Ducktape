@@ -27,39 +27,41 @@ namespace DT
     void EditorModules::SceneView(Engine *engine)
     {
         //// Controls
-        // Movement
-        // const float cameraSpeed = 2.5f * engine->time.deltaTime;
+        // Move
+        const float speed = 2.5f, sensitivity = 25.f;
 
-        // if (engine->input.GetKey(KEY_W))
-        //     engine->camera.transform.position += cameraSpeed * engine->camera.transform.Forward();
-        // if (engine->input.GetKey(KEY_S))
-        //     engine->camera.transform.position -= cameraSpeed * engine->camera.transform.Forward();
-        // if (engine->input.GetKey(KEY_A))
-        //     engine->camera.transform.position += cameraSpeed * engine->camera.transform.Right();
-        // if (engine->input.GetKey(KEY_D))
-        //     engine->camera.transform.position -= cameraSpeed * engine->camera.transform.Right();
+        if (engine->input.GetKey(KEY_UP))
+            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Forward();
+        if (engine->input.GetKey(KEY_DOWN))
+            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Forward();
+        if (engine->input.GetKey(KEY_LEFT))
+            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Right();
+        if (engine->input.GetKey(KEY_RIGHT))
+            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Right();
 
-        // // Look
-        // static float yaw = 0.0f, pitch = 0.0f;
-        // float sensitivity = 25.f * engine->time.deltaTime;
+        // Look
+        if (engine->input.GetMouseButton(MOUSE_BUTTON_RIGHT))
+        {
+            yaw += -engine->input.mouseDelta.x * sensitivity * engine->time.deltaTime;
+            pitch += engine->input.mouseDelta.y * sensitivity * engine->time.deltaTime;
+            
+            if (pitch > 89.0f)
+                pitch = 89.0f;
+            if (pitch < -89.0f)
+                pitch = -89.0f;
+        }
 
-        // yaw += -engine->input.mouseDelta.x * sensitivity;
-        // pitch += engine->input.mouseDelta.y * sensitivity;
-
-        // if (pitch > 89.0f)
-        //     pitch = 89.0f;
-        // if (pitch < -89.0f)
-        //     pitch = -89.0f;
-
-        // engine->camera.transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+        engine->camera.transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
 
         //// Render
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::Begin("Scene View");
 
         ImVec2 wsize = ImGui::GetWindowSize();
         ImGui::Image((ImTextureID)(uintptr_t)engine->renderer.renderTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
 
         ImGui::End();
+        ImGui::PopStyleVar();
     }
 
     void EditorModules::Hierarchy(Engine *engine)

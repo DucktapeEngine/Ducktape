@@ -176,8 +176,6 @@ namespace DT
         defaultShader.Use();
         defaultShader.SetMat4("projection", camera.projection);
         defaultShader.SetMat4("view", camera.view);
-        defaultShader.SetVec3("lightColor", lightColor);
-        defaultShader.SetVec3("lightPos", lightPos);
         defaultShader.SetVec3("viewPos", camera.transform.position);
 
         // Draw skybox
@@ -222,5 +220,22 @@ namespace DT
     void Renderer::LoadSkybox(std::array<std::string, 6> paths)
     {
         skyboxCubemap.Load(paths);
+    }
+
+    unsigned int Renderer::GetFreeDirectionalLightSpot()
+    {
+        for (int i = 0; i < MAX_LIGHT_NO; i++)
+        {
+            if (occupiedDirectionalLights[i] == false)
+            {
+                occupiedDirectionalLights[i] = true;
+                return i;
+            }
+        }
+    }
+
+    void Renderer::UnoccupyDirectionalLightSpot(unsigned int spot)
+    {
+        occupiedDirectionalLights[spot] = false;
     }
 }

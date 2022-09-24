@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <vector>
+#include <unordered_set>
 
 #include <glm/glm.hpp>
 #include <glad/glad.h>
@@ -39,8 +39,10 @@ namespace DT
         glm::vec2 mousePosition = glm::vec2(0.f);
         glm::vec2 mouseDelta = glm::vec2(0.f);
 
-        std::vector<int> keysDown;
-        std::vector<int> keysUp;
+        std::unordered_set<int> keysDown;
+        std::unordered_set<int> keysUp;
+        std::unordered_set<int> mouseButtonsUp;
+        std::unordered_set<int> mouseButtonsDown;
 
         GLFWwindow *window;
 
@@ -48,8 +50,13 @@ namespace DT
         bool GetKeyPressed(int key);
         bool GetKeyReleased(int key);
 
+        bool GetMouseButton(int button);
+        bool GetMouseButtonPressed(int button);
+        bool GetMouseButtonReleased(int button);
+
         void Init(GLFWwindow *_window);
         void Process();
         static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+        static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
     };
 }

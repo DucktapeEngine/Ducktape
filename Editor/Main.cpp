@@ -46,14 +46,13 @@ int main()
 
         Scene mainScene(&e);
 
-        e.renderer.lightPos = {2.0f, 2.0f, 2.0f};
-
         mainScene.LoadModule("./Resources/Scripts/libGame.dll");
 
         Entity camera = mainScene.CreateEntity();
         camera.Assign<Tag>().name = "Camera";
         camera.Assign<Transform>();
-        camera.Assign("PlayerController");
+        // camera.Assign("PlayerController");
+        camera.Assign<DirectionalLight>();
 
         Entity model = mainScene.CreateEntity();
         model.Assign<Tag>().name = "Model";

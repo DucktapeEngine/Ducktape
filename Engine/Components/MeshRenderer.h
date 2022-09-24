@@ -36,38 +36,9 @@ namespace DT
         Shader *shader = nullptr;
         Transform *transform;
 
-        void Init()
-        {
-            transform = &entity.Require<Transform>();
-
-            if (shader == nullptr)
-                shader = &engine->renderer.defaultShader;
-
-            mesh.Setup();
-
-        }
-
-        void Tick()
-        {
-            shader->Use();
-            shader->SetMat4("model", transform->GetModelMatrix());
-            // shader->SetVec3("objectColor", {1.0f, 0.5f, 0.31f});
-            shader->SetVec3("objectColor", {1.f, 1.f, 1.f});
-
-            mesh.Draw(*shader);
-        }
-
-        void Inspector()
-        {
-            if (ImGui::CollapsingHeader("Mesh Renderer"))
-            {
-                
-            }
-        }
-
-        static void System(Scene *scene)
-        {
-            scene->Call<MeshRenderer>();
-        }
+        void Init();
+        void Tick();
+        void Inspector();
+        static void System(Scene *scene);
     };
 }

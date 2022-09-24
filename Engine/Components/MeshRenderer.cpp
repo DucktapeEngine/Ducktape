@@ -20,33 +20,40 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include <Components/Component.h>
-#include <Renderer/Mesh.h>
-#include <Core/Entity.h>
 #include <Components/MeshRenderer.h>
-#include <Renderer/Texture.h>
 
 namespace DT
 {
-    class ModelExtractor : public Component
+    void MeshRenderer::Init()
     {
-    public:
-        std::string path;
-        std::string directory;
-        std::vector<Texture> texturesLoaded;
+        transform = &entity.Require<Transform>();
 
-        void Init();
+        if (shader == nullptr)
+            shader = &engine->renderer.defaultShader;
 
-        void ProcessNode(aiNode *node, const aiScene *scene);
-        Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
-        std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+        mesh.Setup();
+    }
 
-        static void System(Scene *scene);
-    };
+    void MeshRenderer::Tick()
+    {
+        shader->Use();
+        shader->SetMat4("model", transform->GetModelMatrix());
+        shader->SetVec3("material.color", {1.f, 1.f, 1.f});
+        shader->SetFloat("material.shininess", 32.0f);
+
+        mesh.Draw(*shader);
+    }
+
+    void MeshRenderer::Inspector()
+    {
+        if (ImGui::CollapsingHeader("Mesh Renderer"))
+        {
+            
+        }
+    }
+
+    void MeshRenderer::System(Scene *scene)
+    {
+        scene->Call<MeshRenderer>();
+    }
 }

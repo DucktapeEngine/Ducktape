@@ -22,6 +22,10 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#define MAX_LIGHT_NO 1
+
+#include <array>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -47,13 +51,18 @@ namespace DT
         unsigned int skyboxVAO, skyboxVBO;
         Cubemap skyboxCubemap;
         Shader defaultShader, screenShader, skyboxShader;
+        glm::vec2 customViewportSize;
 
-        glm::vec3 lightColor = {1.f, 1.f, 1.f}, lightPos = {0.f, 0.f, 0.f};
+        std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
+        std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};
 
         void Init(Window &window, Configuration &config);
         void Render(Camera &camera, Window &window, Configuration &config);
         void Terminate();
 
         void LoadSkybox(std::array<std::string, 6> paths);
+
+        unsigned int GetFreeDirectionalLightSpot();
+        void UnoccupyDirectionalLightSpot(unsigned int spot);
     };
 }

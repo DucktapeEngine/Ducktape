@@ -22,31 +22,34 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
 #include <Components/Component.h>
-#include <Renderer/Mesh.h>
-#include <Core/Entity.h>
-#include <Components/MeshRenderer.h>
-#include <Renderer/Texture.h>
+#include <Renderer/Shader.h>
+#include <Components/Transform.h>
+#include <Core/Engine.h>
 
 namespace DT
 {
-    class ModelExtractor : public Component
+    class DirectionalLight : public Component
     {
     public:
-        std::string path;
-        std::string directory;
-        std::vector<Texture> texturesLoaded;
+        Shader *shader = nullptr;
+        Transform *transform;
+        unsigned int lightSpot;
+        std::string propertyString;
+
+        glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
+
+        float ambient = 1.f;
+        float diffuse = 1.f;
+        float specular = 1.f;
+        glm::vec3 ambientColor = glm::vec3(1.f);
+        glm::vec3 diffuseColor = glm::vec3(1.f);
+        glm::vec3 specularColor = glm::vec3(1.f);
 
         void Init();
-
-        void ProcessNode(aiNode *node, const aiScene *scene);
-        Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
-        std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
-
+        void Tick();
+        void Inspector();
+        void Destroy();
         static void System(Scene *scene);
     };
 }
