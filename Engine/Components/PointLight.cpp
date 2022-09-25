@@ -64,8 +64,8 @@ namespace DT
         if (ImGui::CollapsingHeader("Point Light"))
         {
             ImGui::Text(std::to_string(lightSpot).c_str());
-            ImGui::InputFloat("intensity", &intensity);
-            ImGui::ColorPicker3("color", &color.x);
+            ImGui::InputFloat("intensity##PL", &intensity);
+            ImGui::ColorPicker3("color##PL", &color.x);
         }
     }
 

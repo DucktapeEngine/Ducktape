@@ -39,7 +39,7 @@ namespace DT
         unsigned int id;
         int mipmapLevel = 0;
         bool loaded = false;
-        std::string type;
+        std::string type; // TODO: Switch to enums
         std::string path;
 
         Texture();

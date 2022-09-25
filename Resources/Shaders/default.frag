@@ -106,5 +106,5 @@ void main()
         if (pointLights[i].enabled)
             result += CalculatePointLight(pointLights[i], norm, FragPos, viewDir);
     
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(result * material.color, 1.0);
 }

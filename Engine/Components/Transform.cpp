@@ -52,9 +52,9 @@ namespace DT
     {
         if (ImGui::CollapsingHeader("Transform"))
         {
-            ImGui::InputFloat3("position", &position.x);
-            ImGui::InputFloat4("rotation", &rotation.x);
-            ImGui::InputFloat3("scale", &scale.x);
+            ImGui::InputFloat3("position##Trans", &position.x);
+            ImGui::InputFloat4("rotation##Trans", &rotation.x);
+            ImGui::InputFloat3("scale##Trans", &scale.x);
         }
     }
 

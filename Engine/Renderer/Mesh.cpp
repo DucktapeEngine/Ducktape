@@ -98,5 +98,14 @@ namespace DT
         glEnableVertexAttribArray(6);
         glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, weights));
         glBindVertexArray(0);
+
+        if (textures.size() == 0)
+        {
+            // Load default texture
+            Texture texture;
+            texture.Load("../Resources/Textures/Default.png");
+            texture.type = "diffuse";
+            textures.push_back(texture);
+        }
     }
 }

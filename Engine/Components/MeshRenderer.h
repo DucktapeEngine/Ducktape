@@ -26,6 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Mesh.h>
 #include <Core/Engine.h>
 #include <Core/Entity.h>
+#include <Renderer/Material.h>
 
 namespace DT
 {
@@ -35,6 +36,7 @@ namespace DT
         Mesh mesh;
         Shader *shader = nullptr;
         Transform *transform;
+        Material material;
 
         void Init();
         void Tick();

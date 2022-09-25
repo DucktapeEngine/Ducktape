@@ -38,8 +38,8 @@ namespace DT
     {
         shader->Use();
         shader->SetMat4("model", transform->GetModelMatrix());
-        shader->SetVec3("material.color", {1.f, 1.f, 1.f});
-        shader->SetFloat("material.shininess", 32.0f);
+        shader->SetVec3("material.color", material.color);
+        shader->SetFloat("material.shininess", material.shininess);
 
         mesh.Draw(*shader);
     }
@@ -48,7 +48,8 @@ namespace DT
     {
         if (ImGui::CollapsingHeader("Mesh Renderer"))
         {
-            
+            ImGui::InputFloat("shininess##MR", &material.shininess);
+            ImGui::ColorPicker3("color##MR", &material.color.x);
         }
     }
 

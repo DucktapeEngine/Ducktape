@@ -57,8 +57,8 @@ namespace DT
     {
         if (ImGui::CollapsingHeader("Directional Light"))
         {
-            ImGui::InputFloat("intensity", &intensity);
-            ImGui::ColorPicker3("color", &color.x);
+            ImGui::InputFloat("intensity##DL", &intensity);
+            ImGui::ColorPicker3("color##DL", &color.x);
         }
     }
 

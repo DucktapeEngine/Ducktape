@@ -20,18 +20,16 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Components/Tag.h>
+#pragma once
+
+#include <glm/glm.hpp>
 
 namespace DT
 {
-    void Tag::Inspector()
+    class Material
     {
-        if (ImGui::CollapsingHeader("Tag"))
-            ImGui::InputText("name##Tag", &name);
-    }
-
-    void Tag::System(Scene *scene)
-    {
-        scene->Call<Tag>();
-    }
+    public:
+        glm::vec3 color = glm::vec3(1.0f);
+        float shininess = 0.5f;
+    };
 }
