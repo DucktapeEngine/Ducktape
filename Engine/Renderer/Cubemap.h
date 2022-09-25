@@ -24,6 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <array>
+#include <iostream>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -36,40 +37,7 @@ namespace DT
     public:
         unsigned int id;
 
-        void Load(std::array<std::string, 6> paths)
-        {
-            glGenTextures(1, &id);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, id);
-
-            for (unsigned int i = 0; i < 6; i++)
-            {
-                int width, height, nrChannels;
-                unsigned char *data = stbi_load(paths[i].c_str(), &width, &height, &nrChannels, 0);
-
-                if (data)
-                {
-                    GLenum format;
-                    if (nrChannels == 1)
-                        format = GL_RED;
-                    else if (nrChannels == 3)
-                        format = GL_RGB;
-                    else if (nrChannels == 4)
-                        format = GL_RGBA;
-
-                    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-                }
-                else
-                {
-                    std::cout << "Cubemap texture failed to load: " << paths[i] << std::endl;
-                }
-                stbi_image_free(data);
-            }
-
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-        }
+        Cubemap(std::array<std::string, 6> paths);
+        ~Cubemap();
     };
 }

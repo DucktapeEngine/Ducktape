@@ -20,53 +20,45 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Components/ModelExtractor.h>
+#include <Renderer/ModelLoader.h>
 
 namespace DT
 {
-    void ModelExtractor::Init()
+    LoadModel::LoadModel(const std::string &path)
     {
-        if (path != "")
+        if (path == "")
+            return;
+        
+        Assimp::Importer importer;
+        const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
+        if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
-            Assimp::Importer importer;
-            const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-
-            if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
-            {
-                std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-                return;
-            }
-
-            directory = path.substr(0, path.find_last_of('/'));
-
-            ProcessNode(scene->mRootNode, scene);
+            std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
+            return;
         }
 
-        entity.Remove<ModelExtractor>();
+        directory = path.substr(0, path.find_last_of('/'));
+
+        ProcessNode(scene->mRootNode, scene);
     }
 
-    void ModelExtractor::ProcessNode(aiNode *node, const aiScene *scene)
+    void LoadModel::ProcessNode(aiNode *node, const aiScene *scene)
     {
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 
-            // entity->scene->sceneRegistry.create();
-            Entity ent(entity.scene->sceneRegistry.create(), entity.scene);
-            // Entity entity = engine->activeScene->CreateEntity();
-            ent.Assign<Transform>();
-            MeshRenderer &mr = ent.Assign<MeshRenderer>();
-            mr.mesh = ProcessMesh(mesh, scene);
-            mr.Init();
+            meshes.push_back(ProcessMesh(mesh, scene));
         }
-
+        
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
             ProcessNode(node->mChildren[i], scene);
         }
     }
 
-    Mesh ModelExtractor::ProcessMesh(aiMesh *mesh, const aiScene *scene)
+    Mesh LoadModel::ProcessMesh(aiMesh *mesh, const aiScene *scene)
     {
         // data to fill
         std::vector<Vertex> vertices;
@@ -155,7 +147,7 @@ namespace DT
         return resultMesh;
     }
 
-    std::vector<Texture> ModelExtractor::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+    std::vector<Texture> LoadModel::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {
         std::vector<Texture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
@@ -175,19 +167,12 @@ namespace DT
             }
             if (!skip)
             { // if texture hasn't been loaded already, load it
-                Texture texture;
-                texture.Load(directory + '/' + str.C_Str());
+                Texture texture = Texture(directory + '/' + str.C_Str(), typeName);
                 texture.path = str.C_Str();
-                texture.type = typeName;
                 textures.push_back(texture);
                 texturesLoaded.push_back(texture); // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
             }
         }
         return textures;
-    }
-
-    void ModelExtractor::System(Scene *scene)
-    {
-        scene->Call<ModelExtractor>();
     }
 }

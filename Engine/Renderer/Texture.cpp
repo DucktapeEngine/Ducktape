@@ -24,14 +24,12 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Texture::Texture()
+    Texture::Texture(const std::string &_path, const std::string &_type)
     {
         stbi_set_flip_vertically_on_load(true);
-    }
 
-    bool Texture::Load(const std::string &path)
-    {
-        this->path = path;
+        this->path = _path;
+        this->type = _type;
 
         glGenTextures(1, &id);
 
@@ -63,10 +61,14 @@ namespace DT
             std::cout << "Texture failed to load at path: " << path << std::endl;
             std::cout << "STBI: " << stbi_failure_reason() << std::endl;
             stbi_image_free(data);
-            return false;
+            return;
         }
 
         loaded = true;
-        return true;
+    }
+
+    void Texture::Delete()
+    {
+        glDeleteTextures(1, &id);
     }
 }

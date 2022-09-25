@@ -54,7 +54,7 @@ namespace DT
         bool GetMouseButtonPressed(int button);
         bool GetMouseButtonReleased(int button);
 
-        void Init(GLFWwindow *_window);
+        Input(GLFWwindow *window);
         void Process();
         static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
         static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);

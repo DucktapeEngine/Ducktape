@@ -31,14 +31,13 @@ namespace DT
         if (shader == nullptr)
             shader = &engine->renderer.defaultShader;
 
-        lightSpot = engine->renderer.GetFreeDirectionalLightSpot();
-
-        if (lightSpot == NAN)
+        if (engine->renderer.GetFreeDirectionalLightSpot(&lightSpot) == false)
         {
             engine->debug << "DirectionalLight: No free light spots.\n";
         }
 
         propertyString = "directionalLights[" + std::to_string(lightSpot) + "].";
+        shader->Use();
         shader->SetBool(propertyString + "enabled", true);
     }
 

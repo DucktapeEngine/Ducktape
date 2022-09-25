@@ -26,27 +26,24 @@ aryanbaburajan2007@gmail.com
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include <Components/Component.h>
 #include <Renderer/Mesh.h>
 #include <Core/Entity.h>
-#include <Components/MeshRenderer.h>
 #include <Renderer/Texture.h>
 
 namespace DT
 {
-    class ModelExtractor : public Component
+    class LoadModel
     {
     public:
-        std::string path;
         std::string directory;
         std::vector<Texture> texturesLoaded;
+        std::vector<Mesh> meshes;
 
-        void Init();
+        LoadModel(const std::string &path);
 
         void ProcessNode(aiNode *node, const aiScene *scene);
         Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
         std::vector<Texture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 
-        static void System(Scene *scene);
     };
 }

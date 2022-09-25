@@ -1,4 +1,4 @@
-#version 330 core
+#version 440 core
 
 #define MAX_LIGHT_NO 25
 

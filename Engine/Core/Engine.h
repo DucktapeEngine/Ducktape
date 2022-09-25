@@ -44,8 +44,8 @@ namespace DT
         Configuration config;
         Window window;
         Renderer renderer;
-        Time time;
         Input input;
+        Time time;
         LoopManager loopManager;
         Debug debug;
         Camera camera;
@@ -53,11 +53,12 @@ namespace DT
 
         static inline Engine *activeContext = nullptr;
 
+        Engine(const Configuration &configuration);
+
         void Init(Scene &scene);
         bool IsOpen();
         void StartFrame();
         void EndFrame();
-        void Terminate();
         void Run(Scene &scene);
     };
 }

@@ -24,12 +24,7 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Shader::~Shader()
-    {
-        glDeleteProgram(id);
-    }
-
-    void Shader::Load(const char *vertexPath, const char *fragmentPath)
+    Shader::Shader(const std::string &vertexPath, const std::string &fragmentPath)
     {
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;
@@ -93,6 +88,11 @@ namespace DT
         glDeleteShader(fragment);
 
         loaded = true;
+    }
+
+    Shader::~Shader()
+    {
+        glDeleteProgram(id);
     }
 
     void Shader::Use()

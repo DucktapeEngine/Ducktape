@@ -41,12 +41,12 @@ namespace DT
     public:
         GLFWwindow *window = nullptr;
 
-        void Init(const Configuration &config);
+        Window(const Configuration &config);
 
         void Clear(glm::vec4 color);
         void PollEvents();
         void SwapBuffers();
-        void Terminate();
+        ~Window();
 
         void Close();
         void SetTitle(const std::string &title);
@@ -71,5 +71,6 @@ namespace DT
 
         static void ErrorCallback(int code, const char *description);
         static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
+        static void APIENTRY GlDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char *message, const void *userParam);
     };
 }

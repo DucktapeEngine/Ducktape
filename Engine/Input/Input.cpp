@@ -54,7 +54,7 @@ namespace DT
         return mouseButtonsUp.find(button) != mouseButtonsUp.end();
     }
 
-    void Input::Init(GLFWwindow *_window)
+    Input::Input(GLFWwindow *_window)
     {
         window = _window;
         glfwSetKeyCallback(window, KeyCallback);

@@ -40,10 +40,8 @@ namespace DT
         unsigned int id;
         bool loaded = false;
 
-        Shader() {}
+        Shader(const std::string &vertexPath, const std::string &fragmentPath);
         ~Shader();
-
-        void Load(const char *vertexPath, const char *fragmentPath);
 
         void Use();
         void SetBool(const std::string &name, bool value) const;

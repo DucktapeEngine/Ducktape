@@ -50,21 +50,23 @@ namespace DT
         unsigned int quadVAO, quadVBO;
         unsigned int skyboxVAO, skyboxVBO;
         Cubemap skyboxCubemap;
-        Shader defaultShader, screenShader, skyboxShader;
+        Shader defaultShader = Shader("../Resources/shaders/default.vert", "../Resources/shaders/default.frag");
+        Shader screenShader = Shader("../Resources/shaders/screen.vert", "../Resources/shaders/screen.frag");
+        Shader skyboxShader = Shader("../Resources/shaders/skybox.vert", "../Resources/shaders/skybox.frag");
         glm::vec2 customViewportSize;
 
         std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
         std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};
 
-        void Init(Window &window, Configuration &config);
+        Renderer(Window &window, Configuration &config);
         void Render(Camera &camera, Window &window, Configuration &config);
-        void Terminate();
+        ~Renderer();
 
         void LoadSkybox(std::array<std::string, 6> paths);
 
-        unsigned int GetFreeDirectionalLightSpot();
+        bool GetFreeDirectionalLightSpot(unsigned int *spot);
         void UnoccupyDirectionalLightSpot(unsigned int spot);
-        unsigned int GetFreePointLightSpot();
+        bool GetFreePointLightSpot(unsigned int *spot);
         void UnoccupyPointLightSpot(unsigned int spot);
     };
 }

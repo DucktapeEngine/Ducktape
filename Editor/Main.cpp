@@ -20,6 +20,7 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#define DT_DEBUG
 #include <Ducktape.h>
 
 #include <Core/Editor.h>
@@ -30,12 +31,12 @@ int main()
 {
     try
     {
-        Engine e;
-        e.config.windowSize = {800, 600};
-        e.config.windowTitle = "DucktapeTest";
-        e.config.drawToQuad = false;
-        e.config.windowIconPath = "../Resources/textures/logo.png";
-        e.config.skyboxCubemapPaths = {
+        Configuration config;
+        config.windowSize = {800, 600};
+        config.windowTitle = "DucktapeTest";
+        config.drawToQuad = false;
+        config.windowIconPath = "../Resources/textures/logo.png";
+        config.skyboxCubemapPaths = {
             "../Resources/Textures/Skybox/right.jpg",
             "../Resources/Textures/Skybox/left.jpg",
             "../Resources/Textures/Skybox/top.jpg",
@@ -44,6 +45,7 @@ int main()
             "../Resources/Textures/Skybox/back.jpg"
         };
 
+        Engine e(config);
         Scene mainScene(&e);
 
         mainScene.LoadModule("./Resources/Scripts/libGame.dll");
@@ -51,15 +53,17 @@ int main()
         Entity camera = mainScene.CreateEntity();
         camera.Assign<Tag>().name = "Camera";
         camera.Assign<Transform>();
-        // camera.Assign("PlayerController");
         camera.Assign<DirectionalLight>();
-        camera.Assign<PointLight>();
 
         Entity model = mainScene.CreateEntity();
         model.Assign<Tag>().name = "Model";
         model.Assign<Transform>();
-        // model.Assign<ModelExtractor>().path = "../Resources/Models/cube.obj";
-        model.Assign<ModelExtractor>().path = "../Resources/Models/backpack/backpack.obj";
+
+        std::vector<Mesh> meshes = LoadModel("../Resources/Models/backpack/backpack.obj").meshes;
+        for (Mesh mesh : meshes)
+        {
+            mainScene.CreateEntity().Assign<MeshRenderer>().mesh = mesh;
+        }
 
         e.Init(mainScene);
 
@@ -79,7 +83,6 @@ int main()
         }
 
         Editor::Terminate();
-        e.Terminate();
     }
     catch (const std::exception &e)
     {

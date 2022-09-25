@@ -53,13 +53,9 @@ GLenum glCheckError_(const char *file, int line)
 
 namespace DT
 {
-    void Renderer::Init(Window &window, Configuration &config)
+    Renderer::Renderer(Window &window, Configuration &config) : skyboxCubemap(config.skyboxCubemapPaths)
     {
         glEnable(GL_DEPTH_TEST);
-
-        defaultShader.Load("../Resources/shaders/default.vert", "../Resources/shaders/default.frag");
-        screenShader.Load("../Resources/shaders/screen.vert", "../Resources/shaders/screen.frag");
-        skyboxShader.Load("../Resources/shaders/skybox.vert", "../Resources/shaders/skybox.frag");
 
         // FBO
         glGenFramebuffers(1, &FBO);
@@ -107,8 +103,6 @@ namespace DT
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
 
         // Skybox
-        skyboxCubemap.Load(config.skyboxCubemapPaths);
-
         float skyboxVertices[] = {
             // positions          
             -1.0f,  1.0f, -1.0f,
@@ -212,27 +206,28 @@ namespace DT
         }
     }
 
-    void Renderer::Terminate()
+    Renderer::~Renderer()
     {
         glDeleteFramebuffers(1, &FBO);
     }
 
     void Renderer::LoadSkybox(std::array<std::string, 6> paths)
     {
-        skyboxCubemap.Load(paths);
+        skyboxCubemap = Cubemap(paths);
     }
 
-    unsigned int Renderer::GetFreeDirectionalLightSpot()
+    bool Renderer::GetFreeDirectionalLightSpot(unsigned int *spot)
     {
         for (int i = 0; i < MAX_LIGHT_NO; i++)
         {
             if (occupiedDirectionalLights[i] == false)
             {
                 occupiedDirectionalLights[i] = true;
-                return i;
+                *spot = i;
+                return true;
             }
         }
-        return NAN;
+        return false;
     }
 
     void Renderer::UnoccupyDirectionalLightSpot(unsigned int spot)
@@ -240,17 +235,18 @@ namespace DT
         occupiedDirectionalLights[spot] = false;
     }
 
-    unsigned int Renderer::GetFreePointLightSpot()
+    bool Renderer::GetFreePointLightSpot(unsigned int *spot)
     {
         for (int i = 0; i < MAX_LIGHT_NO; i++)
         {
             if (occupiedPointLight[i] == false)
             {
                 occupiedPointLight[i] = true;
-                return i;
+                *spot = i;
+                return true;
             }
         }
-        return NAN;
+        return false;
     }
 
     void Renderer::UnoccupyPointLightSpot(unsigned int spot)

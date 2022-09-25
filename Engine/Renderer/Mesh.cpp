@@ -102,10 +102,7 @@ namespace DT
         if (textures.size() == 0)
         {
             // Load default texture
-            Texture texture;
-            texture.Load("../Resources/Textures/Default.png");
-            texture.type = "diffuse";
-            textures.push_back(texture);
+            textures.push_back(Texture("../Resources/Textures/Default.png", "diffuse"));
         }
     }
 }

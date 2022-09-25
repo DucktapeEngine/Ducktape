@@ -29,7 +29,6 @@ aryanbaburajan2007@gmail.com
 #include <Components/Tag.h>
 #include <Components/Transform.h>
 #include <Components/MeshRenderer.h>
-#include <Components/ModelExtractor.h>
 #include <Components/DirectionalLight.h>
 #include <Components/PointLight.h>
 #include <Core/Configuration.h>
@@ -50,3 +49,4 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Vertex.h>
 #include <Renderer/Mesh.h>
 #include <Renderer/Cubemap.h>
+#include <Renderer/ModelLoader.h>

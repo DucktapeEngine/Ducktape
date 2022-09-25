@@ -37,13 +37,11 @@ namespace DT
     public:
         int width, height, nrChannels;
         unsigned int id;
-        int mipmapLevel = 0;
         bool loaded = false;
         std::string type; // TODO: Switch to enums
         std::string path;
 
-        Texture();
-
-        bool Load(const std::string &path);
+        Texture(const std::string &_path, const std::string &_type);
+        void Delete();
     };
 }

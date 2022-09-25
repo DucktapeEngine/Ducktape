@@ -24,7 +24,7 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Engine::Init(Scene &scene)
+    Engine::Engine(const Configuration &configuration) : config(configuration), window(config), renderer(window, config), input(window.window)
     {
         std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
                      "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
@@ -32,15 +32,11 @@ namespace DT
                      "under certain conditions; type `show c' for details.\n";
 
         activeContext = this;
+    }
 
-        // Rendering
-        window.Init(config);
-        renderer.Init(window, config);
-        input.Init(window.window);
-
-        // Logic
+    void Engine::Init(Scene &scene)
+    {
         activeScene = &scene;
-        
         scene.CallLoop(LoopManager::InitLoop);
     }
 
@@ -77,11 +73,5 @@ namespace DT
             StartFrame();
             EndFrame();
         }
-    }
-
-    void Engine::Terminate()
-    {
-        window.Terminate();
-        renderer.Terminate();
     }
 }

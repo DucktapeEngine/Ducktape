@@ -31,9 +31,7 @@ namespace DT
         if (shader == nullptr)
             shader = &engine->renderer.defaultShader;
 
-        lightSpot = engine->renderer.GetFreePointLightSpot();
-
-        if (lightSpot == NAN)
+        if (engine->renderer.GetFreePointLightSpot(&lightSpot) == false)
         {
             engine->debug << "PointLight: No free light spots.\n";
         }
