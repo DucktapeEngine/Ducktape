@@ -37,14 +37,8 @@ namespace DT
         unsigned int lightSpot;
         std::string propertyString;
 
-        glm::vec3 direction = glm::vec3(-0.2f, -1.0f, -0.3f);
-
-        float ambient = 1.f;
-        float diffuse = 1.f;
-        float specular = 1.f;
-        glm::vec3 ambientColor = glm::vec3(1.f);
-        glm::vec3 diffuseColor = glm::vec3(1.f);
-        glm::vec3 specularColor = glm::vec3(1.f);
+        float intensity = 1.f;
+        glm::vec3 color = glm::vec3(1.f);
 
         void Init();
         void Tick();

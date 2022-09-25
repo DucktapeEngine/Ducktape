@@ -92,7 +92,7 @@ namespace DT
     {
         ImGui::Begin("Console");
 
-        ImGui::Text(debug.log.c_str());
+        ImGui::Text(engine->debug.log.c_str());
 
         ImGui::End();
     }

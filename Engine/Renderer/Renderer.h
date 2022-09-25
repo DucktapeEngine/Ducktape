@@ -64,5 +64,7 @@ namespace DT
 
         unsigned int GetFreeDirectionalLightSpot();
         void UnoccupyDirectionalLightSpot(unsigned int spot);
+        unsigned int GetFreePointLightSpot();
+        void UnoccupyPointLightSpot(unsigned int spot);
     };
 }

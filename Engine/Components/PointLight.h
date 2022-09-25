@@ -22,42 +22,28 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <iostream>
-#include <functional>
-
-#include <entt/entt.hpp>
-
-#include <Core/Scene.h>
-#include <Core/Window.h>
-#include <Renderer/Renderer.h>
-#include <Core/Time.h>
-#include <Input/Input.h>
-#include <Core/LoopManager.h>
-#include <Core/Debug.h>
+#include <Components/Component.h>
+#include <Renderer/Shader.h>
+#include <Components/Transform.h>
+#include <Core/Engine.h>
 
 namespace DT
 {
-    class Engine
+    class PointLight : public Component
     {
     public:
-        Configuration config;
-        Window window;
-        Renderer renderer;
-        Time time;
-        Input input;
-        LoopManager loopManager;
-        Debug debug;
-        Camera camera;
-        Scene *activeScene;
+        Shader *shader = nullptr;
+        Transform *transform;
+        unsigned int lightSpot;
+        std::string propertyString;
 
-        static inline Engine *activeContext = nullptr;
+        float intensity = 1.f;
+        glm::vec3 color = glm::vec3(1.f);
 
-        void Init(Scene &scene);
-        bool IsOpen();
-        void StartFrame();
-        void EndFrame();
-        void Terminate();
-        void Run(Scene &scene);
+        void Init();
+        void Tick();
+        void Inspector();
+        void Destroy();
+        static void System(Scene *scene);
     };
 }

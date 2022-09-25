@@ -31,6 +31,7 @@ aryanbaburajan2007@gmail.com
 #include <Components/MeshRenderer.h>
 #include <Components/ModelExtractor.h>
 #include <Components/DirectionalLight.h>
+#include <Components/PointLight.h>
 #include <Core/Configuration.h>
 #include <Core/Debug.h>
 #include <Core/Engine.h>

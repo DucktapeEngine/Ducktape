@@ -15,6 +15,8 @@ struct DirectionalLight {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+    bool enabled;
 };
 
 struct PointLight {    
@@ -27,6 +29,8 @@ struct PointLight {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+    bool enabled;
 };  
 
 uniform vec3 viewPos;
@@ -94,14 +98,13 @@ void main()
     
     // Directional Lights
     for(int i = 0; i < MAX_LIGHT_NO; i++)
-        result += CalculateDirLight(directionalLights[i], norm, viewDir);
+        if (directionalLights[i].enabled)
+            result += CalculateDirLight(directionalLights[i], norm, viewDir);
 
     // Point Lights
-    // for(int i = 0; i < MAX_LIGHT_NO; i++)
-    //     result += CalculatePointLight(pointLights[i], norm, FragPos, viewDir);
-
-    // Spot lights
-    //result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+    for(int i = 0; i < MAX_LIGHT_NO; i++)
+        if (pointLights[i].enabled)
+            result += CalculatePointLight(pointLights[i], norm, FragPos, viewDir);
     
     FragColor = vec4(result, 1.0);
 }

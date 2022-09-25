@@ -232,10 +232,29 @@ namespace DT
                 return i;
             }
         }
+        return NAN;
     }
 
     void Renderer::UnoccupyDirectionalLightSpot(unsigned int spot)
     {
         occupiedDirectionalLights[spot] = false;
+    }
+
+    unsigned int Renderer::GetFreePointLightSpot()
+    {
+        for (int i = 0; i < MAX_LIGHT_NO; i++)
+        {
+            if (occupiedPointLight[i] == false)
+            {
+                occupiedPointLight[i] = true;
+                return i;
+            }
+        }
+        return NAN;
+    }
+
+    void Renderer::UnoccupyPointLightSpot(unsigned int spot)
+    {
+        occupiedPointLight[spot] = false;
     }
 }

@@ -20,56 +20,63 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Components/DirectionalLight.h>
+#include <Components/PointLight.h>
 
 namespace DT
 {
-    void DirectionalLight::Init()
+    void PointLight::Init()
     {
         transform = &entity.Require<Transform>();
 
         if (shader == nullptr)
             shader = &engine->renderer.defaultShader;
 
-        lightSpot = engine->renderer.GetFreeDirectionalLightSpot();
+        lightSpot = engine->renderer.GetFreePointLightSpot();
 
         if (lightSpot == NAN)
         {
-            engine->debug << "DirectionalLight: No free light spots.\n";
+            engine->debug << "PointLight: No free light spots.\n";
         }
 
-        propertyString = "directionalLights[" + std::to_string(lightSpot) + "].";
+        propertyString = "pointLights[" + std::to_string(lightSpot) + "].";
+        
+        shader->Use();
+        shader->SetFloat(propertyString + "constant", 1.0f);
+        shader->SetFloat(propertyString + "quadratic", 1.0f);
         shader->SetBool(propertyString + "enabled", true);
     }
 
-    void DirectionalLight::Tick()
+    void PointLight::Tick()
     {
         if (lightSpot == NAN) return;
 
         shader->Use();
-        shader->SetVec3(propertyString + "direction", transform->Forward());
+        shader->SetVec3(propertyString + "position", transform->position);
+    
+        shader->SetFloat(propertyString + "linear", intensity);
         shader->SetVec3(propertyString + "ambient", color * intensity);
         shader->SetVec3(propertyString + "diffuse", color * intensity);
         shader->SetVec3(propertyString + "specular", color * intensity);
     }
 
-    void DirectionalLight::Inspector()
+    void PointLight::Inspector()
     {
-        if (ImGui::CollapsingHeader("Directional Light"))
+        if (ImGui::CollapsingHeader("Point Light"))
         {
+            ImGui::Text(std::to_string(lightSpot).c_str());
             ImGui::InputFloat("intensity", &intensity);
             ImGui::ColorPicker3("color", &color.x);
         }
     }
 
-    void DirectionalLight::Destroy()
+    void PointLight::Destroy()
     {
-        engine->renderer.UnoccupyDirectionalLightSpot(lightSpot);
-        shader->SetBool(propertyString + "enabled", true);
+        engine->renderer.UnoccupyPointLightSpot(lightSpot);
+        shader->SetBool(propertyString + "enabled", false);
     }
 
-    void DirectionalLight::System(Scene *scene)
+    void PointLight::System(Scene *scene)
     {
-        scene->Call<DirectionalLight>();
+        scene->Call<PointLight>();
     }
 }

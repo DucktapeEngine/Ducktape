@@ -53,6 +53,7 @@ int main()
         camera.Assign<Transform>();
         // camera.Assign("PlayerController");
         camera.Assign<DirectionalLight>();
+        camera.Assign<PointLight>();
 
         Entity model = mainScene.CreateEntity();
         model.Assign<Tag>().name = "Model";

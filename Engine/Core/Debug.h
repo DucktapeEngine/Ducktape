@@ -50,20 +50,18 @@ namespace DT
         return glm::to_string(object);
     }
 
-    class DebugHandler
+    class Debug
     {
     public:
         std::string log;
     };
 
     template <typename T>
-    DebugHandler &operator<<(DebugHandler &target, const T &object)
+    Debug &operator<<(Debug &target, const T &object)
     {
         std::string _object = ToDebug(object);
         target.log += _object;
         std::cout << _object;
         return target;
     }
-
-    inline DebugHandler debug;
 }
