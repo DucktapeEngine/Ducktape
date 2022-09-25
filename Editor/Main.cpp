@@ -58,8 +58,8 @@ int main()
         Entity model = mainScene.CreateEntity();
         model.Assign<Tag>().name = "Model";
         model.Assign<Transform>();
-        // model.Assign<ModelExtractor>().path = "../Resources/Models/cube.obj";
-        model.Assign<ModelExtractor>().path = "../Resources/Models/backpack/backpack.obj";
+        model.Assign<ModelExtractor>().path = "../Resources/Models/cube.obj";
+        // model.Assign<ModelExtractor>().path = "../Resources/Models/backpack/backpack.obj";
 
         e.Init(mainScene);
 
@@ -70,7 +70,7 @@ int main()
             e.StartFrame();
             Editor::NewFrame();
 
-            e.activeScene->CallLoop(CallState::SceneView);
+            e.activeScene->CallLoop(EditorModules::SceneViewLoop);
 
             Editor::Render(&e);
 

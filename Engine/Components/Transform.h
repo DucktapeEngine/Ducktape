@@ -48,6 +48,7 @@ namespace DT
         glm::vec3 Up();
 
         void Inspector();
+        void SceneView(bool selected);
 
         static void System(Scene *scene);
     };

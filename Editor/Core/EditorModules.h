@@ -38,6 +38,7 @@ namespace DT
     namespace EditorModules
     {
         void SceneView(Engine *engine);
+        void SceneViewLoop(Component *component);
 
         inline float yaw = 0.f, pitch = 0.f;
         inline entt::entity selectedEntity = entt::null;
@@ -46,5 +47,6 @@ namespace DT
         void Console(Engine *engine);
 
         void Inspector(Engine *engine);
+        void InspectorLoop(Component* component);
     }
 }

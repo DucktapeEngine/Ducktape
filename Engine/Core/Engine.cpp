@@ -41,7 +41,7 @@ namespace DT
         // Logic
         activeScene = &scene;
         
-        scene.CallLoop(CallState::Init);
+        scene.CallLoop(LoopManager::InitLoop);
     }
 
     bool Engine::IsOpen()
@@ -60,7 +60,7 @@ namespace DT
         renderer.Render(camera, window, config);
 
         if (loopManager.sceneTick)
-            activeScene->CallLoop(CallState::Tick);
+            activeScene->CallLoop(LoopManager::TickLoop);
     }
 
     void Engine::EndFrame()

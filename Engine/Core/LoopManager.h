@@ -22,11 +22,17 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <Components/Component.h>
+
 namespace DT
 {
     class LoopManager
     {
     public:
         bool sceneTick = true;
+
+        static void InitLoop(Component* component);
+        static void TickLoop(Component* component);
+        static void DestroyLoop(Component* component);
     };
 }

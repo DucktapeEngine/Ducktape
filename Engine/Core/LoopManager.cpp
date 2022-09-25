@@ -20,35 +20,24 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Scene.h>
+#pragma once
+
+#include <Core/LoopManager.h>
 
 namespace DT
 {
-    Scene::Scene(Engine *holderEngine)
+    void LoopManager::InitLoop(Component* component)
     {
-        engine = holderEngine;
-    }
-    
-    Scene::~Scene()
-    {
-        FreeLibrary(gameModule);
+        component->Init();
     }
 
-    void Scene::CallLoop(CallFunc callFunc)
+    void LoopManager::TickLoop(Component* component)
     {
-        callFunction = callFunc;
-        for (System system : systems)
-            system(this);
+        component->Tick();
     }
 
-    void Scene::LoadModule(const std::string &path)
+    void LoopManager::DestroyLoop(Component* component)
     {
-        gameModule = LoadLibrary(path.c_str());
-
-        if (!gameModule)
-        {
-            std::cout << "Failed to load Module: " << path << std::endl;
-            return;
-        }
+        component->Destroy();
     }
 }

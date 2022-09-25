@@ -64,6 +64,11 @@ namespace DT
         ImGui::PopStyleVar();
     }
 
+    void EditorModules::SceneViewLoop(Component *component)
+    {
+        component->SceneView(selectedEntity == component->entity);
+    }
+
     void EditorModules::Hierarchy(Engine *engine)
     {
         ImGui::Begin("Hierarchy");
@@ -97,12 +102,20 @@ namespace DT
         ImGui::End();
     }
 
+    void EditorModules::InspectorLoop(Component* component)
+    {
+        if (component->entity == selectedEntity)
+        {
+            component->Inspector();
+            ImGui::Separator();
+        }
+    }
+
     void EditorModules::Inspector(Engine *engine)
     {
         ImGui::Begin("Inspector");
 
-        engine->activeScene->hierarchySelectedEntity = selectedEntity;
-        engine->activeScene->CallLoop(CallState::Inspector);
+        engine->activeScene->CallLoop(InspectorLoop);
 
         ImGui::End();
     }

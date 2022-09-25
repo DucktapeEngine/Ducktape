@@ -40,7 +40,7 @@ namespace DT
 
         virtual void Init() {}
         virtual void Tick() {}
-        virtual void SceneView() {}
+        virtual void SceneView(bool selected) {}
         virtual void Destroy() {}
         virtual void Inspector() {}
     };

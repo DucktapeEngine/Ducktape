@@ -34,39 +34,25 @@ namespace DT
     class Entity;
     class Scene;
     class Engine;
+    class Component;
 
     typedef void (*System)(Scene*);
-
-    enum CallState
-    {
-        Init,
-        Tick,
-        SceneView,
-        Destroy,
-        Inspector
-    };
+    typedef void (*CallFunc)(Component *);
 
     class Scene
     {
     public:
         entt::registry sceneRegistry;
         std::unordered_set<System> systems;
-        CallState callState;
         Engine *engine;
-        entt::entity hierarchySelectedEntity = entt::null;
         HMODULE gameModule;
+        CallFunc callFunction;
 
         Scene(Engine *holderEngine);
         ~Scene();
 
-        template <typename... Args>
-        void CallLoop(CallState calledState, Args &&...args)
-        {
-            callState = calledState;
-            for (System system : systems)
-                system(this, std::forward<Args>(args)...);
-        }
-
+        void CallLoop(CallFunc callFunc);
+        
         template <typename T>
         void Call()
         {
@@ -76,29 +62,8 @@ namespace DT
             {
                 T &component = view. template get<T>(entity);
 
-                switch (callState)
-                {
-                    case CallState::Init:
-                        component.Init();
-                        break;
-                    case CallState::Tick:
-                        component.Tick();
-                        break;
-                    case CallState::SceneView:
-                        component.SceneView();
-                        break;
-                    case CallState::Destroy:
-                        component.Destroy();
-                        break;
-                    case CallState::Inspector:
-                        if (entity == hierarchySelectedEntity)
-                        {
-                            component.Inspector();
-                            ImGui::Separator();
-                        }
-                        break;
-                }
-            }            
+                callFunction(&component);
+            }
         }
 
         // Defined in Entity.cpp

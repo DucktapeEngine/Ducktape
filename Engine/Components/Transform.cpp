@@ -58,6 +58,11 @@ namespace DT
         }
     }
 
+    void Transform::SceneView(bool selected)
+    {
+
+    }
+
     void Transform::System(Scene *scene)
     {
         scene->Call<Transform>();

@@ -66,9 +66,10 @@ public:
         }
     }
 
-    static void System(Scene *scene)
+    template <typename... Args>
+    static void System(Scene *scene, Args &&...args)
     {
-        scene->Call<PlayerController>();
+        scene->Call<DirectionalLight>(std::forward<Args>(args)...);
     }
 };
 
