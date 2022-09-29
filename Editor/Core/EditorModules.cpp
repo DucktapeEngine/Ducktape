@@ -24,6 +24,57 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    void EditorModules::Init(Engine *engine)
+    {
+    }
+
+    void EditorModules::ToolBar(Engine *engine, const ImVec2 &windowPos, const ImVec2 &windowSize)
+    {
+        ImGui::Begin("Tool Bar");
+
+        if (engine->input.GetKeyPressed(KEY_T))
+            currentGizmoOperation = ImGuizmo::TRANSLATE;
+        if (engine->input.GetKeyPressed(KEY_R))
+            currentGizmoOperation = ImGuizmo::ROTATE;
+        if (engine->input.GetKeyPressed(KEY_S))
+            currentGizmoOperation = ImGuizmo::SCALE;
+        if (ImGui::RadioButton("translate", currentGizmoOperation == ImGuizmo::TRANSLATE))
+            currentGizmoOperation = ImGuizmo::TRANSLATE;
+        ImGui::SameLine();
+        if (ImGui::RadioButton("rotate", currentGizmoOperation == ImGuizmo::ROTATE))
+            currentGizmoOperation = ImGuizmo::ROTATE;
+        ImGui::SameLine();
+        if (ImGui::RadioButton("scale", currentGizmoOperation == ImGuizmo::SCALE))
+            currentGizmoOperation = ImGuizmo::SCALE;
+
+        if (currentGizmoOperation != ImGuizmo::SCALE)
+        {
+            if (ImGui::RadioButton("local", currentGizmoMode == ImGuizmo::LOCAL))
+                currentGizmoMode = ImGuizmo::LOCAL;
+            ImGui::SameLine();
+            if (ImGui::RadioButton("world", currentGizmoMode == ImGuizmo::WORLD))
+                currentGizmoMode = ImGuizmo::WORLD;
+        }
+        
+        ImGui::Checkbox("snap", &useSnap);
+        ImGui::SameLine();
+
+        switch (currentGizmoOperation)
+        {
+        case ImGuizmo::TRANSLATE:
+            ImGui::InputFloat3("Snap", &snap);
+            break;
+        case ImGuizmo::ROTATE:
+            ImGui::InputFloat("Angle Snap", &snap);
+            break;
+        case ImGuizmo::SCALE:
+            ImGui::InputFloat("Scale Snap", &snap);
+            break;
+        }
+
+        ImGui::End();
+    }
+
     void EditorModules::SceneView(Engine *engine)
     {
         //// Controls
@@ -52,16 +103,36 @@ namespace DT
         }
 
         engine->camera.transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+        
+        ImVec2 windowPos = ImGui::GetWindowPos();
+        ImVec2 windowSize = ImGui::GetWindowSize();
 
-        //// Render
+        // Transform
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::Begin("Scene View");
 
-        ImVec2 wsize = ImGui::GetWindowSize();
-        ImGui::Image((ImTextureID)(uintptr_t)engine->renderer.renderTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::Image((ImTextureID)(uintptr_t)engine->renderer.renderTexture, windowSize, ImVec2(0, 1), ImVec2(1, 0));
+
+        if (selectedEntity && selectedEntity.Has<Transform>())
+        {
+            Transform &transform = selectedEntity.Get<Transform>();
+
+            glm::mat4 model = transform.GetModelMatrix();
+
+            ImGuizmo::SetOrthographic(engine->camera.isOrtho);
+            ImGuizmo::SetDrawlist();
+
+            ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
+            ImGuizmo::Manipulate(glm::value_ptr(engine->camera.view), glm::value_ptr(engine->camera.projection), currentGizmoOperation, currentGizmoMode, glm::value_ptr(model), NULL, useSnap ? &snap : NULL);
+            ImGuizmo::ViewManipulate(glm::value_ptr(engine->camera.view), glm::length(engine->camera.transform.position - transform.position), ImVec2(0, 0), ImVec2(128, 128), 0x10101010);
+
+            transform.SetModelMatrix(model);
+        }
 
         ImGui::End();
         ImGui::PopStyleVar();
+
+        ToolBar(engine, windowPos, windowSize);
     }
 
     void EditorModules::SceneViewLoop(Component *component)
@@ -87,7 +158,7 @@ namespace DT
 
             if (ImGui::Selectable(label.c_str(), selectedEntity == entity))
             {
-                selectedEntity = entity;
+                selectedEntity = Entity(entity, engine->activeScene);
             } });
 
         ImGui::End();

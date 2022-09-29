@@ -27,10 +27,18 @@ namespace DT
     glm::mat4 Transform::GetModelMatrix()
     {
         glm::mat4 trans = glm::translate(glm::mat4(1.0), position);
-        glm::mat4 rot = glm::toMat4(rotation);
+        glm::mat4 rot = glm::mat4_cast(rotation);
         glm::mat4 scl = glm::scale(glm::mat4(1.0), scale);
 
         return scl * rot * trans;
+    }
+
+    void Transform::SetModelMatrix(glm::mat4 model)
+    {        
+        glm::vec3 skew;
+        glm::vec4 perspective;
+        glm::decompose(model, scale, rotation, position, skew, perspective);
+        rotation = glm::conjugate(rotation);
     }
 
     glm::vec3 Transform::Right()
@@ -56,11 +64,6 @@ namespace DT
             ImGui::InputFloat4("rotation##Trans", &rotation.x);
             ImGui::InputFloat3("scale##Trans", &scale.x);
         }
-    }
-
-    void Transform::SceneView(bool selected)
-    {
-
     }
 
     void Transform::System(Scene *scene)

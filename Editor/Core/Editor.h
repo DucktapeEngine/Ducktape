@@ -38,7 +38,7 @@ namespace DT
     {
         inline bool showDemoWindow = true;
 
-        void Init(GLFWwindow *window);
+        void Init(Engine *engine);
         void NewFrame();
         void Render(Engine *engine);
         void EndFrame(Renderer &renderer);

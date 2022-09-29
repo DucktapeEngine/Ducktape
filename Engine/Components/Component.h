@@ -32,12 +32,25 @@ namespace DT
 {
     class Engine;
 
+    /**
+     * @brief Base class that all Components inherit from.
+     */
     class Component
     {
     public:
+        /**
+         * @brief Pointer to the active instance of Engine.
+         */
         Engine *engine = nullptr;
+
+        /**
+         * @brief Entity that this Component belongs to.
+         */
         Entity entity;
 
+        /**
+         * @brief Called
+         */
         virtual void Init() {}
         virtual void Tick() {}
         virtual void SceneView(bool selected) {}

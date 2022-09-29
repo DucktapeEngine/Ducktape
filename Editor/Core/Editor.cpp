@@ -24,10 +24,10 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Editor::Init(GLFWwindow *window)
+    void Editor::Init(Engine *engine)
     {
         ImGui::CreateContext();
-        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplGlfw_InitForOpenGL(engine->window.window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
         ImGuiIO &io = ImGui::GetIO();
@@ -85,6 +85,8 @@ namespace DT
         style.Colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
         style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
         style.GrabRounding = style.FrameRounding = 2.3f;
+
+        EditorModules::Init(engine);
     }
 
     void Editor::NewFrame()
@@ -99,6 +101,7 @@ namespace DT
         ImGui::DockSpaceOverViewport();
 
         EditorModules::SceneView(engine);
+        // EditorModules::ToolBar(engine); // Called from EditorModules::SceneView() itself
         EditorModules::Hierarchy(engine);
         EditorModules::Console(engine);
         EditorModules::Inspector(engine);

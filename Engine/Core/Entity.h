@@ -43,8 +43,8 @@ namespace DT
         Scene *scene;
 
         Entity();
-        Entity(entt::entity entityHandle, Scene *scene) : handle(entityHandle), scene(scene) {}
-
+        Entity(entt::entity entityHandle, Scene *scene);
+        
         operator entt::entity() const { return handle; }
         operator bool() const { return handle != entt::null; }
 
@@ -110,5 +110,7 @@ namespace DT
         {
             return Entity(entt::to_entity(scene->sceneRegistry, component), scene);
         }
+
+        bool operator==(const Entity& other);
     };
 }

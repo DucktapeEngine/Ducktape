@@ -24,10 +24,8 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Entity::Entity()
-    {
-        handle = entt::null;
-    }
+    Entity::Entity() : handle(entt::null) {}
+    Entity::Entity(entt::entity entityHandle, Scene *scene) : handle(entityHandle), scene(scene) {}
 
     Entity Scene::CreateEntity()
     {
@@ -37,5 +35,10 @@ namespace DT
     void Scene::DestroyEntity(Entity entity)
     {
         sceneRegistry.destroy(entity.handle);
+    }
+
+    bool Entity::operator==(const Entity& other)
+    {
+        return handle == other.handle;
     }
 }

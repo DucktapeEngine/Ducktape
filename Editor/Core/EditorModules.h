@@ -23,8 +23,11 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <imgui.h>
+#include <imguizmo.h>
 
 #include <Renderer/Renderer.h>
+#include <Renderer/ModelLoader.h>
+#include <Renderer/Mesh.h>
 #include <Input/Input.h>
 #include <Core/Time.h>
 #include <Core/Engine.h>
@@ -37,11 +40,19 @@ namespace DT
 {
     namespace EditorModules
     {
+        void Init(Engine *engine);
+
+        inline float snap;
+        inline bool useSnap = false;
+        inline ImGuizmo::OPERATION currentGizmoOperation(ImGuizmo::ROTATE);
+        inline ImGuizmo::MODE currentGizmoMode(ImGuizmo::WORLD);
+        void ToolBar(Engine *engine, const ImVec2 &windowPos, const ImVec2 &windowSize);
+
         void SceneView(Engine *engine);
         void SceneViewLoop(Component *component);
 
         inline float yaw = 0.f, pitch = 0.f;
-        inline entt::entity selectedEntity = entt::null;
+        inline Entity selectedEntity;
         void Hierarchy(Engine *engine);
 
         void Console(Engine *engine);

@@ -26,7 +26,6 @@ aryanbaburajan2007@gmail.com
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include <Core/Scene.h>
@@ -42,13 +41,13 @@ namespace DT
         glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
         glm::mat4 GetModelMatrix();
+        void SetModelMatrix(glm::mat4);
 
         glm::vec3 Right();
         glm::vec3 Forward();
         glm::vec3 Up();
 
         void Inspector();
-        void SceneView(bool selected);
 
         static void System(Scene *scene);
     };
