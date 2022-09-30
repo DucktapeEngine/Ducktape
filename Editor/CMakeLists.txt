@@ -41,7 +41,7 @@ target_compile_features (Editor PRIVATE cxx_std_17)
 target_include_directories(Editor PUBLIC "${PROJECT_SOURCE_DIR}/Editor")
 
 # Ducktape
-set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Cmake/;${CMAKE_MODULE_PATH}")
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_MODULE_PATH}")
 set(TARGET Editor)
 set(Ducktape_ROOT_DIR "${PROJECT_SOURCE_DIR}")
 find_package (Ducktape REQUIRED)
