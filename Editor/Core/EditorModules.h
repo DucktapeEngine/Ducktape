@@ -23,7 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <imgui.h>
-#include <imguizmo.h>
+#include <ImGuizmo.h>
 
 #include <Renderer/Renderer.h>
 #include <Renderer/ModelLoader.h>
