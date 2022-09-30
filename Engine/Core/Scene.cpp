@@ -28,10 +28,15 @@ namespace DT
     {
         engine = holderEngine;
     }
-    
+
     Scene::~Scene()
     {
+#ifdef _WIN32
         FreeLibrary(gameModule);
+#endif
+#ifdef __linux__
+        dlclose(gameModule);
+#endif
     }
 
     void Scene::CallLoop(CallFunc callFunc)
@@ -43,8 +48,12 @@ namespace DT
 
     void Scene::LoadModule(const std::string &path)
     {
+#ifdef _WIN32
         gameModule = LoadLibrary(path.c_str());
-
+#endif
+#ifdef __linux__
+        gameModule = dlopen(path.c_str(), RTLD_LAZY);
+#endif
         if (!gameModule)
         {
             std::cout << "Failed to load Module: " << path << std::endl;
