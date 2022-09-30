@@ -1,12 +1,12 @@
-
-
 # Contributing
 
-If you are interested in contributing to this game engne, feel free to fork the repository and make your own changes.
+If you are interested in contributing to this game engine, feel free to fork the repository and make your own changes.
 
 **Note**: Please do not submit pull requests with new features or major changes. Instead, please file an issue first for discussion. If you'd like a feature implemented into the Game Engine, feel free to use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=feature_request.md&title=). Or if you encountered a bug, you may use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=bug_report.md&title=) instead.
 
 ## Setting up Ducktape for development
+
+Before you proceed further, feel free to join [the Ducktape Discord Server](https://dsc.gg/ducktape) for any help that you may need!
 
 ### Clone the repository
 Fork this repository to your own account.
@@ -16,7 +16,7 @@ git clone https://github.com/<username>/Ducktape.git
 ```
 
 ### Compile Ducktape
-Execute the build script (`build.bat` if you're on Windows, `build.sh` if you're on Linux):
+Execute the build script (`Build.bat` if you're on Windows, `Build.sh` if you're on Linux):
 ```
 cd Ducktape
 build
@@ -51,7 +51,28 @@ Enter your option (1,2):
 ```
 
 Then run 
-
 ```
-./Ducktape
+./Editor/Editor.exe
+```
+
+### Commit naming in Ducktape follows a specific format:
+```
+[tag]: <Commit details>
+```
+where `[tag]` is:
+- **feat** - a new feature is introduced with the changes
+- **fix** - a bug fix has occured
+- **chore** - changes that do not relate to a fix or feature and don't modify src or test files (for example updating dependencies)
+- **refactor** - refactored code that neither fixes a bug nor adds a feature
+- **docs** - updates to documentation such as the README or other markdown files
+- **style** - changes that do not affect the meaning of the code, likely related to code formatting such as white-space, missing semi-colons, and so on
+- **test** - including new or correcting previous tests
+- **perf** - performance improvements
+- **ci** - continuous integration related
+- **build** - changes that affect the build system or external dependencies
+- **revert** - reverts a previous commit
+
+For example:
+```
+feat: Added Linux support
 ```
