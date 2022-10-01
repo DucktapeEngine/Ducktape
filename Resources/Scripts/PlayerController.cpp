@@ -20,6 +20,13 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#ifdef _WIN32
+#define DT_EXPORT extern "C" __declspec(dllexport)
+#endif
+#ifdef __linux__
+#define DT_EXPORT extern "C" __attribute__((visibility("default")))
+#endif
+
 #include <Ducktape.h>
 using namespace DT;
 
@@ -73,7 +80,7 @@ public:
     }
 };
 
-extern "C" __declspec(dllexport) Component *AssignPlayerController(Entity entity)
+DT_EXPORT Component *AssignPlayerController(Entity entity)
 {
     return &entity.Assign<PlayerController>();
 }
