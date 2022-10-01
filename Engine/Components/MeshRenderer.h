@@ -30,18 +30,43 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief MeshRenderer class for mesh handling with a collection of shader, model transformation and material.
+     * Extends Component class
+     */
     class MeshRenderer : public Component
     {
     public:
-        Mesh mesh;
-        Shader *shader = nullptr;
-        Transform *transform;
-        Material material;
+        Mesh mesh;                          ///< @brief Mesh data and buffers for runtime drawing
+        Shader *shader = nullptr;           ///< @brief Pointer to shader for model drawing
+        Transform *transform;               ///< @brief Pointer to model transform
+        Material material;                  ///< @brief Pointer to material for shading properties
 
+        /**
+         * @brief Initializes entity model transform, shader and mesh buffers
+         */
         void Init();
+
+        /**
+         * @brief Sets shader, transform, material properties and mesh buffers in order to draw current mesh
+         */
         void Tick();
+
+        /**
+         * @brief Adds value input for material shininess and color into ImGui interface
+         */
         void Inspector();
+
+        /**
+         * @brief Draws current mesh for current scene
+         * @param selected boolean representing if current entity is selected
+         */
         void SceneView(bool selected);
+
+        /**
+         * @brief Static function for EnTT entity management on MeshRenderer objects
+         * @param scene Scene object from which call entity management
+         */
         static void System(Scene *scene);
     };
 }

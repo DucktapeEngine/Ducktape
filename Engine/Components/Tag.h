@@ -29,13 +29,23 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Tag class for assigning tags on Entity objects
+     */
     class Tag : public Component
     {
     public:
-        std::string name = "Unnamed";
+        std::string name = "Unnamed";       ///< @brief Tag name
 
+        /**
+         * @brief Adds value input for tag name into ImGui interface
+         */
         void Inspector();
 
+        /**
+         * @brief Static function for EnTT entity management on Tag objects
+         * @param scene Scene object from which call entity management
+         */
         static void System(Scene *scene);
     };
 }

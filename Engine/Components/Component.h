@@ -49,12 +49,29 @@ namespace DT
         Entity entity;
 
         /**
-         * @brief Called
+         * @brief Virtual function for Component initialization inside Engine
          */
         virtual void Init() {}
+
+        /**
+         * @brief Virtual function for Component tick/update inside Engine
+         */
         virtual void Tick() {}
+
+        /**
+         * @brief Virtual function for handling Component in a scene view
+         * @param selected boolean representing if current entity is selected
+         */
         virtual void SceneView(bool selected) {}
+
+        /**
+         * @brief Virtual function for Component destruction
+         */
         virtual void Destroy() {}
+
+        /**
+         * @brief Virtual function for ImGui parameters input widgets
+         */
         virtual void Inspector() {}
     };
 }
