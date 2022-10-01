@@ -26,7 +26,7 @@ aryanbaburajan2007@gmail.com
 
 #include <glm/glm.hpp>
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include <Core/Window.h>
 #include <Input/Key.h>
