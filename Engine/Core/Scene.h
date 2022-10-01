@@ -24,8 +24,15 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <iostream>
+#include <unordered_set>
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
+#ifdef __linux__
+#include <dlfcn.h>
+#endif
+
 #include <entt/entt.hpp>
 #include <imgui/imgui.h>
 
@@ -36,7 +43,7 @@ namespace DT
     class Engine;
     class Component;
 
-    typedef void (*System)(Scene*);
+    typedef void (*System)(Scene *);
     typedef void (*CallFunc)(Component *);
 
     class Scene
@@ -45,14 +52,20 @@ namespace DT
         entt::registry sceneRegistry;
         std::unordered_set<System> systems;
         Engine *engine;
+#ifdef _WIN32
         HMODULE gameModule;
+#endif
+#ifdef __linux__
+        void *gameModule;
+#endif
+
         CallFunc callFunction;
 
         Scene(Engine *holderEngine);
         ~Scene();
 
         void CallLoop(CallFunc callFunc);
-        
+
         template <typename T>
         void Call()
         {
@@ -60,7 +73,7 @@ namespace DT
 
             for (auto entity : view)
             {
-                T &component = view. template get<T>(entity);
+                T &component = view.template get<T>(entity);
 
                 callFunction(&component);
             }

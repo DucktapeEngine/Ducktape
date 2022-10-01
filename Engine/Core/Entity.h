@@ -30,10 +30,14 @@ aryanbaburajan2007@gmail.com
 #include <Core/Scene.h>
 #include <Core/Macro.h>
 
+#ifdef __linux__
+#include <dlfcn.h>
+#endif
+
 namespace DT
 {
     class Component;
-    typedef Component *(__stdcall *AssignFunc)(Entity);
+    typedef Component *(*AssignFunc)(Entity);
 
     class Entity
     {
@@ -44,7 +48,7 @@ namespace DT
 
         Entity();
         Entity(entt::entity entityHandle, Scene *scene);
-        
+
         operator entt::entity() const { return handle; }
         operator bool() const { return handle != entt::null; }
 
@@ -68,8 +72,12 @@ namespace DT
 
         Component *Assign(const std::string &name)
         {
+#ifdef _WIN32
             AssignFunc assignFunc = (AssignFunc)GetProcAddress(scene->gameModule, ("Assign" + name).c_str());
-
+#endif
+#ifdef __linux__
+            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Assign" + name).c_str());
+#endif
             if (!assignFunc)
             {
                 std::cout << "Failed to get Assign" << name << "(Entity entity) function from Game Module." << std::endl;
@@ -111,6 +119,6 @@ namespace DT
             return Entity(entt::to_entity(scene->sceneRegistry, component), scene);
         }
 
-        bool operator==(const Entity& other);
+        bool operator==(const Entity &other);
     };
 }
