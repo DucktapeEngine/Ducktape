@@ -49,8 +49,16 @@ Choose the build type:
 2) Release
 Enter your option (1,2):
 ```
+Now the Engine and the Editor should compile.
 
-Then run 
+Note that before you run the Editor, you need to copy the Dll binaries of glfw, glad, assimp, and imgui to the same directory as the Editor exe (./Build/Editor).
+These files are usually situated in:
+- ./Build/Extern/glfw/src
+- ./Build/Extern/glad
+- ./Build/Extern/assimp/bin
+- ./Build/Extern/imgui
+
+Now run 
 ```
 ./Editor/Editor.exe
 ```
