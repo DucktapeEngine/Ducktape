@@ -33,22 +33,55 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Transform class for model transformation set (translation, rotation, scale). Extends Component class
+     */
     class Transform : public Component
     {
     public:
-        glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-        glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);
-        glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+        glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);           ///< Translation vector
+        glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);     ///< Rotation in quaternion form
+        glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);              ///< Scale vector
 
+        /**
+         * @brief Returns the Translation->Rotation->Scale model matrix
+         * @return GLM 4x4 transform matrix
+         */
         glm::mat4 GetModelMatrix();
+
+        /**
+         * @brief Updates all Transform members from GLM 4x4 combined transform matrix decomposition
+         * @param mat GLM 4x4 combined transform matrix
+         */
         void SetModelMatrix(glm::mat4);
 
+        /**
+         * @brief Returns right vector of Transform rotated model
+         * @return GLM 3-vector (rotated X axis)
+         */
         glm::vec3 Right();
+
+        /**
+         * @brief Returns forward vector of Transform rotated model
+         * @return GLM 3-vector (rotated Z axis)
+         */
         glm::vec3 Forward();
+
+        /**
+         * @brief Returns up vector of Transform rotated model
+         * @return GLM 3-vector (rotated Y axis)
+         */
         glm::vec3 Up();
 
+        /**
+         * @brief Adds value input for position, rotation and scale into ImGui interface
+         */
         void Inspector();
 
+        /**
+         * @brief Static function for EnTT entity management on Transform objects
+         * @param scene Scene object from which call entity management
+         */
         static void System(Scene *scene);
     };
 }

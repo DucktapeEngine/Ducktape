@@ -31,19 +31,22 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Configurator class for GLFW window and Ducktape engine properties
+     */
     class Configuration
     {
     public:
-        glm::vec2 windowSize;
-        std::string windowTitle;
-        glm::vec3 version;
-        std::string windowIconPath;
-        int targetFPS;
-        bool drawWireframe = false;
-        bool vsync = true;
-        GLFWwindow *shareContextWith = nullptr;
-        bool hideWindow = false;
-        bool drawToQuad = true;
-        std::array<std::string, 6> skyboxCubemapPaths;
+        glm::vec2 windowSize;                           ///< @brief GLFW window size
+        std::string windowTitle;                        ///< @brief GLFW window title
+        glm::vec3 version;                              ///< @brief GLFW application version
+        std::string windowIconPath;                     ///< @brief Path to GLFW window icon
+        int targetFPS;                                  ///< @brief Engine target FPS
+        bool drawWireframe = false;                     ///< @brief Flag for wireframe draw mode
+        bool vsync = true;                              ///< @brief Flag for VSYNC setting
+        GLFWwindow *shareContextWith = nullptr;         ///< @brief GLFW window context to share with OpenGL
+        bool hideWindow = false;                        ///< @brief Flag for window hiding
+        bool drawToQuad = true;                         ///< @brief Flag for quad drawing
+        std::array<std::string, 6> skyboxCubemapPaths;  ///< @brief Path list for all 6 cubemap faces
     };
 }
