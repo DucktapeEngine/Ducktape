@@ -1,5 +1,4 @@
 #!/bin/bash
-clear
 echo Setting up Ducktape for compiling...
 echo Choose your generator:
 echo 1\) Borland Makefiles
@@ -40,12 +39,10 @@ if [ ${idx} = 7 ]
 then
 	generator="Watcom WMake"
 fi
-clear
 
 echo Specify your compiler:
 echo \(You may enter a path to your compiler or just the compiler\'s command name if the compiler path is already in your PATH environment variable\)
 read compiler
-clear
 
 echo Choose the build type:
 echo 1\) Debug
@@ -63,7 +60,6 @@ then
 fi
 
 mkdir Build
-clear
 cd Build
 cmake -G "${generator}" -DCMAKE_CXX_COMPILER=${compiler} -DCMAKE_BUILD_TYPE=${generator} ..
 make
