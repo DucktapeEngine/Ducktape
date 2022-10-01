@@ -11,31 +11,29 @@ echo 7\) Watcom WMake
 echo -n Enter your option \(1,2,3,4,5,6,7\):
 set generator=None
 read idx
-if [ ${idx} = 1 ]
-then
-	generator="Borland Makefiles"
-fi
-if [ ${idx} = 2 ]
-then
-	generator="MSYS Makefiles"
-fi
-if [ ${idx} = 3 ]
-then
-	generator="MinGW Makefiles"
-fi
-if [ ${idx} = 4 ]
-then
-	generator="NMake Makefiles"
-fi
-if [ ${idx} = 5 ]
-then
-	generator="NMake Makefiles JOM"
-fi
-if [ ${idx} = 6 ]
+
+if [ "${idx}" = "" ]
 then
 	generator="Unix Makefiles"
-fi
-if [ ${idx} = 7 ]
+elif [ ${idx} = 1 ]
+then
+	generator="Borland Makefiles"
+elif [ ${idx} = 2 ]
+then
+	generator="MSYS Makefiles"
+elif [ ${idx} = 3 ]
+then
+	generator="MinGW Makefiles"
+elif [ ${idx} = 4 ]
+then
+	generator="NMake Makefiles"
+elif [ ${idx} = 5 ]
+then
+	generator="NMake Makefiles JOM"
+elif [ ${idx} = 6 ]
+then
+	generator="Unix Makefiles"
+elif [ ${idx} = 7 ]
 then
 	generator="Watcom WMake"
 fi
@@ -49,17 +47,17 @@ echo 1\) Debug
 echo 2\) Release
 echo -n Enter your option \(1,2\):
 set build=None
-read build
+read idx
 if [ ${idx} = 1 ]
 then
-	generator="DEBUG"
+	build="DEBUG"
 fi
 if [ ${idx} = 2 ]
 then
-	generator="RELEASE"
+	build="RELEASE"
 fi
 
 mkdir Build
 cd Build
-cmake -G "${generator}" -DCMAKE_CXX_COMPILER=${compiler} -DCMAKE_BUILD_TYPE=${generator} ..
+cmake -G "${generator}" -DCMAKE_CXX_COMPILER=${compiler} -DCMAKE_BUILD_TYPE=${build} ..
 make
