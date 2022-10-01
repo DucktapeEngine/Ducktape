@@ -53,6 +53,11 @@ namespace DT
         }
     }
 
+    void MeshRenderer::SceneView(bool selected)
+    {
+        Tick();
+    }
+
     void MeshRenderer::System(Scene *scene)
     {
         scene->Call<MeshRenderer>();

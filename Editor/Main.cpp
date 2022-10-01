@@ -60,11 +60,12 @@ int main()
         model.Assign<Transform>();
 
         std::vector<Mesh> meshes = LoadModel("../Resources/Models/backpack/backpack.obj").meshes;
-        // std::vector<Mesh> meshes = LoadModel("../Resources/Models/cube.obj").meshes;
         for (Mesh mesh : meshes)
         {
             mainScene.CreateEntity().Assign<MeshRenderer>().mesh = mesh;
         }
+
+        e.loopManager.sceneTick = false;
 
         e.Init(mainScene);
 
