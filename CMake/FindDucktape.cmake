@@ -56,16 +56,7 @@ set (Ducktape_LIBRARY_DIR
     ${Ducktape_ROOT_DIR}/Build/Extern/imgui;
 )
 
-if (UNIX)
-	set (Ducktape_LIBRARY
-	    stdc++
-	    m
-	    pthread
-	)
-endif()
-
 set (Ducktape_LIBRARY
-    ${Ducktape_LIBRARY}
     Ducktape
     glfw
     ${OPENGL_gl_LIBRARY}
@@ -76,12 +67,8 @@ set (Ducktape_LIBRARY
     imgui
 )
 if (UNIX)
-	set (Ducktape_LIBRARY ${Ducktape_LIBRARY}
-	    dl
-	    X11
-	)
+    set (Ducktape_LIBRARY
+	${Ducktape_LIBRARY}
+	dl
+    )
 endif()
-set (Ducktape_LIBRARY
-    ${Ducktape_LIBRARY}
-    imgui
-)
