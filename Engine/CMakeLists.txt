@@ -70,11 +70,11 @@ target_link_directories(Ducktape PUBLIC
 )
 
 target_link_libraries(Ducktape PUBLIC
-    glfw3
+    glfw
     ${OPENGL_gl_LIBRARY}
     ${OPENGL_glu_LIBRARY}
     ${GLFW_LIBRARIES}
     glad
-    assimp-5
+    assimp
     imgui
 )

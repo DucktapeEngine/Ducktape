@@ -56,13 +56,32 @@ set (Ducktape_LIBRARY_DIR
     ${Ducktape_ROOT_DIR}/Build/Extern/imgui;
 )
 
+if (UNIX)
+	set (Ducktape_LIBRARY
+	    stdc++
+	    m
+	    pthread
+	)
+endif()
+
 set (Ducktape_LIBRARY
+    ${Ducktape_LIBRARY}
     Ducktape
-    glfw3
+    glfw
     ${OPENGL_gl_LIBRARY}
     ${OPENGL_glu_LIBRARY}
     ${GLFW_LIBRARIES}
     glad
-    assimp-5
+    assimp
+    imgui
+)
+if (UNIX)
+	set (Ducktape_LIBRARY ${Ducktape_LIBRARY}
+	    dl
+	    X11
+	)
+endif()
+set (Ducktape_LIBRARY
+    ${Ducktape_LIBRARY}
     imgui
 )
