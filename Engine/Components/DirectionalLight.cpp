@@ -67,6 +67,11 @@ namespace DT
         shader->SetBool(propertyString + "enabled", true);
     }
 
+    void DirectionalLight::SceneView(bool selected)
+    {
+        Tick();
+    }
+
     void DirectionalLight::System(Scene *scene)
     {
         scene->Call<DirectionalLight>();

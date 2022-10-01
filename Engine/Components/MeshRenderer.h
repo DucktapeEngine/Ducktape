@@ -41,6 +41,7 @@ namespace DT
         void Init();
         void Tick();
         void Inspector();
+        void SceneView(bool selected);
         static void System(Scene *scene);
     };
 }

@@ -43,6 +43,7 @@ namespace DT
         void Init();
         void Tick();
         void Inspector();
+        void SceneView(bool selected);
         void Destroy();
         static void System(Scene *scene);
     };

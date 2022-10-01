@@ -67,6 +67,11 @@ namespace DT
         }
     }
 
+    void PointLight::SceneView(bool selected)
+    {
+        Tick();
+    }
+
     void PointLight::Destroy()
     {
         engine->renderer.UnoccupyPointLightSpot(lightSpot);
