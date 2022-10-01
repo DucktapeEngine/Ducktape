@@ -16,4 +16,4 @@ target_include_directories(imgui PUBLIC "${PROJECT_SOURCE_DIR}/Extern/imgui")
 target_include_directories(imgui PUBLIC "${PROJECT_SOURCE_DIR}/Extern/glfw/include/")
 
 target_link_directories(imgui PUBLIC "${PROJECT_SOURCE_DIR}/Build/Extern/glfw/src")
-target_link_libraries(imgui PUBLIC glfw3)
+target_link_libraries(imgui PUBLIC glfw)
