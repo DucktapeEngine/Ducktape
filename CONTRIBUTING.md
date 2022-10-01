@@ -15,6 +15,11 @@ Then, clone the repository using:
 git clone https://github.com/<username>/Ducktape.git
 ```
 
+### Install dependencies (Linux)
+```sh
+sudo apt install libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev
+```
+
 ### Compile Ducktape
 Execute the build script (`Build.bat` if you're on Windows, `Build.sh` if you're on Linux):
 ```
