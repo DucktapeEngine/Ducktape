@@ -26,8 +26,9 @@ namespace DT
 {
     void Tag::Inspector()
     {
-        if (ImGui::CollapsingHeader("Tag"))
-            ImGui::InputText("name##Tag", &name);
+        SCOMPONENT("Tag");
+
+        SPROPERTY("name", &name);
     }
 
     void Tag::System(Scene *scene)

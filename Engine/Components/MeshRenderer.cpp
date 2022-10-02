@@ -46,11 +46,10 @@ namespace DT
 
     void MeshRenderer::Inspector()
     {
-        if (ImGui::CollapsingHeader("Mesh Renderer"))
-        {
-            ImGui::InputFloat("shininess##MR", &material.shininess);
-            ImGui::ColorPicker3("color##MR", &material.color.x);
-        }
+        SCOMPONENT("MeshRenderer");
+
+        SPROPERTY("shininess", &material.shininess);
+        SPROPERTY("color", &material.color);
     }
 
     void MeshRenderer::SceneView(bool selected)

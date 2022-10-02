@@ -53,7 +53,7 @@ namespace DT
         window.PollEvents();
         window.Clear({0.2f, 0.3f, 0.3f, 1.0f});
 
-        renderer.Render(camera, window, config);
+        renderer.Render(window, config);
 
         if (loopManager.sceneTick)
             activeScene->CallLoop(LoopManager::TickLoop);

@@ -33,7 +33,6 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Shader.h>
 #include <Renderer/Texture.h>
 #include <Core/Configuration.h>
-#include <Renderer/Camera.h>
 #include <Core/Window.h>
 #include <Core/Debug.h>
 #include <Renderer/Cubemap.h>
@@ -55,11 +54,18 @@ namespace DT
         Shader skyboxShader = Shader("../Resources/shaders/skybox.vert", "../Resources/shaders/skybox.frag");
         glm::vec2 customViewportSize;
 
+        glm::mat4 *cameraView;
+        glm::mat4 *cameraProjection;
+        glm::vec3 *cameraPosition;
+        glm::quat *cameraRotation;
+        bool *isOrtho;
+        float *fov;
+
         std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
         std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};
 
         Renderer(Window &window, Configuration &config);
-        void Render(Camera &camera, Window &window, Configuration &config);
+        void Render(Window &window, Configuration &config);
         ~Renderer();
 
         void LoadSkybox(std::array<std::string, 6> paths);

@@ -39,15 +39,16 @@ public:
 
     void Tick()
     {
-        // Move
-        if (engine->input.GetKey(KEY_W))
-            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Forward();
-        if (engine->input.GetKey(KEY_S))
-            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Forward();
-        if (engine->input.GetKey(KEY_A))
-            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Right();
-        if (engine->input.GetKey(KEY_D))
-            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Right();
+       const float speed = 2.5f, sensitivity = 25.f;
+
+        if (engine->input.GetKey(KEY_UP))
+            engine->activeScene->mainCamera->transform->position += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
+        if (engine->input.GetKey(KEY_DOWN))
+            engine->activeScene->mainCamera->transform->position -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
+        if (engine->input.GetKey(KEY_LEFT))
+            engine->activeScene->mainCamera->transform->position += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
+        if (engine->input.GetKey(KEY_RIGHT))
+            engine->activeScene->mainCamera->transform->position -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
 
         // Look
         yaw += -engine->input.mouseDelta.x * sensitivity * engine->time.deltaTime;
@@ -58,7 +59,7 @@ public:
         if (pitch < -89.0f)
             pitch = -89.0f;
 
-        engine->camera.transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+        engine->activeScene->mainCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
     }
 
     void Inspector()

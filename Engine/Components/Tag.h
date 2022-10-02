@@ -26,6 +26,8 @@ aryanbaburajan2007@gmail.com
 
 #include <Components/Component.h>
 #include <Core/Scene.h>
+#include <Core/Engine.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {

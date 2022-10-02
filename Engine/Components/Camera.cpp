@@ -1,4 +1,4 @@
-﻿/*
+/*
 Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
 Copyright (C) 2022 Aryan Baburajan
 
@@ -20,34 +20,34 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#define DEG2RAD 0.0174533f
-
-// Ducktape includes
-#include <Components/Component.h>
-#include <Components/Tag.h>
-#include <Components/Transform.h>
-#include <Components/MeshRenderer.h>
-#include <Components/DirectionalLight.h>
-#include <Components/PointLight.h>
 #include <Components/Camera.h>
-#include <Core/Configuration.h>
-#include <Core/Debug.h>
-#include <Core/Engine.h>
-#include <Core/Entity.h>
-#include <Core/Macro.h>
-#include <Core/Scene.h>
-#include <Core/Time.h>
-#include <Core/Serialization.h>
-#include <Core/Window.h>
-#include <Core/LoopManager.h>
-#include <Input/Input.h>
-#include <Input/Key.h>
-#include <Renderer/Renderer.h>
-#include <Renderer/Shader.h>
-#include <Renderer/Texture.h>
-#include <Renderer/Vertex.h>
-#include <Renderer/Mesh.h>
-#include <Renderer/Cubemap.h>
-#include <Renderer/ModelLoader.h>
+
+namespace DT
+{
+    void Camera::Init()
+    {
+        engine->activeScene->mainCamera = this;
+
+        transform = &entity.Get<Transform>();
+
+        engine->renderer.cameraView = &view;
+        engine->renderer.cameraProjection = &projection;
+        engine->renderer.cameraPosition = &transform->position;
+        engine->renderer.cameraRotation = &transform->rotation;
+        engine->renderer.isOrtho = &isOrtho;
+        engine->renderer.fov = &fov;
+    }
+
+    void Camera::Inspector()
+    {
+        SCOMPONENT("Camera");
+
+        SPROPERTY("orthographic", &isOrtho);
+        SPROPERTY("fov", &fov);
+    }
+
+    void Camera::System(Scene *scene)
+    {
+        scene->Call<Camera>();
+    }
+}

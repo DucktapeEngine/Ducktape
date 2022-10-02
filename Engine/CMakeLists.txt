@@ -58,6 +58,7 @@ target_include_directories(Ducktape PUBLIC
     ${PROJECT_SOURCE_DIR}/Build/Extern/assimp/include;
     ${PROJECT_SOURCE_DIR}/Extern/imgui/backends/;
     ${PROJECT_SOURCE_DIR}/Extern/imgui/;
+    ${PROJECT_SOURCE_DIR}/Extern/json/include/;
 )
 
 target_link_directories(Ducktape PUBLIC

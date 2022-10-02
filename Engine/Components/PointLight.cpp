@@ -59,12 +59,10 @@ namespace DT
 
     void PointLight::Inspector()
     {
-        if (ImGui::CollapsingHeader("Point Light"))
-        {
-            ImGui::Text(std::to_string(lightSpot).c_str());
-            ImGui::InputFloat("intensity##PL", &intensity);
-            ImGui::ColorPicker3("color##PL", &color.x);
-        }
+        SCOMPONENT("PointLight");
+        
+        SPROPERTY("intensity", &intensity);
+        SPROPERTY("color", &color);
     }
 
     void PointLight::SceneView(bool selected)

@@ -157,27 +157,27 @@ namespace DT
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     }
 
-    void Renderer::Render(Camera &camera, Window &window, Configuration &config)
+    void Renderer::Render(Window &window, Configuration &config)
     {
         // Projection and View
-        camera.view = glm::lookAt(camera.transform.position, camera.transform.position + camera.transform.Forward(), glm::vec3(0.0f, 1.0f, 0.0f));
+        *cameraView = glm::lookAt(*cameraPosition, *cameraPosition + *cameraRotation * glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        if (camera.isOrtho)
-            camera.projection = glm::ortho(0.f, window.GetWindowSize().x, 0.f, window.GetWindowSize().y, 0.1f, 100.0f);
+        if (*isOrtho)
+            *cameraProjection = glm::ortho(0.f, window.GetWindowSize().x, 0.f, window.GetWindowSize().y, 0.1f, 100.0f);
         else
-            camera.projection = glm::perspective(glm::radians(camera.fov), window.GetWindowSize().x / window.GetWindowSize().y, 0.1f, 100.0f);
+            *cameraProjection = glm::perspective(glm::radians(*fov), window.GetWindowSize().x / window.GetWindowSize().y, 0.1f, 100.0f);
 
         defaultShader.Use();
-        defaultShader.SetMat4("projection", camera.projection);
-        defaultShader.SetMat4("view", camera.view);
-        defaultShader.SetVec3("viewPos", camera.transform.position);
+        defaultShader.SetMat4("projection", *cameraProjection);
+        defaultShader.SetMat4("view", *cameraView);
+        defaultShader.SetVec3("viewPos", *cameraPosition);
 
         // Draw skybox
         glDepthMask(GL_FALSE);
 
         skyboxShader.Use();
-        skyboxShader.SetMat4("projection", camera.projection);
-        skyboxShader.SetMat4("view", glm::mat4(glm::mat3(camera.view)));
+        skyboxShader.SetMat4("projection", *cameraProjection);
+        skyboxShader.SetMat4("view", glm::mat4(glm::mat3(*cameraView)));
 
         glBindVertexArray(skyboxVAO);
         glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxCubemap.id);

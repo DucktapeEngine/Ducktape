@@ -27,6 +27,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Engine.h>
 #include <Core/Entity.h>
 #include <Renderer/Material.h>
+#include <Components/Transform.h>
 
 namespace DT
 {
