@@ -13,9 +13,10 @@ set(OpenGL_GL_PREFERENCE LEGACY)
 if(WIN32)
     add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/assimp")
     add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/glfw")
-    add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/glad")
-    add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/imgui")
 endif(WIN32)
+
+add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/glad")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/imgui")
 
 set(BUILD_SHARED_LIBS OFF)
 
