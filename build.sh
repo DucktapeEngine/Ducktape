@@ -1,10 +1,6 @@
 #!/bin/bash
 
-DEPS="libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev"
-
 echo Setting up Ducktape for compiling...
-echo -e "Installing dependencies... \n$DEPS"
-sudo apt install $DEPS
 
 echo Choose your generator:
 echo 1\) Borland Makefiles
