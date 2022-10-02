@@ -23,26 +23,24 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Components/Component.h>
-#include <Renderer/Mesh.h>
 #include <Core/Engine.h>
-#include <Core/Entity.h>
-#include <Renderer/Material.h>
 #include <Components/Transform.h>
 
 namespace DT
 {
-    class MeshRenderer : public Component
+    class Camera : public Component
     {
     public:
-        Mesh mesh;
-        Shader *shader = nullptr;
-        Transform *transform;
-        Material material;
+        glm::mat4 view;
+        glm::mat4 projection;
 
+        bool isOrtho = false;
+        float fov = 45.0f;
+
+        Transform *transform;
+        
         void Init();
-        void Tick();
         void Inspector();
-        void SceneView(bool selected);
         static void System(Scene *scene);
     };
 }

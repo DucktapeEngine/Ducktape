@@ -23,7 +23,6 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <imgui.h>
-#include <ImGuizmo.h>
 
 #include <Renderer/Renderer.h>
 #include <Renderer/ModelLoader.h>
@@ -33,6 +32,8 @@ aryanbaburajan2007@gmail.com
 #include <Core/Engine.h>
 #include <Components/Tag.h>
 #include <Core/Debug.h>
+#include <Components/Transform.h>
+#include <Components/Camera.h>
 
 #define DEG2RAD 0.0174533f
 
@@ -42,10 +43,6 @@ namespace DT
     {
         void Init(Engine *engine);
 
-        inline float snap;
-        inline bool useSnap = false;
-        inline ImGuizmo::OPERATION currentGizmoOperation(ImGuizmo::ROTATE);
-        inline ImGuizmo::MODE currentGizmoMode(ImGuizmo::WORLD);
         void ToolBar(Engine *engine, const ImVec2 &windowPos, const ImVec2 &windowSize);
 
         void SceneView(Engine *engine);

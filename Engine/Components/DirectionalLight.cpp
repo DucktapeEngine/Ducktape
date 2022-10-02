@@ -54,11 +54,10 @@ namespace DT
 
     void DirectionalLight::Inspector()
     {
-        if (ImGui::CollapsingHeader("Directional Light"))
-        {
-            ImGui::InputFloat("intensity##DL", &intensity);
-            ImGui::ColorPicker3("color##DL", &color.x);
-        }
+        SCOMPONENT("DirectionalLight");
+        
+        SPROPERTY("intensity", &intensity);
+        SPROPERTY("color", &color);
     }
 
     void DirectionalLight::Destroy()

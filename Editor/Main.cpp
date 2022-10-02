@@ -53,6 +53,7 @@ int main()
         Entity camera = mainScene.CreateEntity();
         camera.Assign<Tag>().name = "Camera";
         camera.Assign<Transform>();
+        camera.Assign<Camera>();
         camera.Assign<DirectionalLight>();
 
         Entity model = mainScene.CreateEntity();

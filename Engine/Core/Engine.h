@@ -35,6 +35,7 @@ aryanbaburajan2007@gmail.com
 #include <Input/Input.h>
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -48,8 +49,8 @@ namespace DT
         Time time;
         LoopManager loopManager;
         Debug debug;
-        Camera camera;
         Scene *activeScene;
+        Serialization serializer;
 
         static inline Engine *activeContext = nullptr;
 

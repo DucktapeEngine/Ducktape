@@ -45,6 +45,7 @@ set (Ducktape_INCLUDE_DIR
     ${Ducktape_ROOT_DIR}/Build/Extern/assimp/include;
     ${Ducktape_ROOT_DIR}/Extern/imgui/backends/;
     ${Ducktape_ROOT_DIR}/Extern/imgui/;
+    ${Ducktape_ROOT_DIR}/Extern/json/include/;
 )
 
 set (Ducktape_LIBRARY_DIR 

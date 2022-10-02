@@ -42,6 +42,7 @@ namespace DT
     class Scene;
     class Engine;
     class Component;
+    class Camera;
 
     typedef void (*System)(Scene *);
     typedef void (*CallFunc)(Component *);
@@ -52,6 +53,8 @@ namespace DT
         entt::registry sceneRegistry;
         std::unordered_set<System> systems;
         Engine *engine;
+        Camera *mainCamera;
+
 #ifdef _WIN32
         HMODULE gameModule;
 #endif

@@ -32,46 +32,6 @@ namespace DT
     {
         ImGui::Begin("Tool Bar");
 
-        if (engine->input.GetKeyPressed(KEY_T))
-            currentGizmoOperation = ImGuizmo::TRANSLATE;
-        if (engine->input.GetKeyPressed(KEY_R))
-            currentGizmoOperation = ImGuizmo::ROTATE;
-        if (engine->input.GetKeyPressed(KEY_S))
-            currentGizmoOperation = ImGuizmo::SCALE;
-        if (ImGui::RadioButton("translate", currentGizmoOperation == ImGuizmo::TRANSLATE))
-            currentGizmoOperation = ImGuizmo::TRANSLATE;
-        ImGui::SameLine();
-        if (ImGui::RadioButton("rotate", currentGizmoOperation == ImGuizmo::ROTATE))
-            currentGizmoOperation = ImGuizmo::ROTATE;
-        ImGui::SameLine();
-        if (ImGui::RadioButton("scale", currentGizmoOperation == ImGuizmo::SCALE))
-            currentGizmoOperation = ImGuizmo::SCALE;
-
-        if (currentGizmoOperation != ImGuizmo::SCALE)
-        {
-            if (ImGui::RadioButton("local", currentGizmoMode == ImGuizmo::LOCAL))
-                currentGizmoMode = ImGuizmo::LOCAL;
-            ImGui::SameLine();
-            if (ImGui::RadioButton("world", currentGizmoMode == ImGuizmo::WORLD))
-                currentGizmoMode = ImGuizmo::WORLD;
-        }
-        
-        ImGui::Checkbox("snap", &useSnap);
-        ImGui::SameLine();
-
-        switch (currentGizmoOperation)
-        {
-        case ImGuizmo::TRANSLATE:
-            ImGui::InputFloat3("Snap", &snap);
-            break;
-        case ImGuizmo::ROTATE:
-            ImGui::InputFloat("Angle Snap", &snap);
-            break;
-        case ImGuizmo::SCALE:
-            ImGui::InputFloat("Scale Snap", &snap);
-            break;
-        }
-
         ImGui::End();
     }
 
@@ -82,13 +42,13 @@ namespace DT
         const float speed = 2.5f, sensitivity = 25.f;
 
         if (engine->input.GetKey(KEY_UP))
-            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Forward();
+            engine->activeScene->mainCamera->transform->position += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
         if (engine->input.GetKey(KEY_DOWN))
-            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Forward();
+            engine->activeScene->mainCamera->transform->position -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
         if (engine->input.GetKey(KEY_LEFT))
-            engine->camera.transform.position += speed * engine->time.deltaTime * engine->camera.transform.Right();
+            engine->activeScene->mainCamera->transform->position += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
         if (engine->input.GetKey(KEY_RIGHT))
-            engine->camera.transform.position -= speed * engine->time.deltaTime * engine->camera.transform.Right();
+            engine->activeScene->mainCamera->transform->position -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
 
         // Look
         if (engine->input.GetMouseButton(MOUSE_BUTTON_RIGHT))
@@ -102,7 +62,7 @@ namespace DT
                 pitch = -89.0f;
         }
 
-        engine->camera.transform.rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+        engine->activeScene->mainCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
         
         ImVec2 windowPos = ImGui::GetWindowPos();
         ImVec2 windowSize = ImGui::GetWindowSize();
@@ -117,16 +77,7 @@ namespace DT
         {
             Transform &transform = selectedEntity.Get<Transform>();
 
-            glm::mat4 model = transform.GetModelMatrix();
-
-            ImGuizmo::SetOrthographic(engine->camera.isOrtho);
-            ImGuizmo::SetDrawlist();
-
-            ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
-            ImGuizmo::Manipulate(glm::value_ptr(engine->camera.view), glm::value_ptr(engine->camera.projection), currentGizmoOperation, currentGizmoMode, glm::value_ptr(model), NULL, useSnap ? &snap : NULL);
-            ImGuizmo::ViewManipulate(glm::value_ptr(engine->camera.view), glm::length(engine->camera.transform.position - transform.position), ImVec2(0, 0), ImVec2(128, 128), 0x10101010);
-
-            transform.SetModelMatrix(model);
+            // Removed ImGuizmo, add custom implementation here.
         }
 
         ImGui::End();
@@ -143,6 +94,14 @@ namespace DT
     void EditorModules::Hierarchy(Engine *engine)
     {
         ImGui::Begin("Hierarchy");
+
+        if (ImGui::Button("Serialize"))
+        {
+            engine->serializer.isDump = true;
+            engine->activeScene->CallLoop(InspectorLoop);
+            engine->serializer.isDump = false;
+            std::cout << engine->serializer.dump.dump(4) << std::endl;
+        }
 
         engine->activeScene->sceneRegistry.each([&](const entt::entity entity)
                                                {
@@ -175,7 +134,7 @@ namespace DT
 
     void EditorModules::InspectorLoop(Component* component)
     {
-        if (component->entity == selectedEntity)
+        if (component->engine->serializer.isDump || component->entity == selectedEntity)
         {
             component->Inspector();
             ImGui::Separator();

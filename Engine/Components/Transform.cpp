@@ -38,7 +38,7 @@ namespace DT
         glm::vec3 skew;
         glm::vec4 perspective;
         glm::decompose(model, scale, rotation, position, skew, perspective);
-        rotation = glm::conjugate(rotation);
+        // rotation = glm::conjugate(rotation);
     }
 
     glm::vec3 Transform::Right()
@@ -58,12 +58,11 @@ namespace DT
 
     void Transform::Inspector()
     {
-        if (ImGui::CollapsingHeader("Transform"))
-        {
-            ImGui::InputFloat3("position##Trans", &position.x);
-            ImGui::InputFloat4("rotation##Trans", &rotation.x);
-            ImGui::InputFloat3("scale##Trans", &scale.x);
-        }
+        SCOMPONENT("Transform");
+
+        SPROPERTY("position", &position);
+        SPROPERTY("rotation", &rotation);
+        SPROPERTY("scale", &scale);
     }
 
     void Transform::System(Scene *scene)

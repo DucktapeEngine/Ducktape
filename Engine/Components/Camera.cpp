@@ -20,29 +20,34 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <Components/Component.h>
-#include <Renderer/Mesh.h>
-#include <Core/Engine.h>
-#include <Core/Entity.h>
-#include <Renderer/Material.h>
-#include <Components/Transform.h>
+#include <Components/Camera.h>
 
 namespace DT
 {
-    class MeshRenderer : public Component
+    void Camera::Init()
     {
-    public:
-        Mesh mesh;
-        Shader *shader = nullptr;
-        Transform *transform;
-        Material material;
+        engine->activeScene->mainCamera = this;
 
-        void Init();
-        void Tick();
-        void Inspector();
-        void SceneView(bool selected);
-        static void System(Scene *scene);
-    };
+        transform = &entity.Get<Transform>();
+
+        engine->renderer.cameraView = &view;
+        engine->renderer.cameraProjection = &projection;
+        engine->renderer.cameraPosition = &transform->position;
+        engine->renderer.cameraRotation = &transform->rotation;
+        engine->renderer.isOrtho = &isOrtho;
+        engine->renderer.fov = &fov;
+    }
+
+    void Camera::Inspector()
+    {
+        SCOMPONENT("Camera");
+
+        SPROPERTY("orthographic", &isOrtho);
+        SPROPERTY("fov", &fov);
+    }
+
+    void Camera::System(Scene *scene)
+    {
+        scene->Call<Camera>();
+    }
 }

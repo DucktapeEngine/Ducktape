@@ -9,7 +9,6 @@ add_library(imgui
     "${PROJECT_SOURCE_DIR}/Extern/imgui/backends/imgui_impl_glfw.cpp"
     "${PROJECT_SOURCE_DIR}/Extern/imgui/backends/imgui_impl_opengl3.cpp"
     "${PROJECT_SOURCE_DIR}/Extern/imgui/misc/cpp/imgui_stdlib.cpp"
-    "${PROJECT_SOURCE_DIR}/Extern/imgui/ImGuizmo.cpp"
 )
 
 target_include_directories(imgui PUBLIC "${PROJECT_SOURCE_DIR}/Extern/imgui")
