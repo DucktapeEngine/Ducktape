@@ -24,6 +24,7 @@ aryanbaburajan2007@gmail.com
 #include <Ducktape.h>
 
 #include <Core/Editor.h>
+#include <Core/EditorModules.h>
 
 using namespace DT;
 
@@ -79,7 +80,7 @@ int main()
 
             e.activeScene->CallLoop(EditorModules::SceneViewLoop);
 
-            Editor::Render(&e);
+            Editor::Render();
 
             Editor::EndFrame(e.renderer);
             e.EndFrame();

@@ -81,7 +81,7 @@ namespace DT
 
     void Input::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
-        Input *input = reinterpret_cast<Input *>(glfwGetWindowUserPointer(window));
+        Input *input = reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(window))->input;
 
         if (action == GLFW_PRESS)
             input->keysDown.insert(key);
@@ -91,7 +91,7 @@ namespace DT
 
     void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
     {
-        Input *input = reinterpret_cast<Input *>(glfwGetWindowUserPointer(window));
+        Input *input = reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(window))->input;
 
         if (action == GLFW_PRESS)
             input->mouseButtonsDown.insert(button);

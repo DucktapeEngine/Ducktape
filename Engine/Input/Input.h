@@ -28,11 +28,13 @@ aryanbaburajan2007@gmail.com
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <Core/Window.h>
 #include <Input/Key.h>
+#include <Core/UserPointer.h>
 
 namespace DT
 {
+    class Engine;
+    
     class Input
     {
     public:

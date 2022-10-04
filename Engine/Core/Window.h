@@ -33,12 +33,16 @@ aryanbaburajan2007@gmail.com
 #include <utils/stb_image.h>
 
 #include <Core/Configuration.h>
+#include <Core/UserPointer.h>
 
 namespace DT
 {
+    class Input;
+    
     class Window
     {
     public:
+        glm::vec2 viewportSize;
         GLFWwindow *window = nullptr;
 
         Window(const Configuration &config);
@@ -54,8 +58,6 @@ namespace DT
         glm::vec2 GetWindowPos();
         void SetWindowPos(const glm::vec2 &pos);
         glm::vec2 GetWindowSize();
-        void SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize);
-        void SetWindowAspectRatio(const int &numerator, const int &denominator);
         void SetWindowSize(const glm::vec2 &size);
         glm::vec2 GetWindowContentScale();
         float GetWindowOpacity();
@@ -70,7 +72,6 @@ namespace DT
         void SetVSync(const bool &vsync);
 
         static void ErrorCallback(int code, const char *description);
-        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
         static void APIENTRY GlDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char *message, const void *userParam);
     };
 }

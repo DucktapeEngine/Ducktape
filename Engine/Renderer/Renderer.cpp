@@ -57,6 +57,8 @@ namespace DT
     {
         glEnable(GL_DEPTH_TEST);
 
+        glfwSetFramebufferSizeCallback(window.window, FramebufferSizeCallback);
+
         // FBO
         glGenFramebuffers(1, &FBO);
         glBindFramebuffer(GL_FRAMEBUFFER, FBO);
@@ -211,6 +213,17 @@ namespace DT
         glDeleteFramebuffers(1, &FBO);
     }
 
+    void Renderer::SetViewport(glm::vec2 viewportsize)
+    {
+        glBindTexture(GL_TEXTURE_2D, renderTexture);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportsize.x, viewportsize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        glBindRenderbuffer(GL_RENDERBUFFER, RBO);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportsize.x, viewportsize.y);
+        glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    }
+
     void Renderer::LoadSkybox(std::array<std::string, 6> paths)
     {
         skyboxCubemap = Cubemap(paths);
@@ -252,5 +265,11 @@ namespace DT
     void Renderer::UnoccupyPointLightSpot(unsigned int spot)
     {
         occupiedPointLight[spot] = false;
+    }
+
+    void Renderer::FramebufferSizeCallback(GLFWwindow *glfwWindow, int width, int height)
+    {
+        reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(glfwWindow))->window->SetWindowSize({width, height});
+        reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(glfwWindow))->renderer->SetViewport({width, height});
     }
 }

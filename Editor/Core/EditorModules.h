@@ -34,6 +34,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Debug.h>
 #include <Components/Transform.h>
 #include <Components/Camera.h>
+#include <Core/Editor.h>
 
 #define DEG2RAD 0.0174533f
 
@@ -43,7 +44,7 @@ namespace DT
     {
         void Init(Engine *engine);
 
-        void ToolBar(Engine *engine, const ImVec2 &windowPos, const ImVec2 &windowSize);
+        void ToolBar(Engine *engine);
 
         void SceneView(Engine *engine);
         void SceneViewLoop(Component *component);

@@ -29,21 +29,41 @@ aryanbaburajan2007@gmail.com
 #include <imgui_impl_opengl3.h>
 
 #include <Renderer/Renderer.h>
-#include <Core/EditorModules.h>
 #include <Core/Window.h>
+#include <Core/Engine.h>
 
 namespace DT
 {
     namespace Editor
     {
         inline bool showDemoWindow = true;
+        inline Engine *engine;
 
         void Init(Engine *engine);
         void NewFrame();
-        void Render(Engine *engine);
+        void Render();
         void EndFrame(Renderer &renderer);
         void Terminate();
 
-        static void RenderSceneViewCallback(const ImDrawList *parentList, const ImDrawCmd *cmd);
+        void Close();
+        void SetTitle(const std::string &title);
+        void SetIcon(const std::string &path);
+        glm::vec2 GetWindowPos();
+        void SetWindowPos(const glm::vec2 &pos);
+        glm::vec2 GetWindowSize();
+        void SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize);
+        void SetWindowAspectRatio(const int &numerator, const int &denominator);
+        void SetWindowSize(const glm::vec2 &size);
+        glm::vec2 GetWindowContentScale();
+        float GetWindowOpacity();
+        void SetWindowOpacity(const float &opacity);
+        void IconifyWindow();
+        void RestoreWindow();
+        void MaximizeWindow();
+        void ShowWindow();
+        void HideWindow();
+        void FocusWindow();
+        void RequestWindowAttention();
+        void SetVSync(const bool &vsync);
     }
 }

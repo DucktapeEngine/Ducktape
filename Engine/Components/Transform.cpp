@@ -27,7 +27,7 @@ namespace DT
     glm::mat4 Transform::GetModelMatrix()
     {
         glm::mat4 trans = glm::translate(glm::mat4(1.0), position);
-        glm::mat4 rot = glm::mat4_cast(rotation);
+        glm::mat4 rot = glm::toMat4(rotation);
         glm::mat4 scl = glm::scale(glm::mat4(1.0), scale);
 
         return scl * rot * trans;
@@ -61,8 +61,22 @@ namespace DT
         SCOMPONENT("Transform");
 
         SPROPERTY("position", &position);
-        SPROPERTY("rotation", &rotation);
+
+        glm::vec3 eulerAngles = GetEulerRotation();
+        SPROPERTY("rotation", &eulerAngles);
+        SetEulerRotation(eulerAngles);
+
         SPROPERTY("scale", &scale);
+    }
+
+    glm::vec3 Transform::GetEulerRotation()
+    {
+        return glm::degrees(glm::eulerAngles(rotation));
+    }
+
+    void Transform::SetEulerRotation(glm::vec3 eulerRotation)
+    {
+        rotation = glm::radians(eulerRotation);
     }
 
     void Transform::System(Scene *scene)

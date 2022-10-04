@@ -31,7 +31,11 @@ namespace DT
                      "This is free software, and you are welcome to redistribute it\n"
                      "under certain conditions; type `show c' for details.\n";
 
-        activeContext = this;
+        userPointer.input = &input;
+        userPointer.window = &window;
+        userPointer.renderer = &renderer;
+
+        glfwSetWindowUserPointer(window.window, reinterpret_cast<void *>(&userPointer));
     }
 
     void Engine::Init(Scene &scene)

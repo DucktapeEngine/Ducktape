@@ -36,6 +36,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Window.h>
 #include <Core/Debug.h>
 #include <Renderer/Cubemap.h>
+#include <Core/UserPointer.h>
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
@@ -68,11 +69,15 @@ namespace DT
         void Render(Window &window, Configuration &config);
         ~Renderer();
 
+        void SetViewport(glm::vec2 viewportsize);
+
         void LoadSkybox(std::array<std::string, 6> paths);
 
         bool GetFreeDirectionalLightSpot(unsigned int *spot);
         void UnoccupyDirectionalLightSpot(unsigned int spot);
         bool GetFreePointLightSpot(unsigned int *spot);
         void UnoccupyPointLightSpot(unsigned int spot);
+        
+        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
     };
 }
