@@ -2,4 +2,6 @@
 build
 Build
 imgui.ini
-Docs
+Docs/*
+!Docs/doxygen-awesome*
+!Docs/header.html
