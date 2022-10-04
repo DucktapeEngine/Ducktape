@@ -36,6 +36,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
 #include <Core/Serialization.h>
+#include <Core/UserPointer.h>
 
 namespace DT
 {
@@ -51,8 +52,7 @@ namespace DT
         Debug debug;
         Scene *activeScene;
         Serialization serializer;
-
-        static inline Engine *activeContext = nullptr;
+        UserPointer userPointer;
 
         Engine(const Configuration &configuration);
 

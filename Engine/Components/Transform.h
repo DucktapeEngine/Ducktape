@@ -25,7 +25,7 @@ aryanbaburajan2007@gmail.com
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include <Core/Scene.h>
@@ -53,9 +53,9 @@ namespace DT
 
         /**
          * @brief Updates all Transform members from GLM 4x4 combined transform matrix decomposition
-         * @param mat GLM 4x4 combined transform matrix
+         * @param model GLM 4x4 combined transform matrix
          */
-        void SetModelMatrix(glm::mat4);
+        void SetModelMatrix(glm::mat4 model);
 
         /**
          * @brief Returns right vector of Transform rotated model
@@ -74,6 +74,18 @@ namespace DT
          * @return GLM 3-vector (rotated Y axis)
          */
         glm::vec3 Up();
+
+        /**
+         * @brief Returns the euler rotation of the transform
+         * @return GLM 3-vector Euler angles formed from the quaternion rotation
+         */
+        glm::vec3 GetEulerRotation();
+
+        /**
+         * @brief Sets the quaternion rotation based on euler angles
+         * @param eulerRotation GLM 3-vector Rotation to set in eulers
+         */
+        void SetEulerRotation(glm::vec3 eulerRotation);
 
         /**
          * @brief Adds value input for position, rotation and scale into ImGui interface

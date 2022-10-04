@@ -41,6 +41,9 @@ namespace DT
         
         void Init();
         void Inspector();
+
+        glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 viewSize, glm::vec2 viewOffset);
+
         static void System(Scene *scene);
     };
 }

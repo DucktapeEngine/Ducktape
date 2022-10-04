@@ -111,8 +111,8 @@ namespace DT
             glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
         }
         
+        viewportSize = config.windowSize;
         glViewport(0, 0, config.windowSize.x, config.windowSize.y);
-        glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 
         if (config.drawWireframe)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -143,11 +143,6 @@ namespace DT
     Window::~Window()
     {
         glfwTerminate();
-    }
-
-    void Window::FramebufferSizeCallback(GLFWwindow *window, int width, int height)
-    {
-        glViewport(0, 0, width, height);
     }
 
     void Window::Close()
@@ -193,24 +188,13 @@ namespace DT
 
     glm::vec2 Window::GetWindowSize()
     {
-        int width, height;
-        glfwGetWindowSize(window, &width, &height);
-        return glm::vec2(width, height);
-    }
-
-    void Window::SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize)
-    {
-        glfwSetWindowSizeLimits(window, minSize.x, minSize.y, maxSize.x, maxSize.y);
-    }
-
-    void Window::SetWindowAspectRatio(const int &numerator, const int &denominator)
-    {
-        glfwSetWindowAspectRatio(window, numerator, denominator);
+        return viewportSize;
     }
 
     void Window::SetWindowSize(const glm::vec2 &size)
     {
-        glfwSetWindowSize(window, size.x, size.y);
+        viewportSize = size;
+        glViewport(0, 0, size.x, size.y);
     }
 
     glm::vec2 Window::GetWindowContentScale()

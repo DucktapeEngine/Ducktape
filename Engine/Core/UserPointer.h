@@ -1,4 +1,4 @@
-﻿/*
+/*
 Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
 Copyright (C) 2022 Aryan Baburajan
 
@@ -22,33 +22,19 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#define DEG2RAD 0.0174533f
+#include <GLFW/glfw3.h>
 
-// Ducktape includes
-#include <Components/Component.h>
-#include <Components/Tag.h>
-#include <Components/Transform.h>
-#include <Components/MeshRenderer.h>
-#include <Components/DirectionalLight.h>
-#include <Components/PointLight.h>
-#include <Components/Camera.h>
-#include <Core/Configuration.h>
-#include <Core/Debug.h>
-#include <Core/Engine.h>
-#include <Core/Entity.h>
-#include <Core/Macro.h>
-#include <Core/Scene.h>
-#include <Core/Time.h>
-#include <Core/Serialization.h>
-#include <Core/UserPointer.h>
-#include <Core/Window.h>
-#include <Core/LoopManager.h>
-#include <Input/Input.h>
-#include <Input/Key.h>
-#include <Renderer/Renderer.h>
-#include <Renderer/Shader.h>
-#include <Renderer/Texture.h>
-#include <Renderer/Vertex.h>
-#include <Renderer/Mesh.h>
-#include <Renderer/Cubemap.h>
-#include <Renderer/ModelLoader.h>
+namespace DT
+{
+    class Input;
+    class Window;
+    class Renderer;
+    
+    class UserPointer
+    {
+    public:
+        Input *input;
+        Window *window;
+        Renderer *renderer;
+    };
+}
