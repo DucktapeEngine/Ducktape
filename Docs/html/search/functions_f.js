@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['terminate_0',['Terminate',['../class_d_t_1_1_engine.html#aa439946ecdbeed94066e783a2eb71f2c',1,'DT::Engine::Terminate()'],['../class_d_t_1_1_window.html#ad01924356f4547f229de5d8548f041cd',1,'DT::Window::Terminate()'],['../class_d_t_1_1_renderer.html#a9e6537c1a50d4f2b3278b2e951857a42',1,'DT::Renderer::Terminate()']]],
-  ['texture_1',['Texture',['../class_d_t_1_1_texture.html#aaa7290f1bf7a9c3e2ef76c11bd699c8e',1,'DT::Texture']]],
-  ['tick_2',['Tick',['../class_d_t_1_1_component.html#a74bf33eb7775915e3f707467fa65324f',1,'DT::Component::Tick()'],['../class_d_t_1_1_mesh_renderer.html#a323f8c9ecac5e7efbc7f0f5bc1a999a0',1,'DT::MeshRenderer::Tick()']]],
-  ['todebug_3',['ToDebug',['../namespace_d_t.html#a3c3acd871818f0b7d6214b714b1ddf61',1,'DT::ToDebug(const int &amp;object)'],['../namespace_d_t.html#a7e6158b08422c6583b5e1b29197ba703',1,'DT::ToDebug(const std::string &amp;object)'],['../namespace_d_t.html#abed39b06ea5266a19791f68143f129da',1,'DT::ToDebug(const char *object)'],['../namespace_d_t.html#a1bff76785ebcde15a11db87ddcb867fb',1,'DT::ToDebug(const float &amp;object)'],['../namespace_d_t.html#a6decaabd0a26c9a7209dfdd40037e591',1,'DT::ToDebug(const glm::quat &amp;object)'],['../namespace_d_t.html#a97a6359c5f6c5da35fcac6c04026e994',1,'DT::ToDebug(const bool &amp;object)'],['../namespace_d_t.html#afd25aad1f6106f6bdd66f96e11127a21',1,'DT::ToDebug(const glm::vec&lt; N, T &gt; &amp;object)'],['../namespace_d_t.html#a96400adc4e661116dfd3b130f1acd205',1,'DT::ToDebug(const glm::mat&lt; N, N, T &gt; &amp;object)']]]
-];
