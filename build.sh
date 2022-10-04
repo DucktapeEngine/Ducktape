@@ -10,9 +10,8 @@ echo 4\) NMake Makefiles
 echo 5\) NMake Makefiles JOM
 echo 6\) Unix Makefiles \(Default for Linux\)
 echo 7\) Watcom WMake
-echo -n Enter your option \(1,2,3,4,5,6,7\):
 set generator=None
-read idx
+read -p "Enter your option (1,2,3,4,5,6,7):" idx
 
 if [ "${idx}" = "" ]
 then
