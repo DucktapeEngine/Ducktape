@@ -17,20 +17,40 @@ git clone https://github.com/<username>/Ducktape.git
 
 ### Install dependencies
 #### Debian
+
+```sh
+chmod +x install-deps-debian.sh
+sudo ./install-deps-debian.sh
+```
+or
 ```sh
 sudo apt install libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libglfw3-dev libassimp-dev
 ```
 #### Arch
+
+```sh
+chmod +x install-deps-arch.sh
+sudo ./install-deps-arch.sh
+```
+or
 ```sh
 sudo pacman -S libx11 libxrandr libxinerama libxcursor libxi mesa assimp glfw-x11
 ```
 
 ### Compile Ducktape
 Execute the build script (`Build.bat` if you're on Windows, `Build.sh` if you're on Linux):
-```
+#### Windows
+```bat
 cd Ducktape
-build
+build.bat
 ```
+#### Linux
+```sh
+cd Ducktape
+chmod +x build.sh
+./build.sh
+```
+
 Select the generator for CMake
 ```
 Setting up Ducktape for compiling...
