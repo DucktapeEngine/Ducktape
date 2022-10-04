@@ -36,7 +36,7 @@
     <a href="https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=feature_request.md&title=">Request Feature</a>
 </p>
 
-> **Note: The original Ducktape Engine is going under a rewrite with a completely different goal in mind.**
+> **Note: The original Ducktape Engine is undergoing a rewrite with a completely different goal in mind.**
 
 # Ducktape
 An open source C++ 3D game Engine that focuses on being fast, and powerful.
