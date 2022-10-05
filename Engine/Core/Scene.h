@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <string>
 #include <iostream>
 #include <unordered_set>
+#include <set>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -54,6 +55,9 @@ namespace DT
         std::unordered_set<System> systems;
         Engine *engine;
         Camera *mainCamera;
+        std::string name;
+
+        bool initializedComponents = false;
 
 #ifdef _WIN32
         HMODULE gameModule;

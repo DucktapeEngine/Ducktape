@@ -30,14 +30,17 @@ aryanbaburajan2007@gmail.com
 #include <Core/Scene.h>
 #include <Core/Macro.h>
 
-#ifdef __linux__
-#include <dlfcn.h>
-#endif
-
 namespace DT
 {
+    enum RegisterAction
+    {
+        AddSystem,
+        Assign,
+        Remove
+    };
+
     class Component;
-    typedef Component *(*AssignFunc)(Entity);
+    typedef Component *(*RegisterFunc)(Entity, Scene *, bool, RegisterAction);
 
     class Entity
     {
@@ -64,27 +67,35 @@ namespace DT
             DT_ASSERT(!Has<T>(), "Entity already has component.");
 
             T &component = scene->sceneRegistry.emplace<T>(handle, std::forward<Args>(args)...);
+            
             scene->systems.insert(T::System);
             component.entity = *this;
             component.engine = scene->engine;
+
+            if (scene->initializedComponents)
+                component.Init();
+            
             return component;
         }
 
         Component *Assign(const std::string &name)
         {
 #ifdef _WIN32
-            AssignFunc assignFunc = (AssignFunc)GetProcAddress(scene->gameModule, ("Assign" + name).c_str());
+            RegisterFunc registerFunc = (RegisterFunc)GetProcAddress(scene->gameModule, ("Register" + name).c_str());
 #endif
 #ifdef __linux__
-            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Assign" + name).c_str());
+            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
 #endif
-            if (!assignFunc)
+            if (!registerFunc)
             {
-                std::cout << "Failed to get Assign" << name << "(Entity entity) function from Game Module." << std::endl;
-                return nullptr;
+                std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
             }
 
-            return (*assignFunc)(*this);
+            Component *component = (*registerFunc)(*this, scene, scene->initializedComponents, RegisterAction::Assign);
+            
+            (*registerFunc)(*this, scene, false, RegisterAction::AddSystem);
+
+            return component;
         }
 
         template <typename T, typename... Args>
@@ -111,6 +122,22 @@ namespace DT
 
             scene->sceneRegistry.get<T>(handle).Destroy();
             scene->sceneRegistry.remove<T>(handle);
+        }
+
+        void Remove(const std::string &name)
+        {
+#ifdef _WIN32
+            RegisterFunc assignFunc = (RegisterFunc)GetProcAddress(scene->gameModule, ("Register" + name).c_str());
+#endif
+#ifdef __linux__
+            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
+#endif
+            if (!assignFunc)
+            {
+                std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
+            }
+
+            (*assignFunc)(*this, scene, false, RegisterAction::Remove);
         }
 
         template <typename T>

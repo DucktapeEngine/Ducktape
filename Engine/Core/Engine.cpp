@@ -42,6 +42,8 @@ namespace DT
     {
         activeScene = &scene;
         scene.CallLoop(LoopManager::InitLoop);
+
+        scene.initializedComponents = true;
     }
 
     bool Engine::IsOpen()

@@ -42,7 +42,7 @@ namespace DT
         /**
          * @brief Adds value input for tag name into ImGui interface
          */
-        void Inspector();
+        void Inspector() override;
 
         /**
          * @brief Static function for EnTT entity management on Tag objects

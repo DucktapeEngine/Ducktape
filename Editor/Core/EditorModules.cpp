@@ -249,6 +249,133 @@ namespace DT
 
         engine->activeScene->CallLoop(InspectorLoop);
 
+        //Add Component Menu
+        static bool openAddComponentMenu = false;
+        static std::string addComponentInput;
+        static const std::array<std::string, 6> builtinComponentList = {"Camera", "DirectionalLight", "MeshRenderer", "PointLight", "Tag", "Transform"};
+
+        if (openAddComponentMenu)
+        {
+            ImGui::InputTextWithHint("##addComponentName", "Component Name", &addComponentInput);
+            ImGui::SameLine();
+            if (ImGui::Button("+"))
+            {
+                selectedEntity.Assign(addComponentInput);
+                openAddComponentMenu = false;
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel"))
+            {
+                openAddComponentMenu = false;
+            }
+
+            for (std::string component : builtinComponentList)
+            {
+                if (ImGui::Button((component + "##removeMenu").c_str(), ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
+                {
+                    if (component == "Camera")
+                    {
+                        selectedEntity.Assign<Camera>();
+                    }
+                    else if (component == "DirectionalLight")
+                    {
+                        selectedEntity.Assign<DirectionalLight>();
+                    }
+                    else if (component == "MeshRenderer")
+                    {
+                        selectedEntity.Assign<MeshRenderer>();
+                    }
+                    else if (component == "PointLight")
+                    {
+                        selectedEntity.Assign<PointLight>();
+                    }
+                    else if (component == "Tag")
+                    {
+                        selectedEntity.Assign<Tag>();
+                    }
+                    else if (component == "Transform")
+                    {
+                        selectedEntity.Assign<Transform>();
+                    }
+                    else
+                    {
+                        selectedEntity.Assign(component);
+                    }
+                    openAddComponentMenu = false;
+                }
+            }
+        }
+
+        if (!openAddComponentMenu)
+            if (selectedEntity && ImGui::Button("Assign", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
+                openAddComponentMenu = true;
+
+        if (!selectedEntity)
+            openAddComponentMenu = false;
+
+        // Remove Component menu
+        static bool openRemoveComponentMenu = false;
+        static std::string removeComponentInput;
+
+        if (openRemoveComponentMenu)
+        {
+            ImGui::InputTextWithHint("##RemoveComponentName", "Component Name", &removeComponentInput);
+            ImGui::SameLine();
+            if (ImGui::Button("x"))
+            {
+                selectedEntity.Assign(removeComponentInput);
+                openRemoveComponentMenu = false;
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel"))
+            {
+                openRemoveComponentMenu = false;
+            }
+
+            for (std::string component : builtinComponentList)
+            {
+                if (ImGui::Button((component + "##removeMenu").c_str(), ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
+                {
+                    if (component == "Camera")
+                    {
+                        selectedEntity.Remove<Camera>();
+                    }
+                    else if (component == "DirectionalLight")
+                    {
+                        selectedEntity.Remove<DirectionalLight>();
+                    }
+                    else if (component == "MeshRenderer")
+                    {
+                        selectedEntity.Remove<MeshRenderer>();
+                    }
+                    else if (component == "PointLight")
+                    {
+                        selectedEntity.Remove<PointLight>();
+                    }
+                    else if (component == "Tag")
+                    {
+                        selectedEntity.Remove<Tag>();
+                    }
+                    else if (component == "Transform")
+                    {
+                        selectedEntity.Remove<Transform>();
+                    }
+                    else
+                    {
+                        selectedEntity.Remove(component);
+                    }
+                    openRemoveComponentMenu = false;
+                }
+            }
+        }
+
+        if (!openRemoveComponentMenu)
+            if (selectedEntity && ImGui::Button("Remove", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
+                openRemoveComponentMenu = true;
+
+        if (!selectedEntity)
+            openRemoveComponentMenu = false;
+
         ImGui::End();
     }
 }

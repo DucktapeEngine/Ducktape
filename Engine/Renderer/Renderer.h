@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#define MAX_LIGHT_NO 1
+#define MAX_LIGHT_NO 25
 
 #include <array>
 

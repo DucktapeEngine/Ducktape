@@ -20,13 +20,6 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#ifdef _WIN32
-#define DT_EXPORT extern "C" __declspec(dllexport)
-#endif
-#ifdef __linux__
-#define DT_EXPORT extern "C" __attribute__((visibility("default")))
-#endif
-
 #include <Ducktape.h>
 using namespace DT;
 
@@ -37,7 +30,12 @@ public:
     float speed = 2.5f;
     float sensitivity = 25.f;
 
-    void Tick()
+    void Init() override
+    {
+        engine->debug << "Pogn";
+    }
+
+    void Tick() override
     {
        const float speed = 2.5f, sensitivity = 25.f;
 
@@ -59,29 +57,18 @@ public:
         if (pitch < -89.0f)
             pitch = -89.0f;
 
-        engine->activeScene->mainCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+        engine->activeScene->mainCamera->transform->SetEulerRotation({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
     }
 
-    void Inspector()
+    void Inspector() override
     {
-        if (ImGui::CollapsingHeader("Player Controller"))
-        {
-            ImGui::InputFloat("speed", &speed);
-            ImGui::InputFloat("sensitivity", &sensitivity);
-            
-            ImGui::InputFloat("yaw", &yaw);
-            ImGui::InputFloat("pitch", &pitch);
-        }
+        SCOMPONENT("PlayerController")
+
+        SPROPERTY("speed", &speed);
+        SPROPERTY("sensitivity", &sensitivity);
     }
 
-    template <typename... Args>
-    static void System(Scene *scene, Args &&...args)
-    {
-        scene->Call<DirectionalLight>(std::forward<Args>(args)...);
-    }
+    SYSTEM(PlayerController)
 };
 
-DT_EXPORT Component *AssignPlayerController(Entity entity)
-{
-    return &entity.Assign<PlayerController>();
-}
+REGISTER(PlayerController);

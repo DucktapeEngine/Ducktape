@@ -39,8 +39,8 @@ namespace DT
 
         Transform *transform;
         
-        void Init();
-        void Inspector();
+        void Init() override;
+        void Inspector() override;
 
         glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 viewSize, glm::vec2 viewOffset);
 
