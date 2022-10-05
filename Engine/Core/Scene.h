@@ -51,22 +51,21 @@ namespace DT
     class Scene
     {
     public:
-        entt::registry sceneRegistry;
-        std::unordered_set<System> systems;
-        Engine *engine;
-        Camera *mainCamera;
-        std::string name;
+         entt::registry sceneRegistry;           ///< @brief A registry of all the components and entities in the scene.
+        std::unordered_set<System> systems;     ///< @brief All the systems in the scene.
+        Engine *engine;                         ///< @brief A pointer to the engine.
+        Camera *mainCamera;                     ///< @brief The main camera of the scene.
 
-        bool initializedComponents = false;
+        bool initializedComponents = false;     ///< @brief If the all components are intialized or not.
 
 #ifdef _WIN32
-        HMODULE gameModule;
+        HMODULE gameModule;                     ///< @brief Windows version of game module DLL's base address.
 #endif
 #ifdef __linux__
-        void *gameModule;
+        void *gameModule;                       ///< @brief Linux version of game module DLL's base address.
 #endif
 
-        CallFunc callFunction;
+        CallFunc callFunction;                 ///< @brief The callback to run on all components controlled by the systems.
 
         Scene(Engine *holderEngine);
         ~Scene();
