@@ -22,18 +22,23 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <string>
+
 #include <imgui.h>
 
+#include <Components/Camera.h>
+#include <Components/Transform.h>
+#include <Components/Tag.h>
+#include <Components/DirectionalLight.h>
+#include <Components/MeshRenderer.h>
+#include <Components/PointLight.h>
 #include <Renderer/Renderer.h>
 #include <Renderer/ModelLoader.h>
 #include <Renderer/Mesh.h>
 #include <Input/Input.h>
 #include <Core/Time.h>
 #include <Core/Engine.h>
-#include <Components/Tag.h>
 #include <Core/Debug.h>
-#include <Components/Transform.h>
-#include <Components/Camera.h>
 #include <Core/Editor.h>
 
 #define DEG2RAD 0.0174533f

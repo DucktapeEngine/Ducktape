@@ -90,7 +90,7 @@ namespace DT
         /**
          * @brief Adds value input for position, rotation and scale into ImGui interface
          */
-        void Inspector();
+        void Inspector() override;
 
         /**
          * @brief Static function for EnTT entity management on Transform objects

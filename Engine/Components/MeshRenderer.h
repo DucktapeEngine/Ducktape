@@ -46,23 +46,23 @@ namespace DT
         /**
          * @brief Initializes entity model transform, shader and mesh buffers
          */
-        void Init();
+        void Init() override;
 
         /**
          * @brief Sets shader, transform, material properties and mesh buffers in order to draw current mesh
          */
-        void Tick();
+        void Tick() override;
 
         /**
          * @brief Adds value input for material shininess and color into ImGui interface
          */
-        void Inspector();
+        void Inspector() override;
 
         /**
          * @brief Draws current mesh for current scene
          * @param selected boolean representing if current entity is selected
          */
-        void SceneView(bool selected);
+        void SceneView(bool selected) override;
 
         /**
          * @brief Static function for EnTT entity management on MeshRenderer objects

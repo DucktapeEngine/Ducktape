@@ -31,9 +31,11 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtc/quaternion.hpp>
 #include <entt/entt.hpp>
 
+#include <Core/Entity.h>
+
 using json = nlohmann::json;
 
-#define SCOMPONENT(componentName) engine->serializer.Component(componentName, this->entity.handle);
+#define SCOMPONENT(componentName) engine->serializer.Component(componentName, this->entity);
 #define SPROPERTY(property, valuePtr) engine->serializer.Property(property, valuePtr);
 
 namespace DT
@@ -53,7 +55,7 @@ namespace DT
         int dumpComponentIdx = -1;
         bool lastComponentHeaderOpen = false;
 
-        void Component(const std::string &componentName, entt::entity entityHandle);
+        void Component(const std::string &componentName, Entity entityHandle);
 
         template <typename T>
         void Property(const std::string &label, T *value)

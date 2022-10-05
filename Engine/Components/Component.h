@@ -25,8 +25,46 @@ aryanbaburajan2007@gmail.com
 #include <imgui/imgui.h>
 #include <imgui/misc/cpp/imgui_stdlib.h>
 
+#ifdef _WIN32
+#define DT_EXPORT extern "C" __declspec(dllexport)
+#endif
+#ifdef __linux__
+#define DT_EXPORT extern "C" __attribute__((visibility("default")))
+#endif
+
 #include <Core/Window.h>
 #include <Core/Entity.h>
+
+#define REGISTER(component)\
+    DT_EXPORT Component *Register ## component(Entity entity, Scene *scene, bool init, RegisterAction action)\
+    {\
+        switch (action)\
+        {\
+        case RegisterAction::AddSystem:\
+            scene->systems.insert(component::System);\
+            break;\
+        case RegisterAction::Assign:\
+        {\
+            component & comp = entity.Assign<component>();\
+            comp.entity = entity;\
+            comp.engine = scene->engine;\
+            if (init)\
+                comp.Init();\
+            break;\
+        }\
+        case RegisterAction::Remove:\
+            entity.Remove<component>();\
+            return nullptr;\
+            break;\
+        }\
+        return nullptr;\
+    }
+
+#define SYSTEM(component) \
+    static void System(Scene *scene)\
+    {\
+        scene->Call<component>();\
+    }
 
 namespace DT
 {

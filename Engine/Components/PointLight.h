@@ -40,11 +40,11 @@ namespace DT
         float intensity = 1.f;
         glm::vec3 color = glm::vec3(1.f);
 
-        void Init();
-        void Tick();
-        void Inspector();
-        void SceneView(bool selected);
-        void Destroy();
+        void Init() override;
+        void Tick() override;
+        void Inspector() override;
+        void SceneView(bool selected) override;
+        void Destroy() override;
         static void System(Scene *scene);
     };
 }

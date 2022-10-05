@@ -24,9 +24,10 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Serialization::Component(const std::string &componentName, entt::entity entityHandle)
+    void Serialization::Component(const std::string &componentName, Entity entity)
     {
         lastComponentName = componentName;
+
         lastComponentHeaderOpen = ImGui::CollapsingHeader(componentName.c_str());
 
         if (isDump)
@@ -34,7 +35,7 @@ namespace DT
             dump["components"].push_back({});
             dumpComponentIdx++;
             dump["components"][dumpComponentIdx]["id"] = componentName;
-            dump["components"][dumpComponentIdx]["entity"] = entityHandle;
+            dump["components"][dumpComponentIdx]["entity"] = entity.handle;
         }
     }
 
