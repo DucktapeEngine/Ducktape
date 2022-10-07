@@ -109,6 +109,27 @@ namespace DT
     void EditorModules::ToolBar(Engine *engine)
     {
         ImGui::Begin("Tool Bar");
+        
+        if (engine->input.GetKeyPressed(KEY_T))
+            currentGizmoOperation = ImGuizmo::TRANSLATE;
+        if (engine->input.GetKeyPressed(KEY_R))
+            currentGizmoOperation = ImGuizmo::ROTATE;
+        if (engine->input.GetKeyPressed(KEY_S))
+            currentGizmoOperation = ImGuizmo::SCALE;
+        if (ImGui::RadioButton("translate", currentGizmoOperation == ImGuizmo::TRANSLATE))
+            currentGizmoOperation = ImGuizmo::TRANSLATE;
+        ImGui::SameLine();
+        if (ImGui::RadioButton("rotate", currentGizmoOperation == ImGuizmo::ROTATE))
+            currentGizmoOperation = ImGuizmo::ROTATE;
+        ImGui::SameLine();
+        if (ImGui::RadioButton("scale", currentGizmoOperation == ImGuizmo::SCALE))
+            currentGizmoOperation = ImGuizmo::SCALE;
+
+        if (ImGui::RadioButton("local", currentGizmoMode == ImGuizmo::LOCAL))
+            currentGizmoMode = ImGuizmo::LOCAL;
+        ImGui::SameLine();
+        if (ImGui::RadioButton("world", currentGizmoMode == ImGuizmo::WORLD))
+            currentGizmoMode = ImGuizmo::WORLD;
 
         ImGui::End();
     }
@@ -120,13 +141,13 @@ namespace DT
         const float speed = 2.5f, sensitivity = 25.f;
 
         if (engine->input.GetKey(KEY_UP))
-            engine->activeScene->mainCamera->transform->position += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
+            engine->activeScene->mainCamera->transform->translation += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
         if (engine->input.GetKey(KEY_DOWN))
-            engine->activeScene->mainCamera->transform->position -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
+            engine->activeScene->mainCamera->transform->translation -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
         if (engine->input.GetKey(KEY_LEFT))
-            engine->activeScene->mainCamera->transform->position += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
+            engine->activeScene->mainCamera->transform->translation += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
         if (engine->input.GetKey(KEY_RIGHT))
-            engine->activeScene->mainCamera->transform->position -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
+            engine->activeScene->mainCamera->transform->translation -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
 
         // Look
         if (engine->input.GetMouseButton(MOUSE_BUTTON_RIGHT))
@@ -147,7 +168,6 @@ namespace DT
         ImGui::Begin("Scene View");
 
 
-        ImVec2 windowPos = ImGui::GetWindowPos();
         // ImVec2 windowSize = ImGui::GetWindowSize();
         ImVec2 vMin = ImGui::GetWindowContentRegionMin();
         ImVec2 vMax = ImGui::GetWindowContentRegionMax();
@@ -179,7 +199,22 @@ namespace DT
         {
             Transform &transform = selectedEntity.Get<Transform>();
 
-            // Removed ImGuizmo, add custom implementation here.
+            glm::mat4 model = transform.GetModelMatrix();
+
+            ImGuizmo::SetOrthographic(engine->activeScene->mainCamera->isOrtho);
+            ImGuizmo::SetDrawlist();
+            ImGuizmo::SetRect(vMin.x, vMin.y, engine->window.GetWindowSize().x, engine->window.GetWindowSize().y);
+
+            float snap = 1.f;
+            if (currentGizmoOperation == ImGuizmo::OPERATION::ROTATE)
+                snap = 45.f;
+            
+            ImGuizmo::Manipulate(glm::value_ptr(engine->activeScene->mainCamera->view), glm::value_ptr(engine->activeScene->mainCamera->projection), currentGizmoOperation, currentGizmoMode, glm::value_ptr(model), NULL, engine->input.GetKey(KEY_LEFT_SHIFT) ? &snap : NULL);
+
+            if (ImGuizmo::IsUsing())
+            {
+                transform.SetModelMatrix(model);
+            }
         }
 
         ImGui::End();

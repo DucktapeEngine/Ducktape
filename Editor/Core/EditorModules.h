@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <string>
 
 #include <imgui.h>
+#include <ImGuizmo.h>
 
 #include <Components/Camera.h>
 #include <Components/Transform.h>
@@ -51,6 +52,8 @@ namespace DT
 
         void ToolBar(Engine *engine);
 
+        inline ImGuizmo::OPERATION currentGizmoOperation(ImGuizmo::TRANSLATE);
+        inline ImGuizmo::MODE currentGizmoMode(ImGuizmo::WORLD);
         void SceneView(Engine *engine);
         void SceneViewLoop(Component *component);
 

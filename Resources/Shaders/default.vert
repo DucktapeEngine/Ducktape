@@ -17,5 +17,5 @@ void main()
     Normal = mat3(transpose(inverse(model))) * aNormal; // OPTIMIZATION: Calculate this on CPU for inverse() is a heavy operation
     TexCoords = aTexCoords;
 
-    gl_Position = projection * view * model * vec4(FragPos, 1.0);
+    gl_Position = projection * view * vec4(FragPos, 1.0);
 }

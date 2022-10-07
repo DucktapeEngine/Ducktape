@@ -41,7 +41,7 @@ namespace DT
     class Transform : public Component
     {
     public:
-        glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);           ///< Translation vector
+        glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);           ///< Translation vector
         glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);     ///< Rotation in quaternion form
         glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);              ///< Scale vector
 

@@ -49,7 +49,7 @@ namespace DT
         if (lightSpot == NAN) return;
 
         shader->Use();
-        shader->SetVec3(propertyString + "position", transform->position);
+        shader->SetVec3(propertyString + "position", transform->translation);
     
         shader->SetFloat(propertyString + "linear", intensity);
         shader->SetVec3(propertyString + "ambient", color * intensity);
