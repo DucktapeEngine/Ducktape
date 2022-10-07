@@ -32,7 +32,7 @@ namespace DT
 
         engine->renderer.cameraView = &view;
         engine->renderer.cameraProjection = &projection;
-        engine->renderer.cameraPosition = &transform->position;
+        engine->renderer.cameraPosition = &transform->translation;
         engine->renderer.cameraRotation = &transform->rotation;
         engine->renderer.isOrtho = &isOrtho;
         engine->renderer.fov = &fov;
@@ -46,11 +46,11 @@ namespace DT
         SPROPERTY("fov", &fov);
     }
 
-    glm::vec2 Camera::WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 viewSize, glm::vec2 viewOffset)
+    glm::vec2 Camera::WorldToScreenPoint(glm::vec3 worldPoint)
     {
         glm::vec4 clipSpacePos = projection * (view * glm::vec4(worldPoint, 1.0));
         glm::vec3 ndcSpacePos = glm::vec3(clipSpacePos.x, clipSpacePos.y, clipSpacePos.z) / clipSpacePos.w;
-        glm::vec2 windowSpacePos = glm::vec2(((ndcSpacePos.x + 1.0) / 2.0) * viewSize.x + viewOffset.x, ((1.0 - ndcSpacePos.y) / 2.0) * viewSize.y + viewOffset.y);
+        glm::vec2 windowSpacePos = glm::vec2(((ndcSpacePos.x + 1.0) / 2.0) * engine->window.GetWindowSize().x, ((1.0 - ndcSpacePos.y) / 2.0) * engine->window.GetWindowSize().y);
         return windowSpacePos;
     }
 

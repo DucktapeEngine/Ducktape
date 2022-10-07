@@ -42,7 +42,7 @@ namespace DT
         void Init() override;
         void Inspector() override;
 
-        glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 viewSize, glm::vec2 viewOffset);
+        glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint);
 
         static void System(Scene *scene);
     };
