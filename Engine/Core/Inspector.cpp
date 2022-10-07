@@ -20,61 +20,38 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Serialization.h>
+#include <Core/Inspector.h>
 
 namespace DT
 {
-    void Serialization::Component(const std::string &componentName, Entity entity)
+    void Inspector::Component(const std::string &componentName, Entity entity)
     {
         lastComponentName = componentName;
-
         lastComponentHeaderOpen = ImGui::CollapsingHeader(componentName.c_str());
-
-        if (isDump)
-        {
-            dump["components"].push_back({});
-            dumpComponentIdx++;
-            dump["components"][dumpComponentIdx]["id"] = componentName;
-            dump["components"][dumpComponentIdx]["entity"] = entity.handle;
-        }
     }
 
-    json Serialize(const std::string &label, float *value)
+    void Inspect(const std::string &label, float *value)
     {
         ImGui::InputFloat(label.c_str(), value);
-        return json(*value);
     }
 
-    json Serialize(const std::string &label, glm::vec3 *value)
+    void Inspect(const std::string &label, glm::vec3 *value)
     {
         ImGui::InputFloat3(label.c_str(), &value->x);
-        json j;
-        j["x"] = value->x;
-        j["y"] = value->y;
-        j["z"] = value->z;
-        return j;
     }
 
-    json Serialize(const std::string &label, bool *value)
+    void Inspect(const std::string &label, bool *value)
     {
         ImGui::Checkbox(label.c_str(), value);
-        return json(*value);
     }
 
-    json Serialize(const std::string &label, glm::quat *value)
+    void Inspect(const std::string &label, glm::quat *value)
     {
         ImGui::InputFloat4(label.c_str(), &value->x);
-        json j;
-        j["x"] = value->x;
-        j["y"] = value->y;
-        j["z"] = value->z;
-        j["w"] = value->w;
-        return j;
     }
 
-    json Serialize(const std::string &label, std::string *value)
+    void Inspect(const std::string &label, std::string *value)
     {
         ImGui::InputText(label.c_str(), value);
-        return json(*value);
     }
 }

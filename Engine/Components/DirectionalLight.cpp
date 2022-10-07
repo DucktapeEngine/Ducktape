@@ -54,10 +54,10 @@ namespace DT
 
     void DirectionalLight::Inspector()
     {
-        SCOMPONENT("DirectionalLight");
+        COMPONENT("DirectionalLight");
         
-        SPROPERTY("intensity", &intensity);
-        SPROPERTY("color", &color);
+        PROPERTY("intensity", &intensity);
+        PROPERTY("color", &color);
     }
 
     void DirectionalLight::Destroy()

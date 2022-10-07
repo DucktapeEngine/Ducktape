@@ -234,10 +234,6 @@ namespace DT
 
         if (ImGui::Button("Serialize"))
         {
-            engine->serializer.isDump = true;
-            engine->activeScene->CallLoop(InspectorLoop);
-            engine->serializer.isDump = false;
-            std::cout << engine->serializer.dump.dump(4) << std::endl;
         }
 
         engine->activeScene->sceneRegistry.each([&](const entt::entity entity)
@@ -271,7 +267,7 @@ namespace DT
 
     void EditorModules::InspectorLoop(Component* component)
     {
-        if (component->engine->serializer.isDump || component->entity == selectedEntity)
+        if (component->entity == selectedEntity)
         {
             component->Inspector();
             ImGui::Separator();

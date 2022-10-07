@@ -35,7 +35,7 @@ aryanbaburajan2007@gmail.com
 #include <Input/Input.h>
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
-#include <Core/Serialization.h>
+#include <Core/Inspector.h>
 #include <Core/UserPointer.h>
 
 namespace DT
@@ -51,7 +51,7 @@ namespace DT
         LoopManager loopManager;
         Debug debug;
         Scene *activeScene;
-        Serialization serializer;
+        Inspector inspector;
         UserPointer userPointer;
 
         Engine(const Configuration &configuration);

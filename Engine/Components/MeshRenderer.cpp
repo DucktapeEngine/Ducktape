@@ -46,10 +46,10 @@ namespace DT
 
     void MeshRenderer::Inspector()
     {
-        SCOMPONENT("MeshRenderer");
+        COMPONENT("MeshRenderer");
 
-        SPROPERTY("shininess", &material.shininess);
-        SPROPERTY("color", &material.color);
+        PROPERTY("shininess", &material.shininess);
+        PROPERTY("color", &material.color);
     }
 
     void MeshRenderer::SceneView(bool selected)

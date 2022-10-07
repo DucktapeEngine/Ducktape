@@ -59,10 +59,10 @@ namespace DT
 
     void PointLight::Inspector()
     {
-        SCOMPONENT("PointLight");
+        COMPONENT("PointLight");
         
-        SPROPERTY("intensity", &intensity);
-        SPROPERTY("color", &color);
+        PROPERTY("intensity", &intensity);
+        PROPERTY("color", &color);
     }
 
     void PointLight::SceneView(bool selected)

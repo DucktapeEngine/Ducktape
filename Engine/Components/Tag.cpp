@@ -26,9 +26,9 @@ namespace DT
 {
     void Tag::Inspector()
     {
-        SCOMPONENT("Tag");
+        COMPONENT("Tag");
 
-        SPROPERTY("name", &name);
+        PROPERTY("name", &name);
     }
 
     void Tag::System(Scene *scene)

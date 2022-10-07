@@ -35,24 +35,21 @@ aryanbaburajan2007@gmail.com
 
 using json = nlohmann::json;
 
-#define SCOMPONENT(componentName) engine->serializer.Component(componentName, this->entity);
-#define SPROPERTY(property, valuePtr) engine->serializer.Property(property, valuePtr);
+#define COMPONENT(componentName) engine->inspector.Component(componentName, this->entity);
+#define PROPERTY(property, valuePtr) engine->inspector.Property(property, valuePtr);
 
 namespace DT
 {
-    json Serialize(const std::string &label, float *value);
-    json Serialize(const std::string &label, glm::vec3 *value);
-    json Serialize(const std::string &label, bool *value);
-    json Serialize(const std::string &label, glm::quat *value);
-    json Serialize(const std::string &label, std::string *value);
+    void Inspect(const std::string &label, float *value);
+    void Inspect(const std::string &label, glm::vec3 *value);
+    void Inspect(const std::string &label, bool *value);
+    void Inspect(const std::string &label, glm::quat *value);
+    void Inspect(const std::string &label, std::string *value);
 
-    class Serialization
+    class Inspector
     {
     public:
-        json dump;
-        bool isDump = false;
         std::string lastComponentName;
-        int dumpComponentIdx = -1;
         bool lastComponentHeaderOpen = false;
 
         void Component(const std::string &componentName, Entity entityHandle);
@@ -60,14 +57,8 @@ namespace DT
         template <typename T>
         void Property(const std::string &label, T *value)
         {
-            if (isDump)
-            {
-                dump["components"][dumpComponentIdx]["properties"][label] = Serialize(label + "##" + lastComponentName, value);
-            }
-            else if(lastComponentHeaderOpen)
-            {
-                Serialize(label + "##" + lastComponentName, value);
-            }
+            if(lastComponentHeaderOpen)
+                Inspect(label + "##" + lastComponentName, value);
         }
     };
 }
