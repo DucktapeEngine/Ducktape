@@ -1,0 +1,44 @@
+name: Builder
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build-windows:
+    name: Windows Build
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure
+        run: |
+          mkdir Build
+          cd Build
+          cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RELEASE ..
+      - name: Build
+        run: |
+          cd Build
+          make -j4
+
+  build-linux:
+    name: Linux Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev
+          version: 1.0
+      - name: Configure
+        run: |
+          mkdir Build
+          cd Build
+          cmake -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=RELEASE ..
+      - name: Build
+        run: |
+          cd Build
+          make -j4
