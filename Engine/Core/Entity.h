@@ -84,7 +84,7 @@ namespace DT
             RegisterFunc registerFunc = (RegisterFunc)GetProcAddress(scene->gameModule, ("Register" + name).c_str());
 #endif
 #ifdef __linux__
-            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
+            RegisterFunc registerFunc = (RegisterFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
 #endif
             if (!registerFunc)
             {
@@ -130,7 +130,7 @@ namespace DT
             RegisterFunc assignFunc = (RegisterFunc)GetProcAddress(scene->gameModule, ("Register" + name).c_str());
 #endif
 #ifdef __linux__
-            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
+            RegisterFunc assignFunc = (RegisterFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
 #endif
             if (!assignFunc)
             {
