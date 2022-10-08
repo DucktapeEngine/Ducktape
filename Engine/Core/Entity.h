@@ -89,6 +89,7 @@ namespace DT
             if (!registerFunc)
             {
                 std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
+                return nullptr;
             }
 
             Component *component = (*registerFunc)(*this, scene, scene->initializedComponents, RegisterAction::Assign);
@@ -135,6 +136,7 @@ namespace DT
             if (!assignFunc)
             {
                 std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
+                return;
             }
 
             (*assignFunc)(*this, scene, false, RegisterAction::Remove);
