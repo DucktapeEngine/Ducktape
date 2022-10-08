@@ -43,6 +43,8 @@ namespace DT
                     format = GL_RGB;
                 else if (nrChannels == 4)
                     format = GL_RGBA;
+                else
+                    format = GL_RGB;
 
                 glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
             }

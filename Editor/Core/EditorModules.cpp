@@ -264,7 +264,7 @@ namespace DT
     {
         ImGui::Begin("Console");
 
-        ImGui::Text(engine->debug.log.c_str());
+        ImGui::Text("%s", engine->debug.log.c_str());
 
         ImGui::End();
     }

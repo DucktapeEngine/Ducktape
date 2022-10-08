@@ -36,3 +36,8 @@ aryanbaburajan2007@gmail.com
             exit(1);                                                                                      \
         }                                                                                                 \
     } while (0)
+
+/* This macro expression gets optimized out during compilation, but will
+ * satisfy the compiler from complaining about unused variables
+ */
+#define UNUSED(expr) do { (void)(expr); } while (0)

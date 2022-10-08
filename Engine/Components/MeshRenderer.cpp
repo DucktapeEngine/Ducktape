@@ -20,6 +20,7 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Core/Macro.h>
 #include <Components/MeshRenderer.h>
 
 namespace DT
@@ -54,6 +55,7 @@ namespace DT
 
     void MeshRenderer::SceneView(bool selected)
     {
+        UNUSED(selected);
         Tick();
     }
 
