@@ -34,6 +34,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Window.h>
 #include <Core/Entity.h>
+#include <Core/Macro.h>
 
 #define REGISTER(component)\
     DT_EXPORT Component *Register ## component(Entity entity, Scene *scene, bool init, RegisterAction action)\
@@ -100,7 +101,7 @@ namespace DT
          * @brief Virtual function for handling Component in a scene view
          * @param selected boolean representing if current entity is selected
          */
-        virtual void SceneView(bool selected) {}
+        virtual void SceneView(bool selected) {UNUSED(selected);}
 
         /**
          * @brief Virtual function for Component destruction

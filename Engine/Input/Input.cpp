@@ -20,6 +20,7 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Core/Macro.h>
 #include <Input/Input.h>
 
 namespace DT
@@ -81,6 +82,8 @@ namespace DT
 
     void Input::KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
     {
+        UNUSED(scancode);
+        UNUSED(mods);
         Input *input = reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(window))->input;
 
         if (action == GLFW_PRESS)
@@ -91,6 +94,7 @@ namespace DT
 
     void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
     {
+        UNUSED(mods);
         Input *input = reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(window))->input;
 
         if (action == GLFW_PRESS)
