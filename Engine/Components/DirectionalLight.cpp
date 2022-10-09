@@ -71,8 +71,8 @@ namespace DT
         Tick();
     }
 
-    void DirectionalLight::System(Scene *scene)
+    void Serialize(Serializer &serializer, DirectionalLight &object)
     {
-        scene->Call<DirectionalLight>();
+        serializer & object.intensity & object.color;
     }
 }

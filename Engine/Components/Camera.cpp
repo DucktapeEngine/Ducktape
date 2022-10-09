@@ -54,8 +54,8 @@ namespace DT
         return windowSpacePos;
     }
 
-    void Camera::System(Scene *scene)
+    void Serialize(Serializer &serializer, Camera &object)
     {
-        scene->Call<Camera>();
+        serializer & object.isOrtho & object.fov;
     }
 }

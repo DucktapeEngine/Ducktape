@@ -37,6 +37,8 @@ aryanbaburajan2007@gmail.com
 #include <entt/entt.hpp>
 #include <imgui/imgui.h>
 
+#include <Core/Serializer.h>
+
 namespace DT
 {
     class Entity;

@@ -68,7 +68,12 @@ public:
         PROPERTY("sensitivity", &sensitivity);
     }
 
-    SYSTEM(PlayerController)
+    HANDLER(PlayerController)
 };
+
+void Serialize(Serializer &serializer, PlayerController &object)
+{
+    serializer & object.speed & object.sensitivity;
+}
 
 REGISTER(PlayerController);

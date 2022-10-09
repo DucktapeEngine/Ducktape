@@ -41,6 +41,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Engine.h>
 #include <Core/Debug.h>
 #include <Core/Editor.h>
+#include <Core/SceneManager.h>
 
 #define DEG2RAD 0.0174533f
 

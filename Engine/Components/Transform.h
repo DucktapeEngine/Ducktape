@@ -91,10 +91,8 @@ namespace DT
          */
         void Inspector() override;
 
-        /**
-         * @brief Static function for EnTT entity management on Transform objects
-         * @param scene Scene object from which call entity management
-         */
-        static void System(Scene *scene);
+        HANDLER(Transform);
     };
+
+    void Serialize(Serializer &serializer, Transform &object);
 }

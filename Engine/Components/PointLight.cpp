@@ -76,8 +76,8 @@ namespace DT
         shader->SetBool(propertyString + "enabled", false);
     }
 
-    void PointLight::System(Scene *scene)
+    void Serialize(Serializer &serializer, PointLight &object)
     {
-        scene->Call<PointLight>();
+        serializer & object.intensity & object.color;
     }
 }

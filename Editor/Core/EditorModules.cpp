@@ -232,8 +232,9 @@ namespace DT
     {
         ImGui::Begin("Hierarchy");
 
-        if (ImGui::Button("Serialize"))
+        if (ImGui::Button("Save", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
         {
+            SceneManager::Save(engine->activeScene, "../Resources/Scenes/scene.json");
         }
 
         engine->activeScene->sceneRegistry.each([&](const entt::entity entity)

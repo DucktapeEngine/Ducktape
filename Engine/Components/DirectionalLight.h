@@ -45,6 +45,9 @@ namespace DT
         void Inspector() override;
         void SceneView(bool selected) override;
         void Destroy() override;
-        static void System(Scene *scene);
+
+        HANDLER(DirectionalLight);
     };
+
+    void Serialize(Serializer &serializer, DirectionalLight &object);
 }

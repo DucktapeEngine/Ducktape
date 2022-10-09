@@ -57,8 +57,8 @@ namespace DT
         Tick();
     }
 
-    void MeshRenderer::System(Scene *scene)
+    void Serialize(Serializer &serializer, MeshRenderer &object)
     {
-        scene->Call<MeshRenderer>();
+        serializer & object.mesh & object.material;
     }
 }

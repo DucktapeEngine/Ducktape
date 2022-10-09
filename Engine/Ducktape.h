@@ -42,6 +42,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Inspector.h>
 #include <Core/UserPointer.h>
 #include <Core/Window.h>
+#include <Core/SceneManager.h>
 #include <Core/LoopManager.h>
 #include <Input/Input.h>
 #include <Input/Key.h>

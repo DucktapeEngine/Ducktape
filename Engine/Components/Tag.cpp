@@ -31,8 +31,8 @@ namespace DT
         PROPERTY("name", &name);
     }
 
-    void Tag::System(Scene *scene)
+    void Serialize(Serializer &serializer, Tag &object)
     {
-        scene->Call<Tag>();
+        serializer & object.name;
     }
 }

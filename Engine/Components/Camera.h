@@ -44,6 +44,8 @@ namespace DT
 
         glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint);
 
-        static void System(Scene *scene);
+        HANDLER(Camera);
     };
+
+    void Serialize(Serializer &serializer, Camera &object);
 }

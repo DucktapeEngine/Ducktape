@@ -78,8 +78,8 @@ namespace DT
         rotation = glm::radians(eulerRotation);
     }
 
-    void Transform::System(Scene *scene)
+    void Serialize(Serializer &serializer, Transform &object)
     {
-        scene->Call<Transform>();
+        serializer & object.translation & object.rotation & object.scale;
     }
 }
