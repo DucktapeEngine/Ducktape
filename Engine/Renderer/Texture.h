@@ -32,16 +32,30 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Texture class for loading and using texture or image.
+     */
     class Texture
     {
     public:
-        int width, height, nrChannels;
-        unsigned int id;
-        bool loaded = false;
+        int width;                ///< @brief Width of the image/texture.
+        int height;               ///< @brief Height of the image/texture.
+        int nrChannels;           
+        unsigned int id;          ///< @brief Unique id of the texture.
+        bool loaded = false;      ///< @brief Whether the texture is loaded or not.
         std::string type; // TODO: Switch to enums
-        std::string path;
+        std::string path;         ///< @brief Path to the image/texture file.
 
+        /**
+         * @brief Create a new Texture class
+         * @param _path path to the texture/image to be loaded
+         * @param _type type flag for the texture
+         */
         Texture(const std::string &_path, const std::string &_type);
+
+        /**
+         * @brief  deletes the texture
+         */
         void Delete();
     };
 }
