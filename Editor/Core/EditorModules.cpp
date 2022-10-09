@@ -25,7 +25,6 @@ aryanbaburajan2007@gmail.com
 namespace DT
 {
     namespace fs = std::filesystem;
-
     void Editor::Init(Engine *_engine)
     {
         engine = _engine;
@@ -99,7 +98,6 @@ namespace DT
 
         EditorModules::SceneView(engine);
         // EditorModules::ToolBar(engine); // Called from EditorModules::SceneView() itself
-        EditorModules::ResourceBrowser(engine);
         EditorModules::Hierarchy(engine);
         EditorModules::Console(engine);
         EditorModules::Inspector(engine);
@@ -107,13 +105,6 @@ namespace DT
 
     void EditorModules::Init(Engine *engine)
     {
-        // A bit unsafe to do this since path might change, but for now it just tries to go 2 level up and find resources folder
-        rootDir=fs::current_path().parent_path().parent_path() / "Resources";
-        currentDir = rootDir; 
-        // Note that icons are from https://www.icons8.com and not fully copyright free.
-        // TODO: Add self drawn icons
-        folderIconID = Texture(rootDir.string()+"/Icons/Folder.png","diffuse").id;
-        fileIconID = Texture(rootDir.string()+"/Icons/File.png","diffuse").id;
     }
 
     void EditorModules::ToolBar(Engine *engine)
