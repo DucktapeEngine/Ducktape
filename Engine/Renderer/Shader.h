@@ -34,27 +34,120 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Shader class for creating and using vertex/fragment shader.
+     */
     class Shader
     {
     public:
-        unsigned int id;
-        bool loaded = false;
+        unsigned int id;                   ///< @brief Unique id of the shader.
+        bool loaded = false;               ///< @brief Boolean variable about whether the shader has been loaded or not.
 
+        /**
+         * @brief Create a new Shader object from vertex shader and fragment shader path.
+         * @param vertexPath The path to the vertex shader file.
+         * @param fragmentPath The path to the fragment shader file.
+         */
         Shader(const std::string &vertexPath, const std::string &fragmentPath);
+
+        /**
+         * @brief Destroy the Shader object
+         */
         ~Shader();
 
+        /**
+         * @brief use the current shader
+         */
         void Use();
+
+        /**
+         * @brief set the boolean variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable
+         */
         void SetBool(const std::string &name, bool value) const;
+
+        /**
+         * @brief set the integer variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable
+         */
         void SetInt(const std::string &name, int value) const;
+
+        /**
+         * @brief set the float variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable
+         */
         void SetFloat(const std::string &name, float value) const;
+
+        /**
+         * @brief set the vec2 variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable. Should be of glm::vec2 type.
+         */
         void SetVec2(const std::string &name, const glm::vec2 &value) const;
+
+        /**
+         * @brief set the vec2 variable value in the shader
+         * @param name name of the variable
+         * @param x float value to be assigned to the x component of vec2 variable
+         * @param y float value to be assigened to the y component of vec2 variable
+         */
         void SetVec2(const std::string &name, float x, float y) const;
+
+        /**
+         * @brief set the vec3 variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable. Should be of glm::vec3 type.
+         */
         void SetVec3(const std::string &name, const glm::vec3 &value) const;
+
+        /**
+         * @brief set the vec3 variable value in the shader
+         * @param name name of the variable
+         * @param x float value to be assigned to the x component of vec3 variable.
+         * @param y float value to be assigned to the y component of vec3 variable.
+         * @param z float value to be assigned to the z component of vec3 variable.
+         */
         void SetVec3(const std::string &name, float x, float y, float z) const;
+
+        /**
+         * @brief set the vec4 variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable. Should be of glm::vec4 type.
+         */
         void SetVec4(const std::string &name, const glm::vec4 &value) const;
+
+        /**
+         * @brief set the vec4 variable value in the shader
+         * @param name name of the variable
+         * @param x float value to be assigned to the x component of vec4 variable.
+         * @param y float value to be assigned to the y component of vec4 variable.
+         * @param z float value to be assigned to the z component of vec4 variable.
+         * @param w float value to be assigned to the w component of vec4 variable.
+         */
         void SetVec4(const std::string &name, float x, float y, float z, float w);
+
+        /**
+         * @brief set the mat2 variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable. Should be of glm::mat2 type.
+         */
         void SetMat2(const std::string &name, const glm::mat2 &mat) const;
+
+        /**
+         * @brief set the mat3 variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable. Should be of glm::mat3 type.
+         */
         void SetMat3(const std::string &name, const glm::mat3 &mat) const;
+
+        /**
+         * @brief set the mat4 variable value in the shader
+         * @param name name of the variable
+         * @param value value to be assigned to the variable. Should be of glm::mat4 type.
+         */
         void SetMat4(const std::string &name, const glm::mat4 &mat) const;
 
     private:
