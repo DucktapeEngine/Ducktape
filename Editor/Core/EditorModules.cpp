@@ -346,7 +346,7 @@ namespace DT
     /// @param itemSize item's size for resource browser (controlled by slider)
     /// @param i current iteration
     /// @param selectedIndex selected item index
-    void EditorModules::DrawDirectoryItem(Engine *engine,const auto& directoryEntry,int& itemSize,int& i, int& selectedIndex)
+    void EditorModules::DrawDirectoryItem(Engine *engine,fs::directory_entry directoryEntry,int& itemSize,int& i, int& selectedIndex)
     {
         const auto& path = directoryEntry.path();
         std::string filename = path.filename().string();
@@ -373,7 +373,12 @@ namespace DT
 
             if(ImGui::Selectable("Show In Explorer"))
             {   
+#ifdef _WIN32
                 ShellExecute(NULL, NULL, currentDir.string().c_str(), NULL, NULL, SW_SHOWDEFAULT);
+#endif
+#ifdef __linux__
+                system("xdg-open " + currentDir.string().c_str());
+#endif
             }   
             ImGui::EndPopup();
         }
@@ -398,7 +403,7 @@ namespace DT
     /// @brief Checks if item is double clicked on resource browser.
     /// @param isDir pass this as if item is directory
     /// @param path item's path
-    void EditorModules::OnItemDoubleClicked(bool isDir,auto& path)
+    void EditorModules::OnItemDoubleClicked(bool isDir,fs::path path)
     {
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
@@ -415,7 +420,7 @@ namespace DT
                 // this gets default file manager
                 // xdg-mime query default inode/directory
                 // but gonna try xdg-open firt
-                system("xdg-open " + path.string());
+                system("xdg-open " + path.string().c_str());
 #endif
 		}
     }
