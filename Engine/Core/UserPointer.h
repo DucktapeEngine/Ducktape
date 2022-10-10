@@ -30,11 +30,14 @@ namespace DT
     class Window;
     class Renderer;
     
+    /**
+     * @brief Class pointing to multiple systems stored as UserPointer in GLFW
+     */
     class UserPointer
     {
     public:
-        Input *input;
-        Window *window;
-        Renderer *renderer;
+        Input *input;             ///< @brief pointer to the Input class
+        Window *window;           ///< @brief pointer to the Window class
+        Renderer *renderer;       ///< @brief pointer to the Renderer class
     };
 }
