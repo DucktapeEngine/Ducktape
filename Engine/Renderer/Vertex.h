@@ -30,12 +30,12 @@ namespace DT
 {
     struct Vertex
     {
-        glm::vec3 position;
-        glm::vec3 normal;
-        glm::vec2 texCoords;
-        glm::vec3 tangent;
-        glm::vec3 bitangent;
-        int boneIDs[MAX_BONE_INFLUENCE];
-        float weights[MAX_BONE_INFLUENCE];
+        glm::vec3 position;                  ///< @brief position vector of the vertex 
+        glm::vec3 normal;                    ///< @brief normal vector corresponding to the vertex
+        glm::vec2 texCoords;                 ///< @brief texture coordinate vector corresponding to the vertex
+        glm::vec3 tangent;                   ///< @brief tangent vector corresponding to the vertex
+        glm::vec3 bitangent;                 ///< @brief bi-tangent vector corresponding to the vertex
+        int boneIDs[MAX_BONE_INFLUENCE];     ///< @brief list of bone IDs
+        float weights[MAX_BONE_INFLUENCE];   ///< @brief list of weights
     };
 }
