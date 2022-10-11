@@ -52,7 +52,7 @@ namespace DT
         void Draw(Shader &shader);
 
         /**
-         * @brief 
+         * @brief sets up the VAOs (Vertex Array Objects) for the mesh
          */
         void Setup();
     };
