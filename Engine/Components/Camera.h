@@ -28,20 +28,36 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Camera class for managing camera.
+     * Extends Component class
+     */
     class Camera : public Component
     {
     public:
-        glm::mat4 view;
-        glm::mat4 projection;
+        glm::mat4 view;               ///< @brief View matrix.
+        glm::mat4 projection;         ///< @brief Projection matrix.
 
-        bool isOrtho = false;
-        float fov = 45.0f;
+        bool isOrtho = false;         ///< @brief Whether it is orthographic projection or not.
+        float fov = 45.0f;            ///< @brief Field of view.
 
-        Transform *transform;
+        Transform *transform;         ///< @brief pointer to Transform class.
         
+        /**
+         * @brief function for Camera initialization inside Engine.
+         */
         void Init() override;
+
+        /**
+         * @brief function for ImGui parameters input widgets.
+         */
         void Inspector() override;
 
+        /**
+         * @brief function to convert a 3D world point into 2D point after projection.
+         * @param worldPoint 3D vector for which projection has to be done.
+         * @return 2D projected vector on the screen.
+         */
         glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint);
 
         static void System(Scene *scene);

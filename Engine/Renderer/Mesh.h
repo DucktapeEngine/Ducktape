@@ -31,16 +31,29 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Class for drawing mesh. It also stores mesh information like vertices, textures coordinates, etc
+     */
     class Mesh
     {
     public:
-        std::vector<Vertex> vertices;
-        std::vector<unsigned int> indices;
-        std::vector<Texture> textures;
+        std::vector<Vertex> vertices;            ///< @brief vector of Vertex objects
+        std::vector<unsigned int> indices;       ///< @brief vector of indices of vertices vector
+        std::vector<Texture> textures;           ///< @brief vector of Texture objects
 
-        unsigned int VBO, EBO, VAO;
+        unsigned int VBO;                        ///< @brief id of vertex buffer object
+        unsigned int EBO;                        ///< @brief id of element array buffer object
+        unsigned int VAO;                        ///< @brief id of vertex array buffer object
 
+        /**
+         * @brief Draws the mesh with given shader object
+         * @param shader Shader object to use while drawing
+         */
         void Draw(Shader &shader);
+
+        /**
+         * @brief sets up the VAOs (Vertex Array Objects) for the mesh
+         */
         void Setup();
     };
 }
