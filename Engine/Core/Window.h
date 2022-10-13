@@ -42,8 +42,8 @@ namespace DT
     class Window
     {
     public:
-        glm::vec2 viewportSize;
-        GLFWwindow *window = nullptr;
+        glm::vec2 viewportSize;         ///< @brief The size of the window viewport.
+        GLFWwindow *window = nullptr;   ///< @brief The pointer to the OpenGL window.
 
         Window(const Configuration &config);
 

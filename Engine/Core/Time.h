@@ -29,10 +29,10 @@ namespace DT
     class Time
     {
     public:
-        float deltaTime;
-        float elapsedTime = 0.0f;
-        float fps;
-
+        float deltaTime;            ///< @brief Time elapsed between the current frame and the previous frame.
+        float elapsedTime = 0.0f;   ///< @brief The total elapsed time. 
+        float fps;                  ///< @brief The frames per second.
+        
         void Update();
     };
 }

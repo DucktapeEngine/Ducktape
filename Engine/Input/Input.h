@@ -38,15 +38,15 @@ namespace DT
     class Input
     {
     public:
-        glm::vec2 mousePosition = glm::vec2(0.f);
-        glm::vec2 mouseDelta = glm::vec2(0.f);
+        glm::vec2 mousePosition = glm::vec2(0.f);       ///< @brief The position of the mouse.
+        glm::vec2 mouseDelta = glm::vec2(0.f);          ///< @brief The position change of the mouse.
 
-        std::unordered_set<int> keysDown;
-        std::unordered_set<int> keysUp;
-        std::unordered_set<int> mouseButtonsUp;
-        std::unordered_set<int> mouseButtonsDown;
+        std::unordered_set<int> keysDown;               ///< @brief The keys that are being pressed.
+        std::unordered_set<int> keysUp;                 ///< @brief The keys that are released.
+        std::unordered_set<int> mouseButtonsUp;         ///< @brief The mouse buttons that are being pressed.
+        std::unordered_set<int> mouseButtonsDown;       ///< @brief The mouse buttons that are released.
 
-        GLFWwindow *window;
+        GLFWwindow *window;                             ///< @brief Pointer to the OpenGL window.
 
         bool GetKey(int key);
         bool GetKeyPressed(int key);
