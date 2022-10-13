@@ -84,11 +84,12 @@ namespace DT
             RegisterFunc registerFunc = (RegisterFunc)GetProcAddress(scene->gameModule, ("Register" + name).c_str());
 #endif
 #ifdef __linux__
-            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
+            RegisterFunc registerFunc = (RegisterFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
 #endif
             if (!registerFunc)
             {
                 std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
+                return nullptr;
             }
 
             Component *component = (*registerFunc)(*this, scene, scene->initializedComponents, RegisterAction::Assign);
@@ -130,11 +131,12 @@ namespace DT
             RegisterFunc assignFunc = (RegisterFunc)GetProcAddress(scene->gameModule, ("Register" + name).c_str());
 #endif
 #ifdef __linux__
-            AssignFunc assignFunc = (AssignFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
+            RegisterFunc assignFunc = (RegisterFunc)dlsym(scene->gameModule, ("Register" + name).c_str());
 #endif
             if (!assignFunc)
             {
                 std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
+                return;
             }
 
             (*assignFunc)(*this, scene, false, RegisterAction::Remove);

@@ -20,6 +20,7 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Core/Macro.h>
 #include <Components/PointLight.h>
 
 namespace DT
@@ -67,6 +68,7 @@ namespace DT
 
     void PointLight::SceneView(bool selected)
     {
+        UNUSED(selected);
         Tick();
     }
 

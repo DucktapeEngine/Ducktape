@@ -97,6 +97,7 @@ namespace DT
 
         EditorModules::SceneView(engine);
         // EditorModules::ToolBar(engine); // Called from EditorModules::SceneView() itself
+        EditorModules::ResourceBrowser(engine);
         EditorModules::Hierarchy(engine);
         EditorModules::Console(engine);
         EditorModules::Inspector(engine);
@@ -104,6 +105,13 @@ namespace DT
 
     void EditorModules::Init(Engine *engine)
     {
+        // A bit unsafe to do this since path might change, but for now it just tries to go 2 level up and find resources folder
+        rootDir=std::filesystem::current_path().parent_path().parent_path() / "Resources";
+        currentDir = rootDir; 
+        // Note that icons are from https://www.icons8.com and not fully copyright free.
+        // TODO: Add self drawn icons
+        folderIconID = Texture(rootDir.string()+"/Icons/Folder.png","diffuse").id;
+        fileIconID = Texture(rootDir.string()+"/Icons/File.png","diffuse").id;
     }
 
     void EditorModules::ToolBar(Engine *engine)
@@ -257,11 +265,173 @@ namespace DT
         ImGui::End();
     }
 
+    /// @brief Resource Browser's ImGui window for Ducktape.
+    /// @param engine engine reference
+    void EditorModules::ResourceBrowser(Engine *engine)
+    {
+        ImGui::Begin("Resource Browser");
+        Filter.Draw("Filter");
+        ImGui::Separator();
+        // Make resource button match ducktape color (and transparent button)
+        ImGui::PushStyleColor(ImGuiCol_Text,ImVec4(0.980f, 0.871f, 0.0490f,1.00f));
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        if (ImGui::Button("Resources"))
+			currentDir = rootDir;
+        ImGui::PopStyleColor(2);
+
+        // Get relative path between root and current
+        std::filesystem::path relativePath = std::filesystem::relative(currentDir,rootDir);
+        std::filesystem::path tempDir = rootDir;
+        std::filesystem::path::iterator it = relativePath.begin();
+        // Traverse until reach currentDir to add navigating buttons
+        while(tempDir!=currentDir)
+        {
+            ImGui::SameLine();
+            ImGui::TextUnformatted(">");
+            ImGui::SameLine();
+            tempDir /= *it;
+            // Transparent button style
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+            if(ImGui::Button(tempDir.filename().string().c_str()))
+                currentDir = tempDir;
+            ImGui::PopStyleColor();
+            ++it;
+        }
+        
+        static int itemSize=16;
+        static int selectedIndex=0;
+        int i=0;
+        
+        ImGui::PushStyleColor(ImGuiCol_FrameBg,ImVec4(0,0,0,0));
+        if(ImGui::BeginListBox("##filesListBox",ImVec2(-FLT_MIN,0)))
+        {
+            // Try to list all files when filtering
+            if(Filter.IsActive())
+            {
+                for (std::filesystem::directory_entry directoryEntry : std::filesystem::recursive_directory_iterator(rootDir))
+                {
+                    std::filesystem::path path = directoryEntry.path();
+                    const char* filename = path.filename().string().c_str();
+                    if(Filter.PassFilter(filename))
+                    {
+                        DrawDirectoryItem(engine,directoryEntry,itemSize,i,selectedIndex);
+                        i++;
+                    }
+                }
+            }
+            // List only active dir
+            else
+            {
+                for (std::filesystem::directory_entry directoryEntry : std::filesystem::directory_iterator(currentDir))
+                {
+                    DrawDirectoryItem(engine,directoryEntry,itemSize,i,selectedIndex);    
+                    i++;
+                }
+            }
+            ImGui::EndListBox();
+        }
+        ImGui::PopStyleColor();
+        ImGui::Separator();
+        ImGui::SliderInt("Item Size", &itemSize, 16, 48);    
+        ImGui::End();
+    }
+    /// @brief Draws each item for resource browser using ImGui.
+    /// @param engine engine reference (for debug purposes)
+    /// @param directoryEntry entry on file path
+    /// @param itemSize item's size for resource browser (controlled by slider)
+    /// @param i current iteration
+    /// @param selectedIndex selected item index
+    void EditorModules::DrawDirectoryItem(Engine *engine,std::filesystem::directory_entry directoryEntry,int& itemSize,int& i, int& selectedIndex)
+    {
+        std::filesystem::path path = directoryEntry.path();
+        std::string filename = path.filename().string();
+       
+
+        const bool is_selected = (selectedIndex==i);
+        const bool isDir = directoryEntry.is_directory();
+        // Get id for file type textures (this will be enhanced to identify different file types on future)
+        GLuint iconID = isDir?folderIconID:fileIconID;
+        ImGui::PushID(filename.c_str());
+		ImGui::Image((ImTextureID)(uintptr_t)iconID, { static_cast<float>(itemSize), static_cast<float>(itemSize) }, { 0, 1 }, { 1, 0 });
+        // Since same functionality used twice, grouped them onto same function, you'll see below its used again
+        OnItemDoubleClicked(isDir,path);
+        ImGui::SameLine();
+		if(ImGui::Selectable(filename.c_str(),is_selected,ImGuiSelectableFlags_AllowDoubleClick,ImVec2(0,itemSize)))
+            selectedIndex = i;
+        // TODO: Add more context menu options for item
+        if(ImGui::BeginPopupContextItem())
+        {
+            /*if(ImGui::Selectable("Copy"))
+            {
+                copiedFile = path;
+            }*/
+
+            if(ImGui::Selectable("Show In Explorer"))
+            {   
+#ifdef _WIN32
+                ShellExecute(NULL, NULL, currentDir.string().c_str(), NULL, NULL, SW_SHOWDEFAULT);
+#endif
+#ifdef __linux__
+                // this gets default file manager
+                // xdg-mime query default inode/directory
+                // but gonna try xdg-open first
+                std::string command = "xdg-open " + path.string();
+                system(command.c_str());
+#endif
+            }   
+            ImGui::EndPopup();
+        }
+        // Basically ImGui::Image and ImGui::Selectable grouped together for item double click.
+        // if theres a way to really do that with ImGui it can be implemented later.
+        OnItemDoubleClicked(isDir,path);
+
+        /*if(is_selected)
+            ImGui::SetItemDefaultFocus();*/
+        /*if(ImGui::Selectable(filename,is_selected,ImGuiSelectableFlags_AllowDoubleClick))
+        {
+            selectedIndex = i;
+            if(ImGui::IsMouseDoubleClicked(0))
+            {
+                
+            }
+            
+        }*/
+       
+        ImGui::PopID();
+    }
+    /// @brief Checks if item is double clicked on resource browser.
+    /// @param isDir pass this as if item is directory
+    /// @param path item's path
+    void EditorModules::OnItemDoubleClicked(bool isDir,std::filesystem::path path)
+    {
+        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+		{
+			if(isDir)
+            {
+                currentDir = rootDir / std::filesystem::relative(path,rootDir); 
+                Filter.Clear();
+            }
+            else 
+            {
+#ifdef _WIN32
+                ShellExecute(NULL, NULL, path.string().c_str(), NULL, NULL, SW_SHOWDEFAULT);
+#endif
+#ifdef __linux__
+                // this gets default file manager
+                // xdg-mime query default inode/directory
+                // but gonna try xdg-open first
+                std::string command = "xdg-open " + path.string();
+                system(command.c_str());
+#endif
+            }
+		}
+    }
+
     void EditorModules::Console(Engine *engine)
     {
         ImGui::Begin("Console");
 
-        ImGui::Text(engine->debug.log.c_str());
+        ImGui::Text("%s", engine->debug.log.c_str());
 
         ImGui::End();
     }

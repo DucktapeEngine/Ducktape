@@ -20,6 +20,7 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Core/Macro.h>
 #include <Components/DirectionalLight.h>
 
 namespace DT
@@ -68,6 +69,7 @@ namespace DT
 
     void DirectionalLight::SceneView(bool selected)
     {
+        UNUSED(selected);
         Tick();
     }
 

@@ -62,6 +62,17 @@ namespace DT
         inline Entity selectedEntity;
         void Hierarchy(Engine *engine);
 
+        // Will be used on next version for context
+        // inline std::filesystem::path copiedFile;
+        inline std::filesystem::path currentDir;
+        inline std::filesystem::path rootDir;
+        inline unsigned int folderIconID;
+        inline unsigned int fileIconID;
+        inline ImGuiTextFilter Filter;
+        void ResourceBrowser(Engine *engine);
+        void DrawDirectoryItem(Engine *engine,std::filesystem::directory_entry directoryEntry,int& itemSize,int& i,int& selectedIndex);
+        void OnItemDoubleClicked(bool isDir,std::filesystem::path path);
+
         void Console(Engine *engine);
 
         void Inspector(Engine *engine);
