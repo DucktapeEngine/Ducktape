@@ -64,10 +64,8 @@ namespace DT
          */
         void SceneView(bool selected) override;
 
-        /**
-         * @brief Static function for EnTT entity management on MeshRenderer objects
-         * @param scene Scene object from which call entity management
-         */
-        static void System(Scene *scene);
+        HANDLER(MeshRenderer);
     };
+
+    void Serialize(Serializer &serializer, MeshRenderer &object);
 }

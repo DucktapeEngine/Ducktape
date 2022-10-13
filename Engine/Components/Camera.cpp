@@ -40,10 +40,10 @@ namespace DT
 
     void Camera::Inspector()
     {
-        SCOMPONENT("Camera");
+        COMPONENT("Camera");
 
-        SPROPERTY("orthographic", &isOrtho);
-        SPROPERTY("fov", &fov);
+        PROPERTY("orthographic", &isOrtho);
+        PROPERTY("fov", &fov);
     }
 
     glm::vec2 Camera::WorldToScreenPoint(glm::vec3 worldPoint)
@@ -54,8 +54,8 @@ namespace DT
         return windowSpacePos;
     }
 
-    void Camera::System(Scene *scene)
+    void Serialize(Serializer &serializer, Camera &object)
     {
-        scene->Call<Camera>();
+        serializer & object.isOrtho & object.fov;
     }
 }

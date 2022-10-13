@@ -27,7 +27,6 @@ aryanbaburajan2007@gmail.com
 #include <Components/Component.h>
 #include <Core/Scene.h>
 #include <Core/Engine.h>
-#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -44,10 +43,8 @@ namespace DT
          */
         void Inspector() override;
 
-        /**
-         * @brief Static function for EnTT entity management on Tag objects
-         * @param scene Scene object from which call entity management
-         */
-        static void System(Scene *scene);
+        HANDLER(Tag);
     };
+
+    void Serialize(Serializer &serializer, Tag &object);
 }

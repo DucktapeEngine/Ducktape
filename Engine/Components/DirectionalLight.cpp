@@ -55,10 +55,10 @@ namespace DT
 
     void DirectionalLight::Inspector()
     {
-        SCOMPONENT("DirectionalLight");
+        COMPONENT("DirectionalLight");
         
-        SPROPERTY("intensity", &intensity);
-        SPROPERTY("color", &color);
+        PROPERTY("intensity", &intensity);
+        PROPERTY("color", &color);
     }
 
     void DirectionalLight::Destroy()
@@ -73,8 +73,8 @@ namespace DT
         Tick();
     }
 
-    void DirectionalLight::System(Scene *scene)
+    void Serialize(Serializer &serializer, DirectionalLight &object)
     {
-        scene->Call<DirectionalLight>();
+        serializer & object.intensity & object.color;
     }
 }

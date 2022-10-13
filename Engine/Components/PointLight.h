@@ -69,7 +69,9 @@ namespace DT
          * @brief function for point light destruction
          */
         void Destroy() override;
-
-        static void System(Scene *scene);
+        
+        HANDLER(PointLight);
     };
+
+    void Serialize(Serializer &serializer, PointLight &object);
 }

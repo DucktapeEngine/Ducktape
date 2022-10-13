@@ -47,10 +47,10 @@ namespace DT
 
     void MeshRenderer::Inspector()
     {
-        SCOMPONENT("MeshRenderer");
+        COMPONENT("MeshRenderer");
 
-        SPROPERTY("shininess", &material.shininess);
-        SPROPERTY("color", &material.color);
+        PROPERTY("shininess", &material.shininess);
+        PROPERTY("color", &material.color);
     }
 
     void MeshRenderer::SceneView(bool selected)
@@ -59,8 +59,8 @@ namespace DT
         Tick();
     }
 
-    void MeshRenderer::System(Scene *scene)
+    void Serialize(Serializer &serializer, MeshRenderer &object)
     {
-        scene->Call<MeshRenderer>();
+        serializer & object.mesh & object.material;
     }
 }

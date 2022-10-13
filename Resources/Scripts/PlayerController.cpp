@@ -62,13 +62,18 @@ public:
 
     void Inspector() override
     {
-        SCOMPONENT("PlayerController")
+        COMPONENT("PlayerController")
 
-        SPROPERTY("speed", &speed);
-        SPROPERTY("sensitivity", &sensitivity);
+        PROPERTY("speed", &speed);
+        PROPERTY("sensitivity", &sensitivity);
     }
 
-    SYSTEM(PlayerController)
+    HANDLER(PlayerController)
 };
+
+void Serialize(Serializer &serializer, PlayerController &object)
+{
+    serializer & object.speed & object.sensitivity;
+}
 
 REGISTER(PlayerController);

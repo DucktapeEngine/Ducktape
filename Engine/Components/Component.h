@@ -24,6 +24,8 @@ aryanbaburajan2007@gmail.com
 
 #include <imgui/imgui.h>
 #include <imgui/misc/cpp/imgui_stdlib.h>
+#include <json/json.hpp>
+using json = nlohmann::json;
 
 #ifdef _WIN32
 #define DT_EXPORT extern "C" __declspec(dllexport)
@@ -34,6 +36,8 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Window.h>
 #include <Core/Entity.h>
+#include <Core/Inspector.h>
+#include <Core/Serializer.h>
 #include <Core/Macro.h>
 
 #define REGISTER(component)\
@@ -61,10 +65,18 @@ aryanbaburajan2007@gmail.com
         return nullptr;\
     }
 
-#define SYSTEM(component) \
+#define HANDLER(component) \
     static void System(Scene *scene)\
     {\
         scene->Call<component>();\
+    }\
+    void Serialize(Serializer &serializer) override\
+    {\
+        serializer & (*this);\
+    }\
+    std::string GetId() override\
+    {\
+        return #component;\
     }
 
 namespace DT
@@ -112,5 +124,15 @@ namespace DT
          * @brief Virtual function for ImGui parameters input widgets
          */
         virtual void Inspector() {}
+
+        /**
+         * @brief Virtual function for handling serialization/deserialization
+         */
+        virtual void Serialize(Serializer &serializer) {}
+
+        /**
+         * @brief Virtual function for getting identifier to this component
+        */
+        virtual std::string GetId() { return "Unidentified Component"; }
     };
 }

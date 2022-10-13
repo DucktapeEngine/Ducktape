@@ -35,7 +35,7 @@ aryanbaburajan2007@gmail.com
 #include <Input/Input.h>
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
-#include <Core/Serialization.h>
+#include <Core/Inspector.h>
 #include <Core/UserPointer.h>
 
 namespace DT
@@ -51,7 +51,7 @@ namespace DT
         LoopManager loopManager;    ///< @brief The loop manager.
         Debug debug;                ///< @brief Debugger to output debug messages.
         Scene *activeScene;         ///< @brief The current scene the application is using.
-        Serialization serializer;   ///< @brief The serializer to serialize data.
+        Inspector inspector;   ///< @brief The serializer to serialize data.
         UserPointer userPointer;    ///< @brief Points to multiple systems stored as a user pointer in GLFW.
 
         Engine(const Configuration &configuration);

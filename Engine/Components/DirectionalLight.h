@@ -69,7 +69,9 @@ namespace DT
          * @brief function for directional light destruction
          */
         void Destroy() override;
-        
-        static void System(Scene *scene);
+
+        HANDLER(DirectionalLight);
     };
+
+    void Serialize(Serializer &serializer, DirectionalLight &object);
 }

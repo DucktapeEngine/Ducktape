@@ -57,15 +57,15 @@ namespace DT
 
     void Transform::Inspector()
     {
-        SCOMPONENT("Transform");
+        COMPONENT("Transform");
 
-        SPROPERTY("position", &translation);
+        PROPERTY("position", &translation);
 
         glm::vec3 eulerAngles = GetEulerRotation();
-        SPROPERTY("rotation", &eulerAngles);
+        PROPERTY("rotation", &eulerAngles);
         SetEulerRotation(eulerAngles);
 
-        SPROPERTY("scale", &scale);
+        PROPERTY("scale", &scale);
     }
 
     glm::vec3 Transform::GetEulerRotation()
@@ -78,8 +78,8 @@ namespace DT
         rotation = glm::radians(eulerRotation);
     }
 
-    void Transform::System(Scene *scene)
+    void Serialize(Serializer &serializer, Transform &object)
     {
-        scene->Call<Transform>();
+        serializer & object.translation & object.rotation & object.scale;
     }
 }

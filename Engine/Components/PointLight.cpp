@@ -60,10 +60,10 @@ namespace DT
 
     void PointLight::Inspector()
     {
-        SCOMPONENT("PointLight");
+        COMPONENT("PointLight");
         
-        SPROPERTY("intensity", &intensity);
-        SPROPERTY("color", &color);
+        PROPERTY("intensity", &intensity);
+        PROPERTY("color", &color);
     }
 
     void PointLight::SceneView(bool selected)
@@ -78,8 +78,8 @@ namespace DT
         shader->SetBool(propertyString + "enabled", false);
     }
 
-    void PointLight::System(Scene *scene)
+    void Serialize(Serializer &serializer, PointLight &object)
     {
-        scene->Call<PointLight>();
+        serializer & object.intensity & object.color;
     }
 }
