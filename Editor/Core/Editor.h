@@ -37,11 +37,11 @@ namespace DT
     namespace Editor
     {
         inline bool showDemoWindow = true;
-        inline Engine *engine;
+        inline Engine *enginePtr;
 
-        void Init(Engine *engine);
+        void Init(Engine &engine);
         void NewFrame();
-        void Render();
+        void Render(Engine &engine);
         void EndFrame(Renderer &renderer);
         void Terminate();
 

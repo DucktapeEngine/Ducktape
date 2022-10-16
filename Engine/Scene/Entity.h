@@ -20,22 +20,11 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/LoopManager.h>
+#pragma once
+
+#include <entt/entt.hpp>
 
 namespace DT
 {
-    void LoopManager::InitLoop(Component* component)
-    {
-        component->Init();
-    }
-
-    void LoopManager::TickLoop(Component* component)
-    {
-        component->Tick();
-    }
-
-    void LoopManager::DestroyLoop(Component* component)
-    {
-        component->Destroy();
-    }
+    typedef entt::entity Entity;
 }

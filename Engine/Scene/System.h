@@ -22,33 +22,37 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <array>
-#include <iostream>
+#include <Core/Platform.h>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <utils/stb_image.h>
+#define REGISTER(component)\
+    DT_EXPORT void Register ## component(Entity entity, Scene &scene, RegisterAction action)\
+    {\
+        switch (action)\
+        {\
+        case RegisterAction::Assign:\
+            scene.Assign<component>(entity);\
+            break;\
+        case RegisterAction::Remove:\
+            scene.Remove<component>(entity);\
+            break;\
+        }\
+    }
 
 namespace DT
 {
-    /**
-     * @brief Cubemap class for managing cubemap
-     */
-    class Cubemap
+    class Engine;
+    class Scene;
+    
+    const int MAX_SYSTEMS = 64;
+
+    class System
     {
     public:
-        unsigned int id;     ///< @brief Unique ID for each cubemap
-
-        /**
-         * @brief Creare a new Cubemap object.
-         * @param paths list of 6 texture/image path for the each side of cubemap
-         */
-        Cubemap(std::array<std::string, 6> paths);
-
-        /**
-         * @brief Destroys a Cubemap object.
-         */
-        ~Cubemap();
+        virtual void Init(Scene &scene, Engine &engine) {}
+        virtual void Tick(Scene &scene, Engine &engine) {}
+        virtual void SceneView(Scene &scene, Engine &engine) {}
+        virtual void Destroy(Scene &scene, Engine &engine) {}
+        virtual void Inspector(Scene &scene, Engine &engine) {}
+        virtual void Serialize(Scene &scene, Engine &engine) {}
     };
 }

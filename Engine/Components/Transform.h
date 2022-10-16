@@ -28,22 +28,21 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 
-#include <Core/Scene.h>
-#include <Components/Component.h>
+#include <Scene/Scene.h>
 #include <Core/Engine.h>
+#include <Core/Serializer.h>
 
 namespace DT
 {
     /**
-     * @brief Transform class for model transformation set (translation, rotation, scale). Extends Component class
+     * @brief Transfsorm struct for model transformation set (translation, rotation, scale).
      */
-    class Transform : public Component
+    struct Transform
     {
-    public:
         glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);           ///< Translation vector
         glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);     ///< Rotation in quaternion form
         glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);              ///< Scale vector
-
+        
         /**
          * @brief Returns the Translation->Rotation->Scale model matrix
          * @return GLM 4x4 transform matrix
@@ -85,14 +84,14 @@ namespace DT
          * @param eulerRotation GLM 3-vector Rotation to set in eulers
          */
         void SetEulerRotation(glm::vec3 eulerRotation);
-
-        /**
-         * @brief Adds value input for position, rotation and scale into ImGui interface
-         */
-        void Inspector() override;
-
-        HANDLER(Transform);
     };
 
-    void Serialize(Serializer &serializer, Transform &object);
+    class TransformSystem : System // TOFIX: Register System only if DT_EDITOR flag is on
+    {
+    public:
+        /**
+         * @brief Handles Transform struct serialization.
+         */
+        void Inspector(Scene &scene, Engine &engine) override;
+    };
 }

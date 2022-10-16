@@ -20,38 +20,22 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Inspector.h>
+#pragma once
+
+#include <fstream>
+
+#include <Scene/Scene.h>
+#include <Core/Serializer.h>
 
 namespace DT
 {
-    void Inspector::Component(const std::string &componentName, Entity entity)
+    namespace SceneManager
     {
-        lastComponentName = componentName;
-        lastComponentHeaderOpen = ImGui::CollapsingHeader(componentName.c_str());
-    }
+        // inline json data;
+        // inline int componentIdx = 0;
+        // inline Serializer serializer;
 
-    void Inspect(const std::string &label, float *value)
-    {
-        ImGui::InputFloat(label.c_str(), value);
-    }
-
-    void Inspect(const std::string &label, glm::vec3 *value)
-    {
-        ImGui::InputFloat3(label.c_str(), &value->x);
-    }
-
-    void Inspect(const std::string &label, bool *value)
-    {
-        ImGui::Checkbox(label.c_str(), value);
-    }
-
-    void Inspect(const std::string &label, glm::quat *value)
-    {
-        ImGui::InputFloat4(label.c_str(), &value->x);
-    }
-
-    void Inspect(const std::string &label, std::string *value)
-    {
-        ImGui::InputText(label.c_str(), value);
+        // void SaveLoop(Component* component);
+        // void Save(Scene *scene, const std::string &savePath);
     }
 }

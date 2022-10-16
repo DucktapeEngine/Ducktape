@@ -9,7 +9,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSengine->  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSengine.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -23,57 +23,37 @@ aryanbaburajan2007@gmail.com
 #include <Ducktape.h>
 using namespace DT;
 
-class PlayerController : public Component
+struct PlayerController
 {
-public:
     float yaw = 0.f, pitch = 0.f;
     float speed = 2.5f;
     float sensitivity = 25.f;
 
-    void Init() override
+    void Init(Entity entity, Scene &scene, Engine &engine)
     {
-        engine->debug << "Pogn";
+        engine.debug << "Pogn";
     }
 
-    void Tick() override
+    void Tick(Entity entity, Scene &scene, Engine &engine) {}
+    void SceneView(Entity entity, Scene &scene, Engine &engine) {}
+    void Destroy(Entity entity, Scene &scene, Engine &engine) {}
+
+    void Inspector(Entity entity, Scene &scene, Engine &engine)
     {
-       const float speed = 2.5f, sensitivity = 25.f;
+        if (entity != scene.selectedEntity)
+            return;
 
-        if (engine->input.GetKey(KEY_UP))
-            engine->activeScene->mainCamera->transform->translation += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
-        if (engine->input.GetKey(KEY_DOWN))
-            engine->activeScene->mainCamera->transform->translation -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
-        if (engine->input.GetKey(KEY_LEFT))
-            engine->activeScene->mainCamera->transform->translation += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
-        if (engine->input.GetKey(KEY_RIGHT))
-            engine->activeScene->mainCamera->transform->translation -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
-
-        // Look
-        yaw += -engine->input.mouseDelta.x * sensitivity * engine->time.deltaTime;
-        pitch += engine->input.mouseDelta.y * sensitivity * engine->time.deltaTime;
-        
-        if (pitch > 89.0f)
-            pitch = 89.0f;
-        if (pitch < -89.0f)
-            pitch = -89.0f;
-
-        engine->activeScene->mainCamera->transform->SetEulerRotation({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+        if (ImGui::CollapsingHeader("Player Controller"))
+        {
+            ImGui::DragFloat("speed", &speed);
+            ImGui::DragFloat("sensitivity", &sensitivity);
+        }
     }
-
-    void Inspector() override
-    {
-        COMPONENT("PlayerController")
-
-        PROPERTY("speed", &speed);
-        PROPERTY("sensitivity", &sensitivity);
-    }
-
-    HANDLER(PlayerController)
 };
 
-void Serialize(Serializer &serializer, PlayerController &object)
+DT_EXPORT void RegisterRuntime(Scene &scene)
 {
-    serializer & object.speed & object.sensitivity;
+    scene.Register<GenericSystem<PlayerController>>();
 }
 
 REGISTER(PlayerController);

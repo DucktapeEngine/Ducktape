@@ -20,25 +20,30 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Entity.h>
+#include <Scene/SceneManager.h>
 
 namespace DT
 {
-    Entity::Entity() : handle(entt::null) {}
-    Entity::Entity(entt::entity entityHandle, Scene *scene) : handle(entityHandle), scene(scene) {}
+    // void SceneManager::SaveLoop(Component* component)
+    // {
+    //     serializer.SetMode(SerializeMode::S);
+    //     component->Serialize(serializer);
 
-    Entity Scene::CreateEntity()
-    {
-        return Entity(sceneRegistry.create(), this);
-    }
+    //     data["components"][componentIdx]["id"] = component->GetId();
+    //     data["components"][componentIdx]["entity"] = component->entity.handle;
+    //     data["components"][componentIdx]["properties"] = serializer.GetData();
 
-    void Scene::DestroyEntity(Entity entity)
-    {
-        sceneRegistry.destroy(entity.handle);
-    }
+    //     componentIdx++;
+    //     serializer.ClearData();
+    // }
 
-    bool Entity::operator==(const Entity& other)
-    {
-        return handle == other.handle;
-    }
+    // void SceneManager::Save(Scene *scene, const std::string &savePath)
+    // {
+    //     std::ofstream output(savePath);
+    //     scene->CallLoop(SaveLoop);
+    //     output << data.dump();
+        
+    //     data.clear();
+    //     componentIdx = 0;
+    // }
 }

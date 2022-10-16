@@ -20,35 +20,26 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
-#include <string>
-#include <array>
-#include <iostream>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <utils/stb_image.h>
+#include <Core/Platform.h>
 
 namespace DT
 {
-    /**
-     * @brief Cubemap class for managing cubemap
-     */
-    class Cubemap
+    std::string GetLastErrorAsString()
     {
-    public:
-        unsigned int id;     ///< @brief Unique ID for each cubemap
+        DWORD errorMessageID = ::GetLastError();
+        if(errorMessageID == 0)
+        {
+            return std::string();
+        }
 
-        /**
-         * @brief Creare a new Cubemap object.
-         * @param paths list of 6 texture/image path for the each side of cubemap
-         */
-        Cubemap(std::array<std::string, 6> paths);
+        LPSTR messageBuffer = nullptr;
 
-        /**
-         * @brief Destroys a Cubemap object.
-         */
-        ~Cubemap();
-    };
+        size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
+
+        std::string message(messageBuffer, size);
+
+        LocalFree(messageBuffer);
+                
+        return message;
+    }
 }

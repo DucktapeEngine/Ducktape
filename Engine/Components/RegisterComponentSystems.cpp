@@ -20,30 +20,17 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/SceneManager.h>
+#include <Components/RegisterComponentSystems.h>
 
 namespace DT
 {
-    void SceneManager::SaveLoop(Component* component)
+    void RegisterComponentSystems(Scene &scene)
     {
-        serializer.SetMode(SerializeMode::S);
-        component->Serialize(serializer);
-
-        data["components"][componentIdx]["id"] = component->GetId();
-        data["components"][componentIdx]["entity"] = component->entity.handle;
-        data["components"][componentIdx]["properties"] = serializer.GetData();
-
-        componentIdx++;
-        serializer.ClearData();
-    }
-
-    void SceneManager::Save(Scene *scene, const std::string &savePath)
-    {
-        std::ofstream output(savePath);
-        scene->CallLoop(SaveLoop);
-        output << data.dump();
-        
-        data.clear();
-        componentIdx = 0;
+        scene.Register<CameraSystem>();
+        scene.Register<DirectionalLightSystem>();
+        scene.Register<MeshRendererSystem>();
+        scene.Register<PointLightSystem>();
+        scene.Register<TagSystem>();
+        scene.Register<TransformSystem>();
     }
 }

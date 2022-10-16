@@ -22,46 +22,47 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Components/Component.h>
 #include <Core/Engine.h>
 #include <Components/Transform.h>
+#include <Scene/System.h>
+#include <Core/Serializer.h>
 
 namespace DT
 {
     /**
-     * @brief Camera class for managing camera.
-     * Extends Component class
+     * @brief Camera struct for managing camera.
      */
-    class Camera : public Component
+    struct Camera
     {
-    public:
         glm::mat4 view;               ///< @brief View matrix.
         glm::mat4 projection;         ///< @brief Projection matrix.
 
         bool isOrtho = false;         ///< @brief Whether it is orthographic projection or not.
         float fov = 45.0f;            ///< @brief Field of view.
 
-        Transform *transform;         ///< @brief pointer to Transform class.
-        
-        /**
-         * @brief function for Camera initialization inside Engine.
-         */
-        void Init() override;
+        Transform *transform;         ///< @brief Pointer to Transform class.
 
         /**
-         * @brief function for ImGui parameters input widgets.
-         */
-        void Inspector() override;
-
-        /**
-         * @brief function to convert a 3D world point into 2D point after projection.
+         * @brief Function to convert a 3D world point into 2D point after projection.
          * @param worldPoint 3D vector for which projection has to be done.
+         * @param windowSize 2D size of game window (engine.window.GetWindowSize()).
          * @return 2D projected vector on the screen.
          */
-        glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint);
-
-        HANDLER(Camera);
+        glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize);
     };
 
-    void Serialize(Serializer &serializer, Camera &object);
+
+    class CameraSystem : System
+    {
+    public:
+        /**
+         * @brief Registers Camera in the rendering engine
+         */
+        void Init(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles Camera struct serialization.
+         */
+        void Inspector(Scene &scene, Engine &engine) override;
+    };
 }

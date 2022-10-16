@@ -20,47 +20,59 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Macro.h>
 #include <Components/MeshRenderer.h>
 
 namespace DT
 {
-    void MeshRenderer::Init()
+    void MeshRendererSystem::Init(Scene &scene, Engine &engine)
     {
-        transform = &entity.Require<Transform>();
+        for (Entity entity : scene.View<MeshRenderer>())
+        {
+            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
 
-        if (shader == nullptr)
-            shader = &engine->renderer.defaultShader;
+            mr.transform = &scene.Require<Transform>(entity);
 
-        mesh.Setup();
+            if (mr.shader == nullptr)
+                mr.shader = &engine.renderer.defaultShader;
+
+            mr.mesh.Setup();
+        }
     }
 
-    void MeshRenderer::Tick()
+    void MeshRendererSystem::Tick(Scene &scene, Engine &engine)
     {
-        shader->Use();
-        shader->SetMat4("model", transform->GetModelMatrix());
-        shader->SetVec3("material.color", material.color);
-        shader->SetFloat("material.shininess", material.shininess);
+        for (Entity entity : scene.View<MeshRenderer>())
+        {
+            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
 
-        mesh.Draw(*shader);
+            mr.shader->Use();
+            mr.shader->SetMat4("model", mr.transform->GetModelMatrix());
+            mr.shader->SetVec3("material.color", mr.material.color);
+            mr.shader->SetFloat("material.shininess", mr.material.shininess);
+
+            mr.mesh.Draw(*mr.shader);
+        }
     }
 
-    void MeshRenderer::Inspector()
+    void MeshRendererSystem::SceneView(Scene &scene, Engine &engine)
     {
-        COMPONENT("MeshRenderer");
-
-        PROPERTY("shininess", &material.shininess);
-        PROPERTY("color", &material.color);
+        Tick(scene, engine);
     }
 
-    void MeshRenderer::SceneView(bool selected)
+    void MeshRendererSystem::Inspector(Scene &scene, Engine &engine)
     {
-        UNUSED(selected);
-        Tick();
-    }
+        for (Entity entity : scene.View<MeshRenderer>())
+        {
+            if (scene.selectedEntity != entity)
+                continue;
 
-    void Serialize(Serializer &serializer, MeshRenderer &object)
-    {
-        serializer & object.mesh & object.material;
+            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
+
+            if (ImGui::CollapsingHeader("Mesh Renderer"))
+            {
+                ImGui::Mesh("mesh", &mr.mesh);
+                ImGui::Material("material", &mr.material);
+            }
+        }
     }
 }

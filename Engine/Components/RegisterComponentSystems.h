@@ -22,21 +22,16 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <fstream>
-
-#include <Core/Scene.h>
+#include <Scene/Scene.h>
+#include <Components/Camera.h>
+#include <Components/DirectionalLight.h>
+#include <Components/MeshRenderer.h>
+#include <Components/PointLight.h>
+#include <Components/Tag.h>
+#include <Components/Transform.h>
 #include <Core/Serializer.h>
-#include <Components/Component.h>
 
 namespace DT
 {
-    namespace SceneManager
-    {
-        inline json data;
-        inline int componentIdx = 0;
-        inline Serializer serializer;
-
-        void SaveLoop(Component* component);
-        void Save(Scene *scene, const std::string &savePath);
-    }
+    void RegisterComponentSystems(Scene &scene);
 }

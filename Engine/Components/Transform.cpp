@@ -55,19 +55,6 @@ namespace DT
         return rotation * glm::vec3(0.f, 1.f, 0.f);
     }
 
-    void Transform::Inspector()
-    {
-        COMPONENT("Transform");
-
-        PROPERTY("position", &translation);
-
-        glm::vec3 eulerAngles = GetEulerRotation();
-        PROPERTY("rotation", &eulerAngles);
-        SetEulerRotation(eulerAngles);
-
-        PROPERTY("scale", &scale);
-    }
-
     glm::vec3 Transform::GetEulerRotation()
     {
         return glm::degrees(glm::eulerAngles(rotation));
@@ -78,8 +65,25 @@ namespace DT
         rotation = glm::radians(eulerRotation);
     }
 
-    void Serialize(Serializer &serializer, Transform &object)
+    void TransformSystem::Inspector(Scene &scene, Engine &engine)
     {
-        serializer & object.translation & object.rotation & object.scale;
+        for (Entity entity : scene.View<Transform>())
+        {
+            if (scene.selectedEntity != entity)
+                continue;
+
+            Transform &trans = scene.Get<Transform>(entity);
+
+            if (ImGui::CollapsingHeader("Transform"))
+            {
+                ImGui::Vec3("position", &trans.translation);
+
+                glm::vec3 eulerAngles = trans.GetEulerRotation();
+                ImGui::Vec3("rotation", &eulerAngles);
+                trans.SetEulerRotation(eulerAngles);
+
+                ImGui::Vec3("scale", &trans.scale);
+            }
+        }
     }
 }

@@ -22,20 +22,19 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Components/Component.h>
 #include <Renderer/Shader.h>
 #include <Components/Transform.h>
 #include <Core/Engine.h>
+#include <Scene/System.h>
+#include <Core/Serializer.h>
 
 namespace DT
 {
     /**
-     * @brief DirectionalLight class for managing directional light.
-     * Extends Component class
+     * @brief DirectionalLight struct for managing directional light.
      */
-    class DirectionalLight : public Component
+    struct DirectionalLight
     {
-    public:
         Shader *shader = nullptr;             ///< @brief Pointer to the Shader object.
         Transform *transform;                 ///< @brief Pointer to the Transform object.
         unsigned int lightSpot;               ///< @brief used for instantiated directional light's index
@@ -43,35 +42,34 @@ namespace DT
 
         float intensity = 1.f;                ///< @brief Intensity of the directional light.
         glm::vec3 color = glm::vec3(1.f);     ///< @brief Color of the directional light.
-
-        /**
-         * @brief initiate the directional light inside the engine
-         */
-        void Init() override;
-
-        /**
-         * @brief function for directional light tick/update inside engine
-         */
-        void Tick() override;
-
-        /**
-         * @brief function for ImGui parameters input widgets
-         */
-        void Inspector() override;
-
-        /**
-         * @brief function for handling directional light in a scene view
-         * @param selected boolean representing if current entity is selected
-         */
-        void SceneView(bool selected) override;
-
-        /**
-         * @brief function for directional light destruction
-         */
-        void Destroy() override;
-
-        HANDLER(DirectionalLight);
     };
 
-    void Serialize(Serializer &serializer, DirectionalLight &object);
+    class DirectionalLightSystem : System
+    {
+    public:
+        /**
+         * @brief Registers Directional Light to rendering engine and shader on Initiation.
+         */
+        void Init(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Updates corresponding Directional Light properties in shader every frame.
+         */
+        void Tick(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles DirectionalLight struct serialization.
+         */
+        void Inspector(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles Scene View lighting.
+         */
+        void SceneView(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Unregisters Directional Light from rendering engine and shader on destruction.
+         */
+        void Destroy(Scene &scene, Engine &engine) override;
+    };
 }

@@ -499,7 +499,7 @@ NUM_PROC_THREADS       = 1
 # normally produced when WARNINGS is set to YES.
 # The default value is: NO.
 
-EXTRACT_ALL            = YES
+EXTRACT_ALL            = NO
 
 # If the EXTRACT_PRIVATE tag is set to YES, all private members of a class will
 # be included in the documentation.
@@ -1355,7 +1355,7 @@ HTML_STYLESHEET        =
 # list). For an example see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  = Docs/doxygen-awesome.css              \
+HTML_EXTRA_STYLESHEET  = Docs/doxygen-awesome.css \
                          Docs/doxygen-awesome-sidebar-only.css \
                          Docs/doxygen-awesome-sidebar-only-darkmode-toggle.css
 

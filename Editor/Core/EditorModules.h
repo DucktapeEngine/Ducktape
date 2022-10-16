@@ -41,7 +41,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Engine.h>
 #include <Core/Debug.h>
 #include <Core/Editor.h>
-#include <Core/SceneManager.h>
+#include <Scene/SceneManager.h>
 
 #define DEG2RAD 0.0174533f
 
@@ -49,18 +49,17 @@ namespace DT
 {
     namespace EditorModules
     {
-        void Init(Engine *engine);
+        void Init(Engine &engine);
 
-        void ToolBar(Engine *engine);
+        void ToolBar(Engine &engine);
 
         inline ImGuizmo::OPERATION currentGizmoOperation(ImGuizmo::TRANSLATE);
         inline ImGuizmo::MODE currentGizmoMode(ImGuizmo::WORLD);
-        void SceneView(Engine *engine);
-        void SceneViewLoop(Component *component);
+        void SceneView(Engine &engine);
 
         inline float yaw = 0.f, pitch = 0.f;
         inline Entity selectedEntity;
-        void Hierarchy(Engine *engine);
+        void Hierarchy(Engine &engine);
 
         // Will be used on next version for context
         // inline std::filesystem::path copiedFile;
@@ -69,13 +68,12 @@ namespace DT
         inline unsigned int folderIconID;
         inline unsigned int fileIconID;
         inline ImGuiTextFilter Filter;
-        void ResourceBrowser(Engine *engine);
-        void DrawDirectoryItem(Engine *engine,std::filesystem::directory_entry directoryEntry,int& itemSize,int& i,int& selectedIndex);
+        void ResourceBrowser(Engine &engine);
+        void DrawDirectoryItem(Engine &engine,std::filesystem::directory_entry directoryEntry,int& itemSize,int& i,int& selectedIndex);
         void OnItemDoubleClicked(bool isDir,std::filesystem::path path);
 
-        void Console(Engine *engine);
+        void Console(Engine &engine);
 
-        void Inspector(Engine *engine);
-        void InspectorLoop(Component* component);
+        void Inspector(Engine &engine);
     }
 }

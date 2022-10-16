@@ -20,44 +20,30 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Scene.h>
+#include <Renderer/ImGui.h>
 
-namespace DT
+void ImGui::Mesh(const std::string &label, DT::Mesh *mesh)
 {
-    Scene::Scene(Engine *holderEngine)
-    {
-        engine = holderEngine;
-    }
+    // TOFIX: Point to the correct Resource once Resource System has been implemented
+}
 
-    Scene::~Scene()
+void ImGui::Material(const std::string &label, DT::Material *material)
+{
+    ImGui::Indent();
+    if (ImGui::CollapsingHeader(label.c_str()))
     {
-#ifdef _WIN32
-        FreeLibrary(gameModule);
-#endif
-#ifdef __linux__
-        dlclose(gameModule);
-#endif
+        ImGui::ColorEdit3("color", &material->color.x);
+        ImGui::DragFloat("shininess", &material->shininess);
     }
+    ImGui::Unindent();
+}
 
-    void Scene::CallLoop(CallFunc callFunc)
-    {
-        callFunction = callFunc;
-        for (System system : systems)
-            system(this);
-    }
+void ImGui::Vec3(const std::string &label, glm::vec3 *vec3)
+{
+    ImGui::DragFloat3(label.c_str(), &vec3->x);
+}
 
-    void Scene::LoadModule(const std::string &path)
-    {
-#ifdef _WIN32
-        gameModule = LoadLibrary(path.c_str());
-#endif
-#ifdef __linux__
-        gameModule = dlopen(path.c_str(), RTLD_LAZY);
-#endif
-        if (!gameModule)
-        {
-            std::cout << "Failed to load Module: " << path << std::endl;
-            return;
-        }
-    }
+void ImGui::Vec2(const std::string &label, glm::vec2 *vec2)
+{
+    ImGui::DragFloat2(label.c_str(), &vec2->x);
 }

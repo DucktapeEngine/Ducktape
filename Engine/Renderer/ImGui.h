@@ -22,33 +22,19 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <vector>
 #include <string>
-#include <array>
-#include <iostream>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <utils/stb_image.h>
+#include <imgui/imgui.h>
+#include <glm/glm.hpp>
 
-namespace DT
+#include <Renderer/Mesh.h>
+#include <Renderer/Material.h>
+
+namespace ImGui
 {
-    /**
-     * @brief Cubemap class for managing cubemap
-     */
-    class Cubemap
-    {
-    public:
-        unsigned int id;     ///< @brief Unique ID for each cubemap
-
-        /**
-         * @brief Creare a new Cubemap object.
-         * @param paths list of 6 texture/image path for the each side of cubemap
-         */
-        Cubemap(std::array<std::string, 6> paths);
-
-        /**
-         * @brief Destroys a Cubemap object.
-         */
-        ~Cubemap();
-    };
+    void Mesh(const std::string &label, DT::Mesh *mesh);
+    void Material(const std::string &label, DT::Material *material);
+    void Vec3(const std::string &label, glm::vec3 *vec3);
+    void Vec2(const std::string &label, glm::vec2 *vec2);
 }
