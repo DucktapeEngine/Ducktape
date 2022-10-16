@@ -24,6 +24,7 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+#ifdef _WIN32
     std::string GetLastErrorAsString()
     {
         DWORD errorMessageID = ::GetLastError();
@@ -42,4 +43,5 @@ namespace DT
                 
         return message;
     }
+#endif
 }
