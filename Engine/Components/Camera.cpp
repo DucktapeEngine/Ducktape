@@ -24,38 +24,47 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Camera::Init()
-    {
-        engine->activeScene->mainCamera = this;
-
-        transform = &entity.Get<Transform>();
-
-        engine->renderer.cameraView = &view;
-        engine->renderer.cameraProjection = &projection;
-        engine->renderer.cameraPosition = &transform->translation;
-        engine->renderer.cameraRotation = &transform->rotation;
-        engine->renderer.isOrtho = &isOrtho;
-        engine->renderer.fov = &fov;
-    }
-
-    void Camera::Inspector()
-    {
-        COMPONENT("Camera");
-
-        PROPERTY("orthographic", &isOrtho);
-        PROPERTY("fov", &fov);
-    }
-
-    glm::vec2 Camera::WorldToScreenPoint(glm::vec3 worldPoint)
+    glm::vec2 Camera::WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize)
     {
         glm::vec4 clipSpacePos = projection * (view * glm::vec4(worldPoint, 1.0));
         glm::vec3 ndcSpacePos = glm::vec3(clipSpacePos.x, clipSpacePos.y, clipSpacePos.z) / clipSpacePos.w;
-        glm::vec2 windowSpacePos = glm::vec2(((ndcSpacePos.x + 1.0) / 2.0) * engine->window.GetWindowSize().x, ((1.0 - ndcSpacePos.y) / 2.0) * engine->window.GetWindowSize().y);
+        glm::vec2 windowSpacePos = glm::vec2(((ndcSpacePos.x + 1.0) / 2.0) * windowSize.x, ((1.0 - ndcSpacePos.y) / 2.0) * windowSize.y);
         return windowSpacePos;
     }
 
-    void Serialize(Serializer &serializer, Camera &object)
+    void CameraSystem::Init(Scene &scene, Engine &engine)
     {
-        serializer & object.isOrtho & object.fov;
+        for (Entity entity : scene.View<Camera>())
+        {
+            Camera &cam = scene.Get<Camera>(entity);
+
+            engine.activeScene->activeCamera = &cam;
+
+            cam.transform = &scene.Get<Transform>(entity);
+
+            engine.renderer.cameraView = &cam.view;
+            engine.renderer.cameraProjection = &cam.projection;
+            engine.renderer.cameraPosition = &cam.transform->translation;
+            engine.renderer.cameraRotation = &cam.transform->rotation;
+            engine.renderer.isOrtho = &cam.isOrtho;
+            engine.renderer.fov = &cam.fov;
+        }
+    }
+
+    void CameraSystem::Inspector(Scene &scene, Engine &engine)
+    {
+        for (Entity entity : scene.View<Camera>())
+        {
+            if (scene.selectedEntity != entity)
+                continue;
+
+            Camera &cam = scene.Get<Camera>(entity);
+
+            if (ImGui::CollapsingHeader("Camera"))
+            {
+                ImGui::Checkbox("orthographic", &cam.isOrtho);
+                ImGui::DragFloat("field of view", &cam.fov);
+            }
+        }
     }
 }

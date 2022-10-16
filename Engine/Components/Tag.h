@@ -24,27 +24,25 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 
-#include <Components/Component.h>
-#include <Core/Scene.h>
 #include <Core/Engine.h>
+#include <Core/Serializer.h>
 
 namespace DT
 {
     /**
-     * @brief Tag class for assigning tags on Entity objects
+     * @brief Tag struct for assigning tags on Entity objects
      */
-    class Tag : public Component
+    struct Tag
     {
-    public:
         std::string name = "Unnamed";       ///< @brief Tag name
-
-        /**
-         * @brief Adds value input for tag name into ImGui interface
-         */
-        void Inspector() override;
-
-        HANDLER(Tag);
     };
 
-    void Serialize(Serializer &serializer, Tag &object);
+    class TagSystem : public System
+    {
+    public:
+        /**
+         * @brief Handles Tag struct serialization.
+         */
+        void Inspector(Scene &scene, Engine &engine) override;
+    };
 }

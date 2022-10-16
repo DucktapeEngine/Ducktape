@@ -9,7 +9,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSengine->  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSengine.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -24,16 +24,17 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Editor::Init(Engine *_engine)
+    void Editor::Init(Engine &engine)
     {
-        engine = _engine;
+        enginePtr = &engine;
         
         ImGui::CreateContext();
-        ImGui_ImplGlfw_InitForOpenGL(engine->window.window, true);
+        ImGui_ImplGlfw_InitForOpenGL(engine.window.window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
         ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+        io.ConfigDragClickToInputText = true;
 
         ImGui::StyleColorsDark();
 
@@ -91,38 +92,38 @@ namespace DT
         EditorModules::Init(engine);
     }
     
-    void Editor::Render()
+    void Editor::Render(Engine &engine)
     {
         ImGui::DockSpaceOverViewport();
 
         EditorModules::SceneView(engine);
         // EditorModules::ToolBar(engine); // Called from EditorModules::SceneView() itself
-        EditorModules::ResourceBrowser(engine);
+        // EditorModules::ResourceBrowser(engine);
         EditorModules::Hierarchy(engine);
         EditorModules::Console(engine);
         EditorModules::Inspector(engine);
     }
 
-    void EditorModules::Init(Engine *engine)
+    void EditorModules::Init(Engine &engine)
     {
         // A bit unsafe to do this since path might change, but for now it just tries to go 2 level up and find resources folder
-        rootDir=std::filesystem::current_path().parent_path().parent_path() / "Resources";
-        currentDir = rootDir; 
-        // Note that icons are from https://www.icons8.com and not fully copyright free.
-        // TODO: Add self drawn icons
-        folderIconID = Texture(rootDir.string()+"/Icons/Folder.png","diffuse").id;
-        fileIconID = Texture(rootDir.string()+"/Icons/File.png","diffuse").id;
+        // rootDir=std::filesystem::current_path().parent_path().parent_path() / "Resources";
+        // currentDir = rootDir; 
+        // // Note that icons are from https://www.icons8.com and not fully copyright free.
+        // // TODO: Add self drawn icons
+        // folderIconID = Texture(rootDir.string()+"/Icons/Folder.png","diffuse").id;
+        // fileIconID = Texture(rootDir.string()+"/Icons/File.png","diffuse").id;
     }
 
-    void EditorModules::ToolBar(Engine *engine)
+    void EditorModules::ToolBar(Engine &engine)
     {
         ImGui::Begin("Tool Bar");
         
-        if (engine->input.GetKeyPressed(KEY_T))
+        if (engine.input.GetKeyPressed(KEY_T))
             currentGizmoOperation = ImGuizmo::TRANSLATE;
-        if (engine->input.GetKeyPressed(KEY_R))
+        if (engine.input.GetKeyPressed(KEY_R))
             currentGizmoOperation = ImGuizmo::ROTATE;
-        if (engine->input.GetKeyPressed(KEY_S))
+        if (engine.input.GetKeyPressed(KEY_S))
             currentGizmoOperation = ImGuizmo::SCALE;
         if (ImGui::RadioButton("translate", currentGizmoOperation == ImGuizmo::TRANSLATE))
             currentGizmoOperation = ImGuizmo::TRANSLATE;
@@ -142,26 +143,26 @@ namespace DT
         ImGui::End();
     }
 
-    void EditorModules::SceneView(Engine *engine)
+    void EditorModules::SceneView(Engine &engine)
     {
         //// Controls
         // Move
         const float speed = 2.5f, sensitivity = 25.f;
 
-        if (engine->input.GetKey(KEY_UP))
-            engine->activeScene->mainCamera->transform->translation += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
-        if (engine->input.GetKey(KEY_DOWN))
-            engine->activeScene->mainCamera->transform->translation -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Forward();
-        if (engine->input.GetKey(KEY_LEFT))
-            engine->activeScene->mainCamera->transform->translation += speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
-        if (engine->input.GetKey(KEY_RIGHT))
-            engine->activeScene->mainCamera->transform->translation -= speed * engine->time.deltaTime * engine->activeScene->mainCamera->transform->Right();
+        if (engine.input.GetKey(KEY_UP))
+            engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
+        if (engine.input.GetKey(KEY_DOWN))
+            engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
+        if (engine.input.GetKey(KEY_LEFT))
+            engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
+        if (engine.input.GetKey(KEY_RIGHT))
+            engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
 
         // Look
-        if (engine->input.GetMouseButton(MOUSE_BUTTON_RIGHT))
+        if (engine.input.GetMouseButton(MOUSE_BUTTON_RIGHT))
         {
-            yaw += -engine->input.mouseDelta.x * sensitivity * engine->time.deltaTime;
-            pitch += engine->input.mouseDelta.y * sensitivity * engine->time.deltaTime;
+            yaw += -engine.input.mouseDelta.x * sensitivity * engine.time.deltaTime;
+            pitch += engine.input.mouseDelta.y * sensitivity * engine.time.deltaTime;
             
             if (pitch > 89.0f)
                 pitch = 89.0f;
@@ -169,7 +170,7 @@ namespace DT
                 pitch = -89.0f;
         }
 
-        engine->activeScene->mainCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+        engine.activeScene->activeCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
 
         // Transform
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
@@ -187,37 +188,37 @@ namespace DT
 
         ImVec2 windowSize = ImVec2(vMax.x - vMin.x, vMax.y - vMin.y);
 
-        if (engine->window.GetWindowSize() != glm::vec2(windowSize.x, windowSize.y))
+        if (engine.window.GetWindowSize() != glm::vec2(windowSize.x, windowSize.y))
         {
             if (glm::vec2(windowSize.x, windowSize.y) != glm::vec2(0.f, 0.f))
             {
-                engine->window.SetWindowSize({windowSize.x, windowSize.y});
-                engine->renderer.SetViewport({windowSize.x, windowSize.y});
+                engine.window.SetWindowSize({windowSize.x, windowSize.y});
+                engine.renderer.SetViewport({windowSize.x, windowSize.y});
             }
         }
 
         ImGui::GetWindowDrawList()->AddImage(
-            (ImTextureID)(uintptr_t)engine->renderer.renderTexture, 
+            (ImTextureID)(uintptr_t)engine.renderer.renderTexture, 
             vMin, 
             vMax,
             ImVec2(0, 1), 
             ImVec2(1, 0));
 
-        if (selectedEntity && selectedEntity.Has<Transform>())
+        if (selectedEntity != entt::null && engine.activeScene->Has<Transform>(selectedEntity))
         {
-            Transform &transform = selectedEntity.Get<Transform>();
+            Transform &transform = engine.activeScene->Get<Transform>(selectedEntity);
 
             glm::mat4 model = transform.GetModelMatrix();
 
-            ImGuizmo::SetOrthographic(engine->activeScene->mainCamera->isOrtho);
+            ImGuizmo::SetOrthographic(engine.activeScene->activeCamera->isOrtho);
             ImGuizmo::SetDrawlist();
-            ImGuizmo::SetRect(vMin.x, vMin.y, engine->window.GetWindowSize().x, engine->window.GetWindowSize().y);
+            ImGuizmo::SetRect(vMin.x, vMin.y, engine.window.GetWindowSize().x, engine.window.GetWindowSize().y);
 
             float snap = 1.f;
             if (currentGizmoOperation == ImGuizmo::OPERATION::ROTATE)
                 snap = 45.f;
             
-            ImGuizmo::Manipulate(glm::value_ptr(engine->activeScene->mainCamera->view), glm::value_ptr(engine->activeScene->mainCamera->projection), currentGizmoOperation, currentGizmoMode, glm::value_ptr(model), NULL, engine->input.GetKey(KEY_LEFT_SHIFT) ? &snap : NULL);
+            ImGuizmo::Manipulate(glm::value_ptr(engine.activeScene->activeCamera->view), glm::value_ptr(engine.activeScene->activeCamera->projection), currentGizmoOperation, currentGizmoMode, glm::value_ptr(model), NULL, engine.input.GetKey(KEY_LEFT_SHIFT) ? &snap : NULL);
 
             if (ImGuizmo::IsUsing())
             {
@@ -231,27 +232,22 @@ namespace DT
         ToolBar(engine);
     }
 
-    void EditorModules::SceneViewLoop(Component *component)
-    {
-        component->SceneView(selectedEntity == component->entity);
-    }
-
-    void EditorModules::Hierarchy(Engine *engine)
+    void EditorModules::Hierarchy(Engine &engine)
     {
         ImGui::Begin("Hierarchy");
 
         if (ImGui::Button("Save", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
         {
-            SceneManager::Save(engine->activeScene, "../Resources/Scenes/scene.json");
+            // SceneManager::Save(engine.activeScene, "../Resources/Scenes/scene.json");
         }
 
-        engine->activeScene->sceneRegistry.each([&](const entt::entity entity)
+        engine.activeScene->sceneRegistry.each([&](const entt::entity entity)
                                                {
             std::string label = "Entity " + std::to_string(entt::to_integral(entity));
 
-            if (engine->activeScene->sceneRegistry.any_of<Tag>(entity))
+            if (engine.activeScene->sceneRegistry.any_of<Tag>(entity))
             {
-                std::string _label = engine->activeScene->sceneRegistry.get<Tag>(entity).name;
+                std::string _label = engine.activeScene->sceneRegistry.get<Tag>(entity).name;
 
                 if (_label != "Unnamed")
                     label = _label;
@@ -259,7 +255,7 @@ namespace DT
 
             if (ImGui::Selectable(label.c_str(), selectedEntity == entity))
             {
-                selectedEntity = Entity(entity, engine->activeScene);
+                selectedEntity = entity;
             } });
 
         ImGui::End();
@@ -267,7 +263,7 @@ namespace DT
 
     /// @brief Resource Browser's ImGui window for Ducktape.
     /// @param engine engine reference
-    void EditorModules::ResourceBrowser(Engine *engine)
+    void EditorModules::ResourceBrowser(Engine &engine)
     {
         ImGui::Begin("Resource Browser");
         Filter.Draw("Filter");
@@ -341,7 +337,7 @@ namespace DT
     /// @param itemSize item's size for resource browser (controlled by slider)
     /// @param i current iteration
     /// @param selectedIndex selected item index
-    void EditorModules::DrawDirectoryItem(Engine *engine,std::filesystem::directory_entry directoryEntry,int& itemSize,int& i, int& selectedIndex)
+    void EditorModules::DrawDirectoryItem(Engine &engine,std::filesystem::directory_entry directoryEntry,int& itemSize,int& i, int& selectedIndex)
     {
         std::filesystem::path path = directoryEntry.path();
         std::string filename = path.filename().string();
@@ -427,29 +423,31 @@ namespace DT
 		}
     }
 
-    void EditorModules::Console(Engine *engine)
+    void EditorModules::Console(Engine &engine)
     {
         ImGui::Begin("Console");
 
-        ImGui::Text("%s", engine->debug.log.c_str());
+        ImGui::Text("%s", engine.debug.log.c_str());
 
         ImGui::End();
     }
 
-    void EditorModules::InspectorLoop(Component* component)
-    {
-        if (component->entity == selectedEntity)
-        {
-            component->Inspector();
-            ImGui::Separator();
-        }
-    }
+    // void EditorModules::InspectorLoop(Component* component)
+    // {
+    //     if (component->entity == selectedEntity)
+    //     {
+    //         component->Inspector();
+    //         ImGui::Separator();
+    //     }
+    // }
 
-    void EditorModules::Inspector(Engine *engine)
+    void EditorModules::Inspector(Engine &engine)
     {
         ImGui::Begin("Inspector");
 
-        engine->activeScene->CallLoop(InspectorLoop);
+        engine.activeScene->selectedEntity = selectedEntity;
+        for (System *system : engine.activeScene->GetSystems())
+            system->Inspector(*engine.activeScene, engine);
 
         //Add Component Menu
         static bool openAddComponentMenu = false;
@@ -462,7 +460,7 @@ namespace DT
             ImGui::SameLine();
             if (ImGui::Button("+"))
             {
-                selectedEntity.Assign(addComponentInput);
+                engine.activeScene->Assign(selectedEntity, addComponentInput);
                 openAddComponentMenu = false;
             }
             ImGui::SameLine();
@@ -477,31 +475,31 @@ namespace DT
                 {
                     if (component == "Camera")
                     {
-                        selectedEntity.Assign<Camera>();
+                        engine.activeScene->Assign<Camera>(selectedEntity);
                     }
                     else if (component == "DirectionalLight")
                     {
-                        selectedEntity.Assign<DirectionalLight>();
+                        engine.activeScene->Assign<DirectionalLight>(selectedEntity);
                     }
                     else if (component == "MeshRenderer")
                     {
-                        selectedEntity.Assign<MeshRenderer>();
+                        engine.activeScene->Assign<MeshRenderer>(selectedEntity);
                     }
                     else if (component == "PointLight")
                     {
-                        selectedEntity.Assign<PointLight>();
+                        engine.activeScene->Assign<PointLight>(selectedEntity);
                     }
                     else if (component == "Tag")
                     {
-                        selectedEntity.Assign<Tag>();
+                        engine.activeScene->Assign<Tag>(selectedEntity);
                     }
                     else if (component == "Transform")
                     {
-                        selectedEntity.Assign<Transform>();
+                        engine.activeScene->Assign<Transform>(selectedEntity);
                     }
                     else
                     {
-                        selectedEntity.Assign(component);
+                        engine.activeScene->Assign(selectedEntity, component);
                     }
                     openAddComponentMenu = false;
                 }
@@ -509,74 +507,11 @@ namespace DT
         }
 
         if (!openAddComponentMenu)
-            if (selectedEntity && ImGui::Button("Assign", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
+            if (selectedEntity != entt::null && ImGui::Button("Assign", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
                 openAddComponentMenu = true;
 
-        if (!selectedEntity)
+        if (selectedEntity != entt::null)
             openAddComponentMenu = false;
-
-        // Remove Component menu
-        static bool openRemoveComponentMenu = false;
-        static std::string removeComponentInput;
-
-        if (openRemoveComponentMenu)
-        {
-            ImGui::InputTextWithHint("##RemoveComponentName", "Component Name", &removeComponentInput);
-            ImGui::SameLine();
-            if (ImGui::Button("x"))
-            {
-                selectedEntity.Assign(removeComponentInput);
-                openRemoveComponentMenu = false;
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("Cancel"))
-            {
-                openRemoveComponentMenu = false;
-            }
-
-            for (std::string component : builtinComponentList)
-            {
-                if (ImGui::Button((component + "##removeMenu").c_str(), ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
-                {
-                    if (component == "Camera")
-                    {
-                        selectedEntity.Remove<Camera>();
-                    }
-                    else if (component == "DirectionalLight")
-                    {
-                        selectedEntity.Remove<DirectionalLight>();
-                    }
-                    else if (component == "MeshRenderer")
-                    {
-                        selectedEntity.Remove<MeshRenderer>();
-                    }
-                    else if (component == "PointLight")
-                    {
-                        selectedEntity.Remove<PointLight>();
-                    }
-                    else if (component == "Tag")
-                    {
-                        selectedEntity.Remove<Tag>();
-                    }
-                    else if (component == "Transform")
-                    {
-                        selectedEntity.Remove<Transform>();
-                    }
-                    else
-                    {
-                        selectedEntity.Remove(component);
-                    }
-                    openRemoveComponentMenu = false;
-                }
-            }
-        }
-
-        if (!openRemoveComponentMenu)
-            if (selectedEntity && ImGui::Button("Remove", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
-                openRemoveComponentMenu = true;
-
-        if (!selectedEntity)
-            openRemoveComponentMenu = false;
 
         ImGui::End();
     }

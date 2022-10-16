@@ -50,37 +50,35 @@ int main()
         Scene mainScene(&e);
 
         mainScene.LoadModule("./Resources/Scripts/libGame.dll");
+        RegisterComponentSystems(mainScene);
 
         Entity camera = mainScene.CreateEntity();
-        camera.Assign<Tag>().name = "Camera";
-        camera.Assign<Transform>();
-        camera.Assign<Camera>();
-        camera.Assign<DirectionalLight>();
-
-        Entity model = mainScene.CreateEntity();
-        model.Assign<Tag>().name = "Model";
-        model.Assign<Transform>();
+        mainScene.Assign<Tag>(camera).name = "Camera";
+        mainScene.Assign<Transform>(camera);
+        mainScene.Assign<Camera>(camera);
+        mainScene.Assign<DirectionalLight>(camera);
 
         std::vector<Mesh> meshes = LoadModel("../Resources/Models/backpack/backpack.obj").meshes;
         for (Mesh mesh : meshes)
         {
-            mainScene.CreateEntity().Assign<MeshRenderer>().mesh = mesh;
+            mainScene.Assign<MeshRenderer>(mainScene.CreateEntity()).mesh = mesh;
         }
 
         e.loopManager.sceneTick = false;
 
         e.Init(mainScene);
 
-        Editor::Init(&e);
+        Editor::Init(e);
 
         while (e.IsOpen())
         {
             e.StartFrame();
             Editor::NewFrame();
 
-            e.activeScene->CallLoop(EditorModules::SceneViewLoop);
+            for (System *system : mainScene.GetSystems())
+                system->SceneView(mainScene, e);
 
-            Editor::Render();
+            Editor::Render(e);
 
             Editor::EndFrame(e.renderer);
             e.EndFrame();

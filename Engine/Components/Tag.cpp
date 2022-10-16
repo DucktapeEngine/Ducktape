@@ -24,15 +24,19 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Tag::Inspector()
+    void TagSystem::Inspector(Scene &scene, Engine &engine)
     {
-        COMPONENT("Tag");
+        for (Entity entity : scene.View<Tag>())
+        {
+            if (scene.selectedEntity != entity)
+                continue;
 
-        PROPERTY("name", &name);
-    }
+            Tag &tag = scene.Get<Tag>(entity);
 
-    void Serialize(Serializer &serializer, Tag &object)
-    {
-        serializer & object.name;
+            if (ImGui::CollapsingHeader("Tag"))
+            {
+                ImGui::InputText("name", &tag.name);
+            }
+        }
     }
 }

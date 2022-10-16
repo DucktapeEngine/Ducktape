@@ -22,7 +22,6 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Components/Component.h>
 
 namespace DT
 {
@@ -33,23 +32,5 @@ namespace DT
     {
     public:
         bool sceneTick = true;          ///< @brief whether to update/tick current scene loop or not
-
-        /**
-         * @brief initiate loop with given Component object.
-         * @param component pointer to the component object.
-         */
-        static void InitLoop(Component* component);
-
-        /**
-         * @brief tick/update loop with given Component object.
-         * @param component pointer to the pointer object
-         */
-        static void TickLoop(Component* component);
-
-        /**
-         * @brief destroy the loop with given Component object.
-         * @param component pointer to the component object.
-         */
-        static void DestroyLoop(Component* component);
     };
 }

@@ -33,17 +33,16 @@ aryanbaburajan2007@gmail.com
 namespace DT
 {
     /**
-     * @brief Cubemap class for managing cubemap.
-     * Extends Component class
+     * @brief Cubemap class for managing cubemap
      */
     class Cubemap
     {
     public:
-        unsigned int id;     ///< @brief Unique ID for each cubemap.
+        unsigned int id;     ///< @brief Unique ID for each cubemap
 
         /**
          * @brief Creare a new Cubemap object.
-         * @param paths list of 6 texture/image path for the each side of cubemap.
+         * @param paths list of 6 texture/image path for the each side of cubemap
          */
         Cubemap(std::array<std::string, 6> paths);
 

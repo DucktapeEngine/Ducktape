@@ -25,24 +25,14 @@ aryanbaburajan2007@gmail.com
 #define DEG2RAD 0.0174533f
 
 // Ducktape includes
-#include <Components/Component.h>
-#include <Components/Tag.h>
-#include <Components/Transform.h>
-#include <Components/MeshRenderer.h>
-#include <Components/DirectionalLight.h>
-#include <Components/PointLight.h>
-#include <Components/Camera.h>
+#include <Components/RegisterComponentSystems.h>
 #include <Core/Configuration.h>
 #include <Core/Debug.h>
 #include <Core/Engine.h>
-#include <Core/Entity.h>
 #include <Core/Macro.h>
-#include <Core/Scene.h>
 #include <Core/Time.h>
-#include <Core/Inspector.h>
 #include <Core/UserPointer.h>
 #include <Core/Window.h>
-#include <Core/SceneManager.h>
 #include <Core/LoopManager.h>
 #include <Input/Input.h>
 #include <Input/Key.h>
@@ -53,3 +43,9 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Mesh.h>
 #include <Renderer/Cubemap.h>
 #include <Renderer/ModelLoader.h>
+#include <Renderer/ImGui.h>
+#include <Scene/SceneManager.h>
+#include <Scene/Scene.h>
+#include <Scene/Entity.h>
+#include <Scene/System.h>
+#include <Scene/GenericSystem.h>

@@ -26,7 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <stdexcept>
 #include <iostream>
 
-#include <imgui/imgui.h>
+#include <Renderer/ImGui.h>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

@@ -27,7 +27,7 @@ aryanbaburajan2007@gmail.com
 #include <assimp/postprocess.h>
 
 #include <Renderer/Mesh.h>
-#include <Core/Entity.h>
+#include <Scene/Entity.h>
 #include <Renderer/Texture.h>
 
 namespace DT

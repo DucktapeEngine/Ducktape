@@ -22,50 +22,48 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Components/Component.h>
 #include <Renderer/Mesh.h>
+#include <Renderer/ImGui.h>
 #include <Core/Engine.h>
-#include <Core/Entity.h>
+#include <Scene/Entity.h>
 #include <Renderer/Material.h>
 #include <Components/Transform.h>
+#include <Core/Serializer.h>
 
 namespace DT
 {
     /**
-     * @brief MeshRenderer class for mesh handling with a collection of shader, model transformation and material.
-     * Extends Component class
+     * @brief MeshRenderer struct for mesh handling with a collection of shader, model transformation and material.
      */
-    class MeshRenderer : public Component
+    struct MeshRenderer
     {
-    public:
         Mesh mesh;                          ///< @brief Mesh data and buffers for runtime drawing
         Shader *shader = nullptr;           ///< @brief Pointer to shader for model drawing
         Transform *transform;               ///< @brief Pointer to model transform
         Material material;                  ///< @brief Pointer to material for shading properties
-
-        /**
-         * @brief Initializes entity model transform, shader and mesh buffers
-         */
-        void Init() override;
-
-        /**
-         * @brief Sets shader, transform, material properties and mesh buffers in order to draw current mesh
-         */
-        void Tick() override;
-
-        /**
-         * @brief Adds value input for material shininess and color into ImGui interface
-         */
-        void Inspector() override;
-
-        /**
-         * @brief Draws current mesh for current scene
-         * @param selected boolean representing if current entity is selected
-         */
-        void SceneView(bool selected) override;
-
-        HANDLER(MeshRenderer);
     };
+    
+    class MeshRendererSystem : System
+    {
+    public:
+        /**
+         * @brief Initializes entity model transform, shader and mesh buffers.
+         */
+        void Init(Scene &scene, Engine &engine) override;        
+        
+        /**
+         * @brief Draws current mesh for current scene.
+         */
+        void Tick(Scene &scene, Engine &engine) override;
 
-    void Serialize(Serializer &serializer, MeshRenderer &object);
+        /**
+         * @brief Handles Scene View rendering.
+         */
+        void SceneView(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles MeshRenderer struct serialization.
+         */
+        void Inspector(Scene &scene, Engine &engine) override;
+    };
 }

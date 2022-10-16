@@ -51,12 +51,12 @@ namespace DT
 
     void Editor::Close()
     {
-        glfwSetWindowShouldClose(engine->window.window, true);
+        glfwSetWindowShouldClose(enginePtr->window.window, true);
     }
 
     void Editor::SetTitle(const std::string &title)
     {
-        glfwSetWindowTitle(engine->window.window, title.c_str());
+        glfwSetWindowTitle(enginePtr->window.window, title.c_str());
     }
 
     void Editor::SetIcon(const std::string &path)
@@ -69,7 +69,7 @@ namespace DT
             image.width = width;
             image.height = height;
             image.pixels = data;
-            glfwSetWindowIcon(engine->window.window, 1, &image);
+            glfwSetWindowIcon(enginePtr->window.window, 1, &image);
             stbi_image_free(data);
         }
         else
@@ -81,87 +81,87 @@ namespace DT
     glm::vec2 Editor::GetWindowPos()
     {
         int x, y;
-        glfwGetWindowPos(engine->window.window, &x, &y);
+        glfwGetWindowPos(enginePtr->window.window, &x, &y);
         return glm::vec2(x, y);
     }
 
     void Editor::SetWindowPos(const glm::vec2 &pos)
     {
-        glfwSetWindowPos(engine->window.window, pos.x, pos.y);
+        glfwSetWindowPos(enginePtr->window.window, pos.x, pos.y);
     }
 
     glm::vec2 Editor::GetWindowSize()
     {
         int width, height;
-        glfwGetWindowSize(engine->window.window, &width, &height);
+        glfwGetWindowSize(enginePtr->window.window, &width, &height);
         return glm::vec2(width, height);
     }
 
     void Editor::SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize)
     {
-        glfwSetWindowSizeLimits(engine->window.window, minSize.x, minSize.y, maxSize.x, maxSize.y);
+        glfwSetWindowSizeLimits(enginePtr->window.window, minSize.x, minSize.y, maxSize.x, maxSize.y);
     }
 
     void Editor::SetWindowAspectRatio(const int &numerator, const int &denominator)
     {
-        glfwSetWindowAspectRatio(engine->window.window, numerator, denominator);
+        glfwSetWindowAspectRatio(enginePtr->window.window, numerator, denominator);
     }
 
     void Editor::SetWindowSize(const glm::vec2 &size)
     {
-        glfwSetWindowSize(engine->window.window, size.x, size.y);
+        glfwSetWindowSize(enginePtr->window.window, size.x, size.y);
     }
 
     glm::vec2 Editor::GetWindowContentScale()
     {
         float x, y;
-        glfwGetWindowContentScale(engine->window.window, &x, &y);
+        glfwGetWindowContentScale(enginePtr->window.window, &x, &y);
         return glm::vec2(x, y);
     }
 
     float Editor::GetWindowOpacity()
     {
-        return glfwGetWindowOpacity(engine->window.window);
+        return glfwGetWindowOpacity(enginePtr->window.window);
     }
 
     void Editor::SetWindowOpacity(const float &opacity)
     {
-        glfwSetWindowOpacity(engine->window.window, opacity);
+        glfwSetWindowOpacity(enginePtr->window.window, opacity);
     }
 
     void Editor::IconifyWindow()
     {
-        glfwIconifyWindow(engine->window.window);
+        glfwIconifyWindow(enginePtr->window.window);
     }
 
     void Editor::RestoreWindow()
     {
-        glfwRestoreWindow(engine->window.window);
+        glfwRestoreWindow(enginePtr->window.window);
     }
 
     void Editor::MaximizeWindow()
     {
-        glfwMaximizeWindow(engine->window.window);
+        glfwMaximizeWindow(enginePtr->window.window);
     }
 
     void Editor::ShowWindow()
     {
-        glfwShowWindow(engine->window.window);
+        glfwShowWindow(enginePtr->window.window);
     }
 
     void Editor::HideWindow()
     {
-        glfwHideWindow(engine->window.window);
+        glfwHideWindow(enginePtr->window.window);
     }
 
     void Editor::FocusWindow()
     {
-        glfwFocusWindow(engine->window.window);
+        glfwFocusWindow(enginePtr->window.window);
     }
 
     void Editor::RequestWindowAttention()
     {
-        glfwRequestWindowAttention(engine->window.window);
+        glfwRequestWindowAttention(enginePtr->window.window);
     }
 
     void Editor::SetVSync(const bool &vsync)

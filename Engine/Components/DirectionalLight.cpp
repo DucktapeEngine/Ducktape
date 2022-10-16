@@ -20,61 +20,79 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Macro.h>
 #include <Components/DirectionalLight.h>
 
 namespace DT
 {
-    void DirectionalLight::Init()
+    void DirectionalLightSystem::Init(Scene &scene, Engine &engine)
     {
-        transform = &entity.Require<Transform>();
-
-        if (shader == nullptr)
-            shader = &engine->renderer.defaultShader;
-
-        if (engine->renderer.GetFreeDirectionalLightSpot(&lightSpot) == false)
+        for (Entity entity : scene.View<DirectionalLight>())
         {
-            engine->debug << "DirectionalLight: No free light spots.\n";
+            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
+
+            dl.transform = &scene.Require<Transform>(entity);
+
+            if (dl.shader == nullptr)
+                dl.shader = &engine.renderer.defaultShader;
+
+            if (engine.renderer.GetFreeDirectionalLightSpot(&dl.lightSpot) == false)
+            {
+                engine.debug << "DirectionalLight: No free light spots.\n";
+                continue;
+            }
+
+            dl.propertyString = "directionalLights[" + std::to_string(dl.lightSpot) + "].";
+            dl.shader->Use();
+            dl.shader->SetBool(dl.propertyString + "enabled", true);
         }
-
-        propertyString = "directionalLights[" + std::to_string(lightSpot) + "].";
-        shader->Use();
-        shader->SetBool(propertyString + "enabled", true);
     }
 
-    void DirectionalLight::Tick()
+    void DirectionalLightSystem::Tick(Scene &scene, Engine &engine)
     {
-        if (lightSpot == NAN) return;
+        for (Entity entity : scene.View<DirectionalLight>())
+        {
+            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
 
-        shader->Use();
-        shader->SetVec3(propertyString + "direction", transform->Forward());
-        shader->SetVec3(propertyString + "ambient", color * intensity);
-        shader->SetVec3(propertyString + "diffuse", color * intensity);
-        shader->SetVec3(propertyString + "specular", color * intensity);
+            if (dl.lightSpot == NAN) continue;
+
+            dl.shader->Use();
+            dl.shader->SetVec3(dl.propertyString + "direction", dl.transform->Forward());
+            dl.shader->SetVec3(dl.propertyString + "ambient", dl.color * dl.intensity);
+            dl.shader->SetVec3(dl.propertyString + "diffuse", dl.color * dl.intensity);
+            dl.shader->SetVec3(dl.propertyString + "specular", dl.color * dl.intensity);
+        }
     }
 
-    void DirectionalLight::Inspector()
+    void DirectionalLightSystem::Destroy(Scene &scene, Engine &engine)
     {
-        COMPONENT("DirectionalLight");
-        
-        PROPERTY("intensity", &intensity);
-        PROPERTY("color", &color);
+        for (Entity entity : scene.View<DirectionalLight>())
+        {
+            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
+
+            engine.renderer.UnoccupyDirectionalLightSpot(dl.lightSpot);
+            dl.shader->SetBool(dl.propertyString + "enabled", true);
+        }
     }
 
-    void DirectionalLight::Destroy()
+    void DirectionalLightSystem::SceneView(Scene &scene, Engine &engine)
     {
-        engine->renderer.UnoccupyDirectionalLightSpot(lightSpot);
-        shader->SetBool(propertyString + "enabled", true);
+        Tick(scene, engine);
     }
 
-    void DirectionalLight::SceneView(bool selected)
+    void DirectionalLightSystem::Inspector(Scene &scene, Engine &engine)
     {
-        UNUSED(selected);
-        Tick();
-    }
+        for (Entity entity : scene.View<DirectionalLight>())
+        {
+            if (scene.selectedEntity != entity)
+                continue;
+            
+            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
 
-    void Serialize(Serializer &serializer, DirectionalLight &object)
-    {
-        serializer & object.intensity & object.color;
-    }
+            if (ImGui::CollapsingHeader("Directional Light"))
+            {
+                ImGui::DragFloat("intensity", &dl.intensity);
+                ImGui::ColorEdit3("color", &dl.color.x);
+            }
+        }
+    }    
 }

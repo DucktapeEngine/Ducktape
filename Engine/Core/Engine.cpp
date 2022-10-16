@@ -41,9 +41,11 @@ namespace DT
     void Engine::Init(Scene &scene)
     {
         activeScene = &scene;
-        scene.CallLoop(LoopManager::InitLoop);
+        
+        for (System *system : scene.GetSystems())
+            system->Init(scene, *this);
 
-        scene.initializedComponents = true;
+        scene.initialized = true;
     }
 
     bool Engine::IsOpen()
@@ -62,7 +64,8 @@ namespace DT
         renderer.Render(window, config);
 
         if (loopManager.sceneTick)
-            activeScene->CallLoop(LoopManager::TickLoop);
+            for (System *system : activeScene->GetSystems())
+                system->Tick(*activeScene, *this);
     }
 
     void Engine::EndFrame()

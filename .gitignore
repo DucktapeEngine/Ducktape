@@ -1,7 +1,7 @@
 .vscode
-build
 Build
 imgui.ini
 Docs/*
 !Docs/doxygen-awesome*
 !Docs/header.html
+Resources/Scenes/*

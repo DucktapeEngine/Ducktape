@@ -22,20 +22,19 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Components/Component.h>
 #include <Renderer/Shader.h>
 #include <Components/Transform.h>
 #include <Core/Engine.h>
+#include <Scene/Scene.h>
+#include <Core/Serializer.h>
 
 namespace DT
 {
     /**
-     * @brief PointLight class for managing point light.
-     * Extends Component class
+     * @brief PointLight struct for managing point light.
      */
-    class PointLight : public Component
+    struct PointLight
     {
-    public:
         Shader *shader = nullptr;             ///< @brief Pointer to the Shader object.
         Transform *transform;                 ///< @brief Pointer to the Transform object.
         unsigned int lightSpot;               ///< @brief used for instantiated point light's index
@@ -43,35 +42,34 @@ namespace DT
 
         float intensity = 1.f;                ///< @brief Intensity of the point light.
         glm::vec3 color = glm::vec3(1.f);     ///< @brief Color of the point light.
-
-        /**
-         * @brief initiate the point light inside the engine
-         */
-        void Init() override;
-
-        /**
-         * @brief function for point light tick/update inside engine
-         */
-        void Tick() override;
-
-        /**
-         * @brief function for ImGui parameters input widgets
-         */
-        void Inspector() override;
-
-        /**
-         * @brief function for handling point light in a scene view
-         * @param selected boolean representing if current entity is selected
-         */
-        void SceneView(bool selected) override;
-
-        /**
-         * @brief function for point light destruction
-         */
-        void Destroy() override;
-        
-        HANDLER(PointLight);
     };
 
-    void Serialize(Serializer &serializer, PointLight &object);
+    class PointLightSystem : public System
+    {
+    public:
+        /**
+         * @brief Registers Point Light to rendering engine and shader on Initiation.
+         */
+        void Init(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Updates corresponding Point Light properties in shader every frame.
+         */
+        void Tick(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles PointLight struct serialization.
+         */
+        void Inspector(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles Scene View lighting.
+         */
+        void SceneView(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Unregisters Point Light from rendering engine and shader on destruction.
+         */
+        void Destroy(Scene &scene, Engine &engine) override;
+    };
 }

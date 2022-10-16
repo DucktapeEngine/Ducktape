@@ -26,6 +26,8 @@ aryanbaburajan2007@gmail.com
 
 #include <glm/glm.hpp>
 #include <json/json.hpp>
+#include <Renderer/ImGui.h>
+#include <imgui/misc/cpp/imgui_stdlib.h>
 using json = nlohmann::json;
 
 #include <Renderer/Mesh.h>

@@ -20,66 +20,83 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Macro.h>
 #include <Components/PointLight.h>
 
 namespace DT
 {
-    void PointLight::Init()
+    void PointLightSystem::Init(Scene &scene, Engine &engine)
     {
-        transform = &entity.Require<Transform>();
-
-        if (shader == nullptr)
-            shader = &engine->renderer.defaultShader;
-
-        if (engine->renderer.GetFreePointLightSpot(&lightSpot) == false)
+        for (Entity entity : scene.View<PointLight>())
         {
-            engine->debug << "PointLight: No free light spots.\n";
+            PointLight &pl = scene.Get<PointLight>(entity);
+
+            pl.transform = &scene.Require<Transform>(entity);
+
+            if (pl.shader == nullptr)
+                pl.shader = &engine.renderer.defaultShader;
+
+            if (engine.renderer.GetFreePointLightSpot(&pl.lightSpot) == false)
+            {
+                engine.debug << "PointLight: No free light spots.\n";
+            }
+
+            pl.propertyString = "pointLights[" + std::to_string(pl.lightSpot) + "].";
+            
+            pl.shader->Use();
+            pl.shader->SetFloat(pl.propertyString + "constant", 1.0f);
+            pl.shader->SetFloat(pl.propertyString + "quadratic", 1.0f);
+            pl.shader->SetBool(pl.propertyString + "enabled", true);
         }
+    }
 
-        propertyString = "pointLights[" + std::to_string(lightSpot) + "].";
+    void PointLightSystem::Tick(Scene &scene, Engine &engine)
+    {
+        for (Entity entity : scene.View<PointLight>())
+        {
+            PointLight &pl = scene.Get<PointLight>(entity);
+            
+            if (pl.lightSpot == NAN) return;
+
+            pl.shader->Use();
+            pl.shader->SetVec3(pl.propertyString + "position", pl.transform->translation);
         
-        shader->Use();
-        shader->SetFloat(propertyString + "constant", 1.0f);
-        shader->SetFloat(propertyString + "quadratic", 1.0f);
-        shader->SetBool(propertyString + "enabled", true);
+            pl.shader->SetFloat(pl.propertyString + "linear", pl.intensity);
+            pl.shader->SetVec3(pl.propertyString + "ambient", pl.color * pl.intensity);
+            pl.shader->SetVec3(pl.propertyString + "diffuse", pl.color * pl.intensity);
+            pl.shader->SetVec3(pl.propertyString + "specular", pl.color * pl.intensity);
+        }
     }
 
-    void PointLight::Tick()
+    void PointLightSystem::Inspector(Scene &scene, Engine &engine)
     {
-        if (lightSpot == NAN) return;
+        for (Entity entity : scene.View<PointLight>())
+        {
+            if (scene.selectedEntity != entity)
+                continue;
 
-        shader->Use();
-        shader->SetVec3(propertyString + "position", transform->translation);
-    
-        shader->SetFloat(propertyString + "linear", intensity);
-        shader->SetVec3(propertyString + "ambient", color * intensity);
-        shader->SetVec3(propertyString + "diffuse", color * intensity);
-        shader->SetVec3(propertyString + "specular", color * intensity);
+            PointLight &pl = scene.Get<PointLight>(entity);
+
+            if (ImGui::CollapsingHeader("Point Light"))
+            {
+                ImGui::DragFloat("intensity", &pl.intensity);
+                ImGui::ColorEdit3("color", &pl.color.x);
+            }
+        }
     }
 
-    void PointLight::Inspector()
+    void PointLightSystem::SceneView(Scene &scene, Engine &engine)
     {
-        COMPONENT("PointLight");
-        
-        PROPERTY("intensity", &intensity);
-        PROPERTY("color", &color);
+        Tick(scene, engine);
     }
 
-    void PointLight::SceneView(bool selected)
+    void PointLightSystem::Destroy(Scene &scene, Engine &engine)
     {
-        UNUSED(selected);
-        Tick();
-    }
+        for (Entity entity : scene.View<PointLight>())
+        {
+            PointLight &pl = scene.Get<PointLight>(entity);
 
-    void PointLight::Destroy()
-    {
-        engine->renderer.UnoccupyPointLightSpot(lightSpot);
-        shader->SetBool(propertyString + "enabled", false);
-    }
-
-    void Serialize(Serializer &serializer, PointLight &object)
-    {
-        serializer & object.intensity & object.color;
+            engine.renderer.UnoccupyPointLightSpot(pl.lightSpot);
+            pl.shader->SetBool(pl.propertyString + "enabled", false); // TOFIX: Move this to Renderer class
+        }
     }
 }
