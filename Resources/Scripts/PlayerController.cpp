@@ -29,15 +29,6 @@ struct PlayerController
     float speed = 2.5f;
     float sensitivity = 25.f;
 
-    void Init(Entity entity, Scene &scene, Engine &engine)
-    {
-        engine.debug << "Pogn";
-    }
-
-    void Tick(Entity entity, Scene &scene, Engine &engine) {}
-    void SceneView(Entity entity, Scene &scene, Engine &engine) {}
-    void Destroy(Entity entity, Scene &scene, Engine &engine) {}
-
     void Inspector(Entity entity, Scene &scene, Engine &engine)
     {
         if (entity != scene.selectedEntity)
