@@ -30,7 +30,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Scene/Scene.h>
 #include <Core/Engine.h>
-#include <Core/Serializer.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -86,12 +86,19 @@ namespace DT
         void SetEulerRotation(glm::vec3 eulerRotation);
     };
 
+    SERIALIZE(Transform, translation, rotation, scale);
+
     class TransformSystem : System // TOFIX: Register System only if DT_EDITOR flag is on
     {
     public:
         /**
-         * @brief Handles Transform struct serialization.
+         * @brief Serializes Transform properties for Inspector.
          */
         void Inspector(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles Transform serialization.
+         */
+        void Serialize(Scene &scene, Engine &engine) override;
     };
 }

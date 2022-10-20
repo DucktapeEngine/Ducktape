@@ -28,7 +28,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Entity.h>
 #include <Renderer/Material.h>
 #include <Components/Transform.h>
-#include <Core/Serializer.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -42,6 +42,8 @@ namespace DT
         Transform *transform;               ///< @brief Pointer to model transform
         Material material;                  ///< @brief Pointer to material for shading properties
     };
+
+    SERIALIZE(MeshRenderer, material);
     
     class MeshRendererSystem : System
     {
@@ -62,7 +64,12 @@ namespace DT
         void SceneView(Scene &scene, Engine &engine) override;
 
         /**
-         * @brief Handles MeshRenderer struct serialization.
+         * @brief Handles MeshRenderer serialization.
+         */
+        void Serialize(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Serializes MeshRenderer properties for Inspector.
          */
         void Inspector(Scene &scene, Engine &engine) override;
     };

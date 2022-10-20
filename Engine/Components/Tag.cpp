@@ -39,4 +39,14 @@ namespace DT
             }
         }
     }
+    
+    void TagSystem::Serialize(Scene &scene, Engine &engine)
+    {
+        for (Entity entity : scene.View<Tag>())
+        {
+            Tag &tag = scene.Get<Tag>(entity);
+
+            engine.serialization.SerializeComponent("Tag", tag, entity);
+        }
+    }
 }

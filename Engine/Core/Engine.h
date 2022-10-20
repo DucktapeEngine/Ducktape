@@ -36,7 +36,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
 #include <Core/UserPointer.h>
-#include <Core/Serializer.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -52,7 +52,7 @@ namespace DT
         Debug debug;                ///< @brief Debugger to output debug messages.
         Scene *activeScene;         ///< @brief The current scene the application is using.
         UserPointer userPointer;    ///< @brief Points to multiple systems stored as a user pointer in GLFW.
-        Serializer serializer;
+        Serialization serialization;
 
         Engine(const Configuration &configuration);
 

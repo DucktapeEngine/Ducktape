@@ -88,6 +88,16 @@ namespace DT
     {
         Tick(scene, engine);
     }
+    
+    void PointLightSystem::Serialize(Scene &scene, Engine &engine)
+    {
+        for (Entity entity : scene.View<PointLight>())
+        {
+            PointLight &pl = scene.Get<PointLight>(entity);
+
+            engine.serialization.SerializeComponent("PointLight", pl, entity);
+        }
+    }
 
     void PointLightSystem::Destroy(Scene &scene, Engine &engine)
     {

@@ -86,4 +86,14 @@ namespace DT
             }
         }
     }
+    
+    void TransformSystem::Serialize(Scene &scene, Engine &engine)
+    {
+        for (Entity entity : scene.View<Transform>())
+        {
+            Transform &trans = scene.Get<Transform>(entity);
+
+            engine.serialization.SerializeComponent("Transform", trans, entity);
+        }
+    }
 }

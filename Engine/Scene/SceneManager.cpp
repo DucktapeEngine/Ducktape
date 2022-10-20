@@ -24,26 +24,25 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    // void SceneManager::SaveLoop(Component* component)
-    // {
-    //     serializer.SetMode(SerializeMode::S);
-    //     component->Serialize(serializer);
+    void SceneManager::Save(const std::string &savePath, Scene &scene, Engine &engine)
+    {
+        std::ofstream output(savePath);
+        engine.serialization.data.clear();
 
-    //     data["components"][componentIdx]["id"] = component->GetId();
-    //     data["components"][componentIdx]["entity"] = component->entity.handle;
-    //     data["components"][componentIdx]["properties"] = serializer.GetData();
-
-    //     componentIdx++;
-    //     serializer.ClearData();
-    // }
-
-    // void SceneManager::Save(Scene *scene, const std::string &savePath)
-    // {
-    //     std::ofstream output(savePath);
-    //     scene->CallLoop(SaveLoop);
-    //     output << data.dump();
+        for (System *system : scene.GetSystems())
+            system->Serialize(scene, engine);
         
-    //     data.clear();
-    //     componentIdx = 0;
-    // }
+        output << engine.serialization.data.dump(4);
+    }
+
+    void SceneManager::Load(const std::string &savePath, Scene &scene, Engine &engine)
+    {
+        // std::ofstream output(savePath);
+        // engine.serialization.data.clear();
+
+        // for (System *system : scene.GetSystems())
+        //     system->Serialize(scene, engine);
+        
+        // output << engine.serialization.data.dump();
+    }
 }

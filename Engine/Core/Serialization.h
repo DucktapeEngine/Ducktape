@@ -22,16 +22,38 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Scene/Scene.h>
-#include <Components/Camera.h>
-#include <Components/DirectionalLight.h>
-#include <Components/MeshRenderer.h>
-#include <Components/PointLight.h>
-#include <Components/Tag.h>
-#include <Components/Transform.h>
-#include <Core/Serialization.h>
+#include <string>
+
+#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <json/json.hpp>
+using json = nlohmann::json;
+
+#include <Scene/Entity.h>
+
+#define SERIALIZE NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
+
+namespace glm
+{
+    SERIALIZE(vec2, x, y);
+    SERIALIZE(vec3, x, y, z);
+    SERIALIZE(quat, x, y, z, w);
+}
 
 namespace DT
 {
-    void RegisterComponentSystems(Scene &scene);
+    class Serialization
+    {
+    public:
+        json data;
+
+        template <typename T>
+        void SerializeComponent(const std::string componentName, T &component, Entity entity)
+        {
+            json componentData = component;
+            componentData["id"] = componentName;
+            componentData["entity"] = entity;
+            data["components"].push_back(componentData);
+        }
+    };
 }

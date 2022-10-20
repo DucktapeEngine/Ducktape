@@ -67,4 +67,14 @@ namespace DT
             }
         }
     }
+    
+    void CameraSystem::Serialize(Scene &scene, Engine &engine)
+    {
+        for (Entity entity : scene.View<Camera>())
+        {
+            Camera &cam = scene.Get<Camera>(entity);
+
+            engine.serialization.SerializeComponent("Camera", cam, entity);
+        }
+    }
 }
