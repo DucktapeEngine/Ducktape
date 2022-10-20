@@ -26,7 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <Components/Transform.h>
 #include <Core/Engine.h>
 #include <Scene/System.h>
-#include <Core/Serializer.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -44,6 +44,8 @@ namespace DT
         glm::vec3 color = glm::vec3(1.f);     ///< @brief Color of the directional light.
     };
 
+    SERIALIZE(DirectionalLight, intensity, color);
+
     class DirectionalLightSystem : System
     {
     public:
@@ -58,9 +60,14 @@ namespace DT
         void Tick(Scene &scene, Engine &engine) override;
 
         /**
-         * @brief Handles DirectionalLight struct serialization.
+         * @brief Serializes DirectionalLight properties for Inspector.
          */
         void Inspector(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles DirectionalLight serialization.
+         */
+        void Serialize(Scene &scene, Engine &engine) override;
 
         /**
          * @brief Handles Scene View lighting.

@@ -24,12 +24,16 @@ aryanbaburajan2007@gmail.com
 
 #include <glm/glm.hpp>
 
+#include <Core/Serialization.h>
+
 namespace DT
 {
-    class Material
+    struct Material
     {
-    public:
         glm::vec3 color = glm::vec3(1.0f);
         float shininess = 0.5f;
+
     };
+
+    SERIALIZE(Material, color, shininess);
 }

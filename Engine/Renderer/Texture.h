@@ -30,6 +30,8 @@ aryanbaburajan2007@gmail.com
 #include <GLFW/glfw3.h>
 #include <utils/stb_image.h>
 
+#include <Core/Serialization.h>
+
 namespace DT
 {
     /**
@@ -58,4 +60,6 @@ namespace DT
          */
         void Delete();
     };
+    
+    SERIALIZE(Texture, type, path); // TODO: Switch to Resource ID once Resource System has been implemented
 }

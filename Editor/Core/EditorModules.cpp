@@ -98,7 +98,7 @@ namespace DT
 
         EditorModules::SceneView(engine);
         // EditorModules::ToolBar(engine); // Called from EditorModules::SceneView() itself
-        // EditorModules::ResourceBrowser(engine);
+        EditorModules::ResourceBrowser(engine);
         EditorModules::Hierarchy(engine);
         EditorModules::Console(engine);
         EditorModules::Inspector(engine);
@@ -107,12 +107,12 @@ namespace DT
     void EditorModules::Init(Engine &engine)
     {
         // A bit unsafe to do this since path might change, but for now it just tries to go 2 level up and find resources folder
-        // rootDir=std::filesystem::current_path().parent_path().parent_path() / "Resources";
-        // currentDir = rootDir; 
-        // // Note that icons are from https://www.icons8.com and not fully copyright free.
-        // // TODO: Add self drawn icons
-        // folderIconID = Texture(rootDir.string()+"/Icons/Folder.png","diffuse").id;
-        // fileIconID = Texture(rootDir.string()+"/Icons/File.png","diffuse").id;
+        rootDir=std::filesystem::current_path().parent_path() / "Resources";
+        currentDir = rootDir; 
+        // Note that icons are from https://www.icons8.com and not fully copyright free.
+        // TODO: Add self drawn icons
+        folderIconID = Texture((rootDir / "Icons" / "folder.png").string(),"diffuse").id;
+        fileIconID = Texture((rootDir / "Icons" / "file.png").string(),"diffuse").id;
     }
 
     void EditorModules::ToolBar(Engine &engine)
@@ -238,7 +238,7 @@ namespace DT
 
         if (ImGui::Button("Save", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
         {
-            // SceneManager::Save(engine.activeScene, "../Resources/Scenes/scene.json");
+            SceneManager::Save("../Resources/Scenes/scene.json", *engine.activeScene, engine);
         }
 
         engine.activeScene->sceneRegistry.each([&](const entt::entity entity)

@@ -25,7 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <string>
 
 #include <Core/Engine.h>
-#include <Core/Serializer.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -37,12 +37,19 @@ namespace DT
         std::string name = "Unnamed";       ///< @brief Tag name
     };
 
+    SERIALIZE(Tag, name);
+
     class TagSystem : public System
     {
     public:
         /**
-         * @brief Handles Tag struct serialization.
+         * @brief Serializes Tag properties for Inspector.
          */
         void Inspector(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles Tag serialization.
+         */
+        void Serialize(Scene &scene, Engine &engine) override;
     };
 }

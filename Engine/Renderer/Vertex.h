@@ -23,6 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <glm/glm.hpp>
+#include <Core/Serialization.h>
 
 #define MAX_BONE_INFLUENCE 4
 
@@ -38,4 +39,6 @@ namespace DT
         int boneIDs[MAX_BONE_INFLUENCE];     ///< @brief list of bone IDs
         float weights[MAX_BONE_INFLUENCE];   ///< @brief list of weights
     };
+    
+    SERIALIZE(Vertex, position, normal, texCoords, tangent, bitangent);
 }

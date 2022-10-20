@@ -28,6 +28,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Texture.h>
 #include <Renderer/Shader.h>
 #include <Core/Debug.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -56,4 +57,6 @@ namespace DT
          */
         void Setup();
     };
+    
+    // SERIALIZE(Mesh, textures); // TOFIX: Serialization of vector<T> fails to compile, commented atm
 }

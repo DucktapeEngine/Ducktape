@@ -25,17 +25,14 @@ aryanbaburajan2007@gmail.com
 #include <fstream>
 
 #include <Scene/Scene.h>
-#include <Core/Serializer.h>
+#include <Core/Serialization.h>
+#include <Core/Engine.h>
 
 namespace DT
 {
     namespace SceneManager
     {
-        // inline json data;
-        // inline int componentIdx = 0;
-        // inline Serializer serializer;
-
-        // void SaveLoop(Component* component);
-        // void Save(Scene *scene, const std::string &savePath);
+        void Save(const std::string &savePath, Scene &scene, Engine &engine);
+        void Load(const std::string &savePath, Scene &scene, Engine &engine);
     }
 }

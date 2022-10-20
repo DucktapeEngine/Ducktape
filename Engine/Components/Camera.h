@@ -25,7 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Engine.h>
 #include <Components/Transform.h>
 #include <Scene/System.h>
-#include <Core/Serializer.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -50,7 +50,8 @@ namespace DT
          */
         glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize);
     };
-
+    
+    SERIALIZE(Camera, isOrtho, fov);
 
     class CameraSystem : System
     {
@@ -61,8 +62,13 @@ namespace DT
         void Init(Scene &scene, Engine &engine) override;
 
         /**
-         * @brief Handles Camera struct serialization.
+         * @brief Serializes Camera properties for Inspector.
          */
         void Inspector(Scene &scene, Engine &engine) override;
+
+        /**
+         * @brief Handles Camera serialization.
+         */
+        void Serialize(Scene &scene, Engine &engine) override;
     };
 }
