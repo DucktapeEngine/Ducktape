@@ -4,7 +4,9 @@
 #include <filesystem>
 #include <imgui.h>
 #include <Extra/imgui_extra.h>
+#ifdef _WIN32
 #include <windows.h>
+#endif
 #include <Renderer/Texture.h>
 
 namespace DT
