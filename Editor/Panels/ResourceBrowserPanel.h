@@ -1,0 +1,31 @@
+#pragma once
+
+#include "Panel.h"
+#include <filesystem>
+#include <imgui.h>
+#include <Extra/imgui_extra.h>
+#include <windows.h>
+#include <Renderer/Texture.h>
+
+namespace DT
+{
+    class ResourceBrowserPanel :public Panel 
+    {
+    private:
+        std::filesystem::path currentDir;
+        std::filesystem::path rootDir;
+        unsigned int folderIconID;
+        unsigned int fileIconID;
+        ImGuiTextFilter Filter;
+        // Switches to column layout when item size is larger than this value
+        const float columnSwitchSize=24.0f;
+        void RenderImGuiWindow();
+        void RenderDirectoryItem(std::filesystem::directory_entry directoryEntry,int& itemSize);
+        void OnItemDoubleClicked(bool isDir,std::filesystem::path path);
+        unsigned int GetKnownIconID(std::filesystem::path path);
+    public:
+        void Start() override;
+        void Update(Engine &engine) override;
+        void Destroy() override;
+    };
+}
