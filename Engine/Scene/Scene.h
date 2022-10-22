@@ -111,18 +111,18 @@ namespace DT
 
             const Iterator end()
             {
-                return Iterator(this, noAllocatedSystems - 1);
+                return Iterator(this, noAllocatedSystems);
             }
         };
 
         SystemPool systems;
     public:
-        entt::registry sceneRegistry;           ///< @brief Registry of all the components and entities in the scene
-        Engine *engine;                         ///< @brief Pointer to the engine instance
-        Camera *activeCamera;                   ///< @brief Active camera of the scene
-        bool initialized = false;               ///< @brief Component initialization state
-        Module gameModule;                      ///< @breif Dll containing the game
-        Entity selectedEntity;
+        entt::registry sceneRegistry;           /// @brief Registry of all the components and entities in the scene
+        Engine *engine;                         /// @brief Pointer to the engine instance
+        Camera *activeCamera;                   /// @brief Active camera of the scene
+        bool initialized = false;               /// @brief Component initialization state
+        Module gameModule;                      /// @brief Dll containing the game
+        Entity selectedEntity = entt::null;     /// @brief FIXME: Find cause of buggy identifier and why we have to pass null
 
         Scene(Engine *holderEngine);
         ~Scene();
