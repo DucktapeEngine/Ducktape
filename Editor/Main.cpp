@@ -23,8 +23,13 @@ aryanbaburajan2007@gmail.com
 #define DT_DEBUG
 #include <Ducktape.h>
 
-#include <Core/Editor.h>
-#include <Core/EditorModules.h>
+#include "Editor.h"
+
+#include <Panels/SceneViewPanel.h>
+#include <Panels/HierarchyPanel.h>
+#include <Panels/ResourceBrowserPanel.h>
+#include <Panels/ConsolePanel.h>
+#include <Panels/InspectorPanel.h>
 
 using namespace DT;
 
@@ -67,6 +72,13 @@ int main()
         e.loopManager.sceneTick = false;
 
         e.Init(mainScene);
+
+        // Toolbar is rendered in SceneViewPanel now
+        Editor::AddPanel<SceneViewPanel>();
+        Editor::AddPanel<HierarchyPanel>();
+        Editor::AddPanel<ResourceBrowserPanel>();
+        Editor::AddPanel<ConsolePanel>();
+        Editor::AddPanel<InspectorPanel>();
 
         Editor::Init(e);
 
