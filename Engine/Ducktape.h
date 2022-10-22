@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#define DEG2RAD 0.0174533f
+constexpr float DEG2RAD = 0.0174533f;
 
 // Ducktape includes
 #include <Components/RegisterComponentSystems.h>
