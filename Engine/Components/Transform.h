@@ -31,6 +31,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Scene.h>
 #include <Core/Engine.h>
 #include <Core/Serialization.h>
+#include <functional>
 
 namespace DT
 {
@@ -88,7 +89,7 @@ namespace DT
 
     SERIALIZE(Transform, translation, rotation, scale);
 
-    class TransformSystem : System // TOFIX: Register System only if DT_EDITOR flag is on
+    class TransformSystem :public System // TOFIX: Register System only if DT_EDITOR flag is on
     {
     public:
         /**
@@ -100,5 +101,7 @@ namespace DT
          * @brief Handles Transform serialization.
          */
         void Serialize(Scene &scene, Engine &engine) override;
+    private:
+        void PopupContext(const char* label, std::function<void()> func);
     };
 }

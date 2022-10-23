@@ -50,9 +50,9 @@ namespace DT
         unsigned int quadVAO, quadVBO;
         unsigned int skyboxVAO, skyboxVBO;
         Cubemap skyboxCubemap;
-        Shader defaultShader = Shader("../Resources/shaders/default.vert", "../Resources/shaders/default.frag");
-        Shader screenShader = Shader("../Resources/shaders/screen.vert", "../Resources/shaders/screen.frag");
-        Shader skyboxShader = Shader("../Resources/shaders/skybox.vert", "../Resources/shaders/skybox.frag");
+        Shader defaultShader = Shader("../Resources/Shaders/default.vert", "../Resources/Shaders/default.frag");
+        Shader screenShader = Shader("../Resources/Shaders/screen.vert", "../Resources/Shaders/screen.frag");
+        Shader skyboxShader = Shader("../Resources/Shaders/skybox.vert", "../Resources/Shaders/skybox.frag");
         glm::vec2 customViewportSize;
 
         glm::mat4 *cameraView;

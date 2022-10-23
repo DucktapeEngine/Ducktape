@@ -71,19 +71,48 @@ namespace DT
         {
             if (scene.selectedEntity != entity)
                 continue;
-
+                
             Transform &trans = scene.Get<Transform>(entity);
-
             if (ImGui::CollapsingHeader("Transform"))
             {
+                if (ImGui::BeginPopupContextItem())
+                {
+                    if (ImGui::MenuItem("Reset##Transform"))
+                    {
+                        trans.translation = glm::vec3(0);
+                        trans.SetEulerRotation(glm::vec3(0));
+                        trans.scale = glm::vec3(1);
+                    }
+                    ImGui::EndPopup();
+                }
                 ImGui::Vec3("position", &trans.translation);
+                PopupContext("Position", [&]() {trans.translation = glm::vec3(0); });
 
                 glm::vec3 eulerAngles = trans.GetEulerRotation();
                 ImGui::Vec3("rotation", &eulerAngles);
+                PopupContext("Rotation", [&]() { eulerAngles = glm::vec3(0); });
                 trans.SetEulerRotation(eulerAngles);
 
                 ImGui::Vec3("scale", &trans.scale);
+                PopupContext("Scale", [&]() {trans.scale = glm::vec3(1); });
             }
+        }
+    }
+
+    void TransformSystem::PopupContext(const char* label, std::function<void()> func)
+    {
+        std::string popupStr = (std::string("Popup") + label);
+        std::string menuStr = (std::string("Reset##") + label);
+
+        if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+            ImGui::OpenPopup(popupStr.c_str());
+        if (ImGui::BeginPopup(popupStr.c_str()))
+        {
+            if (ImGui::MenuItem(menuStr.c_str()))
+            {
+                func();
+            }
+            ImGui::EndPopup();
         }
     }
     

@@ -31,6 +31,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Renderer.h>
 #include <Core/Window.h>
 #include <Core/Engine.h>
+#include <Panels/Panel.h>
 
 namespace DT
 {
@@ -65,5 +66,15 @@ namespace DT
         void FocusWindow();
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
+        void SetDarkTheme();
+        inline std::vector<Panel*> panels;
+
+        template<typename T>
+        T* AddPanel()
+        {
+            T* Tptr = new T();
+            panels.push_back(Tptr);
+            return Tptr;
+        }
     }
 }
