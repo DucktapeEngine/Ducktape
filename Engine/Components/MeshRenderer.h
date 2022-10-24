@@ -37,22 +37,22 @@ namespace DT
      */
     struct MeshRenderer
     {
-        Mesh mesh;                          ///< @brief Mesh data and buffers for runtime drawing
-        Shader *shader = nullptr;           ///< @brief Pointer to shader for model drawing
-        Transform *transform;               ///< @brief Pointer to model transform
-        Material material;                  ///< @brief Pointer to material for shading properties
+        Mesh mesh;                ///< @brief Mesh data and buffers for runtime drawing
+        Shader *shader = nullptr; ///< @brief Pointer to shader for model drawing
+        Transform *transform;     ///< @brief Pointer to model transform
+        Material material;        ///< @brief Pointer to material for shading properties
     };
 
-    SERIALIZE(MeshRenderer, material);
-    
+    SERIALIZE(MeshRenderer, material, mesh);
+
     class MeshRendererSystem : System
     {
     public:
         /**
          * @brief Initializes entity model transform, shader and mesh buffers.
          */
-        void Init(Scene &scene, Engine &engine) override;        
-        
+        void Init(Scene &scene, Engine &engine) override;
+
         /**
          * @brief Draws current mesh for current scene.
          */

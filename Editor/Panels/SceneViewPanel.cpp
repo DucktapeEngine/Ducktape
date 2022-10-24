@@ -5,20 +5,20 @@ namespace DT
     void SceneViewPanel::Update(Engine &engine)
     {
         selectedEntity = engine.activeScene->selectedEntity;
-        if(sceneViewActive)
+        if (sceneViewActive)
         {
             // Controls
             // Move
             const float speed = 2.5f, sensitivity = 25.f;
             bool holdingRightButton = engine.input.GetMouseButton(MOUSE_BUTTON_RIGHT);
 
-            if (holdingRightButton && engine.input.GetKey(KEY_W))
+            if (engine.input.GetKey(KEY_UP))
                 engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
-            if (holdingRightButton && engine.input.GetKey(KEY_S))
+            if (engine.input.GetKey(KEY_DOWN))
                 engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
-            if (holdingRightButton && engine.input.GetKey(KEY_A))
+            if (engine.input.GetKey(KEY_LEFT))
                 engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
-            if (holdingRightButton && engine.input.GetKey(KEY_D))
+            if (engine.input.GetKey(KEY_RIGHT))
                 engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
 
             // Look
@@ -33,11 +33,12 @@ namespace DT
                     pitch = -89.0f;
             }
         }
-        engine.activeScene->activeCamera->transform->rotation = glm::quat({ pitch * DEG2RAD, yaw * DEG2RAD, 0.0f });
+        engine.activeScene->activeCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+
         // Transform
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
         ImGui::Begin("Scene View");
-        sceneViewActive = ImGui::IsWindowFocused();
+        sceneViewActive = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
         // ImVec2 windowSize = ImGui::GetWindowSize();
         ImVec2 vMin = ImGui::GetWindowContentRegionMin();
         ImVec2 vMax = ImGui::GetWindowContentRegionMax();
@@ -53,8 +54,8 @@ namespace DT
         {
             if (glm::vec2(windowSize.x, windowSize.y) != glm::vec2(0.f, 0.f))
             {
-                engine.window.SetWindowSize({ windowSize.x, windowSize.y });
-                engine.renderer.SetViewport({ windowSize.x, windowSize.y });
+                engine.window.SetWindowSize({windowSize.x, windowSize.y});
+                engine.renderer.SetViewport({windowSize.x, windowSize.y});
             }
         }
 
@@ -67,7 +68,7 @@ namespace DT
 
         if (selectedEntity != entt::null && engine.activeScene->Has<Transform>(selectedEntity))
         {
-            Transform& transform = engine.activeScene->Get<Transform>(selectedEntity);
+            Transform &transform = engine.activeScene->Get<Transform>(selectedEntity);
 
             glm::mat4 model = transform.GetModelMatrix();
 

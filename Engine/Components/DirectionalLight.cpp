@@ -53,7 +53,8 @@ namespace DT
         {
             DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
 
-            if (dl.lightSpot == NAN) continue;
+            if (dl.lightSpot == NAN)
+                continue;
 
             dl.shader->Use();
             dl.shader->SetVec3(dl.propertyString + "direction", dl.transform->Forward());
@@ -78,7 +79,7 @@ namespace DT
     {
         Tick(scene, engine);
     }
-    
+
     void DirectionalLightSystem::Serialize(Scene &scene, Engine &engine)
     {
         for (Entity entity : scene.View<DirectionalLight>())
@@ -95,7 +96,7 @@ namespace DT
         {
             if (scene.selectedEntity != entity)
                 continue;
-            
+
             DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
 
             if (ImGui::CollapsingHeader("Directional Light"))
@@ -104,5 +105,5 @@ namespace DT
                 ImGui::ColorEdit3("color", &dl.color.x);
             }
         }
-    }    
+    }
 }

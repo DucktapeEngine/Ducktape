@@ -30,6 +30,7 @@ aryanbaburajan2007@gmail.com
 #include <Panels/ResourceBrowserPanel.h>
 #include <Panels/ConsolePanel.h>
 #include <Panels/InspectorPanel.h>
+#include <Panels/MenuBarPanel.h>
 
 using namespace DT;
 
@@ -41,21 +42,25 @@ int main()
         config.windowSize = {800, 600};
         config.windowTitle = "DucktapeTest";
         config.drawToQuad = false;
-        config.windowIconPath = "../Resources/textures/logo.png";
+        config.projectDirectory = DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox";
         config.skyboxCubemapPaths = {
-            "../Resources/Textures/Skybox/right.jpg",
-            "../Resources/Textures/Skybox/left.jpg",
-            "../Resources/Textures/Skybox/top.jpg",
-            "../Resources/Textures/Skybox/bottom.jpg",
-            "../Resources/Textures/Skybox/front.jpg",
-            "../Resources/Textures/Skybox/back.jpg"
-        };
+            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "right.jpg",
+            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "left.jpg",
+            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "top.jpg",
+            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "bottom.jpg",
+            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "front.jpg",
+            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "back.jpg"};
+        config.gameModule = DUCKTAPE_ROOT_DIR / "Build" / "Resources" / "Sandbox" / "Assets" / "Scripts" / "libGame.dll";
 
         Engine e(config);
-        Scene mainScene(&e);
 
-        mainScene.LoadModule("./Resources/Scripts/libGame.dll");
+        // Engine e(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox");
+
+        Scene mainScene(&e, e.config);
+
         RegisterComponentSystems(mainScene);
+
+        // SceneManager::Load(e.config.projectDirectory / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
 
         Entity camera = mainScene.CreateEntity();
         mainScene.Assign<Tag>(camera).name = "Camera";
@@ -63,11 +68,10 @@ int main()
         mainScene.Assign<Camera>(camera);
         mainScene.Assign<DirectionalLight>(camera);
 
-        std::vector<Mesh> meshes = LoadModel("../Resources/Models/backpack/backpack.obj").meshes;
+        // std::vector<Mesh> meshes = LoadModel(e.config.projectDirectory / "Assets" / "Models" / "backpack" / "backpack.obj").meshes;
+        std::vector<Mesh> meshes = LoadModel(e.config.projectDirectory / "Assets" / "Models" / "cube.obj").meshes;
         for (Mesh mesh : meshes)
-        {
             mainScene.Assign<MeshRenderer>(mainScene.CreateEntity()).mesh = mesh;
-        }
 
         e.loopManager.sceneTick = false;
 
@@ -79,6 +83,7 @@ int main()
         Editor::AddPanel<ResourceBrowserPanel>();
         Editor::AddPanel<ConsolePanel>();
         Editor::AddPanel<InspectorPanel>();
+        Editor::AddPanel<MenuBarPanel>();
 
         Editor::Init(e);
 

@@ -24,7 +24,7 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Texture::Texture(const std::string &_path, const std::string &_type)
+    Texture::Texture(std::filesystem::path _path, std::string _type)
     {
         stbi_set_flip_vertically_on_load(true);
 
@@ -33,7 +33,7 @@ namespace DT
 
         glGenTextures(1, &id);
 
-        unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+        unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &nrChannels, 0);
 
         if (data)
         {

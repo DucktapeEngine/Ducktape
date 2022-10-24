@@ -32,6 +32,7 @@ using json = nlohmann::json;
 #include <Scene/Entity.h>
 
 #define SERIALIZE NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
+#define IN_SERIALIZE NLOHMANN_DEFINE_TYPE_INTRUSIVE
 
 namespace glm
 {
@@ -46,14 +47,23 @@ namespace DT
     {
     public:
         json data;
+        bool isSerializing = true;
 
         template <typename T>
         void SerializeComponent(const std::string componentName, T &component, Entity entity)
         {
-            json componentData = component;
-            componentData["id"] = componentName;
-            componentData["entity"] = entity;
-            data["components"].push_back(componentData);
+            if (isSerializing)
+            {
+                json componentData = component;
+                componentData["id"] = componentName;
+                componentData["entity"] = entity;
+                data["components"].push_back(componentData);
+            }
+            else
+            {
+                component = data["components"][0];
+                data["components"].erase(data["components"].begin());
+            }
         }
     };
 }

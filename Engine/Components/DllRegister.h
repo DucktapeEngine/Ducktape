@@ -22,34 +22,12 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <array>
-#include <iostream>
-#include <filesystem>
+#include <Components/RegisterComponentSystems.h>
+using namespace DT;
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <utils/stb_image.h>
-
-namespace DT
-{
-    /**
-     * @brief Cubemap class for managing cubemap
-     */
-    class Cubemap
-    {
-    public:
-        unsigned int id;     ///< @brief Unique ID for each cubemap
-
-        /**
-         * @brief Creare a new Cubemap object.
-         * @param paths list of 6 texture/image path for the each side of cubemap
-         */
-        Cubemap(std::array<std::filesystem::path, 6> paths);
-
-        /**
-         * @brief Destroys a Cubemap object.
-         */
-        ~Cubemap();
-    };
-}
+REGISTER(Camera);
+REGISTER(DirectionalLight);
+REGISTER(MeshRenderer);
+REGISTER(PointLight);
+REGISTER(Tag);
+REGISTER(Transform);

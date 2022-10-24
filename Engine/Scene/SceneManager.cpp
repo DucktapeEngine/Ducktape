@@ -24,25 +24,55 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void SceneManager::Save(const std::string &savePath, Scene &scene, Engine &engine)
+    void SceneManager::Save(std::filesystem::path savePath, Scene &scene, Engine &engine)
     {
         std::ofstream output(savePath);
         engine.serialization.data.clear();
+        engine.serialization.isSerializing = true;
 
         for (System *system : scene.GetSystems())
             system->Serialize(scene, engine);
-        
+
         output << engine.serialization.data.dump(4);
     }
 
-    void SceneManager::Load(const std::string &savePath, Scene &scene, Engine &engine)
+    void SceneManager::Load(std::filesystem::path loadPath, Scene &scene, Engine &engine)
     {
-        // std::ofstream output(savePath);
-        // engine.serialization.data.clear();
+        std::ifstream input(loadPath);
+        std::stringstream inputBuffer;
+        inputBuffer << input.rdbuf();
+        engine.serialization.data = json::parse(inputBuffer.str());
 
-        // for (System *system : scene.GetSystems())
-        //     system->Serialize(scene, engine);
-        
-        // output << engine.serialization.data.dump();
+        // Create EC-like Scene Data for easy scene construction
+        json sceneData;
+        for (json &component : engine.serialization.data["components"])
+        {
+            json editedComponent = component;
+            editedComponent.erase("entity");
+
+            sceneData["entities"][(int)component["entity"]]["components"].push_back(editedComponent);
+        }
+
+        scene.sceneRegistry.clear();
+
+        // Create the scene structure
+        for (json &entityData : sceneData["entities"])
+        {
+            Entity entity = scene.CreateEntity();
+
+            for (json &componentData : entityData["components"])
+                scene.Assign(entity, componentData["id"]);
+        }
+
+        // Deserialize
+        engine.serialization.isSerializing = false;
+
+        for (System *system : scene.GetSystems())
+            system->Serialize(scene, engine);
+
+        for (System *system : scene.GetSystems())
+            system->Init(scene, engine);
+
+        std::cout << "Loaded scene successfully\n";
     }
 }

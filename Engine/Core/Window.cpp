@@ -158,10 +158,10 @@ namespace DT
         glfwSetWindowTitle(window, title.c_str());
     }
 
-    void Window::SetIcon(const std::string &path)
+    void Window::SetIcon(std::filesystem::path path)
     {
         int width, height, nrChannels;
-        unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+        unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &nrChannels, 0);
         if (data)
         {
             GLFWimage image;

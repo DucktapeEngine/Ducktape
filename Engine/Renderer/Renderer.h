@@ -37,47 +37,48 @@ aryanbaburajan2007@gmail.com
 #include <Core/Debug.h>
 #include <Renderer/Cubemap.h>
 #include <Core/UserPointer.h>
+#include <Core/Macro.h>
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
 
 namespace DT
 {
-    class Renderer
-    {
-    public:
-        unsigned int FBO, RBO, renderTexture;
-        unsigned int quadVAO, quadVBO;
-        unsigned int skyboxVAO, skyboxVBO;
-        Cubemap skyboxCubemap;
-        Shader defaultShader = Shader("../Resources/Shaders/default.vert", "../Resources/Shaders/default.frag");
-        Shader screenShader = Shader("../Resources/Shaders/screen.vert", "../Resources/Shaders/screen.frag");
-        Shader skyboxShader = Shader("../Resources/Shaders/skybox.vert", "../Resources/Shaders/skybox.frag");
-        glm::vec2 customViewportSize;
+        class Renderer
+        {
+        public:
+                unsigned int FBO, RBO, renderTexture;
+                unsigned int quadVAO, quadVBO;
+                unsigned int skyboxVAO, skyboxVBO;
+                Cubemap skyboxCubemap;
+                Shader defaultShader = Shader(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "default.vert", DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "default.frag");
+                Shader screenShader = Shader(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "screen.vert", DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "screen.frag");
+                Shader skyboxShader = Shader(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "skybox.vert", DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "skybox.frag");
+                glm::vec2 customViewportSize;
 
-        glm::mat4 *cameraView;
-        glm::mat4 *cameraProjection;
-        glm::vec3 *cameraPosition;
-        glm::quat *cameraRotation;
-        bool *isOrtho;
-        float *fov;
+                glm::mat4 *cameraView;
+                glm::mat4 *cameraProjection;
+                glm::vec3 *cameraPosition;
+                glm::quat *cameraRotation;
+                bool *isOrtho;
+                float *fov;
 
-        std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
-        std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};
+                std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
+                std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};
 
-        Renderer(Window &window, Configuration &config);
-        void Render(Window &window, Configuration &config);
-        ~Renderer();
+                Renderer(Window &window, Configuration &config);
+                void Render(Window &window, Configuration &config);
+                ~Renderer();
 
-        void SetViewport(glm::vec2 viewportsize);
+                void SetViewport(glm::vec2 viewportsize);
 
-        void LoadSkybox(std::array<std::string, 6> paths);
+                void LoadSkybox(std::array<std::filesystem::path, 6> paths);
 
-        bool GetFreeDirectionalLightSpot(unsigned int *spot);
-        void UnoccupyDirectionalLightSpot(unsigned int spot);
-        bool GetFreePointLightSpot(unsigned int *spot);
-        void UnoccupyPointLightSpot(unsigned int spot);
-        
-        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
-    };
+                bool GetFreeDirectionalLightSpot(unsigned int *spot);
+                void UnoccupyDirectionalLightSpot(unsigned int spot);
+                bool GetFreePointLightSpot(unsigned int *spot);
+                void UnoccupyPointLightSpot(unsigned int spot);
+
+                static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
+        };
 }

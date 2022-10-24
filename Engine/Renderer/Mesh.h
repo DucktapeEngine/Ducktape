@@ -29,6 +29,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Shader.h>
 #include <Core/Debug.h>
 #include <Core/Serialization.h>
+#include <Core/Macro.h>
 
 namespace DT
 {
@@ -38,13 +39,13 @@ namespace DT
     class Mesh
     {
     public:
-        std::vector<Vertex> vertices;            ///< @brief vector of Vertex objects
-        std::vector<unsigned int> indices;       ///< @brief vector of indices of vertices vector
-        std::vector<Texture> textures;           ///< @brief vector of Texture objects
+        std::vector<Vertex> vertices;      ///< @brief vector of Vertex objects
+        std::vector<unsigned int> indices; ///< @brief vector of indices of vertices vector
+        std::vector<Texture> textures;     ///< @brief vector of Texture objects
 
-        unsigned int VBO;                        ///< @brief id of vertex buffer object
-        unsigned int EBO;                        ///< @brief id of element array buffer object
-        unsigned int VAO;                        ///< @brief id of vertex array buffer object
+        unsigned int VBO; ///< @brief id of vertex buffer object
+        unsigned int EBO; ///< @brief id of element array buffer object
+        unsigned int VAO; ///< @brief id of vertex array buffer object
 
         /**
          * @brief Draws the mesh with given shader object
@@ -57,6 +58,6 @@ namespace DT
          */
         void Setup();
     };
-    
-    // SERIALIZE(Mesh, textures); // TOFIX: Serialization of vector<T> fails to compile, commented atm
+
+    SERIALIZE(Mesh, vertices, indices, textures);
 }

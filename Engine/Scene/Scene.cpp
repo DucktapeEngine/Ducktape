@@ -24,9 +24,11 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Scene::Scene(Engine *holderEngine)
+    Scene::Scene(Engine *holderEngine, Configuration &config)
     {
         engine = holderEngine;
+
+        LoadModule(config.gameModule);
     }
 
     Scene::~Scene()
@@ -34,7 +36,7 @@ namespace DT
         gameModule.Free();
     }
 
-    void Scene::LoadModule(const std::string &path)
+    void Scene::LoadModule(std::filesystem::path path)
     {
         gameModule.Load(path);
         if (!gameModule.module)

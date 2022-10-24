@@ -1,0 +1,26 @@
+{
+    "drawToQuad": false,
+    "drawWireframe": false,
+    "hideWindow": false,
+    "skyboxCubemapPaths": [
+        "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Textures\\Skybox\\right.jpg",
+        "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Textures\\Skybox\\left.jpg",
+        "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Textures\\Skybox\\top.jpg",
+        "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Textures\\Skybox\\bottom.jpg",
+        "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Textures\\Skybox\\front.jpg",
+        "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Textures\\Skybox\\back.jpg"
+    ],
+    "targetFPS": 60,
+    "version": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "vsync": true,
+    "windowIconPath": "",
+    "windowSize": {
+        "x": 800.0,
+        "y": 600.0
+    },
+    "windowTitle": "DucktapeTest"
+}

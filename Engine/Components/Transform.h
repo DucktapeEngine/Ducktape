@@ -22,6 +22,8 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <functional>
+
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -31,7 +33,6 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Scene.h>
 #include <Core/Engine.h>
 #include <Core/Serialization.h>
-#include <functional>
 
 namespace DT
 {
@@ -40,10 +41,10 @@ namespace DT
      */
     struct Transform
     {
-        glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);           ///< Translation vector
-        glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);     ///< Rotation in quaternion form
-        glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);              ///< Scale vector
-        
+        glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);    ///< Translation vector
+        glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f); ///< Rotation in quaternion form
+        glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);          ///< Scale vector
+
         /**
          * @brief Returns the Translation->Rotation->Scale model matrix
          * @return GLM 4x4 transform matrix
@@ -89,7 +90,7 @@ namespace DT
 
     SERIALIZE(Transform, translation, rotation, scale);
 
-    class TransformSystem :public System // TOFIX: Register System only if DT_EDITOR flag is on
+    class TransformSystem : public System // TOFIX: Register System only if DT_EDITOR flag is on
     {
     public:
         /**
@@ -101,7 +102,7 @@ namespace DT
          * @brief Handles Transform serialization.
          */
         void Serialize(Scene &scene, Engine &engine) override;
-    private:
-        void PopupContext(const char* label, std::function<void()> func);
+
+        void PopupContext(const char *label, std::function<void()> func);
     };
 }

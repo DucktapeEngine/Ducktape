@@ -24,6 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <iostream>
+#include <filesystem>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -55,16 +56,16 @@ namespace DT
 			Free();
         }
 
-        void Load(const std::string &path)
+        void Load(std::filesystem::path path)
         {
 #ifdef _WIN32
-			module = LoadLibrary(path.c_str());
+			module = LoadLibrary(path.string().c_str());
 
 			if (!module)
 				std::cout << GetLastErrorAsString();
 #endif
 #ifdef __linux__
-			module = dlopen(path.c_str(), RTLD_LAZY);
+			module = dlopen(path.string().c_str(), RTLD_LAZY);
 #endif
         }
 
