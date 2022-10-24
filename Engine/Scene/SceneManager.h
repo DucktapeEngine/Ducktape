@@ -32,7 +32,7 @@ namespace DT
 {
     namespace SceneManager
     {
-        void Save(const std::string &savePath, Scene &scene, Engine &engine);
-        void Load(const std::string &savePath, Scene &scene, Engine &engine);
+        void Save(std::filesystem::path savePath, Scene &scene, Engine &engine);
+        void Load(std::filesystem::path savePath, Scene &scene, Engine &engine);
     }
 }

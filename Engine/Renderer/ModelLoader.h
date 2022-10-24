@@ -35,11 +35,11 @@ namespace DT
     class LoadModel
     {
     public:
-        std::string directory;
+        std::filesystem::path directory;
         std::vector<Texture> texturesLoaded;
         std::vector<Mesh> meshes;
 
-        LoadModel(const std::string &path);
+        LoadModel(std::filesystem::path path);
 
         void ProcessNode(aiNode *node, const aiScene *scene);
         Mesh ProcessMesh(aiMesh *mesh, const aiScene *scene);

@@ -24,7 +24,21 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Engine::Engine(const Configuration &configuration) : config(configuration), window(config), renderer(window, config), input(window.window)
+    Engine::Engine(std::filesystem::path configurationPath) : config(configurationPath), window(config), renderer(window, config), input(window.window)
+    {
+        std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
+                     "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
+                     "This is free software, and you are welcome to redistribute it\n"
+                     "under certain conditions; type `show c' for details.\n";
+
+        userPointer.input = &input;
+        userPointer.window = &window;
+        userPointer.renderer = &renderer;
+
+        glfwSetWindowUserPointer(window.window, reinterpret_cast<void *>(&userPointer));
+    }
+
+    Engine::Engine(Configuration configuration) : config(configuration), window(config), renderer(window, config), input(window.window)
     {
         std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
                      "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
@@ -41,7 +55,7 @@ namespace DT
     void Engine::Init(Scene &scene)
     {
         activeScene = &scene;
-        
+
         for (System *system : scene.GetSystems())
             system->Init(scene, *this);
 

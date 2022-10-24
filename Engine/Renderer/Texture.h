@@ -45,15 +45,17 @@ namespace DT
         int nrChannels;           
         unsigned int id;          ///< @brief Unique id of the texture.
         bool loaded = false;      ///< @brief Whether the texture is loaded or not.
-        std::string type; // TODO: Switch to enums
-        std::string path;         ///< @brief Path to the image/texture file.
+        std::string type; // TOFIX: Switch to enums
+        std::filesystem::path path;         ///< @brief Path to the image/texture file.
+
+        Texture() = default;
 
         /**
          * @brief Create a new Texture class
          * @param _path path to the texture/image to be loaded
          * @param _type type flag for the texture
          */
-        Texture(const std::string &_path, const std::string &_type);
+        Texture(std::filesystem::path _path, std::string _type);
 
         /**
          * @brief  deletes the texture

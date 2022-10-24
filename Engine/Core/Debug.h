@@ -24,6 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <iostream>
+#include <filesystem>
 
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -43,7 +44,7 @@ namespace DT
      * @param object string to parse for debugging
      * @return string for debug purposes
      */
-    std::string ToDebug(const std::string &object);
+    std::string ToDebug(std::filesystem::path object);
 
     /**
      * @brief Returns a debug string from a char array

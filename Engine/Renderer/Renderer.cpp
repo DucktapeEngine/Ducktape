@@ -224,7 +224,7 @@ namespace DT
         glBindRenderbuffer(GL_RENDERBUFFER, 0);
     }
 
-    void Renderer::LoadSkybox(std::array<std::string, 6> paths)
+    void Renderer::LoadSkybox(std::array<std::filesystem::path, 6> paths)
     {
         skyboxCubemap = Cubemap(paths);
     }

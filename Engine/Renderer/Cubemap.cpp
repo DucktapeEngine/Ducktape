@@ -24,7 +24,7 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Cubemap::Cubemap(std::array<std::string, 6> paths)
+    Cubemap::Cubemap(std::array<std::filesystem::path, 6> paths)
     {
         glGenTextures(1, &id);
         glBindTexture(GL_TEXTURE_CUBE_MAP, id);
@@ -32,7 +32,7 @@ namespace DT
         for (unsigned int i = 0; i < 6; i++)
         {
             int width, height, nrChannels;
-            unsigned char *data = stbi_load(paths[i].c_str(), &width, &height, &nrChannels, 0);
+            unsigned char *data = stbi_load(paths[i].string().c_str(), &width, &height, &nrChannels, 0);
 
             if (data)
             {

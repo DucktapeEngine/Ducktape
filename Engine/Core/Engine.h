@@ -54,7 +54,8 @@ namespace DT
         UserPointer userPointer;    ///< @brief Points to multiple systems stored as a user pointer in GLFW.
         Serialization serialization;
 
-        Engine(const Configuration &configuration);
+        Engine(std::filesystem::path configurationPath);
+        Engine(Configuration configuration);
 
         void Init(Scene &scene);
         bool IsOpen();

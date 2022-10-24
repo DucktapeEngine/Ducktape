@@ -24,13 +24,10 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    LoadModel::LoadModel(const std::string &path)
+    LoadModel::LoadModel(std::filesystem::path path)
     {
-        if (path == "")
-            return;
-        
         Assimp::Importer importer;
-        const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+        const aiScene *scene = importer.ReadFile(path.string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
@@ -38,7 +35,7 @@ namespace DT
             return;
         }
 
-        directory = path.substr(0, path.find_last_of('/'));
+        directory = path.parent_path();
 
         ProcessNode(scene->mRootNode, scene);
     }
@@ -158,7 +155,7 @@ namespace DT
             bool skip = false;
             for (unsigned int j = 0; j < texturesLoaded.size(); j++)
             {
-                if (std::strcmp(texturesLoaded[j].path.data(), str.C_Str()) == 0)
+                if (strcmp(texturesLoaded[j].path.string().c_str(), str.C_Str()) == 0)
                 {
                     textures.push_back(texturesLoaded[j]);
                     skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
@@ -167,7 +164,7 @@ namespace DT
             }
             if (!skip)
             { // if texture hasn't been loaded already, load it
-                Texture texture = Texture(directory + '/' + str.C_Str(), typeName);
+                Texture texture = Texture(directory / str.C_Str(), typeName);
                 texture.path = str.C_Str();
                 textures.push_back(texture);
                 texturesLoaded.push_back(texture); // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.

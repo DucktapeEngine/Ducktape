@@ -41,7 +41,7 @@ namespace DT
             }
 
             pl.propertyString = "pointLights[" + std::to_string(pl.lightSpot) + "].";
-            
+
             pl.shader->Use();
             pl.shader->SetFloat(pl.propertyString + "constant", 1.0f);
             pl.shader->SetFloat(pl.propertyString + "quadratic", 1.0f);
@@ -54,12 +54,13 @@ namespace DT
         for (Entity entity : scene.View<PointLight>())
         {
             PointLight &pl = scene.Get<PointLight>(entity);
-            
-            if (pl.lightSpot == NAN) return;
+
+            if (pl.lightSpot == NAN)
+                return;
 
             pl.shader->Use();
             pl.shader->SetVec3(pl.propertyString + "position", pl.transform->translation);
-        
+
             pl.shader->SetFloat(pl.propertyString + "linear", pl.intensity);
             pl.shader->SetVec3(pl.propertyString + "ambient", pl.color * pl.intensity);
             pl.shader->SetVec3(pl.propertyString + "diffuse", pl.color * pl.intensity);
@@ -89,6 +90,16 @@ namespace DT
         Tick(scene, engine);
     }
     
+    void PointLightSystem::Serialize(Scene &scene, Engine &engine)
+    {
+        for (Entity entity : scene.View<PointLight>())
+        {
+            PointLight &pl = scene.Get<PointLight>(entity);
+
+            engine.serialization.SerializeComponent("PointLight", pl, entity);
+        }
+    }
+
     void PointLightSystem::Serialize(Scene &scene, Engine &engine)
     {
         for (Entity entity : scene.View<PointLight>())

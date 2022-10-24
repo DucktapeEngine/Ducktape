@@ -54,7 +54,7 @@ namespace DT
 
         void Close();
         void SetTitle(const std::string &title);
-        void SetIcon(const std::string &path);
+        void SetIcon(std::filesystem::path path);
         glm::vec2 GetWindowPos();
         void SetWindowPos(const glm::vec2 &pos);
         glm::vec2 GetWindowSize();

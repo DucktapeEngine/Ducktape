@@ -34,7 +34,7 @@ namespace DT
     }
 
     void Transform::SetModelMatrix(glm::mat4 model)
-    {        
+    {
         glm::vec3 skew;
         glm::vec4 perspective;
         glm::decompose(model, scale, rotation, translation, skew, perspective);
@@ -71,7 +71,7 @@ namespace DT
         {
             if (scene.selectedEntity != entity)
                 continue;
-                
+
             Transform &trans = scene.Get<Transform>(entity);
             if (ImGui::CollapsingHeader("Transform"))
             {
@@ -86,20 +86,23 @@ namespace DT
                     ImGui::EndPopup();
                 }
                 ImGui::Vec3("position", &trans.translation);
-                PopupContext("Position", [&]() {trans.translation = glm::vec3(0); });
+                PopupContext("Position", [&]()
+                             { trans.translation = glm::vec3(0); });
 
                 glm::vec3 eulerAngles = trans.GetEulerRotation();
                 ImGui::Vec3("rotation", &eulerAngles);
-                PopupContext("Rotation", [&]() { eulerAngles = glm::vec3(0); });
+                PopupContext("Rotation", [&]()
+                             { eulerAngles = glm::vec3(0); });
                 trans.SetEulerRotation(eulerAngles);
 
                 ImGui::Vec3("scale", &trans.scale);
-                PopupContext("Scale", [&]() {trans.scale = glm::vec3(1); });
+                PopupContext("Scale", [&]()
+                             { trans.scale = glm::vec3(1); });
             }
         }
     }
 
-    void TransformSystem::PopupContext(const char* label, std::function<void()> func)
+    void TransformSystem::PopupContext(const char *label, std::function<void()> func)
     {
         std::string popupStr = (std::string("Popup") + label);
         std::string menuStr = (std::string("Reset##") + label);
@@ -115,7 +118,7 @@ namespace DT
             ImGui::EndPopup();
         }
     }
-    
+
     void TransformSystem::Serialize(Scene &scene, Engine &engine)
     {
         for (Entity entity : scene.View<Transform>())

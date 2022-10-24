@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <assert.h>
 #include <iostream>
 #include <string>
+#include <filesystem>
 
 #define DT_ASSERT(condition, message)                                                                     \
     do                                                                                                    \
@@ -41,3 +42,5 @@ aryanbaburajan2007@gmail.com
  * satisfy the compiler from complaining about unused variables
  */
 #define UNUSED(expr) do { (void)(expr); } while (0)
+
+#define DUCKTAPE_ROOT_DIR std::filesystem::current_path().parent_path().parent_path()

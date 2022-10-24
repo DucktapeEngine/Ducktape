@@ -33,6 +33,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/System.h>
 #include <Scene/Entity.h>
 #include <Core/Macro.h>
+#include <Core/Configuration.h>
 
 namespace DT
 {
@@ -124,7 +125,7 @@ namespace DT
         Module gameModule;                      /// @brief Dll containing the game
         Entity selectedEntity = entt::null;     /// @brief FIXME: Find cause of buggy identifier and why we have to pass null
 
-        Scene(Engine *holderEngine);
+        Scene(Engine *holderEngine, Configuration &config);
         ~Scene();
 
         template <typename T, typename... Args>
@@ -190,7 +191,7 @@ namespace DT
         }
 
         SystemPool &GetSystems();
-        void LoadModule(const std::string &path);
+        void LoadModule(std::filesystem::path path);
         Entity CreateEntity();
         void DestroyEntity(Entity entity);
         void Assign(Entity entity, const std::string &name);

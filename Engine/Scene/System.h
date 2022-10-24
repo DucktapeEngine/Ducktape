@@ -23,16 +23,18 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Core/Platform.h>
+#include <Scene/Entity.h>
+#include <Scene/Scene.h>
 
 #define REGISTER(component)\
-    DT_EXPORT void Register ## component(Entity entity, Scene &scene, RegisterAction action)\
+    DT_EXPORT void Register ## component(DT::Entity entity, DT::Scene &scene, DT::RegisterAction action)\
     {\
         switch (action)\
         {\
-        case RegisterAction::Assign:\
+        case DT::RegisterAction::Assign:\
             scene.Assign<component>(entity);\
             break;\
-        case RegisterAction::Remove:\
+        case DT::RegisterAction::Remove:\
             scene.Remove<component>(entity);\
             break;\
         }\

@@ -102,7 +102,7 @@ namespace DT
         if (textures.size() == 0)
         {
             // Load default texture
-            textures.push_back(Texture("../Resources/Textures/Default.png", "diffuse"));
+            textures.push_back(Texture(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Textures" / "Default.png", "diffuse"));
         }
     }
 }

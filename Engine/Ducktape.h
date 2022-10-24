@@ -26,6 +26,7 @@ constexpr float DEG2RAD = 0.0174533f;
 
 // Ducktape includes
 #include <Components/RegisterComponentSystems.h>
+#include <Components/DllRegister.h>
 #include <Core/Configuration.h>
 #include <Core/Debug.h>
 #include <Core/Engine.h>
