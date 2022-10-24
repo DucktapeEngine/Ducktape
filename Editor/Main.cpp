@@ -69,8 +69,7 @@ int main()
         mainScene.Assign<Camera>(camera);
         mainScene.Assign<DirectionalLight>(camera);
 
-        // std::vector<Mesh> meshes = LoadModel(e.config.projectDirectory / "Assets" / "Models" / "backpack" / "backpack.obj").meshes;
-        std::vector<Mesh> meshes = LoadModel(e.config.projectDirectory / "Assets" / "Models" / "cube.obj").meshes;
+        std::vector<Mesh> meshes = LoadModel(e.config.projectDirectory / "Assets" / "Models" / "backpack" / "backpack.obj").meshes;
         for (Mesh mesh : meshes)
             mainScene.Assign<MeshRenderer>(mainScene.CreateEntity()).mesh = mesh;
 
@@ -78,7 +77,6 @@ int main()
 
         e.Init(mainScene);
 
-        // Toolbar is rendered in SceneViewPanel now
         Editor::AddPanel<SceneViewPanel>();
         Editor::AddPanel<HierarchyPanel>();
         Editor::AddPanel<ResourceBrowserPanel>();

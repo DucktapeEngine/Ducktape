@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <string>
 #include <array>
 #include <sstream>
+#include <fstream>
 
 #include <glm/glm.hpp>
 #include <glad/glad.h>
@@ -40,31 +41,23 @@ namespace DT
     class Configuration
     {
     public:
-        glm::vec2 windowSize = glm::vec2(500.f, 500.f); ///< @brief GLFW window size
-        std::string windowTitle = "Untitled Ducktape Project";  ///< @brief GLFW window title
-        glm::vec3 version = glm::vec3(1.f, 1.f, 1.f);   ///< @brief GLFW application version
-        std::filesystem::path windowIconPath;                     ///< @brief Path to GLFW window icon
-        int targetFPS = 60.f;                           ///< @brief Engine target FPS
-        bool drawWireframe = false;                     ///< @brief Flag for wireframe draw mode
-        bool vsync = true;                              ///< @brief Flag for VSYNC setting
-        GLFWwindow *shareContextWith = nullptr;         ///< @brief GLFW window context to share with OpenGL
-        bool hideWindow = false;                        ///< @brief Flag for window hiding
-        bool drawToQuad = true;                         ///< @brief Flag for quad drawing
-        std::array<std::filesystem::path, 6> skyboxCubemapPaths;  ///< @brief Path list for all 6 cubemap faces
-        std::filesystem::path projectDirectory;
-        std::filesystem::path gameModule;
+        glm::vec2 windowSize = glm::vec2(500.f, 500.f);          ///< @brief GLFW window size
+        std::string windowTitle = "Untitled Ducktape Project";   ///< @brief GLFW window title
+        glm::vec3 version = glm::vec3(1.f, 1.f, 1.f);            ///< @brief GLFW application version
+        std::filesystem::path windowIconPath;                    ///< @brief Path to GLFW window icon
+        int targetFPS = 60.f;                                    ///< @brief Engine target FPS
+        bool drawWireframe = false;                              ///< @brief Flag for wireframe draw mode
+        bool vsync = true;                                       ///< @brief Flag for VSYNC setting
+        GLFWwindow *shareContextWith = nullptr;                  ///< @brief GLFW window context to share with OpenGL
+        bool hideWindow = false;                                 ///< @brief Flag for window hiding
+        bool drawToQuad = true;                                  ///< @brief Flag for quad drawing
+        std::array<std::filesystem::path, 6> skyboxCubemapPaths; ///< @brief Path list for all 6 cubemap faces
+        std::filesystem::path projectDirectory;                  ///< @brief Project directory
+        std::filesystem::path gameModule;                        ///< @brief Path to the game module (shared library)
 
-        IN_SERIALIZE(Configuration, windowSize, windowTitle, version, windowIconPath, targetFPS, drawWireframe, vsync, hideWindow, drawToQuad, skyboxCubemapPaths);
+        IN_SERIALIZE(Configuration, windowSize, windowTitle, version, windowIconPath, targetFPS, drawWireframe, vsync, hideWindow, drawToQuad, skyboxCubemapPaths, gameModule);
 
         Configuration() = default;
-        Configuration(std::filesystem::path configPath)
-        {
-            std::ifstream configFile((configPath / "DucktapeProjectSettings.json").string());
-            std::stringstream buffer;
-            buffer << configFile.rdbuf();
-            from_json(json::parse(buffer.str()), *this);
-
-            projectDirectory = configPath;
-        }
+        Configuration(std::filesystem::path configPath);
     };
 }

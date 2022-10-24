@@ -20,40 +20,17 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Debug.h>
+#include <Core/Configuration.h>
 
 namespace DT
 {
-    std::string ToDebug(const int &object)
+    Configuration::Configuration(std::filesystem::path configPath)
     {
-        return std::to_string(object);
-    }
+        std::ifstream configFile((configPath / "DucktapeProjectSettings.json").string());
+        std::stringstream buffer;
+        buffer << configFile.rdbuf();
+        from_json(json::parse(buffer.str()), *this);
 
-    std::string ToDebug(const std::string &object)
-    {
-        return object;
-    }
-
-    std::string ToDebug(const char *object)
-    {
-        return std::string(object);
-    }
-
-    std::string ToDebug(const float &object)
-    {
-        return std::to_string(object);
-    }
-
-    std::string ToDebug(const glm::quat &object)
-    {
-        return glm::to_string(object);
-    }
-
-    std::string ToDebug(const bool &object)
-    {
-        if (object)
-            return "true";
-        else
-            return "false";
+        projectDirectory = configPath;
     }
 }

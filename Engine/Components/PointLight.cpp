@@ -37,7 +37,7 @@ namespace DT
 
             if (engine.renderer.GetFreePointLightSpot(&pl.lightSpot) == false)
             {
-                engine.debug << "PointLight: No free light spots.\n";
+                engine.debug.Err() << "PointLight: No free light spots.\n";
             }
 
             pl.propertyString = "pointLights[" + std::to_string(pl.lightSpot) + "].";

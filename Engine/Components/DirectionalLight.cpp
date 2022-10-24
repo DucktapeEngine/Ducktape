@@ -37,7 +37,7 @@ namespace DT
 
             if (engine.renderer.GetFreeDirectionalLightSpot(&dl.lightSpot) == false)
             {
-                engine.debug << "DirectionalLight: No free light spots.\n";
+                engine.debug.Err() << "DirectionalLight: No free light spots.\n";
                 continue;
             }
 
