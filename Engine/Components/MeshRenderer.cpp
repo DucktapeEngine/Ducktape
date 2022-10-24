@@ -69,16 +69,6 @@ namespace DT
         }
     }
 
-    void MeshRendererSystem::Serialize(Scene &scene, Engine &engine)
-    {
-        for (Entity entity : scene.View<MeshRenderer>())
-        {
-            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
-
-            engine.serialization.SerializeComponent("MeshRenderer", mr, entity);
-        }
-    }
-
     void MeshRendererSystem::Inspector(Scene &scene, Engine &engine)
     {
         for (Entity entity : scene.View<MeshRenderer>())

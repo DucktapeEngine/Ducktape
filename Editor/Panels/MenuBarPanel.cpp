@@ -1,4 +1,4 @@
-#include "MenuBar.h"
+#include "MenuBarPanel.h"
 
 namespace DT
 {

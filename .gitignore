@@ -1,9 +1,8 @@
 .vs
 .vscode
 Build
-imgui.ini
 Docs/*
 !Docs/doxygen-awesome*
 !Docs/header.html
-Resources/Scenes/*
+Resources/Sandbox/Scenes/*
 *.hint

@@ -79,16 +79,6 @@ namespace DT
     {
         Tick(scene, engine);
     }
-    
-    void DirectionalLightSystem::Serialize(Scene &scene, Engine &engine)
-    {
-        for (Entity entity : scene.View<DirectionalLight>())
-        {
-            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
-
-            engine.serialization.SerializeComponent("DirectionalLight", dl, entity);
-        }
-    }
 
     void DirectionalLightSystem::Serialize(Scene &scene, Engine &engine)
     {

@@ -90,13 +90,7 @@ namespace DT
 
     SERIALIZE(Transform, translation, rotation, scale);
 
-<<<<<<< Updated upstream
     class TransformSystem : public System // TOFIX: Register System only if DT_EDITOR flag is on
-                            == ==
-                            ==
-        =
-            class TransformSystem : public System // TOFIX: Register System only if DT_EDITOR flag is on
->>>>>>> Stashed changes
     {
     public:
         /**
@@ -108,11 +102,7 @@ namespace DT
          * @brief Handles Transform serialization.
          */
         void Serialize(Scene &scene, Engine &engine) override;
-<<<<<<< Updated upstream
 
-    private:
         void PopupContext(const char *label, std::function<void()> func);
-        == == == =
->>>>>>> Stashed changes
     };
 }

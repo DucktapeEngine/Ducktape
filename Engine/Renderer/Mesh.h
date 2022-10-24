@@ -58,10 +58,6 @@ namespace DT
          */
         void Setup();
     };
-    
-<<<<<<< Updated upstream
-    // SERIALIZE(Mesh, textures); // TOFIX: Serialization of vector<T> fails to compile, commented atm
-    == == == =
-                 SERIALIZE(Mesh, vertices, indices, textures);
->>>>>>> Stashed changes
+
+    SERIALIZE(Mesh, vertices, indices, textures);
 }
