@@ -30,17 +30,17 @@ namespace DT
         ImGui_ImplGlfw_InitForOpenGL(engine.window.window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
-        ImGuiIO& io = ImGui::GetIO();
+        ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigDragClickToInputText = true;
 
         SetDarkTheme();
 
-        for (Panel* panel : panels)
+        for (Panel *panel : panels)
         {
             panel->Start();
         }
-        //EditorModules::Init(engine);
+        // EditorModules::Init(engine);
     }
 
     void Editor::NewFrame()
@@ -54,7 +54,7 @@ namespace DT
     {
         ImGui::DockSpaceOverViewport();
 
-        for (Panel* panel : panels)
+        for (Panel *panel : panels)
         {
             panel->Update(engine);
         }
@@ -72,11 +72,11 @@ namespace DT
     void Editor::EndFrame(Renderer &renderer)
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        
+
         ImGui::EndFrame();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        
+
         glBindFramebuffer(GL_FRAMEBUFFER, renderer.FBO);
     }
 
@@ -86,7 +86,7 @@ namespace DT
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
 
-        for (Panel* panel : panels)
+        for (Panel *panel : panels)
             free(panel);
         panels.clear();
     }
@@ -101,10 +101,10 @@ namespace DT
         glfwSetWindowTitle(enginePtr->window.window, title.c_str());
     }
 
-    void Editor::SetIcon(const std::string &path)
+    void Editor::SetIcon(std::filesystem::path path)
     {
         int width, height, nrChannels;
-        unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+        unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &nrChannels, 0);
         if (data)
         {
             GLFWimage image;
@@ -218,7 +218,7 @@ namespace DT
     {
         ImGui::StyleColorsDark();
 
-        ImGuiStyle& style = ImGui::GetStyle();
+        ImGuiStyle &style = ImGui::GetStyle();
         style.Colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
         style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
         style.Colors[ImGuiCol_WindowBg] = ImVec4(0.13f, 0.14f, 0.15f, 1.00f);

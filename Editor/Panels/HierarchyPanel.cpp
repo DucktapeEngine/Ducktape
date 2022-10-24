@@ -1,16 +1,22 @@
 #include "HierarchyPanel.h"
 
-void DT::HierarchyPanel::Update(Engine& engine)
+void DT::HierarchyPanel::Update(Engine &engine)
 {
     ImGui::Begin("Hierarchy");
 
-    if (ImGui::Button("Save", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
+    if (ImGui::Button("Save", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
     {
-        SceneManager::Save("../Resources/Scenes/scene.json", *engine.activeScene, engine);
+        SceneManager::Save(engine.config.projectDirectory / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+    }
+
+    if (ImGui::Button("Load", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
+    {
+        SceneManager::Load(engine.config.projectDirectory / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+        selectedEntity = entt::null;
     }
 
     engine.activeScene->sceneRegistry.each([&](const Entity entity)
-    {
+                                           {
             std::string label = "Entity " + std::to_string(entt::to_integral(entity));
 
             if (engine.activeScene->sceneRegistry.any_of<Tag>(entity))
@@ -25,7 +31,6 @@ void DT::HierarchyPanel::Update(Engine& engine)
             {
                 selectedEntity = entity;
                 engine.activeScene->selectedEntity = selectedEntity;
-            } 
-    });
+            } });
     ImGui::End();
 }

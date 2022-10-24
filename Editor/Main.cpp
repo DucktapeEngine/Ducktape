@@ -30,6 +30,7 @@ aryanbaburajan2007@gmail.com
 #include <Panels/ResourceBrowserPanel.h>
 #include <Panels/ConsolePanel.h>
 #include <Panels/InspectorPanel.h>
+#include <Panels/MainMenuPanel.h>
 
 using namespace DT;
 
@@ -82,6 +83,7 @@ int main()
         Editor::AddPanel<ResourceBrowserPanel>();
         Editor::AddPanel<ConsolePanel>();
         Editor::AddPanel<InspectorPanel>();
+        Editor::AddPanel<MainMenuPanel>();
 
         Editor::Init(e);
 
