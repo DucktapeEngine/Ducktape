@@ -17,7 +17,6 @@ namespace DT
         std::filesystem::path currentDir;
         std::filesystem::path rootDir;
         unsigned int folderIconID;
-        unsigned int fileIconID;
         ImGuiTextFilter Filter;
         // Switches to column layout when item size is larger than this value
         const float columnSwitchSize=24.0f;
