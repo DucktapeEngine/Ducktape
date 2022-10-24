@@ -56,8 +56,8 @@ namespace DT
                 for (std::filesystem::directory_entry directoryEntry : std::filesystem::recursive_directory_iterator(rootDir))
                 {
                     std::filesystem::path path = directoryEntry.path();
-                    const char *filename = path.filename().string().c_str();
-                    if (Filter.PassFilter(filename))
+                    std::string filename = path.filename().string();
+                    if (Filter.PassFilter(filename.c_str()))
                     {
                         RenderDirectoryItem(directoryEntry, itemSize);
                         totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
@@ -175,13 +175,15 @@ namespace DT
     unsigned int ResourceBrowserPanel::GetKnownIconID(std::filesystem::path path)
     {
         std::string ext = path.extension().string().substr(1);
-        std::string iconPath = rootDir.string() + "/Icons/" + ext + ".png";
+        std::filesystem::path iconsDir = rootDir / "Editor" / "Icons";
+        std::string iconPath = (iconsDir  / (ext + ".png")).string();
+
         if (ext == "jpg" || ext == "png" || ext == "jpeg")
-            return Texture(rootDir.string() + "/Icons/image.png", "diffuse").id;
-        if (std::filesystem::exists(iconPath))
+            return Texture((iconsDir / "image.png").string(), "diffuse").id;
+        else if (std::filesystem::exists(iconPath))
             return Texture(iconPath, "diffuse").id;
         else
-            return Texture(rootDir.string() + "/Icons/file.png", "diffuse").id;
+            return Texture((iconsDir / "file.png").string(), "diffuse").id;
     }
 
     void ResourceBrowserPanel::Start()
@@ -191,7 +193,6 @@ namespace DT
         // Note that icons are from https://www.icons8.com and not fully copyright free.
         // TODO: Add self drawn icons
         folderIconID = Texture((rootDir / "Editor" / "Icons" / "folder.png").string(), "diffuse").id;
-        fileIconID = Texture((rootDir / "Editor" / "Icons" / "file.png").string(), "diffuse").id;
     }
     void ResourceBrowserPanel::Update(Engine &engine)
     {

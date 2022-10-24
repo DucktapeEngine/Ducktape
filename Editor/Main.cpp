@@ -43,6 +43,7 @@ int main()
         config.windowTitle = "DucktapeTest";
         config.drawToQuad = false;
         config.projectDirectory = DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox";
+        config.windowIconPath = DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Textures" / "logo.png";
         config.skyboxCubemapPaths = {
             config.projectDirectory / "Assets" / "Textures" / "Skybox" / "right.jpg",
             config.projectDirectory / "Assets" / "Textures" / "Skybox" / "left.jpg",
