@@ -1,4 +1,6 @@
-#include "Panel.h"
+#pragma once
+
+#include <Panels/Panel.h>
 #include <Components/Camera.h>
 #include <Components/Transform.h>
 #include <Components/Tag.h>

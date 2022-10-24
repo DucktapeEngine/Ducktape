@@ -36,11 +36,15 @@ namespace DT
 
         SetDarkTheme();
 
+        AddPanel<SceneViewPanel>();
+        AddPanel<HierarchyPanel>();
+        AddPanel<ResourceBrowserPanel>();
+        AddPanel<ConsolePanel>();
+        AddPanel<InspectorPanel>();
+        AddPanel<MenuBarPanel>();
+
         for (Panel *panel : panels)
-        {
             panel->Start();
-        }
-        // EditorModules::Init(engine);
     }
 
     void Editor::NewFrame()
@@ -55,18 +59,7 @@ namespace DT
         ImGui::DockSpaceOverViewport();
 
         for (Panel *panel : panels)
-        {
             panel->Update(engine);
-        }
-
-        /*EditorModules::SceneView(engine);
-        // EditorModules::ToolBar(engine); // Called from EditorModules::SceneView() itself
-
-        // EditorModules::ResourceBrowser(engine) carried to class
-        EditorModules::resourceBrowserPanel.Update();
-        EditorModules::Hierarchy(engine);
-        EditorModules::Console(engine);
-        EditorModules::Inspector(engine);*/
     }
 
     void Editor::EndFrame(Renderer &renderer)

@@ -1,4 +1,7 @@
-#include "Panel.h"
+#pragma once
+
+#include <Panels/Panel.h>
+
 namespace DT
 {
 	class ConsolePanel : public Panel

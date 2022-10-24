@@ -23,7 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Renderer/Mesh.h>
-#include <Renderer/ImGui.h>
+#include <Core/ImGui.h>
 #include <Core/Engine.h>
 #include <Scene/Entity.h>
 #include <Renderer/Material.h>

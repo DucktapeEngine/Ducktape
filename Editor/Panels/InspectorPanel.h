@@ -1,4 +1,6 @@
-#include "Panel.h"
+#pragma once
+
+#include <Panels/Panel.h>
 #include <Components/Camera.h>
 #include <Components/Transform.h>
 #include <Components/Tag.h>
@@ -9,12 +11,13 @@
 
 namespace DT
 {
-	class InspectorPanel :public Panel
+	class InspectorPanel : public Panel
 	{
 	public:
 		void Update(Engine &engine) override;
+
 	private:
-		void RenderAddComponentMenu(Engine& engine);
+		void RenderAddComponentMenu(Engine &engine);
 		Entity selectedEntity;
 		bool openAddComponentMenu = false;
 		std::string addComponentInput;

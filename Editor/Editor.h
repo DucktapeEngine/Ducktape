@@ -24,7 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <iostream>
 
-#include <imgui.h>
+#include <Core/ImGui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
@@ -32,6 +32,12 @@ aryanbaburajan2007@gmail.com
 #include <Core/Window.h>
 #include <Core/Engine.h>
 #include <Panels/Panel.h>
+#include <Panels/SceneViewPanel.h>
+#include <Panels/HierarchyPanel.h>
+#include <Panels/ResourceBrowserPanel.h>
+#include <Panels/ConsolePanel.h>
+#include <Panels/InspectorPanel.h>
+#include <Panels/MenuBarPanel.h>
 
 namespace DT
 {
@@ -67,12 +73,12 @@ namespace DT
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
         void SetDarkTheme();
-        inline std::vector<Panel*> panels;
+        inline std::vector<Panel *> panels;
 
-        template<typename T>
-        T* AddPanel()
+        template <typename T>
+        T *AddPanel()
         {
-            T* Tptr = new T();
+            T *Tptr = new T();
             panels.push_back(Tptr);
             return Tptr;
         }

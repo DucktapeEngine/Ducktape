@@ -26,7 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <stdexcept>
 #include <iostream>
 
-#include <Renderer/ImGui.h>
+#include <Core/ImGui.h>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -38,12 +38,12 @@ aryanbaburajan2007@gmail.com
 namespace DT
 {
     class Input;
-    
+
     class Window
     {
     public:
-        glm::vec2 viewportSize;         ///< @brief The size of the window viewport.
-        GLFWwindow *window = nullptr;   ///< @brief The pointer to the OpenGL window.
+        glm::vec2 viewportSize;       ///< @brief The size of the window viewport.
+        GLFWwindow *window = nullptr; ///< @brief The pointer to the OpenGL window.
 
         Window(const Configuration &config);
 

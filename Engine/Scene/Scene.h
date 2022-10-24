@@ -27,7 +27,7 @@ aryanbaburajan2007@gmail.com
 #include <array>
 
 #include <entt/entt.hpp>
-#include <Renderer/ImGui.h>
+#include <Core/ImGui.h>
 
 #include <Core/Platform.h>
 #include <Scene/System.h>
@@ -57,7 +57,7 @@ namespace DT
         class SystemPool
         {
         public:
-            char* pData {nullptr};
+            char *pData{nullptr};
             unsigned int noAllocatedSystems = 0;
 
             SystemPool()
@@ -70,7 +70,7 @@ namespace DT
                 delete[] pData;
             }
 
-            inline void* Get(size_t index)
+            inline void *Get(size_t index)
             {
                 return pData + index * sizeof(System);
             }
@@ -88,17 +88,17 @@ namespace DT
                     return (System *)systemPool->Get(idx);
                 }
 
-                bool operator==(const Iterator& other) const
+                bool operator==(const Iterator &other) const
                 {
                     return idx == other.idx;
                 }
 
-                bool operator!=(const Iterator& other) const
+                bool operator!=(const Iterator &other) const
                 {
                     return idx != other.idx;
                 }
 
-                Iterator& operator++()
+                Iterator &operator++()
                 {
                     idx++;
                     return *this;
@@ -117,13 +117,14 @@ namespace DT
         };
 
         SystemPool systems;
+
     public:
-        entt::registry sceneRegistry;           /// @brief Registry of all the components and entities in the scene
-        Engine *engine;                         /// @brief Pointer to the engine instance
-        Camera *activeCamera;                   /// @brief Active camera of the scene
-        bool initialized = false;               /// @brief Component initialization state
-        Module gameModule;                      /// @brief Dll containing the game
-        Entity selectedEntity = entt::null;     /// @brief FIXME: Find cause of buggy identifier and why we have to pass null
+        entt::registry sceneRegistry;       /// @brief Registry of all the components and entities in the scene
+        Engine *engine;                     /// @brief Pointer to the engine instance
+        Camera *activeCamera;               /// @brief Active camera of the scene
+        bool initialized = false;           /// @brief Component initialization state
+        Module gameModule;                  /// @brief Dll containing the game
+        Entity selectedEntity = entt::null; /// @brief FIXME: Find cause of buggy identifier and why we have to pass null
 
         Scene(Engine *holderEngine, Configuration &config);
         ~Scene();
@@ -148,7 +149,7 @@ namespace DT
             DT_ASSERT(!Has<T>(entity), "Entity already has component.");
 
             T &component = sceneRegistry.emplace<T>(entity);
-            
+
             return component;
         }
 

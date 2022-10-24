@@ -1,11 +1,14 @@
-#include "ConsolePanel.h"
+#include <Panels/ConsolePanel.h>
 
-void DT::ConsolePanel::Update(Engine &engine)
+namespace DT
 {
-    ImGui::Begin("Console");
+    void ConsolePanel::Update(Engine &engine)
+    {
+        ImGui::Begin("Console");
 
-    ImGui::Text("%s", engine.debug.GetOut());
-    ImGui::Text("%s", engine.debug.GetErr());
+        ImGui::Text("%s", engine.debug.GetOut());
+        ImGui::Text("%s", engine.debug.GetErr());
 
-    ImGui::End();
+        ImGui::End();
+    }
 }

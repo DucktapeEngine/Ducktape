@@ -36,6 +36,7 @@ constexpr float DEG2RAD = 0.0174533f;
 #include <Core/Window.h>
 #include <Core/Serialization.h>
 #include <Core/LoopManager.h>
+#include <Core/ImGui.h>
 #include <Input/Input.h>
 #include <Input/Key.h>
 #include <Renderer/Renderer.h>
@@ -45,7 +46,7 @@ constexpr float DEG2RAD = 0.0174533f;
 #include <Renderer/Mesh.h>
 #include <Renderer/Cubemap.h>
 #include <Renderer/ModelLoader.h>
-#include <Renderer/ImGui.h>
+#include <Core/ImGui.h>
 #include <Scene/SceneManager.h>
 #include <Scene/Scene.h>
 #include <Scene/Entity.h>

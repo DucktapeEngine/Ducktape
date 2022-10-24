@@ -1,11 +1,11 @@
-#include "InspectorPanel.h"
+#include <Panels/InspectorPanel.h>
 
 namespace DT
 {
-	void InspectorPanel::RenderAddComponentMenu(Engine &engine)
-	{
-        //Add Component Menu
-        static const std::array<std::string, 6> builtinComponentList = { "Camera", "DirectionalLight", "MeshRenderer", "PointLight", "Tag", "Transform" };
+    void InspectorPanel::RenderAddComponentMenu(Engine &engine)
+    {
+        // Add Component Menu
+        static const std::array<std::string, 6> builtinComponentList = {"Camera", "DirectionalLight", "MeshRenderer", "PointLight", "Tag", "Transform"};
 
         if (openAddComponentMenu)
         {
@@ -62,15 +62,14 @@ namespace DT
         if (!openAddComponentMenu)
             if (selectedEntity != entt::null && ImGui::Button("Assign", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
                 openAddComponentMenu = true;
-
-	}
+    }
 
     void InspectorPanel::Update(Engine &engine)
     {
         selectedEntity = engine.activeScene->selectedEntity;
         ImGui::Begin("Inspector");
 
-        for (System* system : engine.activeScene->GetSystems())
+        for (System *system : engine.activeScene->GetSystems())
             system->Inspector(*engine.activeScene, engine);
 
         RenderAddComponentMenu(engine);
