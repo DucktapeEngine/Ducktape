@@ -6,8 +6,8 @@ namespace DT
     {
         ImGui::Begin("Console");
 
-        ImGui::Text("%s", engine.debug.GetOut());
-        ImGui::Text("%s", engine.debug.GetErr());
+        ImGui::Text("%s", engine.debug.GetOut().c_str());
+        ImGui::Text("%s", engine.debug.GetErr().c_str());
 
         ImGui::End();
     }

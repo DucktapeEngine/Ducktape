@@ -39,8 +39,8 @@ namespace DT
     public:
         Debug()
         {
-            std::cout.rdbuf(outStream.rdbuf());
-            std::cerr.rdbuf(errStream.rdbuf());
+            oldOutBuffer = std::cout.rdbuf(outStream.rdbuf());
+            oldErrBuffer = std::cerr.rdbuf(errStream.rdbuf());
         }
 
         ~Debug()
