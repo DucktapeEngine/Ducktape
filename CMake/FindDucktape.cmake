@@ -48,25 +48,15 @@ set (Ducktape_INCLUDE_DIR
     ${Ducktape_ROOT_DIR}/Extern/json/include/;
 )
 
-set (Ducktape_LIBRARY_DIR 
-    ${Ducktape_ROOT_DIR}/Build/Engine/;
-    ${Ducktape_ROOT_DIR}/Build/Extern/assimp/bin/;
-    ${Ducktape_ROOT_DIR}/Build/Extern/assimp/contrib/zlib/;
-    ${Ducktape_ROOT_DIR}/Build/Extern/glad/;
-    ${Ducktape_ROOT_DIR}/Build/Extern/glfw/src;
-    ${Ducktape_ROOT_DIR}/Build/Extern/imgui;
-)
-
 set (Ducktape_LIBRARY
     Ducktape
     glfw
-    ${OPENGL_gl_LIBRARY}
-    ${OPENGL_glu_LIBRARY}
-    ${GLFW_LIBRARIES}
+    OpenGL::GL
     glad
     assimp
     imgui
 )
+
 if (UNIX)
     set (Ducktape_LIBRARY
 	${Ducktape_LIBRARY}

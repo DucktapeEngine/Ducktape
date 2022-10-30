@@ -43,18 +43,17 @@ namespace DT
     class Engine
     {
     public:
-        Configuration config;       ///< @brief The engine configuration.
-        Window window;              ///< @brief The application window.
-        Renderer renderer;          ///< @brief The application renderer.
-        Input input;                ///< @brief .
-        Time time;                  ///< @brief The time object to track time fields.
-        LoopManager loopManager;    ///< @brief The loop manager.
-        Debug debug;                ///< @brief Debugger to output debug messages.
-        Scene *activeScene;         ///< @brief The current scene the application is using.
-        UserPointer userPointer;    ///< @brief Points to multiple systems stored as a user pointer in GLFW.
+        Configuration config;    ///< @brief The engine configuration.
+        Window window;           ///< @brief The application window.
+        Renderer renderer;       ///< @brief The application renderer.
+        Input input;             ///< @brief .
+        Time time;               ///< @brief The time object to track time fields.
+        LoopManager loopManager; ///< @brief The loop manager.
+        Debug debug;             ///< @brief Debugger to output debug messages.
+        Scene *activeScene;      ///< @brief The current scene the application is using.
+        UserPointer userPointer; ///< @brief Points to multiple systems stored as a user pointer in GLFW.
         Serialization serialization;
 
-        Engine(std::filesystem::path configurationPath);
         Engine(Configuration configuration);
 
         void Init(Scene &scene);

@@ -22,5 +22,8 @@
         "x": 800.0,
         "y": 600.0
     },
-    "windowTitle": "DucktapeTest"
+    "windowTitle": "DucktapeTest",
+    "assetSystem": {
+        
+    }
 }

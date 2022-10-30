@@ -10,9 +10,7 @@ namespace DT
             {
                 if (ImGui::MenuItem("Save"))
                 {
-                    std::ofstream output((engine.config.projectDirectory / "DucktapeProjectSettings.json").string());
-                    json j = engine.config;
-                    output << j.dump(4);
+                    engine.config.Save();
                 }
                 ImGui::EndMenu();
             }

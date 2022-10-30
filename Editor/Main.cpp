@@ -48,7 +48,7 @@ int main()
 
         Engine e(config);
 
-        // Engine e(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox");
+        // Engine e(Configuration(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox"));
 
         Scene mainScene(&e, e.config);
 

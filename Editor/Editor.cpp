@@ -44,7 +44,7 @@ namespace DT
         AddPanel<MenuBarPanel>();
 
         for (Panel *panel : panels)
-            panel->Start();
+            panel->Start(engine);
     }
 
     void Editor::NewFrame()
