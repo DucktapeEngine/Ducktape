@@ -43,7 +43,6 @@ namespace DT
 {
     namespace Editor
     {
-        inline bool showDemoWindow = true;
         inline Engine *enginePtr;
 
         void Init(Engine &engine);
@@ -73,7 +72,13 @@ namespace DT
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
         void SetDarkTheme();
-        inline std::vector<Panel *> panels;
+
+        inline ImGuiID dockspace_id; /// @brief Persistent id for dockspace.
+        void RenderDockLayout();
+        void SetDefaultLayout(bool firstTime=true);
+
+        inline MenuBarPanel* menuBar;
+        inline std::vector<Panel *> panels; 
 
         template <typename T>
         T *AddPanel()

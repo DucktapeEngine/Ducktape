@@ -14,6 +14,14 @@ namespace DT
                 }
                 ImGui::EndMenu();
             }
+            if (ImGui::BeginMenu("Edit"))
+            {
+                if (ImGui::MenuItem("Set Default Layout"))
+                {
+                    RequestDefaultLayout = true;
+                }
+                ImGui::EndMenu();
+            }
             ImGui::EndMainMenuBar();
         }
     }

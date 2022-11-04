@@ -15,5 +15,6 @@ namespace DT
     {
     public:
         void Update(Engine &engine) override;
+        bool RequestDefaultLayout=false;
     };
 }

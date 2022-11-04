@@ -10,7 +10,8 @@ namespace DT
     class Panel
     {
     public:
-        virtual void Start(Engine &engine) {}
+        virtual void Start() {}
+        virtual const char* GetWindowName() { return nullptr; }
         virtual void Update(Engine &engine) {}
         virtual void Destroy(Engine &engine) {}
     };

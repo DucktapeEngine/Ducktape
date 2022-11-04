@@ -15,9 +15,11 @@ namespace DT
 	{
 	public:
 		void Update(Engine &engine) override;
+		const char* GetWindowName() override;
 
 	private:
 		void RenderAddComponentMenu(Engine &engine);
+		const char* windowName = "Inspector";
 		Entity selectedEntity;
 		bool openAddComponentMenu = false;
 		std::string addComponentInput;

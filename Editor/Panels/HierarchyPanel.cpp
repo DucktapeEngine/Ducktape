@@ -2,9 +2,11 @@
 
 namespace DT
 {
+    const char* HierarchyPanel::GetWindowName() { return windowName; }
+
     void HierarchyPanel::Update(Engine &engine)
     {
-        ImGui::Begin("Hierarchy");
+        ImGui::Begin(windowName);
 
         if (ImGui::Button("Save", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
         {
