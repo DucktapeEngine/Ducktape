@@ -2,16 +2,30 @@
 
 namespace DT
 {
+    const char* ResourceBrowserPanel::GetWindowName() { return windowName; }
+
+    /// @brief Handles main imgui render for resource browser window.
     void ResourceBrowserPanel::RenderImGuiWindow()
     {
-        ImGui::Begin("Resource Browser");
+        ImGui::Begin(windowName);
         Filter.Draw("Filter");
         ImGui::Separator();
+
+        // Make a scrollable region in case it doesn't fit
+        ImGuiWindowFlags child_flags = ImGuiWindowFlags_HorizontalScrollbar;
+        static float navbarHeight = 20.0f;
+        float totalNavbarSize = 0.0f;
+        ImGui::BeginChild("Navbar##ResourceBrowser",{-1,navbarHeight},false,child_flags);
         // Make resource button match ducktape color (and transparent button)
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.980f, 0.871f, 0.0490f, 1.00f));
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        if (ImGui::Button("Resources"))
+        if (currentDir==rootDir)
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.67f, 0.67f, 0.67f, 0.39f));
+        else 
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+        std::string rootDirName = rootDir.filename().string();
+        if (ImGui::Button(rootDirName.c_str()))
             currentDir = rootDir;
+        totalNavbarSize += ImGui::GetItemRectSize().x;
         ImGui::PopStyleColor(2);
 
         // Get relative path between root and current
@@ -23,32 +37,65 @@ namespace DT
         {
             ImGui::SameLine();
             ImGui::TextUnformatted(">");
+            totalNavbarSize += ImGui::GetItemRectSize().x + 8.0f;
             ImGui::SameLine();
             tempDir /= *it;
-            // Transparent button style
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-            if (ImGui::Button(tempDir.filename().string().c_str()))
+            // Transparent button style (active directory will be highlighted)
+            if (tempDir == currentDir)
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.67f, 0.67f, 0.67f, 0.39f)); 
+            else
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+            std::string filename = tempDir.filename().string();
+            ImGui::PushID(filename.c_str());
+            ImGui::Button(filename.c_str());
+            if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+            {
                 currentDir = tempDir;
+            }
+            if (tempDir == currentDir)
+                ImGui::SetScrollHereX();
+            ImGui::PopID();
+            totalNavbarSize += ImGui::GetItemRectSize().x + 8.0f;
             ImGui::PopStyleColor();
             ++it;
+            
         }
-
-        static int itemSize = 16;
-        static int selectedIndex = 0;
-        int i = 0;
-
-        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
+        ImGui::EndChild();
+        // Trying to implement adding height to navbar when scrolling is visible
         ImVec2 avail = ImGui::GetContentRegionAvail();
+        if (totalNavbarSize > avail.x)
+            navbarHeight = 40.0f;
+        else navbarHeight = 20.0f;
+        static int itemSize = 24;
+        
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
+        
+        // TODO: Listbox context menu does not pop up (Doesn't listboxes support context menus??)
         if (ImGui::BeginListBox("##filesListBox", ImVec2(-FLT_MIN, avail.y - 28)))
         {
-            /*if(itemSize>24.0f)
+            // HACK: Seems like this is best one that works so far for a context menu for listboxes.
+            if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
             {
-                int cellSize = itemSize*2;
-                int columnCount = (int)(avail.x/cellSize);
-                if(columnCount<1)
-                    columnCount=1;
-                ImGui::Columns(columnCount,0,false);
-            }*/
+                ImGui::OpenPopup("Test");
+            }
+            if (ImGui::BeginPopup("Test"))
+            {
+                if (ImGui::BeginMenu("Create..."))
+                {
+                    if (ImGui::MenuItem("Folder"))
+                    {
+                        fileAction = FileAction_Create;
+                        creatingFileType = FileCreateType_Folder;
+                    }
+                    if (ImGui::MenuItem("File"))
+                    {
+                        fileAction = FileAction_Create;
+                        creatingFileType = FileCreateType_File;
+                    }
+                    ImGui::EndMenu();
+                }
+                ImGui::EndPopup();
+            }
             // Try to list all files when filtering
             float totalSizeOnColumn = 0;
             if (Filter.IsActive())
@@ -59,16 +106,14 @@ namespace DT
                     std::string filename = path.filename().string();
                     if (Filter.PassFilter(filename.c_str()))
                     {
-                        RenderDirectoryItem(directoryEntry, itemSize);
+                        RenderDirectoryItem(directoryEntry, static_cast<float>(itemSize));
                         totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
                         // Custom wrap for items for column-like layout
                         if (itemSize >= columnSwitchSize && totalSizeOnColumn < avail.x)
-                        {
                             ImGui::SameLine();
-                        }
                         else if (totalSizeOnColumn > avail.x)
                             totalSizeOnColumn = 0;
-                        i++;
+
                     }
                 }
             }
@@ -77,32 +122,78 @@ namespace DT
             {
                 for (std::filesystem::directory_entry directoryEntry : std::filesystem::directory_iterator(currentDir))
                 {
-                    RenderDirectoryItem(directoryEntry, itemSize);
+                    RenderDirectoryItem(directoryEntry, static_cast<float>(itemSize));
                     totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
                     // Custom wrap for items for column-like layout
                     if (itemSize >= columnSwitchSize && totalSizeOnColumn < avail.x)
                         ImGui::SameLine();
                     else if (totalSizeOnColumn > avail.x)
                         totalSizeOnColumn = 0;
-                    i++;
+
                 }
+            }
+            if (fileAction == FileAction_Create)
+            {
+                RenderEditItem(itemSize);
+            }
+            else if (fileAction == FileAction_Delete)
+            {
+                fileAction = FileAction_None;
+                ImGui::OpenPopup("Delete");
+            }
+            
+            if (ImGui::BeginPopupModal("Delete"))
+            {
+                std::string prompt = std::string("Are you sure you want to delete \"") + selectedFile.filename().string() + (!selectedFile.has_extension() ? "\" and its contents?" : "\"?");
+                ImGui::TextWrapped(prompt.c_str());
+                ImGui::Separator();
+                if (ImGui::Button("No",{36,24}))
+                {
+                    selectedFile = "";
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::SameLine();
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.77f,0.2f,0.2f,1.0f });
+                ImGui::PushStyleColor(ImGuiCol_Button, { 0.0f,0.0f,0.0f,0.0f });
+                if (ImGui::Button("Yes",{36, 24}))
+                {
+                    if (!std::filesystem::remove_all(selectedFile))
+                    {
+                        std::cout << "Couldn't delete file: " << selectedFile.filename().string() << std::endl;
+                    }
+                    selectedFile = "";
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::PopStyleColor(2);
+                ImGui::EndPopup();
             }
             ImGui::EndListBox();
         }
         ImGui::PopStyleColor();
+       /* if (ImGui::BeginPopupModal("ModalNewFile"), NULL)
+        {
+            ImGui::InputText("File name", &newFileName);
+            ImGui::EndPopup();
+        }*/
         ImGui::Separator();
         ImGui::SliderInt("Item Size", &itemSize, 16, 48);
         ImGui::End();
+        
     }
-    /// @brief Draws each item for resource browser using ImGui.
+    /// @brief Renders each item for resource browser.
     /// @param directoryEntry entry on file path
     /// @param itemSize item's size for resource browser (controlled by slider)
-    /// @param i current iteration
-    /// @param selectedIndex selected item index
-    void ResourceBrowserPanel::RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, int &itemSize)
+    void ResourceBrowserPanel::RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, float itemSize)
     {
         std::filesystem::path path = directoryEntry.path();
         std::string filename = path.filename().string();
+
+        // Render editable label instead when renaming this file
+        if (fileAction == FileAction_Rename && path == selectedFile)
+        {
+            RenderEditItem(itemSize);
+            return;
+        }
 
         const bool isDir = directoryEntry.is_directory();
         const bool onColumnLayout = itemSize >= columnSwitchSize;
@@ -111,7 +202,7 @@ namespace DT
         GLuint iconID = isDir ? folderIconID : GetKnownIconID(path);
         ImGui::PushID(filename.c_str());
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        ImGui::ImageButtonWithText((ImTextureID)(uintptr_t)iconID, filename.c_str(), {static_cast<float>(itemSize), static_cast<float>(itemSize)}, onColumnLayout, {0, 1}, {1, 0});
+        ImGui::ImageButtonWithText((ImTextureID)(uintptr_t)iconID, filename.c_str(), {itemSize,itemSize}, onColumnLayout, {0, 1}, {1, 0});
         // Since same functionality used twice, grouped them onto same function, you'll see below its used again
         // HACK: ^ Image and text are one group now thanks to new implementation, but it will still use same method.
         OnItemDoubleClicked(isDir, path);
@@ -123,7 +214,20 @@ namespace DT
             {
                 copiedFile = path;
             }*/
-
+            if (ImGui::BeginMenu("Create..."))
+            {
+                if (ImGui::MenuItem("Folder"))
+                {
+                    fileAction = FileAction_Create;
+                    creatingFileType = FileCreateType_Folder;
+                }
+                if (ImGui::MenuItem("File"))
+                {
+                    fileAction = FileAction_Create;
+                    creatingFileType = FileCreateType_File;
+                }
+                ImGui::EndMenu();
+            }
             if (ImGui::MenuItem("Show In Explorer"))
             {
 #ifdef _WIN32
@@ -137,11 +241,106 @@ namespace DT
                 system(command.c_str());
 #endif
             }
+            if (ImGui::MenuItem("Rename"))
+            {
+                fileAction = FileAction_Rename;
+                selectedFile = path;
+            }
+            if (ImGui::MenuItem("Delete"))
+            {
+                fileAction = FileAction_Delete;
+                selectedFile = path;
+            }
             ImGui::EndPopup();
         }
-
         ImGui::PopStyleColor();
         ImGui::PopID();
+        
+    }
+
+
+    /// @brief Renders edit action based items (create, rename, ...) for resource browser.
+    /// @param itemSize Current item size on resource browser.
+    void ResourceBrowserPanel::RenderEditItem(float itemSize)
+    {
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape))
+        {
+            fileAction = FileAction_None;
+            selectedFile = "";
+            return;
+        }
+
+        GLuint iconID = creatingFileType == FileCreateType_Folder ? folderIconID : fileIconID;
+
+        if (fileAction == FileAction_Rename) 
+            iconID = selectedFile.has_extension() ? GetKnownIconID(selectedFile) : folderIconID;
+        /*ImGui::Image((ImTextureID)(uintptr_t)iconID, { itemSize,itemSize }, { 0, 1 }, { 1, 0 });
+        if (itemSize < columnSwitchSize)
+            ImGui::SameLine();*/
+
+        if (fileAction == FileAction_Rename && selectedFile == "") return;
+        static char buf[128];
+
+        if (fileAction != FileAction_Rename && creatingFileType == FileCreateType_File)
+            strcpy(buf, "New File");
+        else if (fileAction != FileAction_Rename && creatingFileType == FileCreateType_Folder)
+            strcpy(buf, "New Folder");
+        else
+            strcpy(buf, selectedFile.stem().string().c_str());
+
+
+        //ImGui::Image((ImTextureID)(uintptr_t)iconID, { itemSize,itemSize }, { 0, 1 }, { 1, 0 });
+        //ImGui::SameLine();
+            
+
+        //ImGui::SetKeyboardFocusHere(0);
+        //ImGui::InputText("##inputNewFile", buf, IM_ARRAYSIZE(buf));
+
+        bool onColumnLayout = itemSize >= columnSwitchSize;
+        
+        ImGui::ImageWithInputText((ImTextureID)(uintptr_t)iconID,"##inputNewFile", buf, IM_ARRAYSIZE(buf), { itemSize,itemSize }, { 0, 1 }, { 1, 0 }, onColumnLayout);
+        ImGui::SetKeyboardFocusHere(-1);
+        if (ImGui::IsItemDeactivatedAfterEdit() || ImGui::IsKeyPressed(ImGuiKey_Enter))
+        {
+            if (fileAction == FileAction_Rename)
+            {
+                std::string ext = selectedFile.extension().string();
+                try
+                {
+                    std::filesystem::path p = currentDir / (std::string(buf) + ext);
+                    std::filesystem::rename(selectedFile, p);
+                    fileAction = FileAction_None;
+                    selectedFile = "";
+                }
+                catch (...)
+                {
+                    std::cout << "[Error] Failed to rename file: " << selectedFile.stem().string() << " to " << buf << std::endl;
+                }
+            }
+            else if (creatingFileType == FileCreateType_File)
+            {
+                std::ofstream file((currentDir / buf).string());
+                if (!file)
+                {
+                    std::cout << "[Error] Can't create requested file: " << buf << std::endl;
+                }
+                else
+                    fileAction = FileAction_None;
+                file.close();
+            }
+            else
+            {
+                if (std::filesystem::create_directory(currentDir / buf))
+                {
+                    fileAction = FileAction_None;
+                   
+                }
+                else
+                {
+                    std::cout << "[Error] Failed to create folder: " << buf << std::endl;
+                }
+            }
+        }
     }
 
     /// @brief Checks if item is double clicked on resource browser.
@@ -175,7 +374,7 @@ namespace DT
     unsigned int ResourceBrowserPanel::GetKnownIconID(std::filesystem::path path)
     {
         std::string ext = path.extension().string().substr(1);
-        std::filesystem::path iconsDir = rootDir / "Editor" / "Icons";
+        std::filesystem::path iconsDir = resourceDir / "Icons";
         std::string iconPath = (iconsDir  / (ext + ".png")).string();
 
         if (ext == "jpg" || ext == "png" || ext == "jpeg")
@@ -183,17 +382,21 @@ namespace DT
         else if (std::filesystem::exists(iconPath))
             return Texture(iconPath, "diffuse").id;
         else
-            return Texture((iconsDir / "file.png").string(), "diffuse").id;
+            return fileIconID;
     }
 
+    /// @brief Called when this panel is added and ready to start.
     void ResourceBrowserPanel::Start()
     {
-        rootDir = std::filesystem::current_path().parent_path().parent_path() / "Resources";
+        rootDir = DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox";
+        resourceDir = DUCKTAPE_ROOT_DIR / "Resources" / "Editor";
         currentDir = rootDir;
         // Note that icons are from https://www.icons8.com and not fully copyright free.
         // TODO: Add self drawn icons
-        folderIconID = Texture((rootDir / "Editor" / "Icons" / "folder.png").string(), "diffuse").id;
+        folderIconID = Texture((resourceDir / "Icons" / "folder.png").string(), "diffuse").id;
+        fileIconID = Texture((resourceDir / "Icons" / "file.png").string(), "diffuse").id;
     }
+    /// @brief Called when this panel is updated each frame.
     void ResourceBrowserPanel::Update(Engine &engine)
     {
         RenderImGuiWindow();
