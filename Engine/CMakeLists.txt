@@ -27,9 +27,15 @@ file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/Engine/**/*.cpp" "${PROJECT
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
-add_library(Ducktape
-    ${source_list}
-)
+if(BUILD_SHARED_LIBS)
+    add_library(Ducktape SHARED 
+        ${source_list}
+    )
+else()
+    add_library(Ducktape 
+        ${source_list}
+    )
+endif()
 
 set_target_properties(Ducktape PROPERTIES
     CXX_EXTENSIONS OFF
@@ -61,20 +67,9 @@ target_include_directories(Ducktape PUBLIC
     ${PROJECT_SOURCE_DIR}/Extern/json/include/;
 )
 
-target_link_directories(Ducktape PUBLIC
-    ${PROJECT_SOURCE_DIR}/Build/Engine/;
-    ${PROJECT_SOURCE_DIR}/Build/Extern/assimp/bin/;
-    ${PROJECT_SOURCE_DIR}/Build/Extern/assimp/contrib/zlib/;
-    ${PROJECT_SOURCE_DIR}/Build/Extern/glad/;
-    ${PROJECT_SOURCE_DIR}/Build/Extern/glfw/src;
-    ${PROJECT_SOURCE_DIR}/Build/Extern/imgui;
-)
-
 target_link_libraries(Ducktape PUBLIC
     glfw
-    ${OPENGL_gl_LIBRARY}
-    ${OPENGL_glu_LIBRARY}
-    ${GLFW_LIBRARIES}
+    OpenGL::GL
     glad
     assimp
     imgui

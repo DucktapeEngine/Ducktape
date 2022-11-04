@@ -28,7 +28,8 @@ namespace DT
     {
         engine = holderEngine;
 
-        LoadModule(config.gameModule);
+        if (config.gameModule != "")
+            LoadModule(config.gameModule);
     }
 
     Scene::~Scene()

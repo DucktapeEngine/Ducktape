@@ -26,11 +26,15 @@ namespace DT
 {
     Configuration::Configuration(std::filesystem::path configPath)
     {
-        std::ifstream configFile((configPath / "DucktapeProjectSettings.json").string());
-        std::stringstream buffer;
-        buffer << configFile.rdbuf();
-        from_json(json::parse(buffer.str()), *this);
+        from_json(json::parse(std::ifstream((configPath / "DucktapeProjectSettings.json").string())), *this);
 
         projectDirectory = configPath;
+    }
+
+    void Configuration::Save()
+    {
+        std::ofstream output((projectDirectory / "DucktapeProjectSettings.json").string());
+        json j = *this;
+        output << j.dump();
     }
 }

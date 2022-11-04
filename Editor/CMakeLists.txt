@@ -53,5 +53,4 @@ else (Ducktape_FOUND)
 endif ()
 
 target_include_directories (Editor PUBLIC ${Ducktape_INCLUDE_DIR})
-target_link_directories (Editor PUBLIC ${Ducktape_LIBRARY_DIR})
 target_link_libraries (Editor PUBLIC ${Ducktape_LIBRARY})

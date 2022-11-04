@@ -43,4 +43,4 @@ aryanbaburajan2007@gmail.com
  */
 #define UNUSED(expr) do { (void)(expr); } while (0)
 
-#define DUCKTAPE_ROOT_DIR std::filesystem::current_path().parent_path().parent_path()
+#define DUCKTAPE_ROOT_DIR std::filesystem::current_path().parent_path()

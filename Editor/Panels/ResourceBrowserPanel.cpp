@@ -32,6 +32,7 @@ namespace DT
         std::filesystem::path relativePath = std::filesystem::relative(currentDir, rootDir);
         std::filesystem::path tempDir = rootDir;
         std::filesystem::path::iterator it = relativePath.begin();
+
         // Traverse until reach currentDir to add navigating buttons
         while (tempDir != currentDir)
         {
@@ -98,16 +99,17 @@ namespace DT
             }
             // Try to list all files when filtering
             float totalSizeOnColumn = 0;
-            if (Filter.IsActive())
+            if (filter.IsActive())
             {
                 for (std::filesystem::directory_entry directoryEntry : std::filesystem::recursive_directory_iterator(rootDir))
                 {
                     std::filesystem::path path = directoryEntry.path();
                     std::string filename = path.filename().string();
-                    if (Filter.PassFilter(filename.c_str()))
+                    if (filter.PassFilter(filename.c_str()))
                     {
                         RenderDirectoryItem(directoryEntry, static_cast<float>(itemSize));
                         totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
+
                         // Custom wrap for items for column-like layout
                         if (itemSize >= columnSwitchSize && totalSizeOnColumn < avail.x)
                             ImGui::SameLine();
@@ -177,6 +179,7 @@ namespace DT
         }*/
         ImGui::Separator();
         ImGui::SliderInt("Item Size", &itemSize, 16, 48);
+
         ImGui::End();
         
     }
@@ -198,8 +201,10 @@ namespace DT
         const bool isDir = directoryEntry.is_directory();
         const bool onColumnLayout = itemSize >= columnSwitchSize;
         ImVec2 avail = ImGui::GetContentRegionAvail();
+
         // Get id for file type textures (this will be enhanced to identify different file types on future)
         GLuint iconID = isDir ? folderIconID : GetKnownIconID(path);
+
         ImGui::PushID(filename.c_str());
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         ImGui::ImageButtonWithText((ImTextureID)(uintptr_t)iconID, filename.c_str(), {itemSize,itemSize}, onColumnLayout, {0, 1}, {1, 0});
@@ -343,9 +348,6 @@ namespace DT
         }
     }
 
-    /// @brief Checks if item is double clicked on resource browser.
-    /// @param isDir pass this as if item is directory
-    /// @param path item's path
     void ResourceBrowserPanel::OnItemDoubleClicked(bool isDir, std::filesystem::path path)
     {
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
@@ -353,7 +355,7 @@ namespace DT
             if (isDir)
             {
                 currentDir = rootDir / std::filesystem::relative(path, rootDir);
-                Filter.Clear();
+                filter.Clear();
             }
             else
             {
@@ -396,10 +398,10 @@ namespace DT
         folderIconID = Texture((resourceDir / "Icons" / "folder.png").string(), "diffuse").id;
         fileIconID = Texture((resourceDir / "Icons" / "file.png").string(), "diffuse").id;
     }
+
     /// @brief Called when this panel is updated each frame.
     void ResourceBrowserPanel::Update(Engine &engine)
     {
         RenderImGuiWindow();
     }
-    void ResourceBrowserPanel::Destroy() {}
 }

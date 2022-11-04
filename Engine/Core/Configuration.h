@@ -55,9 +55,11 @@ namespace DT
         std::filesystem::path projectDirectory;                  ///< @brief Project directory
         std::filesystem::path gameModule;                        ///< @brief Path to the game module (shared library)
 
-        IN_SERIALIZE(Configuration, windowSize, windowTitle, version, windowIconPath, targetFPS, drawWireframe, vsync, hideWindow, drawToQuad, skyboxCubemapPaths, gameModule);
+        IN_SERIALIZE(Configuration, windowSize, windowTitle, version, windowIconPath, targetFPS, drawWireframe, vsync, hideWindow, drawToQuad, skyboxCubemapPaths, projectDirectory, gameModule);
 
         Configuration() = default;
         Configuration(std::filesystem::path configPath);
+
+        void Save();
     };
 }

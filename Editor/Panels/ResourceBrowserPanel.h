@@ -51,6 +51,5 @@ namespace DT
         void RenderEditItem(float itemSize);
         void OnItemDoubleClicked(bool isDir, std::filesystem::path path);
         unsigned int GetKnownIconID(std::filesystem::path path);
-
     };
 }
