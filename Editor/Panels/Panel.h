@@ -11,6 +11,7 @@ namespace DT
     {
     public:
         virtual void Start() {}
+        virtual const char* GetWindowName() { return nullptr; }
         virtual void Update(Engine &engine) {}
         virtual void Destroy() {}
     };

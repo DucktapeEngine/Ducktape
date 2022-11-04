@@ -2,6 +2,10 @@
 
 namespace DT
 {
+    const char* SceneViewPanel::GetWindowName() { return windowName; }
+
+    const char* SceneViewPanel::GetToolbarWindowName() { return toolbarWindowName; }
+
     void SceneViewPanel::Update(Engine &engine)
     {
         selectedEntity = engine.activeScene->selectedEntity;
@@ -12,13 +16,13 @@ namespace DT
             const float speed = 2.5f, sensitivity = 25.f;
             bool holdingRightButton = engine.input.GetMouseButton(MOUSE_BUTTON_RIGHT);
 
-            if (engine.input.GetKey(KEY_UP))
+            if (engine.input.GetKey(KEY_UP) || engine.input.GetKey(KEY_W))
                 engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
-            if (engine.input.GetKey(KEY_DOWN))
+            if (engine.input.GetKey(KEY_DOWN) || engine.input.GetKey(KEY_S))
                 engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
-            if (engine.input.GetKey(KEY_LEFT))
+            if (engine.input.GetKey(KEY_LEFT) || engine.input.GetKey(KEY_A))
                 engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
-            if (engine.input.GetKey(KEY_RIGHT))
+            if (engine.input.GetKey(KEY_RIGHT) || engine.input.GetKey(KEY_D))
                 engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
 
             // Look
@@ -37,7 +41,7 @@ namespace DT
 
         // Transform
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
-        ImGui::Begin("Scene View");
+        ImGui::Begin(windowName);
         sceneViewActive = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
         // ImVec2 windowSize = ImGui::GetWindowSize();
         ImVec2 vMin = ImGui::GetWindowContentRegionMin();
@@ -96,7 +100,7 @@ namespace DT
 
     void SceneViewPanel::RenderToolbarPanel(Engine &engine)
     {
-        ImGui::Begin("Tool Bar");
+        ImGui::Begin(toolbarWindowName);
 
         bool holdingRightButton = engine.input.GetMouseButton(MOUSE_BUTTON_RIGHT);
 

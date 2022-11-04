@@ -2,6 +2,8 @@
 
 namespace DT
 {
+    const char* InspectorPanel::GetWindowName() { return windowName; }
+
     void InspectorPanel::RenderAddComponentMenu(Engine &engine)
     {
         // Add Component Menu
@@ -67,7 +69,7 @@ namespace DT
     void InspectorPanel::Update(Engine &engine)
     {
         selectedEntity = engine.activeScene->selectedEntity;
-        ImGui::Begin("Inspector");
+        ImGui::Begin(windowName);
 
         for (System *system : engine.activeScene->GetSystems())
             system->Inspector(*engine.activeScene, engine);
