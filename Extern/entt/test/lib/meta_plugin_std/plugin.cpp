@@ -33,11 +33,11 @@ void tear_down() {
 CR_EXPORT int cr_main(cr_plugin *ctx, cr_op operation) {
     switch(operation) {
     case CR_LOAD:
-        entt::meta_ctx::bind(static_cast<userdata *>(ctx->userdata)->ctx);
+        entt::meta_ctx::bind(static_cast<userdata *>(ctx.userdata)->ctx);
         set_up();
         break;
     case CR_STEP:
-        static_cast<userdata *>(ctx->userdata)->any = 42;
+        static_cast<userdata *>(ctx.userdata)->any = 42;
         break;
     case CR_UNLOAD:
     case CR_CLOSE:

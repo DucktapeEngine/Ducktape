@@ -6,7 +6,7 @@ CR_EXPORT int cr_main(cr_plugin *ctx, cr_op operation) {
     switch(operation) {
     case CR_STEP: {
         // forces things to break
-        auto &registry = *static_cast<entt::registry *>(ctx->userdata);
+        auto &registry = *static_cast<entt::registry *>(ctx.userdata);
 
         // forces the creation of the pool for the velocity component
         static_cast<void>(registry.storage<velocity>());

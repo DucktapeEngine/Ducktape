@@ -25,11 +25,14 @@ aryanbaburajan2007@gmail.com
 #include <vector>
 
 #include <Renderer/Vertex.h>
-#include <Renderer/Texture.h>
+#include <Renderer/Material.h>
 #include <Renderer/Shader.h>
 #include <Core/Debug.h>
 #include <Core/Serialization.h>
 #include <Core/Macro.h>
+#include <Core/ResourceManager.h>
+#include <Core/Resource.h>
+#include <Renderer/Renderer.h>
 
 namespace DT
 {
@@ -41,7 +44,8 @@ namespace DT
     public:
         std::vector<Vertex> vertices;      ///< @brief vector of Vertex objects
         std::vector<unsigned int> indices; ///< @brief vector of indices of vertices vector
-        std::vector<Texture> textures;     ///< @brief vector of Texture objects
+        std::vector<Resource<Material>> materials;
+        static inline std::unordered_map<RID, Mesh> factoryData;
 
         unsigned int VBO; ///< @brief id of vertex buffer object
         unsigned int EBO; ///< @brief id of element array buffer object
@@ -51,13 +55,27 @@ namespace DT
          * @brief Draws the mesh with given shader object
          * @param shader Shader object to use while drawing
          */
-        void Draw(Shader &shader);
+        void Draw(const glm::mat4 &model, Renderer &renderer);
 
         /**
          * @brief sets up the VAOs (Vertex Array Objects) for the mesh
          */
         void Setup();
-    };
 
-    SERIALIZE(Mesh, vertices, indices, textures);
+        static Mesh *LoadResource(RID rid)
+        {
+            if (factoryData.count(rid))
+                return &factoryData[rid];
+
+            factoryData[rid] = json::parse(std::ifstream(ResourceManager::GetPath(rid)));
+            return &factoryData[rid];
+        }
+
+        static void UnLoadResource(RID rid)
+        {
+            factoryData.erase(rid);
+        }
+
+        IN_SERIALIZE(Mesh, vertices, indices, materials);
+    };
 }

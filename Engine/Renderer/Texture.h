@@ -31,6 +31,7 @@ aryanbaburajan2007@gmail.com
 #include <utils/stb_image.h>
 
 #include <Core/Serialization.h>
+#include <Core/ResourceManager.h>
 
 namespace DT
 {
@@ -40,13 +41,21 @@ namespace DT
     class Texture
     {
     public:
-        int width;                ///< @brief Width of the image/texture.
-        int height;               ///< @brief Height of the image/texture.
-        int nrChannels;           
-        unsigned int id;          ///< @brief Unique id of the texture.
-        bool loaded = false;      ///< @brief Whether the texture is loaded or not.
-        std::string type; // TOFIX: Switch to enums
-        std::filesystem::path path;         ///< @brief Path to the image/texture file.
+        int width;  ///< @brief Width of the image/texture.
+        int height; ///< @brief Height of the image/texture.
+        int nrChannels;
+        unsigned int id;     ///< @brief Unique id of the texture.
+        bool loaded = false; ///< @brief Whether the texture is loaded or not.
+
+        enum Type
+        {
+            DIFFUSE,
+            SPECULAR,
+            NORMAL,
+            HEIGHT
+        };
+
+        static inline std::unordered_map<RID, Texture> factoryData;
 
         Texture() = default;
 
@@ -55,13 +64,25 @@ namespace DT
          * @param _path path to the texture/image to be loaded
          * @param _type type flag for the texture
          */
-        Texture(std::filesystem::path _path, std::string _type);
+        Texture(RID rid);
+
+        static Texture *LoadResource(RID rid)
+        {
+            if (factoryData.count(rid))
+                return &factoryData[rid];
+
+            factoryData[rid] = Texture(rid);
+            return &factoryData[rid];
+        }
+
+        static void UnLoadResource(RID rid)
+        {
+            factoryData.erase(rid);
+        }
 
         /**
          * @brief  deletes the texture
          */
         void Delete();
     };
-    
-    SERIALIZE(Texture, type, path); // TODO: Switch to Resource ID once Resource System has been implemented
 }

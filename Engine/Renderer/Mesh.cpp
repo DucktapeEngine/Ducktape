@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 In case of any further questions feel free to contact me at
-the following email address:
+the following email address:material
 aryanbaburajan2007@gmail.com
 */
 
@@ -24,39 +24,44 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Mesh::Draw(Shader &shader)
+    void Mesh::Draw(const glm::mat4 &model, Renderer &renderer)
     {
-        // bind appropriate textures
-        unsigned int diffuseNr = 1;
-        unsigned int specularNr = 1;
-        unsigned int normalNr = 1;
-        unsigned int heightNr = 1;
-
-        for (unsigned int i = 0; i < textures.size(); i++)
+        // Bind appropriate textures
+        for (unsigned int i = 0; i < materials.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + i);
 
-            std::string number;
-            std::string name = textures[i].type;
-            if (name == "diffuse")
-                number = std::to_string(diffuseNr++);
-            else if (name == "specular")
-                number = std::to_string(specularNr++);
-            else if (name == "normal")
-                number = std::to_string(normalNr++);
-            else if (name == "height")
-                number = std::to_string(heightNr++);
+            Material *material = materials[i].Data();
+            Shader *shader = material->shader.Data();
+            renderer.ActivateShader(shader);
 
-            shader.SetInt(("material." + name + number).c_str(), i);
-            glBindTexture(GL_TEXTURE_2D, textures[i].id);
+            Texture::Type type = material->textureType;
+
+            shader->Use();
+            shader->SetVec3("material.diffuseColor", material->diffuseColor);
+            shader->SetVec3("material.specularColor", material->specularColor);
+            shader->SetVec3("material.ambientColor", material->ambientColor);
+            shader->SetFloat("material.shininess", material->shininess);
+            shader->SetMat4("model", model);
+
+            shader->SetInt("material.diffuse", i);
+            if (type == Texture::Type::DIFFUSE)
+                shader->SetInt("material.diffuse", i);
+            else if (type == Texture::Type::SPECULAR)
+                shader->SetInt("material.specular", i);
+            else if (type == Texture::Type::NORMAL)
+                shader->SetInt("material.normal", i);
+            else if (type == Texture::Type::HEIGHT)
+                shader->SetInt("material.height", i);
+            glBindTexture(GL_TEXTURE_2D, material->texture.Data()->id);
         }
 
-        // draw mesh
+        // Draw mesh
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
 
-        // good practice to set everything back to defaults once configured.
+        // Good practice to set everything back to defaults once configured.
+        glBindVertexArray(0);
         glActiveTexture(GL_TEXTURE0);
     }
 
@@ -98,11 +103,5 @@ namespace DT
         glEnableVertexAttribArray(6);
         glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, weights));
         glBindVertexArray(0);
-
-        if (textures.size() == 0)
-        {
-            // Load default texture
-            textures.push_back(Texture(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Textures" / "Default.png", "diffuse"));
-        }
     }
 }

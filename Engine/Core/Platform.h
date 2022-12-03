@@ -37,57 +37,36 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-#ifdef _WIN32
-	std::string GetLastErrorAsString();
-#endif
+	namespace Platform
+	{
+		std::string GetLastErrorAsString();
+		void Execute(const std::string command);
 
-    class Module
-    {
-    public:
+		class Module
+		{
+		public:
 #ifdef _WIN32
-        HMODULE module;
+			HMODULE module;
 #endif
 #ifdef __linux__
-        void * module;
+			void *module;
 #endif
 
-        ~Module()
-        {
-			Free();
-        }
+			~Module();
 
-        void Load(std::filesystem::path path)
-        {
+			void Load(std::filesystem::path path);
+			void Free();
+
+			template <typename T>
+			T GetSymbolAddress(const std::string &symbolName)
+			{
 #ifdef _WIN32
-			module = LoadLibrary(path.string().c_str());
-
-			if (!module)
-				std::cout << GetLastErrorAsString();
+				return (T)GetProcAddress(module, symbolName.c_str());
 #endif
 #ifdef __linux__
-			module = dlopen(path.string().c_str(), RTLD_LAZY);
+				return (T)dlsym(module, symbolName.c_str());
 #endif
-        }
-
-        void Free()
-        {
-#ifdef _WIN32
-			FreeLibrary(module);
-#endif
-#ifdef __linux__
-			dlclose(module);
-#endif
-        }
-
-        template <typename T>
-        T GetSymbolAddress(const std::string &symbolName)
-        {
-#ifdef _WIN32
-            return (T)GetProcAddress(module, symbolName.c_str());
-#endif
-#ifdef __linux__
-            return (T)dlsym(module, symbolName.c_str());
-#endif
-        }
-    };
+			}
+		};
+	}
 }

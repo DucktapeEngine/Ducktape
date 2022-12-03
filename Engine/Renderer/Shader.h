@@ -33,6 +33,10 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <Core/Serialization.h>
+#include <Core/ResourceManager.h>
+#include <Core/Macro.h>
+
 namespace DT
 {
     /**
@@ -41,15 +45,29 @@ namespace DT
     class Shader
     {
     public:
-        unsigned int id;                   ///< @brief Unique id of the shader.
-        bool loaded = false;               ///< @brief Boolean variable about whether the shader has been loaded or not.
+        unsigned int id = 0; ///< @brief Unique id of the shader.
+        bool loaded = false; ///< @brief Boolean variable about whether the shader has been loaded or not.
+        bool deleteOnDestructor = true;
+
+        static inline const std::string versionInclude = "#version 440 core\n";
+        static inline const std::string ducktapeInclude = "#ifdef DT_SHADER_FRAG\n"
+                                                          "out vec4 FragColor;\n"
+                                                          "#endif\n"
+
+                                                          "#ifdef DT_SHADER_VERT\n"
+                                                          "#define DT_REGISTER_SHADER() void main() {gl_Position = Vert();}\n"
+                                                          "#endif\n"
+                                                          "#ifdef DT_SHADER_FRAG\n"
+                                                          "#define DT_REGISTER_SHADER() void main() {FragColor = Frag();}\n"
+                                                          "#endif\n";
+        static inline std::unordered_map<RID, Shader> factoryData;
+
+        Shader() = default;
 
         /**
          * @brief Create a new Shader object from vertex shader and fragment shader path.
-         * @param vertexPath The path to the vertex shader file.
-         * @param fragmentPath The path to the fragment shader file.
          */
-        Shader(std::filesystem::path vertexPath, std::filesystem::path fragmentPath);
+        Shader(RID shader);
 
         /**
          * @brief Destroy the Shader object
@@ -151,7 +169,10 @@ namespace DT
          */
         void SetMat4(std::string name, const glm::mat4 &mat) const;
 
+        static Shader *LoadResource(RID rid);
+        static void UnLoadResource(RID rid);
+
     private:
-        void CheckCompileErrors(unsigned int shader, std::string type);
+        bool CheckCompileErrors(unsigned int shader, std::string type, const std::filesystem::path &path);
     };
 }

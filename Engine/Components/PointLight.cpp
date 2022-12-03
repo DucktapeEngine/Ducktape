@@ -24,18 +24,15 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void PointLightSystem::Init(Scene &scene, Engine &engine)
+    void PointLightSystem::Init(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<PointLight>())
+        for (Entity entity : scene->View<PointLight>())
         {
-            PointLight &pl = scene.Get<PointLight>(entity);
+            PointLight &pl = scene->Get<PointLight>(entity);
 
-            pl.transform = &scene.Require<Transform>(entity);
+            pl.transform = &scene->Require<Transform>(entity);
 
-            if (pl.shader == nullptr)
-                pl.shader = &engine.renderer.defaultShader;
-
-            if (engine.renderer.GetFreePointLightSpot(&pl.lightSpot) == false)
+            if (ctx.renderer->GetFreePointLightSpot(&pl.lightSpot) == false)
             {
                 std::cerr << "PointLight: No free light spots.\n";
             }
@@ -49,11 +46,11 @@ namespace DT
         }
     }
 
-    void PointLightSystem::Tick(Scene &scene, Engine &engine)
+    void PointLightSystem::Tick(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<PointLight>())
+        for (Entity entity : scene->View<PointLight>())
         {
-            PointLight &pl = scene.Get<PointLight>(entity);
+            PointLight &pl = scene->Get<PointLight>(entity);
 
             if (pl.lightSpot == NAN)
                 return;
@@ -68,14 +65,14 @@ namespace DT
         }
     }
 
-    void PointLightSystem::Inspector(Scene &scene, Engine &engine)
+    void PointLightSystem::Inspector(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<PointLight>())
+        for (Entity entity : scene->View<PointLight>())
         {
-            if (scene.selectedEntity != entity)
+            if (scene->selectedEntity != entity)
                 continue;
 
-            PointLight &pl = scene.Get<PointLight>(entity);
+            PointLight &pl = scene->Get<PointLight>(entity);
 
             if (ImGui::CollapsingHeader("Point Light"))
             {
@@ -85,28 +82,28 @@ namespace DT
         }
     }
 
-    void PointLightSystem::SceneView(Scene &scene, Engine &engine)
+    void PointLightSystem::SceneView(Scene *scene, const Context &ctx)
     {
-        Tick(scene, engine);
+        Tick(scene, ctx);
     }
 
-    void PointLightSystem::Serialize(Scene &scene, Engine &engine)
+    void PointLightSystem::Serialize(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<PointLight>())
+        for (Entity entity : scene->View<PointLight>())
         {
-            PointLight &pl = scene.Get<PointLight>(entity);
+            PointLight &pl = scene->Get<PointLight>(entity);
 
-            engine.serialization.SerializeComponent("PointLight", pl, entity);
+            ctx.serialization->SerializeComponent("PointLight", pl, entity);
         }
     }
 
-    void PointLightSystem::Destroy(Scene &scene, Engine &engine)
+    void PointLightSystem::Destroy(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<PointLight>())
+        for (Entity entity : scene->View<PointLight>())
         {
-            PointLight &pl = scene.Get<PointLight>(entity);
+            PointLight &pl = scene->Get<PointLight>(entity);
 
-            engine.renderer.UnoccupyPointLightSpot(pl.lightSpot);
+            ctx.renderer->UnoccupyPointLightSpot(pl.lightSpot);
             pl.shader->SetBool(pl.propertyString + "enabled", false); // TOFIX: Move this to Renderer class
         }
     }

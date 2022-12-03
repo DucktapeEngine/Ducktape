@@ -24,8 +24,10 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 
-#include <Core/Engine.h>
 #include <Core/Serialization.h>
+#include <Scene/System.h>
+#include <Scene/Scene.h>
+#include <Core/Context.h>
 
 namespace DT
 {
@@ -34,7 +36,7 @@ namespace DT
      */
     struct Tag
     {
-        std::string name = "Unnamed";       ///< @brief Tag name
+        std::string name = "Unnamed"; ///< @brief Tag name
     };
 
     SERIALIZE(Tag, name);
@@ -45,11 +47,11 @@ namespace DT
         /**
          * @brief Serializes Tag properties for Inspector.
          */
-        void Inspector(Scene &scene, Engine &engine) override;
+        void Inspector(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Handles Tag serialization.
          */
-        void Serialize(Scene &scene, Engine &engine) override;
+        void Serialize(Scene *scene, const Context &ctx) override;
     };
 }

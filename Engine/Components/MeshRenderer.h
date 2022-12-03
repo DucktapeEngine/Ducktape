@@ -24,11 +24,11 @@ aryanbaburajan2007@gmail.com
 
 #include <Renderer/Mesh.h>
 #include <Core/ImGui.h>
-#include <Core/Engine.h>
 #include <Scene/Entity.h>
 #include <Renderer/Material.h>
 #include <Components/Transform.h>
 #include <Core/Serialization.h>
+#include <Core/Resource.h>
 
 namespace DT
 {
@@ -37,13 +37,11 @@ namespace DT
      */
     struct MeshRenderer
     {
-        Mesh mesh;                ///< @brief Mesh data and buffers for runtime drawing
-        Shader *shader = nullptr; ///< @brief Pointer to shader for model drawing
-        Transform *transform;     ///< @brief Pointer to model transform
-        Material material;        ///< @brief Pointer to material for shading properties
-    };
+        Resource<Mesh> mesh;  ///< @brief Mesh data and buffers for runtime drawing
+        Transform *transform; ///< @brief Pointer to model transform
 
-    SERIALIZE(MeshRenderer, material, mesh);
+        IN_SERIALIZE(MeshRenderer, mesh);
+    };
 
     class MeshRendererSystem : System
     {
@@ -51,26 +49,26 @@ namespace DT
         /**
          * @brief Initializes entity model transform, shader and mesh buffers.
          */
-        void Init(Scene &scene, Engine &engine) override;
+        void Init(Scene *scene, const Context &ctx) override;
 
         /**
-         * @brief Draws current mesh for current scene.
+         * @brief Draws current mesh for current scene->
          */
-        void Tick(Scene &scene, Engine &engine) override;
+        void Tick(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Handles Scene View rendering.
          */
-        void SceneView(Scene &scene, Engine &engine) override;
+        void SceneView(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Handles MeshRenderer serialization.
          */
-        void Serialize(Scene &scene, Engine &engine) override;
+        void Serialize(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Serializes MeshRenderer properties for Inspector.
          */
-        void Inspector(Scene &scene, Engine &engine) override;
+        void Inspector(Scene *scene, const Context &ctx) override;
     };
 }

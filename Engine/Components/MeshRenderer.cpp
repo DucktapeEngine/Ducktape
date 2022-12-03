@@ -24,64 +24,56 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void MeshRendererSystem::Init(Scene &scene, Engine &engine)
+    void MeshRendererSystem::Init(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<MeshRenderer>())
+        for (Entity entity : scene->View<MeshRenderer>())
         {
-            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
+            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
 
-            mr.transform = &scene.Require<Transform>(entity);
+            mr.transform = &scene->Require<Transform>(entity);
 
-            if (mr.shader == nullptr)
-                mr.shader = &engine.renderer.defaultShader;
-
-            mr.mesh.Setup();
+            mr.mesh.Data()->Setup();
         }
     }
 
-    void MeshRendererSystem::Tick(Scene &scene, Engine &engine)
+    void MeshRendererSystem::Tick(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<MeshRenderer>())
+        for (Entity entity : scene->View<MeshRenderer>())
         {
-            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
+            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
 
-            mr.shader->Use();
-            mr.shader->SetMat4("model", mr.transform->GetModelMatrix());
-            mr.shader->SetVec3("material.color", mr.material.color);
-            mr.shader->SetFloat("material.shininess", mr.material.shininess);
-
-            mr.mesh.Draw(*mr.shader);
+            mr.mesh.Data()->Draw(mr.transform->GetModelMatrix(), *ctx.renderer);
         }
     }
 
-    void MeshRendererSystem::SceneView(Scene &scene, Engine &engine)
+    void MeshRendererSystem::SceneView(Scene *scene, const Context &ctx)
     {
-        Tick(scene, engine);
+        Tick(scene, ctx);
     }
-    
-    void MeshRendererSystem::Serialize(Scene &scene, Engine &engine)
-    {
-        for (Entity entity : scene.View<MeshRenderer>())
-        {
-            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
 
-            engine.serialization.SerializeComponent("MeshRenderer", mr, entity);
+    void MeshRendererSystem::Serialize(Scene *scene, const Context &ctx)
+    {
+        for (Entity entity : scene->View<MeshRenderer>())
+        {
+            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
+
+            ctx.serialization->SerializeComponent("MeshRenderer", mr, entity);
         }
     }
 
-    void MeshRendererSystem::Inspector(Scene &scene, Engine &engine)
+    void MeshRendererSystem::Inspector(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<MeshRenderer>())
+        for (Entity entity : scene->View<MeshRenderer>())
         {
-            if (scene.selectedEntity != entity)
+            if (scene->selectedEntity != entity)
                 continue;
 
-            MeshRenderer &mr = scene.Get<MeshRenderer>(entity);
+            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
 
             if (ImGui::CollapsingHeader("Mesh Renderer"))
             {
-                ImGui::Mesh("mesh", &mr.mesh);
-                ImGui::Material("material", &mr.material);
+                ImGui::Resource("mesh", &mr.mesh);
+                // ImGui::Resource("material", mr.material);
             }
         }
     }

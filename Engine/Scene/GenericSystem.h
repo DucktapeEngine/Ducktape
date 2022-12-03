@@ -23,19 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Scene/System.h>
-
-// Source: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
-#define HAS_METHOD_DECL(methodName)\
-    template <typename CheckType>\
-    class Has ## methodName\
-    {\
-        typedef char One;\
-        struct Two {char x[2];};\
-        template <typename C> static One Test( decltype(&C::methodName));\
-        template <typename C> static Two Test(...);\
-    public:\
-        enum {value = sizeof(Test<CheckType>(0)) == sizeof(char)};\
-    };
+#include <Core/Macro.h>
 
 namespace DT
 {
@@ -51,46 +39,46 @@ namespace DT
         HAS_METHOD_DECL(Inspector);
 
     public:
-        void Init(Scene &scene, Engine &engine) override
+        void Init(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasInit<T>::value)
-                for (Entity entity : scene.View<T>())
-                    scene.Get<T>(entity).Init(entity, scene, engine);
+                for (Entity entity : scene->View<T>())
+                    scene->Get<T>(entity).Init(entity, scene, ctx);
         }
 
-        void Tick(Scene &scene, Engine &engine) override
+        void Tick(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasTick<T>::value)
-                for (Entity entity : scene.View<T>())
-                    scene.Get<T>(entity).Tick(entity, scene, engine);
+                for (Entity entity : scene->View<T>())
+                    scene->Get<T>(entity).Tick(entity, scene, ctx);
         }
 
-        void SceneView(Scene &scene, Engine &engine) override
+        void SceneView(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasSceneView<T>::value)
-                for (Entity entity : scene.View<T>())
-                    scene.Get<T>(entity).SceneView(entity, scene, engine);
+                for (Entity entity : scene->View<T>())
+                    scene->Get<T>(entity).SceneView(entity, scene, ctx);
         }
 
-        void Destroy(Scene &scene, Engine &engine) override
+        void Destroy(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasDestroy<T>::value)
-                for (Entity entity : scene.View<T>())
-                    scene.Get<T>(entity).Destroy(entity, scene, engine);
+                for (Entity entity : scene->View<T>())
+                    scene->Get<T>(entity).Destroy(entity, scene, ctx);
         }
 
-        void Serialize(Scene &scene, Engine &engine) override
+        void Serialize(Scene *scene, const Context &ctx) override
         {
             // if constexpr (HasSerialize<T>::value)
-            //     for (Entity entity : scene.View<T>())
+            //     for (Entity entity : scene->View<T>())
             //         Serialize(engine.serializer, );
         }
 
-        void Inspector(Scene &scene, Engine &engine) override
+        void Inspector(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasInspector<T>::value)
-                for (Entity entity : scene.View<T>())
-                    scene.Get<T>(entity).Inspector(entity, scene, engine);
+                for (Entity entity : scene->View<T>())
+                    scene->Get<T>(entity).Inspector(entity, scene, ctx);
         }
     };
 }

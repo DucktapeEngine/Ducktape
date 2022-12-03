@@ -106,49 +106,48 @@ namespace DT
 
         // Skybox
         float skyboxVertices[] = {
-            // positions          
-            -1.0f,  1.0f, -1.0f,
+            // positions
+            -1.0f, 1.0f, -1.0f,
             -1.0f, -1.0f, -1.0f,
             1.0f, -1.0f, -1.0f,
             1.0f, -1.0f, -1.0f,
-            1.0f,  1.0f, -1.0f,
-            -1.0f,  1.0f, -1.0f,
+            1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, -1.0f,
 
-            -1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f, 1.0f,
             -1.0f, -1.0f, -1.0f,
-            -1.0f,  1.0f, -1.0f,
-            -1.0f,  1.0f, -1.0f,
-            -1.0f,  1.0f,  1.0f,
-            -1.0f, -1.0f,  1.0f,
+            -1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, 1.0f,
+            -1.0f, -1.0f, 1.0f,
 
             1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f, -1.0f,
+            1.0f, -1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, -1.0f,
             1.0f, -1.0f, -1.0f,
 
-            -1.0f, -1.0f,  1.0f,
-            -1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f, -1.0f,  1.0f,
-            -1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f, 1.0f,
+            -1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f, -1.0f, 1.0f,
+            -1.0f, -1.0f, 1.0f,
 
-            -1.0f,  1.0f, -1.0f,
-            1.0f,  1.0f, -1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            -1.0f,  1.0f,  1.0f,
-            -1.0f,  1.0f, -1.0f,
+            -1.0f, 1.0f, -1.0f,
+            1.0f, 1.0f, -1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f, -1.0f,
 
             -1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f,  1.0f,
+            -1.0f, -1.0f, 1.0f,
             1.0f, -1.0f, -1.0f,
             1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f,  1.0f,
-            1.0f, -1.0f,  1.0f
-        };
+            -1.0f, -1.0f, 1.0f,
+            1.0f, -1.0f, 1.0f};
 
         glGenVertexArrays(1, &skyboxVAO);
         glGenBuffers(1, &skyboxVBO);
@@ -156,11 +155,20 @@ namespace DT
         glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     }
 
-    void Renderer::Render(Window &window, Configuration &config)
+    void Renderer::Render(Window &window, Configuration &config, Scene *scene)
     {
+        if (window.GetMinimized())
+            return;
+
+        if (scene->activeCamera == nullptr)
+        {
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            return;
+        }
+
         // Projection and View
         *cameraView = glm::lookAt(*cameraPosition, *cameraPosition + *cameraRotation * glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -168,11 +176,6 @@ namespace DT
             *cameraProjection = glm::ortho(0.f, window.GetWindowSize().x, 0.f, window.GetWindowSize().y, 0.1f, 100.0f);
         else
             *cameraProjection = glm::perspective(glm::radians(*fov), window.GetWindowSize().x / window.GetWindowSize().y, 0.1f, 100.0f);
-
-        defaultShader.Use();
-        defaultShader.SetMat4("projection", *cameraProjection);
-        defaultShader.SetMat4("view", *cameraView);
-        defaultShader.SetVec3("viewPos", *cameraPosition);
 
         // Draw skybox
         glDepthMask(GL_FALSE);
@@ -267,9 +270,17 @@ namespace DT
         occupiedPointLight[spot] = false;
     }
 
+    void Renderer::ActivateShader(Shader *shader)
+    {
+        shader->Use();
+        shader->SetMat4("projection", *cameraProjection);
+        shader->SetMat4("view", *cameraView);
+        shader->SetVec3("viewPos", *cameraPosition);
+    }
+
     void Renderer::FramebufferSizeCallback(GLFWwindow *glfwWindow, int width, int height)
     {
-        reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(glfwWindow))->window->SetWindowSize({width, height});
-        reinterpret_cast<UserPointer *>(glfwGetWindowUserPointer(glfwWindow))->renderer->SetViewport({width, height});
+        reinterpret_cast<Context *>(glfwGetWindowUserPointer(glfwWindow))->window->SetWindowSize({width, height});
+        reinterpret_cast<Context *>(glfwGetWindowUserPointer(glfwWindow))->renderer->SetViewport({width, height});
     }
 }

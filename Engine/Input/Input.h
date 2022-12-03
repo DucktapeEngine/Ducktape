@@ -22,41 +22,39 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <unordered_set>
+#include <vector>
+#include <functional>
 
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <Input/Key.h>
-#include <Core/UserPointer.h>
+#include <Core/Context.h>
 
 namespace DT
 {
     class Engine;
-    
+
     class Input
     {
     public:
-        glm::vec2 mousePosition = glm::vec2(0.f);       ///< @brief The position of the mouse.
-        glm::vec2 mouseDelta = glm::vec2(0.f);          ///< @brief The position change of the mouse.
+        glm::vec2 mousePosition = glm::vec2(0.f); ///< @brief The position of the mouse.
+        glm::vec2 mouseDelta = glm::vec2(0.f);    ///< @brief The position change of the mouse.
 
-        std::unordered_set<int> keysDown;               ///< @brief The keys that are being pressed.
-        std::unordered_set<int> keysUp;                 ///< @brief The keys that are released.
-        std::unordered_set<int> mouseButtonsUp;         ///< @brief The mouse buttons that are being pressed.
-        std::unordered_set<int> mouseButtonsDown;       ///< @brief The mouse buttons that are released.
+        std::vector<std::function<void(Key, Action)>> onKeyEvents;
+        std::vector<std::function<void(Button, Action)>> onMouseEvents;
 
-        GLFWwindow *window;                             ///< @brief Pointer to the OpenGL window.
-
-        bool GetKey(int key);
-        bool GetKeyPressed(int key);
-        bool GetKeyReleased(int key);
-
-        bool GetMouseButton(int button);
-        bool GetMouseButtonPressed(int button);
-        bool GetMouseButtonReleased(int button);
+        GLFWwindow *window; ///< @brief Pointer to the OpenGL window.
 
         Input(GLFWwindow *window);
+
+        bool IsKeyHeld(int key);
+        bool IsMouseButtonHeld(int button);
+
+        void OnKeyEvent(std::function<void(Key, Action)> onKeyEvent);
+        void OnMouseEvent(std::function<void(Button, Action)> onMouseEvent);
+
         void Process();
         static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
         static void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);

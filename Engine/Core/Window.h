@@ -26,14 +26,14 @@ aryanbaburajan2007@gmail.com
 #include <stdexcept>
 #include <iostream>
 
-#include <Core/ImGui.h>
+#include <imgui/imgui.h>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <utils/stb_image.h>
 
 #include <Core/Configuration.h>
-#include <Core/UserPointer.h>
+#include <Core/Context.h>
 
 namespace DT
 {
@@ -70,6 +70,7 @@ namespace DT
         void FocusWindow();
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
+        bool GetMinimized();
 
         static void ErrorCallback(int code, const char *description);
         static void APIENTRY GlDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char *message, const void *userParam);

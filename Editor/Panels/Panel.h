@@ -10,6 +10,8 @@ namespace DT
     class Panel
     {
     public:
+        bool isOpen = false;
+
         virtual void Start(Engine &engine) {}
         virtual void Update(Engine &engine) {}
         virtual void Destroy(Engine &engine) {}

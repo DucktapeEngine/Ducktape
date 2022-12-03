@@ -21,71 +21,97 @@ aryanbaburajan2007@gmail.com
 */
 
 #define DT_DEBUG
-#include <Ducktape.h>
 
+#include <Core/Engine.h>
+#include <Components/RegisterComponentSystems.h>
 #include <Editor.h>
+#include <Panels/ConsolePanel.h>
+#include <Panels/ScenePanel.h>
+#include <Panels/PropertiesPanel.h>
+#include <Panels/MenuBarPanel.h>
+#include <Panels/ProjectPanel.h>
+#include <Panels/ResourceBrowserPanel.h>
+#include <Panels/ResourceImporter.h>
+#include <Panels/ResourceInspectorPanel.h>
+#include <Panels/ResourceInterface.h>
+#include <Panels/SceneViewPanel.h>
 
 using namespace DT;
+
+void window_close_callback(GLFWwindow *window)
+{
+    std::cout << "window_close_callback\n";
+}
 
 int main()
 {
     try
     {
-        Configuration config;
-        config.windowSize = {800, 600};
-        config.windowTitle = "DucktapeTest";
-        config.drawToQuad = false;
-        config.projectDirectory = DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox";
-        config.windowIconPath = DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Textures" / "logo.png";
-        config.skyboxCubemapPaths = {
-            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "right.jpg",
-            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "left.jpg",
-            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "top.jpg",
-            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "bottom.jpg",
-            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "front.jpg",
-            config.projectDirectory / "Assets" / "Textures" / "Skybox" / "back.jpg"};
-        config.gameModule = DUCKTAPE_ROOT_DIR / "Build" / "Resources" / "Sandbox" / "Assets" / "Scripts" / "libGame.dll";
+        Engine e(Project(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox"));
 
-        Engine e(config);
+        glfwSetWindowCloseCallback(e.window.window, window_close_callback);
 
-        // Engine e(Configuration(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox"));
-
-        Scene mainScene(&e, e.config);
+        Scene mainScene(e.project.config);
 
         RegisterComponentSystems(mainScene);
 
-        // SceneManager::Load(e.config.projectDirectory / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
+        // std::cout << __LINE__ << std::endl;
+        // SceneManager::Load(e.project.directory / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
+        // std::cout << __LINE__ << std::endl;
 
         Entity camera = mainScene.CreateEntity();
         mainScene.Assign<Tag>(camera).name = "Camera";
         mainScene.Assign<Transform>(camera);
         mainScene.Assign<Camera>(camera);
-        mainScene.Assign<DirectionalLight>(camera);
+        // mainScene.Assign<DirectionalLight>(camera);
 
-        std::vector<Mesh> meshes = LoadModel(e.config.projectDirectory / "Assets" / "Models" / "backpack" / "backpack.obj").meshes;
-        for (Mesh mesh : meshes)
-            mainScene.Assign<MeshRenderer>(mainScene.CreateEntity()).mesh = mesh;
+        // for (const auto &meshAsset : std::filesystem::directory_iterator(e.project.directory / "Assets" / "Models" / "backpack" / "backpack"))
+        //     if (!meshAsset.is_directory())
+        //         mainScene.Assign<MeshRenderer>(mainScene.CreateEntity()).mesh = ResourceManager::GetRID(meshAsset);
 
         e.loopManager.sceneTick = false;
 
         e.Init(mainScene);
 
+        Editor::AddPanel<SceneViewPanel>();
+        Editor::AddPanel<ScenePanel>();
+        Editor::AddPanel<ResourceBrowserPanel>();
+        Editor::AddPanel<ResourceInspectorPanel>();
+        Editor::AddPanel<ConsolePanel>();
+        Editor::AddPanel<PropertiesPanel>();
+        Editor::AddPanel<MenuBarPanel>();
+        Editor::AddPanel<ProjectPanel>();
+        ResourceInterface::AddDefault();
+
         Editor::Init(e);
 
         while (e.IsOpen())
         {
+            e.PollEvents();
+
+            if (!e.IsOpen())
+                break;
+
             e.StartFrame();
+            // std::cout << "StartFrame\n";
+
             Editor::NewFrame();
+            // std::cout << "NewFrame\n";
 
             for (System *system : mainScene.GetSystems())
-                system->SceneView(mainScene, e);
+                system->SceneView(&mainScene, e.ctx);
+            // std::cout << "SceneView\n";
 
             Editor::Render(e);
+            // std::cout << "Render\n";
 
             Editor::EndFrame(e.renderer);
+            // std::cout << "EndFrame\n";
             e.EndFrame();
+            // std::cout << "EndFrame\n";
         }
 
+        e.project.Save();
         Editor::Terminate();
     }
     catch (const std::exception &e)

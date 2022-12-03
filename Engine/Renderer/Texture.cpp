@@ -24,14 +24,13 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Texture::Texture(std::filesystem::path _path, std::string _type)
+    Texture::Texture(RID rid)
     {
         stbi_set_flip_vertically_on_load(true);
 
-        this->path = _path;
-        this->type = _type;
-
         glGenTextures(1, &id);
+
+        std::filesystem::path path = ResourceManager::GetPath(rid);
 
         unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &nrChannels, 0);
 

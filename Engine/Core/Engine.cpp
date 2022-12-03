@@ -24,18 +24,14 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Engine::Engine(Configuration configuration) : config(configuration), window(config), renderer(window, config), input(window.window)
+    Engine::Engine(Project project) : project(project), window(project.config), renderer(window, project.config), input(window.window), ctx{this, &project, &window, &renderer, &input, &time, &loopManager, &debug, activeScene, &serialization}
     {
         std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
                      "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
                      "This is free software, and you are welcome to redistribute it\n"
                      "under certain conditions; type `show c' for details.\n";
 
-        userPointer.input = &input;
-        userPointer.window = &window;
-        userPointer.renderer = &renderer;
-
-        glfwSetWindowUserPointer(window.window, reinterpret_cast<void *>(&userPointer));
+        glfwSetWindowUserPointer(window.window, reinterpret_cast<void *>(&ctx));
     }
 
     void Engine::Init(Scene &scene)
@@ -43,9 +39,7 @@ namespace DT
         activeScene = &scene;
 
         for (System *system : scene.GetSystems())
-            system->Init(scene, *this);
-
-        scene.initialized = true;
+            system->Init(&scene, ctx);
     }
 
     bool Engine::IsOpen()
@@ -55,22 +49,37 @@ namespace DT
 
     void Engine::StartFrame()
     {
+        window.PollEvents();
+
+        if (!IsOpen())
+            return;
+
+        if (window.GetMinimized())
+        {
+            window.PollEvents();
+            return;
+        }
+
         time.Update();
         input.Process();
 
-        window.PollEvents();
         window.Clear({0.2f, 0.3f, 0.3f, 1.0f});
 
-        renderer.Render(window, config);
+        renderer.Render(window, project.config, activeScene);
 
         if (loopManager.sceneTick)
             for (System *system : activeScene->GetSystems())
-                system->Tick(*activeScene, *this);
+                system->Tick(activeScene, ctx);
     }
 
     void Engine::EndFrame()
     {
         window.SwapBuffers();
+    }
+
+    void Engine::PollEvents()
+    {
+        window.PollEvents();
     }
 
     void Engine::Run(Scene &scene)

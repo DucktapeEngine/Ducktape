@@ -1,5 +1,5 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
+Ducktape | An open source C++ 2D & 3D game ctx that focuses on being fast, and powerful.
 Copyright (C) 2022 Aryan Baburajan
 
 This program is free software: you can redistribute it and/or modify
@@ -24,37 +24,36 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Platform.h>
 #include <Scene/Entity.h>
-#include <Scene/Scene.h>
+#include <Core/Context.h>
 
-#define REGISTER(component)\
-    DT_EXPORT void Register ## component(DT::Entity entity, DT::Scene &scene, DT::RegisterAction action)\
-    {\
-        switch (action)\
-        {\
-        case DT::RegisterAction::Assign:\
-            scene.Assign<component>(entity);\
-            break;\
-        case DT::RegisterAction::Remove:\
-            scene.Remove<component>(entity);\
-            break;\
-        }\
+#define REGISTER(component)                                                                            \
+    DT_EXPORT void Register##component(DT::Entity entity, DT::Scene *scene, DT::RegisterAction action) \
+    {                                                                                                  \
+        switch (action)                                                                                \
+        {                                                                                              \
+        case DT::RegisterAction::Assign:                                                               \
+            scene->Assign<component>(entity);                                                          \
+            break;                                                                                     \
+        case DT::RegisterAction::Remove:                                                               \
+            scene->Remove<component>(entity);                                                          \
+            break;                                                                                     \
+        }                                                                                              \
     }
 
 namespace DT
 {
-    class Engine;
-    class Scene;
-    
     const int MAX_SYSTEMS = 64;
+
+    class Scene;
 
     class System
     {
     public:
-        virtual void Init(Scene &scene, Engine &engine) {}
-        virtual void Tick(Scene &scene, Engine &engine) {}
-        virtual void SceneView(Scene &scene, Engine &engine) {}
-        virtual void Destroy(Scene &scene, Engine &engine) {}
-        virtual void Inspector(Scene &scene, Engine &engine) {}
-        virtual void Serialize(Scene &scene, Engine &engine) {}
+        virtual void Init(Scene *scene, const Context &ctx) {}
+        virtual void Tick(Scene *scene, const Context &ctx) {}
+        virtual void SceneView(Scene *scene, const Context &ctx) {}
+        virtual void Destroy(Scene *scene, const Context &ctx) {}
+        virtual void Inspector(Scene *scene, const Context &ctx) {}
+        virtual void Serialize(Scene *scene, const Context &ctx) {}
     };
 }

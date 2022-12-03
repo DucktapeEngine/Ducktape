@@ -24,8 +24,6 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <array>
-#include <sstream>
-#include <fstream>
 
 #include <glm/glm.hpp>
 #include <glad/glad.h>
@@ -52,14 +50,8 @@ namespace DT
         bool hideWindow = false;                                 ///< @brief Flag for window hiding
         bool drawToQuad = true;                                  ///< @brief Flag for quad drawing
         std::array<std::filesystem::path, 6> skyboxCubemapPaths; ///< @brief Path list for all 6 cubemap faces
-        std::filesystem::path projectDirectory;                  ///< @brief Project directory
         std::filesystem::path gameModule;                        ///< @brief Path to the game module (shared library)
 
-        IN_SERIALIZE(Configuration, windowSize, windowTitle, version, windowIconPath, targetFPS, drawWireframe, vsync, hideWindow, drawToQuad, skyboxCubemapPaths, projectDirectory, gameModule);
-
-        Configuration() = default;
-        Configuration(std::filesystem::path configPath);
-
-        void Save();
+        IN_SERIALIZE(Configuration, windowSize, windowTitle, version, windowIconPath, targetFPS, drawWireframe, vsync, hideWindow, drawToQuad, skyboxCubemapPaths, gameModule);
     };
 }

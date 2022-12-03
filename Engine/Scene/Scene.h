@@ -49,7 +49,7 @@ namespace DT
     };
 
     typedef void (*RegisterRuntimeFunc)(Scene &);
-    typedef void (*RegisterFunc)(Entity, Scene &, RegisterAction);
+    typedef void (*RegisterFunc)(Entity, Scene *, RegisterAction);
 
     class Scene
     {
@@ -120,13 +120,11 @@ namespace DT
 
     public:
         entt::registry sceneRegistry;       /// @brief Registry of all the components and entities in the scene
-        Engine *engine;                     /// @brief Pointer to the engine instance
-        Camera *activeCamera;               /// @brief Active camera of the scene
-        bool initialized = false;           /// @brief Component initialization state
-        Module gameModule;                  /// @brief Dll containing the game
+        Camera *activeCamera = nullptr;     /// @brief Active camera of the scene
+        Platform::Module gameModule;        /// @brief Dll containing the game
         Entity selectedEntity = entt::null; /// @brief FIXME: Find cause of buggy identifier and why we have to pass null
 
-        Scene(Engine *holderEngine, Configuration &config);
+        Scene(Configuration &config);
         ~Scene();
 
         template <typename T, typename... Args>

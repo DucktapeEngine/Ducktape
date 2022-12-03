@@ -1,3 +1,5 @@
+#include <iostream>
+
 // #include "config/config.h"
 #ifndef ENTT_CONFIG_CONFIG_H
 #define ENTT_CONFIG_CONFIG_H
@@ -14053,6 +14055,7 @@ protected:
      * @param last An iterator past the last element of the range of entities.
      */
     virtual void in_place_pop(basic_iterator first, basic_iterator last) {
+        std::cout << "in place pop\n";
         for(; first != last; ++first) {
             const auto entt = entity_traits::to_entity(std::exchange(sparse_ref(*first), null));
             packed[static_cast<size_type>(entt)] = std::exchange(free_list, entity_traits::combine(entt, entity_traits::reserved));
@@ -25413,6 +25416,7 @@ public:
      */
     template<typename... Component>
     void clear() {
+        std::cout << "clear\n";
         if constexpr(sizeof...(Component) == 0) {
             for(auto &&curr: pools) {
                 curr.second->clear();

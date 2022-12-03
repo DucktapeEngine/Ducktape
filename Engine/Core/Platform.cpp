@@ -20,15 +20,17 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#pragma once
+
 #include <Core/Platform.h>
 
 namespace DT
 {
-#ifdef _WIN32
-    std::string GetLastErrorAsString()
+    std::string Platform::GetLastErrorAsString()
     {
+#ifdef _WIN32
         DWORD errorMessageID = ::GetLastError();
-        if(errorMessageID == 0)
+        if (errorMessageID == 0)
         {
             return std::string();
         }
@@ -40,8 +42,49 @@ namespace DT
         std::string message(messageBuffer, size);
 
         LocalFree(messageBuffer);
-                
+
         return message;
-    }
 #endif
+#ifdef __linux__
+        // Write Linux specific code here
+#endif
+    }
+
+    void Platform::Execute(const std::string command)
+    {
+#ifdef _WIN32
+        ShellExecute(NULL, NULL, command.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+#endif
+#ifdef __linux__
+        system(command.c_str());
+#endif
+    }
+
+    Platform::Module::~Module()
+    {
+        Free();
+    }
+
+    void Platform::Module::Load(std::filesystem::path path)
+    {
+#ifdef _WIN32
+        module = LoadLibrary(path.string().c_str());
+
+        if (!module)
+            std::cout << GetLastErrorAsString();
+#endif
+#ifdef __linux__
+        module = dlopen(path.string().c_str(), RTLD_LAZY);
+#endif
+    }
+
+    void Platform::Module::Free()
+    {
+#ifdef _WIN32
+        FreeLibrary(module);
+#endif
+#ifdef __linux__
+        dlclose(module);
+#endif
+    }
 }

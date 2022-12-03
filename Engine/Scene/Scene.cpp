@@ -24,10 +24,8 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Scene::Scene(Engine *holderEngine, Configuration &config)
+    Scene::Scene(Configuration &config)
     {
-        engine = holderEngine;
-
         if (config.gameModule != "")
             LoadModule(config.gameModule);
     }
@@ -35,6 +33,11 @@ namespace DT
     Scene::~Scene()
     {
         gameModule.Free();
+
+        for (System *system : systems)
+            free(system);
+
+        sceneRegistry.clear();
     }
 
     void Scene::LoadModule(std::filesystem::path path)
@@ -50,7 +53,7 @@ namespace DT
         if (registerRuntimeFunc)
             registerRuntimeFunc(*this);
     }
-    
+
     Scene::SystemPool &Scene::GetSystems()
     {
         return systems;
@@ -76,7 +79,7 @@ namespace DT
             return;
         }
 
-        (*registerFunc)(entity, *this, RegisterAction::Assign);
+        (*registerFunc)(entity, this, RegisterAction::Assign);
     }
 
     void Scene::Remove(Entity entity, const std::string &name)
@@ -89,6 +92,6 @@ namespace DT
             return;
         }
 
-        (*registerFunc)(entity, *this, RegisterAction::Remove);
+        (*registerFunc)(entity, this, RegisterAction::Remove);
     }
 }

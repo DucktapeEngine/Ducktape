@@ -30,21 +30,61 @@ aryanbaburajan2007@gmail.com
 #include <imgui/misc/cpp/imgui_stdlib.h>
 #include <glm/glm.hpp>
 #include <imgui/ImGuizmo.h>
+#include <imgui/imfilebrowser.h>
 
 #include <Renderer/Mesh.h>
 #include <Renderer/Material.h>
+#include <Core/ResourceManager.h>
+#include <Core/Resource.h>
 
 namespace ImGui
 {
-    IMGUI_API void Mesh(const std::string &label, DT::Mesh *mesh);
+    inline FileBrowser fileDialog(ImGuiFileBrowserFlags_CloseOnEsc);
+
     IMGUI_API void Material(const std::string &label, DT::Material *material);
     IMGUI_API void Vec3(const std::string &label, glm::vec3 *vec3);
     IMGUI_API void Vec2(const std::string &label, glm::vec2 *vec2);
     IMGUI_API bool ImageButtonWithText(ImTextureID texId, const char *label, const ImVec2 &imageSize = ImVec2(0, 0), bool wrapContent = false, const ImVec2 &uv0 = ImVec2(0, 0), const ImVec2 &uv1 = ImVec2(1, 1), int frame_padding = -1, const ImVec4 &bg_col = ImVec4(0, 0, 0, 0), const ImVec4 &tint_col = ImVec4(1, 1, 1, 1));
+    IMGUI_API void AlignForWidth(float width, float alignment = 0.5f);
+    IMGUI_API void Color(const std::string &label, glm::vec3 *color);
+    IMGUI_API void Color(const std::string &label, glm::vec4 *color);
 
     ImVec2 operator*(ImVec2 &iv2, float fl);
     ImVec2 operator*(const ImVec2 &iv2, float fl);
     ImVec2 operator*(ImVec2 &iv2, int i);
     ImVec2 operator+(ImVec2 &iv2, ImVec2 &otheriv2);
     ImVec2 operator+(const ImVec2 &iv2, const ImVec2 &otheriv2);
+
+    template <typename T>
+    IMGUI_API void Resource(const std::string &label, DT::Resource<T> *resource)
+    {
+        ImGuiWindow *window = GetCurrentWindow();
+        if (window->SkipItems)
+            return;
+
+        DT::ResourceManager &rm = DT::ResourceManager::Instance();
+
+        BeginGroup();
+        PushID(label.c_str());
+
+        if (ImGui::Button(rm.GetPath(resource->rid).filename().string().c_str(), ImVec2(ImGui::GetWindowSize().x * 0.65f, 0.0f)))
+        {
+            fileDialog.Open();
+            fileDialog.SetTitle(label);
+            // fileDialog.SetTypeFilters() // Implement resource type identifiers
+        }
+
+        if (fileDialog.HasSelected())
+        {
+            resource->rid = DT::ResourceManager::GetRID(fileDialog.GetSelected());
+            fileDialog.ClearSelected();
+        }
+
+        ImGui::SameLine();
+
+        ImGui::Text(label.c_str());
+
+        PopID();
+        EndGroup();
+    }
 }

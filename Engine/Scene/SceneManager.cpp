@@ -31,7 +31,7 @@ namespace DT
         engine.serialization.isSerializing = true;
 
         for (System *system : scene.GetSystems())
-            system->Serialize(scene, engine);
+            system->Serialize(&scene, engine.ctx);
 
         output << engine.serialization.data.dump(4);
     }
@@ -68,10 +68,10 @@ namespace DT
         engine.serialization.isSerializing = false;
 
         for (System *system : scene.GetSystems())
-            system->Serialize(scene, engine);
+            system->Serialize(&scene, engine.ctx);
 
         for (System *system : scene.GetSystems())
-            system->Init(scene, engine);
+            system->Init(&scene, engine.ctx);
 
         std::cout << "Loaded scene successfully\n";
     }

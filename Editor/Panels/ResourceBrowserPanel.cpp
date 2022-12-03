@@ -1,10 +1,11 @@
-#include "ResourceBrowserPanel.h"
+#include <Panels/ResourceBrowserPanel.h>
 
 namespace DT
 {
     void ResourceBrowserPanel::RenderImGuiWindow()
     {
-        ImGui::Begin("Resource Browser");
+        isOpen = true;
+        ImGui::Begin("Resource Browser", &isOpen);
         filter.Draw("Filter");
         ImGui::Separator();
 
@@ -110,15 +111,33 @@ namespace DT
         ImVec2 avail = ImGui::GetContentRegionAvail();
 
         // Get id for file type textures (this will be enhanced to identify different file types on future)
-        GLuint iconID = isDir ? folderIconID : GetKnownIconID(path);
+        GLuint iconID = 0;
+        if (isDir)
+        {
+            iconID = folderIconID;
+        }
+        else
+        {
+            Interface *interface = ResourceInterface::GetInterface(path.extension().string());
+            if (interface != nullptr)
+                iconID = interface->iconId;
+        }
+        if (iconID == 0)
+            iconID = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "file.png"))->id;
 
         ImGui::PushID(filename.c_str());
-        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+
+        bool selected = selectedItemPath == path;
+
+        if (!selected)
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         ImGui::ImageButtonWithText((ImTextureID)(uintptr_t)iconID, filename.c_str(), {static_cast<float>(itemSize), static_cast<float>(itemSize)}, onColumnLayout, {0, 1}, {1, 0});
-        
+
         // Since same functionality used twice, grouped them onto same function, you'll see below its used again
         // HACK: ^ Image and text are one group now thanks to new implementation, but it will still use same method.
-        OnItemDoubleClicked(isDir, path);
+
+        HandleItemSelected(isDir, path);
+        HandleItemDoubleClicked(isDir, path);
 
         // TODO: Add more context menu options for item
         if (ImGui::BeginPopupContextItem())
@@ -128,27 +147,29 @@ namespace DT
                 copiedFile = path;
             }*/
 
+            if (!isDir && ImGui::MenuItem("Reimport"))
+            {
+                ResourceImporter::Reimport(directoryEntry.path());
+            }
+
             if (ImGui::MenuItem("Show In Explorer"))
             {
 #ifdef _WIN32
-                ShellExecute(NULL, NULL, currentDir.string().c_str(), NULL, NULL, SW_SHOWDEFAULT);
+                Platform::Execute(currentDir.string());
 #endif
 #ifdef __linux__
-                // this gets default file manager
-                // xdg-mime query default inode/directory
-                // but gonna try xdg-open first
-                std::string command = "xdg-open " + path.string();
-                system(command.c_str());
+                Platform::Execute("xdg-open " + path.string());
 #endif
             }
             ImGui::EndPopup();
         }
 
-        ImGui::PopStyleColor();
+        if (!selected)
+            ImGui::PopStyleColor();
         ImGui::PopID();
     }
 
-    void ResourceBrowserPanel::OnItemDoubleClicked(bool isDir, std::filesystem::path path)
+    void ResourceBrowserPanel::HandleItemDoubleClicked(bool isDir, std::filesystem::path path)
     {
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
         {
@@ -160,31 +181,24 @@ namespace DT
             else
             {
 #ifdef _WIN32
-                ShellExecute(NULL, NULL, path.string().c_str(), NULL, NULL, SW_SHOWDEFAULT);
+                Platform::Execute(path.string());
 #endif
 #ifdef __linux__
-                // this gets default file manager
-                // xdg-mime query default inode/directory
-                // but gonna try xdg-open first
-                std::string command = "xdg-open " + path.string();
-                system(command.c_str());
+                Platform::Execute("xdg-open " + path.string());
 #endif
             }
         }
     }
 
-    unsigned int ResourceBrowserPanel::GetKnownIconID(std::filesystem::path path)
+    void ResourceBrowserPanel::HandleItemSelected(bool isDir, std::filesystem::path path)
     {
-        std::string ext = path.extension().string().substr(1);
-        std::filesystem::path iconsDir = rootDir / "Editor" / "Icons";
-        std::string iconPath = (iconsDir  / (ext + ".png")).string();
+        if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+        {
+            selectedItemPath = path;
 
-        if (ext == "jpg" || ext == "png" || ext == "jpeg")
-            return Texture((iconsDir / "image.png").string(), "diffuse").id;
-        else if (std::filesystem::exists(iconPath))
-            return Texture(iconPath, "diffuse").id;
-        else
-            return Texture((iconsDir / "file.png").string(), "diffuse").id;
+            if (!isDir)
+                Invoke(Events::OnItemSelect);
+        }
     }
 
     void ResourceBrowserPanel::Start(Engine &engine)
@@ -193,9 +207,9 @@ namespace DT
         currentDir = rootDir;
         // Note that icons are from https://www.icons8.com and not fully copyright free.
         // TODO: Add self drawn icons
-        folderIconID = Texture((rootDir / "Editor" / "Icons" / "folder.png").string(), "diffuse").id;
+        folderIconID = Texture::LoadResource(ResourceManager::GetRID(rootDir / "Editor" / "Icons" / "ResourceBrowser" / "folder.png"))->id;
     }
-    
+
     void ResourceBrowserPanel::Update(Engine &engine)
     {
         RenderImGuiWindow();

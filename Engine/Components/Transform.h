@@ -31,7 +31,6 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include <Scene/Scene.h>
-#include <Core/Engine.h>
 #include <Core/Serialization.h>
 
 namespace DT
@@ -96,12 +95,12 @@ namespace DT
         /**
          * @brief Serializes Transform properties for Inspector.
          */
-        void Inspector(Scene &scene, Engine &engine) override;
+        void Inspector(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Handles Transform serialization.
          */
-        void Serialize(Scene &scene, Engine &engine) override;
+        void Serialize(Scene *scene, const Context &ctx) override;
 
         void PopupContext(const char *label, std::function<void()> func);
     };

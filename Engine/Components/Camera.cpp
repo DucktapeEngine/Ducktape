@@ -32,49 +32,49 @@ namespace DT
         return windowSpacePos;
     }
 
-    void CameraSystem::Init(Scene &scene, Engine &engine)
+    void CameraSystem::Init(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<Camera>())
+        for (Entity entity : scene->View<Camera>())
         {
-            Camera &cam = scene.Get<Camera>(entity);
+            Camera &cam = scene->Get<Camera>(entity);
 
-            engine.activeScene->activeCamera = &cam;
+            ctx.activeScene->activeCamera = &cam;
 
-            cam.transform = &scene.Get<Transform>(entity);
+            cam.transform = &scene->Get<Transform>(entity);
 
-            engine.renderer.cameraView = &cam.view;
-            engine.renderer.cameraProjection = &cam.projection;
-            engine.renderer.cameraPosition = &cam.transform->translation;
-            engine.renderer.cameraRotation = &cam.transform->rotation;
-            engine.renderer.isOrtho = &cam.isOrtho;
-            engine.renderer.fov = &cam.fov;
+            ctx.renderer->cameraView = &cam.view;
+            ctx.renderer->cameraProjection = &cam.projection;
+            ctx.renderer->cameraPosition = &cam.transform->translation;
+            ctx.renderer->cameraRotation = &cam.transform->rotation;
+            ctx.renderer->isOrtho = &cam.isOrtho;
+            ctx.renderer->fov = &cam.fov;
         }
     }
 
-    void CameraSystem::Inspector(Scene &scene, Engine &engine)
+    void CameraSystem::Inspector(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<Camera>())
+        // for (Entity entity : scene->View<Camera>())
         {
-            if (scene.selectedEntity != entity)
-                continue;
+            // if (scene->selectedEntity != entity)
+            //     continue;
 
-            Camera &cam = scene.Get<Camera>(entity);
+            // Camera &cam = scene->Get<Camera>(entity);
 
-            if (ImGui::CollapsingHeader("Camera"))
-            {
-                ImGui::Checkbox("orthographic", &cam.isOrtho);
-                ImGui::DragFloat("field of view", &cam.fov);
-            }
+            // if (ImGui::CollapsingHeader("Camera"))
+            // {
+            //     ImGui::Checkbox("orthographic", &cam.isOrtho);
+            //     ImGui::DragFloat("field of view", &cam.fov);
+            // }
         }
     }
 
-    void CameraSystem::Serialize(Scene &scene, Engine &engine)
+    void CameraSystem::Serialize(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<Camera>())
+        for (Entity entity : scene->View<Camera>())
         {
-            Camera &cam = scene.Get<Camera>(entity);
+            Camera &cam = scene->Get<Camera>(entity);
 
-            engine.serialization.SerializeComponent("Camera", cam, entity);
+            ctx.serialization->SerializeComponent("Camera", cam, entity);
         }
     }
 }

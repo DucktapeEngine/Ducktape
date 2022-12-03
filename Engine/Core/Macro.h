@@ -41,6 +41,32 @@ aryanbaburajan2007@gmail.com
 /* This macro expression gets optimized out during compilation, but will
  * satisfy the compiler from complaining about unused variables
  */
-#define UNUSED(expr) do { (void)(expr); } while (0)
+#define UNUSED(expr)  \
+    do                \
+    {                 \
+        (void)(expr); \
+    } while (0)
 
 #define DUCKTAPE_ROOT_DIR std::filesystem::current_path().parent_path()
+
+// Source: https://stackoverflow.com/questions/257288/templated-check-for-the-existence-of-a-class-member-function
+#define HAS_METHOD_DECL(methodName)                            \
+    template <typename CheckType>                              \
+    class Has##methodName                                      \
+    {                                                          \
+        typedef char One;                                      \
+        struct Two                                             \
+        {                                                      \
+            char x[2];                                         \
+        };                                                     \
+        template <typename C>                                  \
+        static One Test(decltype(&C::methodName));             \
+        template <typename C>                                  \
+        static Two Test(...);                                  \
+                                                               \
+    public:                                                    \
+        enum                                                   \
+        {                                                      \
+            value = sizeof(Test<CheckType>(0)) == sizeof(char) \
+        };                                                     \
+    };

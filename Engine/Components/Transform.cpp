@@ -65,14 +65,14 @@ namespace DT
         rotation = glm::radians(eulerRotation);
     }
 
-    void TransformSystem::Inspector(Scene &scene, Engine &engine)
+    void TransformSystem::Inspector(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<Transform>())
+        for (Entity entity : scene->View<Transform>())
         {
-            if (scene.selectedEntity != entity)
+            if (scene->selectedEntity != entity)
                 continue;
 
-            Transform &trans = scene.Get<Transform>(entity);
+            Transform &trans = scene->Get<Transform>(entity);
             if (ImGui::CollapsingHeader("Transform"))
             {
                 if (ImGui::BeginPopupContextItem())
@@ -119,13 +119,13 @@ namespace DT
         }
     }
 
-    void TransformSystem::Serialize(Scene &scene, Engine &engine)
+    void TransformSystem::Serialize(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<Transform>())
+        for (Entity entity : scene->View<Transform>())
         {
-            Transform &trans = scene.Get<Transform>(entity);
+            Transform &trans = scene->Get<Transform>(entity);
 
-            engine.serialization.SerializeComponent("Transform", trans, entity);
+            ctx.serialization->SerializeComponent("Transform", trans, entity);
         }
     }
 }

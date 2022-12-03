@@ -32,12 +32,6 @@ aryanbaburajan2007@gmail.com
 #include <Core/Window.h>
 #include <Core/Engine.h>
 #include <Panels/Panel.h>
-#include <Panels/SceneViewPanel.h>
-#include <Panels/HierarchyPanel.h>
-#include <Panels/ResourceBrowserPanel.h>
-#include <Panels/ConsolePanel.h>
-#include <Panels/InspectorPanel.h>
-#include <Panels/MenuBarPanel.h>
 
 namespace DT
 {
@@ -45,6 +39,24 @@ namespace DT
     {
         inline bool showDemoWindow = true;
         inline Engine *enginePtr;
+        inline std::vector<Panel *> panels;
+
+        template <typename T>
+        T *AddPanel()
+        {
+            T *Tptr = new T();
+            panels.push_back(Tptr);
+            return Tptr;
+        }
+
+        template <typename T>
+        T *GetPanel()
+        {
+            for (Panel *panel : panels)
+                if (T *ptr = dynamic_cast<T *>(panel))
+                    return ptr;
+            return nullptr;
+        }
 
         void Init(Engine &engine);
         void NewFrame();
@@ -73,14 +85,5 @@ namespace DT
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
         void SetDarkTheme();
-        inline std::vector<Panel *> panels;
-
-        template <typename T>
-        T *AddPanel()
-        {
-            T *Tptr = new T();
-            panels.push_back(Tptr);
-            return Tptr;
-        }
     }
 }

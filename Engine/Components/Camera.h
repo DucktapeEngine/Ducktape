@@ -22,10 +22,10 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Core/Engine.h>
 #include <Components/Transform.h>
 #include <Scene/System.h>
 #include <Core/Serialization.h>
+#include <Renderer/Renderer.h>
 
 namespace DT
 {
@@ -34,23 +34,23 @@ namespace DT
      */
     struct Camera
     {
-        glm::mat4 view;               ///< @brief View matrix.
-        glm::mat4 projection;         ///< @brief Projection matrix.
+        glm::mat4 view;       ///< @brief View matrix.
+        glm::mat4 projection; ///< @brief Projection matrix.
 
-        bool isOrtho = false;         ///< @brief Whether it is orthographic projection or not.
-        float fov = 45.0f;            ///< @brief Field of view.
+        bool isOrtho = false; ///< @brief Whether it is orthographic projection or not.
+        float fov = 45.0f;    ///< @brief Field of view.
 
-        Transform *transform;         ///< @brief Pointer to Transform class.
+        Transform *transform; ///< @brief Pointer to Transform class.
 
         /**
          * @brief Function to convert a 3D world point into 2D point after projection.
          * @param worldPoint 3D vector for which projection has to be done.
-         * @param windowSize 2D size of game window (engine.window.GetWindowSize()).
+         * @param windowSize 2D size of game window (ctx.window.GetWindowSize()).
          * @return 2D projected vector on the screen.
          */
         glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize);
     };
-    
+
     SERIALIZE(Camera, isOrtho, fov);
 
     class CameraSystem : System
@@ -59,16 +59,16 @@ namespace DT
         /**
          * @brief Registers Camera in the rendering engine
          */
-        void Init(Scene &scene, Engine &engine) override;
+        void Init(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Serializes Camera properties for Inspector.
          */
-        void Inspector(Scene &scene, Engine &engine) override;
+        void Inspector(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Handles Camera serialization.
          */
-        void Serialize(Scene &scene, Engine &engine) override;
+        void Serialize(Scene *scene, const Context &ctx) override;
     };
 }

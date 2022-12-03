@@ -22,6 +22,8 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+typedef int Key;
+
 /* The unknown key */
 #define KEY_UNKNOWN -1
 
@@ -149,15 +151,23 @@ aryanbaburajan2007@gmail.com
 #define KEY_RIGHT_SUPER 347
 #define KEY_MENU 348
 
-#define MOUSE_BUTTON_1         0
-#define MOUSE_BUTTON_2         1
-#define MOUSE_BUTTON_3         2
-#define MOUSE_BUTTON_4         3
-#define MOUSE_BUTTON_5         4
-#define MOUSE_BUTTON_6         5
-#define MOUSE_BUTTON_7         6
-#define MOUSE_BUTTON_8         7
-#define MOUSE_BUTTON_LAST      MOUSE_BUTTON_8
-#define MOUSE_BUTTON_LEFT      MOUSE_BUTTON_1
-#define MOUSE_BUTTON_RIGHT     MOUSE_BUTTON_2
-#define MOUSE_BUTTON_MIDDLE    MOUSE_BUTTON_3
+typedef int Button;
+
+#define MOUSE_BUTTON_1 0
+#define MOUSE_BUTTON_2 1
+#define MOUSE_BUTTON_3 2
+#define MOUSE_BUTTON_4 3
+#define MOUSE_BUTTON_5 4
+#define MOUSE_BUTTON_6 5
+#define MOUSE_BUTTON_7 6
+#define MOUSE_BUTTON_8 7
+#define MOUSE_BUTTON_LAST MOUSE_BUTTON_8
+#define MOUSE_BUTTON_LEFT MOUSE_BUTTON_1
+#define MOUSE_BUTTON_RIGHT MOUSE_BUTTON_2
+#define MOUSE_BUTTON_MIDDLE MOUSE_BUTTON_3
+
+typedef int Action;
+
+#define RELEASE 0
+#define PRESS 1
+#define REPEAT 2

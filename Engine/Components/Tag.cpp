@@ -24,14 +24,14 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void TagSystem::Inspector(Scene &scene, Engine &engine)
+    void TagSystem::Inspector(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<Tag>())
+        for (Entity entity : scene->View<Tag>())
         {
-            if (scene.selectedEntity != entity)
+            if (scene->selectedEntity != entity)
                 continue;
 
-            Tag &tag = scene.Get<Tag>(entity);
+            Tag &tag = scene->Get<Tag>(entity);
 
             if (ImGui::CollapsingHeader("Tag"))
             {
@@ -40,13 +40,13 @@ namespace DT
         }
     }
 
-    void TagSystem::Serialize(Scene &scene, Engine &engine)
+    void TagSystem::Serialize(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<Tag>())
+        for (Entity entity : scene->View<Tag>())
         {
-            Tag &tag = scene.Get<Tag>(entity);
+            Tag &tag = scene->Get<Tag>(entity);
 
-            engine.serialization.SerializeComponent("Tag", tag, entity);
+            ctx.serialization->SerializeComponent("Tag", tag, entity);
         }
     }
 }

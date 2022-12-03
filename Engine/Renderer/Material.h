@@ -25,15 +25,45 @@ aryanbaburajan2007@gmail.com
 #include <glm/glm.hpp>
 
 #include <Core/Serialization.h>
+#include <Renderer/Texture.h>
+#include <Renderer/Shader.h>
+#include <Core/Resource.h>
 
 namespace DT
 {
     struct Material
     {
-        glm::vec3 color = glm::vec3(1.0f);
+        glm::vec3 diffuseColor = glm::vec3(1.0f);
+        glm::vec3 specularColor = glm::vec3(1.0f);
+        glm::vec3 ambientColor = glm::vec3(1.0f);
         float shininess = 0.5f;
+        Resource<Texture> texture;
+        Texture::Type textureType = Texture::Type::DIFFUSE;
+        Resource<Shader> shader;
+        static inline std::unordered_map<RID, Material> factoryData;
 
+        static Material *LoadResource(RID rid)
+        {
+            if (factoryData.count(rid))
+                return &factoryData[rid];
+
+            factoryData[rid] = json::parse(std::ifstream(ResourceManager::GetPath(rid)));
+            return &factoryData[rid];
+        }
+
+        static void UnLoadResource(RID rid)
+        {
+            factoryData.erase(rid);
+        }
+
+        static void SaveResource(RID rid)
+        {
+            std::ofstream out(ResourceManager::GetPath(rid));
+            json j = factoryData[rid];
+            out << j;
+        }
+
+        IN_SERIALIZE(Material, diffuseColor, specularColor, ambientColor, shininess, texture, textureType, shader);
     };
 
-    SERIALIZE(Material, color, shininess);
 }

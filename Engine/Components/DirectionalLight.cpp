@@ -24,18 +24,15 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void DirectionalLightSystem::Init(Scene &scene, Engine &engine)
+    void DirectionalLightSystem::Init(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<DirectionalLight>())
+        for (Entity entity : scene->View<DirectionalLight>())
         {
-            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
+            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
 
-            dl.transform = &scene.Require<Transform>(entity);
+            dl.transform = &scene->Require<Transform>(entity);
 
-            if (dl.shader == nullptr)
-                dl.shader = &engine.renderer.defaultShader;
-
-            if (engine.renderer.GetFreeDirectionalLightSpot(&dl.lightSpot) == false)
+            if (ctx.renderer->GetFreeDirectionalLightSpot(&dl.lightSpot) == false)
             {
                 std::cerr << "DirectionalLight: No free light spots.\n";
                 continue;
@@ -47,11 +44,11 @@ namespace DT
         }
     }
 
-    void DirectionalLightSystem::Tick(Scene &scene, Engine &engine)
+    void DirectionalLightSystem::Tick(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<DirectionalLight>())
+        for (Entity entity : scene->View<DirectionalLight>())
         {
-            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
+            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
 
             if (dl.lightSpot == NAN)
                 continue;
@@ -64,40 +61,40 @@ namespace DT
         }
     }
 
-    void DirectionalLightSystem::Destroy(Scene &scene, Engine &engine)
+    void DirectionalLightSystem::Destroy(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<DirectionalLight>())
+        for (Entity entity : scene->View<DirectionalLight>())
         {
-            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
+            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
 
-            engine.renderer.UnoccupyDirectionalLightSpot(dl.lightSpot);
+            ctx.renderer->UnoccupyDirectionalLightSpot(dl.lightSpot);
             dl.shader->SetBool(dl.propertyString + "enabled", true);
         }
     }
 
-    void DirectionalLightSystem::SceneView(Scene &scene, Engine &engine)
+    void DirectionalLightSystem::SceneView(Scene *scene, const Context &ctx)
     {
-        Tick(scene, engine);
+        Tick(scene, ctx);
     }
 
-    void DirectionalLightSystem::Serialize(Scene &scene, Engine &engine)
+    void DirectionalLightSystem::Serialize(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<DirectionalLight>())
+        for (Entity entity : scene->View<DirectionalLight>())
         {
-            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
+            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
 
-            engine.serialization.SerializeComponent("DirectionalLight", dl, entity);
+            ctx.serialization->SerializeComponent("DirectionalLight", dl, entity);
         }
     }
 
-    void DirectionalLightSystem::Inspector(Scene &scene, Engine &engine)
+    void DirectionalLightSystem::Inspector(Scene *scene, const Context &ctx)
     {
-        for (Entity entity : scene.View<DirectionalLight>())
+        for (Entity entity : scene->View<DirectionalLight>())
         {
-            if (scene.selectedEntity != entity)
+            if (scene->selectedEntity != entity)
                 continue;
 
-            DirectionalLight &dl = scene.Get<DirectionalLight>(entity);
+            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
 
             if (ImGui::CollapsingHeader("Directional Light"))
             {

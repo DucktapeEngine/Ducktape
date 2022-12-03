@@ -26,6 +26,8 @@ namespace DT
 {
     void Editor::Init(Engine &engine)
     {
+        enginePtr = &engine;
+
         ImGui::CreateContext();
         ImGui_ImplGlfw_InitForOpenGL(engine.window.window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
@@ -34,17 +36,14 @@ namespace DT
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigDragClickToInputText = true;
 
-        SetDarkTheme();
+        io.Fonts->AddFontFromFileTTF((DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Fonts" / "Roboto" / "Roboto-Regular.ttf").string().c_str(), 15.f);
 
-        AddPanel<SceneViewPanel>();
-        AddPanel<HierarchyPanel>();
-        AddPanel<ResourceBrowserPanel>();
-        AddPanel<ConsolePanel>();
-        AddPanel<InspectorPanel>();
-        AddPanel<MenuBarPanel>();
+        SetDarkTheme();
 
         for (Panel *panel : panels)
             panel->Start(engine);
+
+        MaximizeWindow();
     }
 
     void Editor::NewFrame()
@@ -58,8 +57,11 @@ namespace DT
     {
         ImGui::DockSpaceOverViewport();
 
+        ImGui::fileDialog.Display();
+
         for (Panel *panel : panels)
-            panel->Update(engine);
+            if (panel->isOpen)
+                panel->Update(engine);
     }
 
     void Editor::EndFrame(Renderer &renderer)
@@ -207,6 +209,8 @@ namespace DT
             glfwSwapInterval(0);
     }
 
+#define rgb(r, g, b) ImVec4(r / 255.0f, g / 255.0f, b / 255.0f, 1.00f)
+
     void Editor::SetDarkTheme()
     {
         ImGui::StyleColorsDark();
@@ -250,6 +254,8 @@ namespace DT
         style.Colors[ImGuiCol_TabActive] = ImVec4(0.23f, 0.23f, 0.24f, 1.00f);
         style.Colors[ImGuiCol_TabUnfocused] = ImVec4(0.08f, 0.08f, 0.09f, 1.00f);
         style.Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.13f, 0.14f, 0.15f, 1.00f);
+        style.Colors[ImGuiCol_DockingPreview] = ImVec4(0.26f, 0.59f, 0.98f, 0.70f);
+        style.Colors[ImGuiCol_DockingEmptyBg] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
         style.Colors[ImGuiCol_PlotLines] = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
         style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
         style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);

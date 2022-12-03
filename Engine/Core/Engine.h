@@ -24,7 +24,6 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <iostream>
-#include <functional>
 
 #include <entt/entt.hpp>
 
@@ -35,15 +34,17 @@ aryanbaburajan2007@gmail.com
 #include <Input/Input.h>
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
-#include <Core/UserPointer.h>
 #include <Core/Serialization.h>
+#include <Core/Project.h>
+#include <Core/ResourceManager.h>
+#include <Core/Context.h>
 
 namespace DT
 {
     class Engine
     {
     public:
-        Configuration config;    ///< @brief The engine configuration.
+        Project project;
         Window window;           ///< @brief The application window.
         Renderer renderer;       ///< @brief The application renderer.
         Input input;             ///< @brief .
@@ -51,15 +52,16 @@ namespace DT
         LoopManager loopManager; ///< @brief The loop manager.
         Debug debug;             ///< @brief Debugger to output debug messages.
         Scene *activeScene;      ///< @brief The current scene the application is using.
-        UserPointer userPointer; ///< @brief Points to multiple systems stored as a user pointer in GLFW.
         Serialization serialization;
+        Context ctx;
 
-        Engine(Configuration configuration);
+        Engine(Project project);
 
         void Init(Scene &scene);
         bool IsOpen();
         void StartFrame();
         void EndFrame();
+        void PollEvents();
         void Run(Scene &scene);
     };
 }

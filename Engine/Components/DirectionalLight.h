@@ -24,9 +24,9 @@ aryanbaburajan2007@gmail.com
 
 #include <Renderer/Shader.h>
 #include <Components/Transform.h>
-#include <Core/Engine.h>
 #include <Scene/System.h>
 #include <Core/Serialization.h>
+#include <Renderer/Renderer.h>
 
 namespace DT
 {
@@ -35,13 +35,13 @@ namespace DT
      */
     struct DirectionalLight
     {
-        Shader *shader = nullptr;             ///< @brief Pointer to the Shader object.
-        Transform *transform;                 ///< @brief Pointer to the Transform object.
-        unsigned int lightSpot;               ///< @brief used for instantiated directional light's index
-        std::string propertyString;           ///< @brief property string of the directional light
+        Shader *shader = nullptr;   ///< @brief Pointer to the Shader object.
+        Transform *transform;       ///< @brief Pointer to the Transform object.
+        unsigned int lightSpot;     ///< @brief used for instantiated directional light's index
+        std::string propertyString; ///< @brief property string of the directional light
 
-        float intensity = 1.f;                ///< @brief Intensity of the directional light.
-        glm::vec3 color = glm::vec3(1.f);     ///< @brief Color of the directional light.
+        float intensity = 1.f;            ///< @brief Intensity of the directional light.
+        glm::vec3 color = glm::vec3(1.f); ///< @brief Color of the directional light.
     };
 
     SERIALIZE(DirectionalLight, intensity, color);
@@ -52,31 +52,31 @@ namespace DT
         /**
          * @brief Registers Directional Light to rendering engine and shader on Initiation.
          */
-        void Init(Scene &scene, Engine &engine) override;
+        void Init(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Updates corresponding Directional Light properties in shader every frame.
          */
-        void Tick(Scene &scene, Engine &engine) override;
+        void Tick(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Serializes DirectionalLight properties for Inspector.
          */
-        void Inspector(Scene &scene, Engine &engine) override;
+        void Inspector(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Handles DirectionalLight serialization.
          */
-        void Serialize(Scene &scene, Engine &engine) override;
+        void Serialize(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Handles Scene View lighting.
          */
-        void SceneView(Scene &scene, Engine &engine) override;
+        void SceneView(Scene *scene, const Context &ctx) override;
 
         /**
          * @brief Unregisters Directional Light from rendering engine and shader on destruction.
          */
-        void Destroy(Scene &scene, Engine &engine) override;
+        void Destroy(Scene *scene, const Context &ctx) override;
     };
 }

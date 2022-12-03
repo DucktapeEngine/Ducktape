@@ -36,8 +36,9 @@ aryanbaburajan2007@gmail.com
 #include <Core/Window.h>
 #include <Core/Debug.h>
 #include <Renderer/Cubemap.h>
-#include <Core/UserPointer.h>
+#include <Core/Context.h>
 #include <Core/Macro.h>
+#include <Scene/Scene.h>
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
@@ -51,23 +52,22 @@ namespace DT
 		unsigned int quadVAO, quadVBO;
 		unsigned int skyboxVAO, skyboxVBO;
 		Cubemap skyboxCubemap;
-		Shader defaultShader = Shader(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "default.vert", DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "default.frag");
-		Shader screenShader = Shader(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "screen.vert", DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "screen.frag");
-		Shader skyboxShader = Shader(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "skybox.vert", DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "skybox.frag");
+		Shader screenShader = Shader(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Screen.glsl"));
+		Shader skyboxShader = Shader(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Skybox.glsl"));
 		glm::vec2 customViewportSize;
 
-		glm::mat4 *cameraView;
-		glm::mat4 *cameraProjection;
-		glm::vec3 *cameraPosition;
-		glm::quat *cameraRotation;
-		bool *isOrtho;
-		float *fov;
+		glm::mat4 *cameraView = nullptr;
+		glm::mat4 *cameraProjection = nullptr;
+		glm::vec3 *cameraPosition = nullptr;
+		glm::quat *cameraRotation = nullptr;
+		bool *isOrtho = nullptr;
+		float *fov = nullptr;
 
 		std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
 		std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};
 
 		Renderer(Window &window, Configuration &config);
-		void Render(Window &window, Configuration &config);
+		void Render(Window &window, Configuration &config, Scene *scene);
 		~Renderer();
 
 		void SetViewport(glm::vec2 viewportsize);
@@ -78,6 +78,8 @@ namespace DT
 		void UnoccupyDirectionalLightSpot(unsigned int spot);
 		bool GetFreePointLightSpot(unsigned int *spot);
 		void UnoccupyPointLightSpot(unsigned int spot);
+
+		void ActivateShader(Shader *shader);
 
 		static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
 	};

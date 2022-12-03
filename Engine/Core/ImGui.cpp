@@ -22,17 +22,14 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/ImGui.h>
 
-void ImGui::Mesh(const std::string &label, DT::Mesh *mesh)
-{
-    // TOFIX: Point to the correct Resource once Resource System has been implemented
-}
-
 void ImGui::Material(const std::string &label, DT::Material *material)
 {
     ImGui::Indent();
     if (ImGui::CollapsingHeader(label.c_str()))
     {
-        ImGui::ColorEdit3("color", &material->color.x);
+        ImGui::ColorEdit3("color", &material->ambientColor.x);
+        ImGui::ColorEdit3("color", &material->diffuseColor.x);
+        ImGui::ColorEdit3("color", &material->specularColor.x);
         ImGui::DragFloat("shininess", &material->shininess);
     }
     ImGui::Unindent();
@@ -46,6 +43,16 @@ void ImGui::Vec3(const std::string &label, glm::vec3 *vec3)
 void ImGui::Vec2(const std::string &label, glm::vec2 *vec2)
 {
     ImGui::DragFloat2(label.c_str(), &vec2->x);
+}
+
+void ImGui::Color(const std::string &label, glm::vec3 *color)
+{
+    ImGui::ColorEdit3(label.c_str(), &color->x);
+}
+
+void ImGui::Color(const std::string &label, glm::vec4 *color)
+{
+    ImGui::ColorEdit4(label.c_str(), &color->x);
 }
 
 bool ImGui::ImageButtonWithText(ImTextureID texId, const char *label, const ImVec2 &imageSize, bool wrapContent, const ImVec2 &uv0, const ImVec2 &uv1, int frame_padding, const ImVec4 &bg_col, const ImVec4 &tint_col)
@@ -128,6 +135,15 @@ bool ImGui::ImageButtonWithText(ImTextureID texId, const char *label, const ImVe
             ImGui::RenderText(start, label);
     }
     return pressed;
+}
+
+void ImGui::AlignForWidth(float width, float alignment)
+{
+    ImGuiStyle &style = ImGui::GetStyle();
+    float avail = ImGui::GetContentRegionAvail().x;
+    float off = (avail - width) * alignment;
+    if (off > 0.0f)
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
 }
 
 ImVec2 ImGui::operator*(ImVec2 &iv2, float fl)

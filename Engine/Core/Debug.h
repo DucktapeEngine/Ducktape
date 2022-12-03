@@ -39,14 +39,14 @@ namespace DT
     public:
         Debug()
         {
-            oldOutBuffer = std::cout.rdbuf(outStream.rdbuf());
-            oldErrBuffer = std::cerr.rdbuf(errStream.rdbuf());
+            // oldOutBuffer = std::cout.rdbuf(outStream.rdbuf());
+            // oldErrBuffer = std::cerr.rdbuf(errStream.rdbuf());
         }
 
         ~Debug()
         {
-            std::cout.rdbuf(oldOutBuffer);
-            std::cerr.rdbuf(oldErrBuffer);
+            // std::cout.rdbuf(oldOutBuffer);
+            // std::cerr.rdbuf(oldErrBuffer);
         }
 
         inline std::string GetOut()
