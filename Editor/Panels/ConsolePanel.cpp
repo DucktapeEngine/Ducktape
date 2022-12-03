@@ -2,13 +2,15 @@
 
 namespace DT
 {
-    void ConsolePanel::Update(Engine &engine)
-    {
-        ImGui::Begin("Console", &isOpen);
+	const char *ConsolePanel::GetWindowName() { return windowName; }
 
-        ImGui::Text("%s", engine.debug.GetOut().c_str());
-        ImGui::Text("%s", engine.debug.GetErr().c_str());
+	void ConsolePanel::Update(Engine &engine)
+	{
+		ImGui::Begin(windowName, &isOpen);
 
-        ImGui::End();
-    }
+		ImGui::TextWrapped("%s", engine.debug.GetOut().c_str());
+		ImGui::TextWrapped("%s", engine.debug.GetErr().c_str());
+
+		ImGui::End();
+	}
 }

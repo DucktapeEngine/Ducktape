@@ -11,8 +11,9 @@ namespace DT
 	{
 	public:
 		void Update(Engine &engine) override;
-
+		const char* GetWindowName() override;
 	private:
+		const char* windowName = "Hierarchy";
 		Entity selectedEntity;
 	};
 }

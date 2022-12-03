@@ -2,9 +2,11 @@
 
 namespace DT
 {
+    const char *ScenePanel::GetWindowName() { return windowName; }
+
     void ScenePanel::Update(Engine &engine)
     {
-        ImGui::Begin("Scene", &isOpen);
+        ImGui::Begin(windowName, &isOpen);
 
         if (ImGui::Button("Save", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
         {

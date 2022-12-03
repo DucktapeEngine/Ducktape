@@ -48,6 +48,7 @@ namespace ImGui
     IMGUI_API void AlignForWidth(float width, float alignment = 0.5f);
     IMGUI_API void Color(const std::string &label, glm::vec3 *color);
     IMGUI_API void Color(const std::string &label, glm::vec4 *color);
+    IMGUI_API bool ImageWithInputText(ImTextureID texId, const char *label, char *buf, size_t buf_size, const ImVec2 &imageSize = ImVec2(0, 0), const ImVec2 &uv0 = ImVec2(0, 0), const ImVec2 &uv1 = ImVec2(1, 1), bool wrapContent = false, int frame_padding = -1, const ImVec4 &bg_col = ImVec4(0, 0, 0, 0), const ImVec4 &tint_col = ImVec4(1, 1, 1, 1));
 
     ImVec2 operator*(ImVec2 &iv2, float fl);
     ImVec2 operator*(const ImVec2 &iv2, float fl);

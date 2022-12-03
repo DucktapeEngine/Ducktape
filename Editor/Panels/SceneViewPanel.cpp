@@ -2,6 +2,9 @@
 
 namespace DT
 {
+    const char *SceneViewPanel::GetWindowName() { return windowName; }
+    const char *SceneViewPanel::GetToolbarWindowName() { return toolbarWindowName; }
+
     void SceneViewPanel::Start(Engine &engine)
     {
         translateIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "translate.png"))->id;
@@ -53,7 +56,8 @@ namespace DT
 
         // Transform
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
-        ImGui::Begin("Scene View", &isOpen);
+        ImGui::Begin(windowName, &isOpen);
+
         sceneViewActive = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
         // ImVec2 windowSize = ImGui::GetWindowSize();
         ImVec2 vMin = ImGui::GetWindowContentRegionMin();
@@ -114,8 +118,12 @@ namespace DT
 
     void SceneViewPanel::RenderToolbarPanel(Engine &engine)
     {
+<<<<<<< HEAD
         const float padding = 10.f;
         const float iconSize = 25.f;
+        == == == =
+                     ImGui::Begin(toolbarWindowName);
+>>>>>>> 76357f681f30c509ccb155dcf4406d36551e8952
 
         ImGui::SetNextWindowPos(ImVec2(windowPos.x + padding, windowPos.y + padding));
         // ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, toolbarSize));

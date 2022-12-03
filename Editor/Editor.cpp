@@ -37,8 +37,10 @@ namespace DT
         io.ConfigDragClickToInputText = true;
 
         io.Fonts->AddFontFromFileTTF((DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Fonts" / "Roboto" / "Roboto-Regular.ttf").string().c_str(), 15.f);
-
         SetDarkTheme();
+
+        // Check if user have settings file
+        const bool settingsExists = std::filesystem::exists(std::filesystem::current_path() / "imgui.ini");
 
         for (Panel *panel : panels)
             panel->Start(engine);
@@ -53,9 +55,98 @@ namespace DT
         ImGui::NewFrame();
     }
 
+    /// @brief Renders dock layout for editor.
+    /// Also creates default layout upon first run of Ducktape.
+    void Editor::RenderDockLayout()
+    {
+        // Check if user have settings file
+        static bool settingsExists = std::filesystem::exists(std::filesystem::current_path() / "imgui.ini");
+        static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+        // DockSpace
+        ImGuiIO &io = ImGui::GetIO();
+        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+        {
+            dockspace_id = ImGui::DockSpaceOverViewport();
+
+            // For setting up default layout
+            if (!settingsExists)
+            {
+                settingsExists = true;
+                // Menu panel is out of docking worries
+                // also set menubar pointer for default layout requests
+                menuBar = AddPanel<MenuBarPanel>();
+
+                SetDefaultLayout();
+
+                for (Panel *panel : panels)
+                    panel->Start();
+            }
+        }
+    }
+    /// @brief Sets up default layout for editor.
+    /// @param firstTime defines if its called from menu or first initialization
+    void Editor::SetDefaultLayout(bool firstTime)
+    {
+        ImGuiID leftSplit;
+        ImGuiID rightSplit;
+        ImGuiID rightLeftSplit;
+
+        // 0: Hierarchy
+        // 1: Resource Browser
+        // 2: Sceneview
+        // 3: Console
+        // 4: Inspector
+        // Adding splits in spesific order because when a default layout is requested
+        // (while running Ducktape) we have to keep panels alive.
+        ImGuiID splits[5]{};
+
+        // Clear out previously created nodes
+        ImGui::DockBuilderRemoveNodeDockedWindows(dockspace_id, false);
+        ImGui::DockBuilderRemoveNodeChildNodes(dockspace_id);
+
+        // Split dockspace into two first as left and right
+        ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.25f, &leftSplit, &rightSplit);
+        // Then split left split on top and bottom
+        ImGui::DockBuilderSplitNode(leftSplit, ImGuiDir_Down, 0.4f, &splits[1], &splits[0]);
+        // Now split right node (sceneview) to rightleft and rightright
+        ImGui::DockBuilderSplitNode(rightSplit, ImGuiDir_Left, 0.65f, &rightLeftSplit, &splits[4]);
+        // Finally split sceneview to have console on bottom of it
+        ImGui::DockBuilderSplitNode(rightLeftSplit, ImGuiDir_Down, 0.25f, &splits[3], &splits[2]);
+        // now dock our windows into the docking nodes we made above
+        // DockBuilderDockWindow requires window name as first parameter, hence why panels have GetWindowName now.
+
+        // If user already have a layout and requested default one again
+        if (menuBar != nullptr && !firstTime)
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                ImGui::DockBuilderDockWindow(panels[i]->GetWindowName(), splits[i - 1]);
+            }
+        }
+        // Theres no default layout or windows, set it up
+        else
+        {
+            ImGui::DockBuilderDockWindow(AddPanel<HierarchyPanel>()->GetWindowName(), splits[0]);
+            ImGui::DockBuilderDockWindow(AddPanel<ResourceBrowserPanel>()->GetWindowName(), splits[1]);
+            ImGui::DockBuilderDockWindow(AddPanel<SceneViewPanel>()->GetWindowName(), splits[2]);
+            ImGui::DockBuilderDockWindow(AddPanel<ConsolePanel>()->GetWindowName(), splits[3]);
+            ImGui::DockBuilderDockWindow(AddPanel<InspectorPanel>()->GetWindowName(), splits[4]);
+        }
+
+        ImGui::DockBuilderFinish(dockspace_id);
+    }
+
     void Editor::Render(Engine &engine)
     {
-        ImGui::DockSpaceOverViewport();
+        // ImGui::DockSpaceOverViewport();
+        RenderDockLayout();
+
+        // Kind of event system when default layout is requested
+        if (menuBar->RequestDefaultLayout)
+        {
+            menuBar->RequestDefaultLayout = false;
+            SetDefaultLayout(false);
+        }
 
         ImGui::fileDialog.Display();
 

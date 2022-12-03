@@ -26,5 +26,6 @@ namespace DT
 
         void Start(Engine &engine) override;
         void Update(Engine &engine) override;
+        bool RequestDefaultLayout=false;
     };
 }
