@@ -5,6 +5,9 @@ namespace DT
     void MenuBarPanel::Start(Engine &engine)
     {
         isOpen = true;
+
+        if (!std::filesystem::exists(std::filesystem::current_path() / "imgui.ini"))
+            SetDefaultLayout();
     }
 
     void MenuBarPanel::Update(Engine &engine)
@@ -19,7 +22,7 @@ namespace DT
                     Editor::GetPanel<ProjectPanel>()->isOpen = true;
                 ImGui::EndMenu();
             }
-            if (ImGui::BeginMenu("Panel"))
+            if (ImGui::BeginMenu("Panels"))
             {
                 if (ImGui::MenuItem("Console"))
                     Editor::GetPanel<ConsolePanel>()->isOpen = true;
@@ -39,20 +42,7 @@ namespace DT
             {
                 if (ImGui::MenuItem("Load Default layout"))
                 {
-                    Editor::GetPanel<ConsolePanel>()->isOpen = true;
-                    Editor::GetPanel<ScenePanel>()->isOpen = true;
-                    Editor::GetPanel<PropertiesPanel>()->isOpen = true;
-                    Editor::GetPanel<ResourceBrowserPanel>()->isOpen = true;
-                    Editor::GetPanel<SceneViewPanel>()->isOpen = true;
-                    Editor::GetPanel<ResourceInspectorPanel>()->isOpen = true;
-                }
-                ImGui::EndMenu();
-            }
-            if (ImGui::BeginMenu("Edit"))
-            {
-                if (ImGui::MenuItem("Set Default Layout"))
-                {
-                    RequestDefaultLayout = true;
+                    SetDefaultLayout();
                 }
                 ImGui::EndMenu();
             }
@@ -95,5 +85,49 @@ namespace DT
         pauseIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "pause.png"))->id;
         stopIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "stop.png"))->id;
         */
+    }
+
+    void MenuBarPanel::SetDefaultLayout()
+    {
+        Editor::GetPanel<ConsolePanel>()->isOpen = true;
+        Editor::GetPanel<ScenePanel>()->isOpen = true;
+        Editor::GetPanel<PropertiesPanel>()->isOpen = true;
+        Editor::GetPanel<ResourceBrowserPanel>()->isOpen = true;
+        Editor::GetPanel<SceneViewPanel>()->isOpen = true;
+        Editor::GetPanel<ResourceInspectorPanel>()->isOpen = true;
+
+        ImGuiIO &io = ImGui::GetIO();
+        if (!(io.ConfigFlags & ImGuiConfigFlags_DockingEnable))
+            return;
+
+        ImGui::DockBuilderRemoveNodeDockedWindows(Editor::dockspaceId, false);
+        ImGui::DockBuilderRemoveNodeChildNodes(Editor::dockspaceId);
+
+        // Scene
+        ImGuiID scene;
+        ImGuiID sceneViewPropertiesResourceInspector;
+        ImGui::DockBuilderSplitNode(Editor::dockspaceId, ImGuiDir_Left, 0.15f, &scene, &sceneViewPropertiesResourceInspector);
+        ImGui::DockBuilderDockWindow("Scene", scene);
+
+        // Scene View
+        ImGuiID sceneView;
+        ImGuiID sceneViewConsoleResourceBrowser;
+        ImGuiID propertiesResourceInspector;
+        ImGui::DockBuilderSplitNode(sceneViewPropertiesResourceInspector, ImGuiDir_Left, 0.8f, &sceneViewConsoleResourceBrowser, &propertiesResourceInspector);
+
+        ImGuiID consoleResourceBrowser;
+        ImGui::DockBuilderSplitNode(sceneViewConsoleResourceBrowser, ImGuiDir_Up, 0.7f, &sceneView, &consoleResourceBrowser);
+        ImGui::DockBuilderDockWindow("Scene View", sceneView);
+
+        // Properties & Resource Inspector
+        ImGui::DockBuilderDockWindow("Properties", propertiesResourceInspector);
+        ImGui::DockBuilderDockWindow("Resource Inspector", propertiesResourceInspector);
+
+        // Console & Resource Browser
+        ImGui::DockBuilderDockWindow("Console", consoleResourceBrowser);
+        ImGui::DockBuilderDockWindow("Resource Browser", consoleResourceBrowser);
+
+        // Build
+        ImGui::DockBuilderFinish(Editor::dockspaceId);
     }
 }
