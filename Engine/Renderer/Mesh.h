@@ -45,7 +45,7 @@ namespace DT
         std::vector<Vertex> vertices;      ///< @brief vector of Vertex objects
         std::vector<unsigned int> indices; ///< @brief vector of indices of vertices vector
         std::vector<Resource<Material>> materials;
-        static inline std::unordered_map<RID, Mesh> factoryData;
+        static inline std::unordered_map<RID, Mesh *> factoryData;
 
         unsigned int VBO; ///< @brief id of vertex buffer object
         unsigned int EBO; ///< @brief id of element array buffer object
@@ -65,14 +65,15 @@ namespace DT
         static Mesh *LoadResource(RID rid)
         {
             if (factoryData.count(rid))
-                return &factoryData[rid];
+                return factoryData[rid];
 
-            factoryData[rid] = json::parse(std::ifstream(ResourceManager::GetPath(rid)));
-            return &factoryData[rid];
+            factoryData[rid] = new Mesh(json::parse(std::ifstream(ResourceManager::GetPath(rid))));
+            return factoryData[rid];
         }
 
         static void UnLoadResource(RID rid)
         {
+            delete factoryData[rid];
             factoryData.erase(rid);
         }
 

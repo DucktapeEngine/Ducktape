@@ -40,30 +40,31 @@ namespace DT
         Resource<Texture> texture;
         Texture::Type textureType = Texture::Type::DIFFUSE;
         Resource<Shader> shader;
-        static inline std::unordered_map<RID, Material> factoryData;
+
+        static inline std::unordered_map<RID, Material *> factoryData;
 
         static Material *LoadResource(RID rid)
         {
             if (factoryData.count(rid))
-                return &factoryData[rid];
+                return factoryData[rid];
 
-            factoryData[rid] = json::parse(std::ifstream(ResourceManager::GetPath(rid)));
-            return &factoryData[rid];
+            factoryData[rid] = new Material(json::parse(std::ifstream(ResourceManager::GetPath(rid))));
+            return factoryData[rid];
         }
 
         static void UnLoadResource(RID rid)
         {
+            delete factoryData[rid];
             factoryData.erase(rid);
         }
 
         static void SaveResource(RID rid)
         {
             std::ofstream out(ResourceManager::GetPath(rid));
-            json j = factoryData[rid];
+            json j = *factoryData[rid];
             out << j;
         }
 
         IN_SERIALIZE(Material, diffuseColor, specularColor, ambientColor, shininess, texture, textureType, shader);
     };
-
 }

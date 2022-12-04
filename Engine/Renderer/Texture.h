@@ -55,7 +55,7 @@ namespace DT
             HEIGHT
         };
 
-        static inline std::unordered_map<RID, Texture> factoryData;
+        static inline std::unordered_map<RID, Texture *> factoryData;
 
         Texture() = default;
 
@@ -69,14 +69,15 @@ namespace DT
         static Texture *LoadResource(RID rid)
         {
             if (factoryData.count(rid))
-                return &factoryData[rid];
+                return factoryData[rid];
 
-            factoryData[rid] = Texture(rid);
-            return &factoryData[rid];
+            factoryData[rid] = new Texture(rid);
+            return factoryData[rid];
         }
 
         static void UnLoadResource(RID rid)
         {
+            delete factoryData[rid];
             factoryData.erase(rid);
         }
 

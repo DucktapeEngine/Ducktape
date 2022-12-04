@@ -88,8 +88,7 @@ namespace DT
 
     Shader::~Shader()
     {
-        if (deleteOnDestructor)
-            glDeleteProgram(id);
+        glDeleteProgram(id);
     }
 
     void Shader::Use()
@@ -142,6 +141,7 @@ namespace DT
                 return false;
             }
         }
+        return false;
     }
 
     void Shader::SetVec2(std::string name, const glm::vec2 &value) const
@@ -192,17 +192,16 @@ namespace DT
     Shader *Shader::LoadResource(RID rid)
     {
         if (factoryData.count(rid))
-            return &factoryData[rid];
+            return factoryData[rid];
 
-        Shader shader(rid);
-        factoryData[rid] = shader;
-        shader.deleteOnDestructor = false;
+        factoryData[rid] = new Shader(rid);
 
-        return &factoryData[rid];
+        return factoryData[rid];
     }
 
     void Shader::UnLoadResource(RID rid)
     {
+        delete factoryData[rid];
         factoryData.erase(rid);
     }
 }
