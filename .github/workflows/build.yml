@@ -28,11 +28,6 @@ jobs:
     name: Linux Build
     runs-on: ubuntu-latest
     steps: 
-      - name: Set up CMake
-        uses: jwlawson/actions-setup-cmake@v1.13.0
-        with:
-          cmake-version: '3.16.x'
-
       - uses: actions/checkout@v3
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
