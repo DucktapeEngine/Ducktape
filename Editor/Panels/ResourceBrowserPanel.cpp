@@ -2,19 +2,13 @@
 
 namespace DT
 {
-    const char *ResourceBrowserPanel::GetWindowName() { return windowName; }
-
     /// @brief Handles main imgui render for resource browser window.
     void ResourceBrowserPanel::RenderImGuiWindow()
     {
-<<<<<<< HEAD
         isOpen = true;
-        ImGui::Begin("Resource Browser", &isOpen);
+        ImGui::Begin(GetWindowName().c_str(), &isOpen);
+
         filter.Draw("Filter");
-        == == == =
-                     ImGui::Begin(windowName);
-        Filter.Draw("Filter");
->>>>>>> 76357f681f30c509ccb155dcf4406d36551e8952
         ImGui::Separator();
 
         // Make a scrollable region in case it doesn't fit
@@ -113,7 +107,7 @@ namespace DT
                     std::string filename = path.filename().string();
                     if (filter.PassFilter(filename.c_str()))
                     {
-                        RenderDirectoryItem(directoryEntry, static_cast<float>(itemSize));
+                        RenderDirectoryItem(directoryEntry, itemSize);
                         totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
 
                         // Custom wrap for items for column-like layout
@@ -129,7 +123,7 @@ namespace DT
             {
                 for (std::filesystem::directory_entry directoryEntry : std::filesystem::directory_iterator(currentDir))
                 {
-                    RenderDirectoryItem(directoryEntry, static_cast<float>(itemSize));
+                    RenderDirectoryItem(directoryEntry, itemSize);
                     totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
                     // Custom wrap for items for column-like layout
                     if (itemSize >= columnSwitchSize && totalSizeOnColumn < avail.x)
@@ -189,7 +183,7 @@ namespace DT
     /// @brief Renders each item for resource browser.
     /// @param directoryEntry entry on file path
     /// @param itemSize item's size for resource browser (controlled by slider)
-    void ResourceBrowserPanel::RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, float itemSize)
+    void ResourceBrowserPanel::RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, int &itemSize)
     {
         std::filesystem::path path = directoryEntry.path();
         std::string filename = path.filename().string();
@@ -205,20 +199,7 @@ namespace DT
         const bool onColumnLayout = itemSize >= columnSwitchSize;
         ImVec2 avail = ImGui::GetContentRegionAvail();
 
-        // Get id for file type textures (this will be enhanced to identify different file types on future)
-        GLuint iconID = 0;
-        if (isDir)
-        {
-            iconID = folderIconID;
-        }
-        else
-        {
-            Interface *interface = ResourceInterface::GetInterface(path.extension().string());
-            if (interface != nullptr)
-                iconID = interface->iconId;
-        }
-        if (iconID == 0)
-            iconID = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "file.png"))->id;
+        unsigned int iconId = isDir ? folderIconId : ResourceInterface::GetIcon(path.extension().string());
 
         ImGui::PushID(filename.c_str());
 
@@ -226,7 +207,7 @@ namespace DT
 
         if (!selected)
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        ImGui::ImageButtonWithText((ImTextureID)(uintptr_t)iconID, filename.c_str(), {static_cast<float>(itemSize), static_cast<float>(itemSize)}, onColumnLayout, {0, 1}, {1, 0});
+        ImGui::ImageButtonWithText((ImTextureID)(uintptr_t)iconId, filename.c_str(), {static_cast<float>(itemSize), static_cast<float>(itemSize)}, onColumnLayout, {0, 1}, {1, 0});
 
         // Since same functionality used twice, grouped them onto same function, you'll see below its used again
         // HACK: ^ Image and text are one group now thanks to new implementation, but it will still use same method.
@@ -282,19 +263,14 @@ namespace DT
             }
             ImGui::EndPopup();
         }
-<<<<<<< HEAD
-
         if (!selected)
             ImGui::PopStyleColor();
-        == == == =
-                     ImGui::PopStyleColor();
->>>>>>> 76357f681f30c509ccb155dcf4406d36551e8952
         ImGui::PopID();
     }
 
     /// @brief Renders edit action based items (create, rename, ...) for resource browser.
     /// @param itemSize Current item size on resource browser.
-    void ResourceBrowserPanel::RenderEditItem(float itemSize)
+    void ResourceBrowserPanel::RenderEditItem(int &itemSize)
     {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape))
         {
@@ -303,11 +279,12 @@ namespace DT
             return;
         }
 
-        GLuint iconID = creatingFileType == FileCreateType_Folder ? folderIconID : fileIconID;
+        unsigned int iconId = creatingFileType == FileCreateType_Folder ? folderIconId : fileIconId;
 
         if (fileAction == FileAction_Rename)
-            iconID = selectedFile.has_extension() ? GetKnownIconID(selectedFile) : folderIconID;
-        /*ImGui::Image((ImTextureID)(uintptr_t)iconID, { itemSize,itemSize }, { 0, 1 }, { 1, 0 });
+            iconId = selectedFile.has_extension() ? ResourceInterface::GetIcon(selectedFile.extension().string()) : folderIconId;
+
+        /*ImGui::Image((ImTextureID)(uintptr_t)iconId, { itemSize,itemSize }, { 0, 1 }, { 1, 0 });
         if (itemSize < columnSwitchSize)
             ImGui::SameLine();*/
 
@@ -322,7 +299,7 @@ namespace DT
         else
             strcpy(buf, selectedFile.stem().string().c_str());
 
-        // ImGui::Image((ImTextureID)(uintptr_t)iconID, { itemSize,itemSize }, { 0, 1 }, { 1, 0 });
+        // ImGui::Image((ImTextureID)(uintptr_t)iconId, { itemSize,itemSize }, { 0, 1 }, { 1, 0 });
         // ImGui::SameLine();
 
         // ImGui::SetKeyboardFocusHere(0);
@@ -330,7 +307,7 @@ namespace DT
 
         bool onColumnLayout = itemSize >= columnSwitchSize;
 
-        ImGui::ImageWithInputText((ImTextureID)(uintptr_t)iconID, "##inputNewFile", buf, IM_ARRAYSIZE(buf), {itemSize, itemSize}, {0, 1}, {1, 0}, onColumnLayout);
+        ImGui::ImageWithInputText((ImTextureID)(uintptr_t)iconId, "##inputNewFile", buf, IM_ARRAYSIZE(buf), {itemSize, itemSize}, {0, 1}, {1, 0}, onColumnLayout);
         ImGui::SetKeyboardFocusHere(-1);
         if (ImGui::IsItemDeactivatedAfterEdit() || ImGui::IsKeyPressed(ImGuiKey_Enter))
         {
@@ -397,7 +374,6 @@ namespace DT
 
     void ResourceBrowserPanel::HandleItemSelected(bool isDir, std::filesystem::path path)
     {
-<<<<<<< HEAD
         if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
         {
             selectedItemPath = path;
@@ -405,41 +381,24 @@ namespace DT
             if (!isDir)
                 Invoke(Events::OnItemSelect);
         }
-        == == == =
-                     std::string ext = path.extension().string().substr(1);
-        std::filesystem::path iconsDir = resourceDir / "Icons";
-        std::string iconPath = (iconsDir / (ext + ".png")).string();
-
-        if (ext == "jpg" || ext == "png" || ext == "jpeg")
-            return Texture((iconsDir / "image.png").string(), "diffuse").id;
-        else if (std::filesystem::exists(iconPath))
-            return Texture(iconPath, "diffuse").id;
-        else
-            return fileIconID;
->>>>>>> 76357f681f30c509ccb155dcf4406d36551e8952
     }
 
     /// @brief Called when this panel is added and ready to start.
-    void ResourceBrowserPanel::Start()
+    void ResourceBrowserPanel::Start(Engine &engine)
     {
         rootDir = DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox";
         resourceDir = DUCKTAPE_ROOT_DIR / "Resources" / "Editor";
         currentDir = rootDir;
         // Note that icons are from https://www.icons8.com and not fully copyright free.
         // TODO: Add self drawn icons
-<<<<<<< HEAD
-        folderIconID = Texture::LoadResource(ResourceManager::GetRID(rootDir / "Editor" / "Icons" / "ResourceBrowser" / "folder.png"))->id;
+
+        folderIconId = Texture::LoadResource(ResourceManager::GetRID(resourceDir / "Icons" / "ResourceBrowser" / "folder.png"))->id;
+        fileIconId = Texture::LoadResource(ResourceManager::GetRID(resourceDir / "Icons" / "ResourceBrowser" / "file.png"))->id;
     }
 
-    == == == =
-                 folderIconID = Texture((resourceDir / "Icons" / "folder.png").string(), "diffuse").id;
-    fileIconID = Texture((resourceDir / "Icons" / "file.png").string(), "diffuse").id;
-}
-
-/// @brief Called when this panel is updated each frame.
->>>>>>> 76357f681f30c509ccb155dcf4406d36551e8952
-void ResourceBrowserPanel::Update(Engine &engine)
-{
-    RenderImGuiWindow();
-}
+    /// @brief Called when this panel is updated each frame.
+    void ResourceBrowserPanel::Update(Engine &engine)
+    {
+        RenderImGuiWindow();
+    }
 }

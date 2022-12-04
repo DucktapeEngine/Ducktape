@@ -10,10 +10,11 @@ namespace DT
 	class ScenePanel : public Panel
 	{
 	public:
+		inline std::string GetWindowName() override { return "Scene"; }
+
 		void Update(Engine &engine) override;
-		const char* GetWindowName() override;
-	private:
-		const char* windowName = "Hierarchy";
+
+	protected:
 		Entity selectedEntity;
 	};
 }

@@ -43,6 +43,8 @@ namespace DT
         Interface *GetInterface(const std::string &extension);
         bool HasInterface(const std::string &extension);
         void AddDefault();
+
+        unsigned int GetIcon(const std::string &extension);
     }
 
     class MaterialInterface : public Interface

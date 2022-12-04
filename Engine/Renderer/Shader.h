@@ -172,7 +172,7 @@ namespace DT
         static Shader *LoadResource(RID rid);
         static void UnLoadResource(RID rid);
 
-    private:
+    protected:
         bool CheckCompileErrors(unsigned int shader, std::string type, const std::filesystem::path &path);
     };
 }

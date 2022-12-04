@@ -7,9 +7,8 @@ namespace DT
 	class ConsolePanel : public Panel
 	{
 	public:
-		const char* GetWindowName() override;
+		inline std::string GetWindowName() override { return "Console"; }
+
 		void Update(Engine &engine) override;
-	private:
-		const char* windowName = "Console";
 	};
 }

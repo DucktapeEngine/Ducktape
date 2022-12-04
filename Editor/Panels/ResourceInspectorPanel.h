@@ -20,6 +20,8 @@ namespace DT
         std::string extension;
 
     public:
+        inline std::string GetWindowName() override { return "Resource Inspector"; }
+
         void Start(Engine &engine) override;
         void Update(Engine &engine) override;
     };

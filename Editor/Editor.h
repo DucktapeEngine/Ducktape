@@ -40,6 +40,8 @@ namespace DT
         inline Engine *enginePtr;
         inline std::vector<Panel *> panels;
 
+        inline ImGuiID dockspaceId; /// @brief Persistent id for dockspace.
+
         template <typename T>
         T *AddPanel()
         {
@@ -84,20 +86,5 @@ namespace DT
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
         void SetDarkTheme();
-
-        inline ImGuiID dockspace_id; /// @brief Persistent id for dockspace.
-        void RenderDockLayout();
-        void SetDefaultLayout(bool firstTime = true);
-
-        inline MenuBarPanel *menuBar;
-        inline std::vector<Panel *> panels;
-
-        template <typename T>
-        T *AddPanel()
-        {
-            T *Tptr = new T();
-            panels.push_back(Tptr);
-            return Tptr;
-        }
     }
 }

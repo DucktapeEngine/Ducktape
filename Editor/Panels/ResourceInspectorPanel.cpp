@@ -23,7 +23,7 @@ namespace DT
 
     void ResourceInspectorPanel::Update(Engine &engine)
     {
-        ImGui::Begin("Resource Inspector", &isOpen);
+        ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
         if (isItemSelected && ResourceInterface::HasInterface(extension))
             ResourceInterface::GetInterface(extension)->Inspect();

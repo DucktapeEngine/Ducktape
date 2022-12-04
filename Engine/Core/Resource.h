@@ -30,7 +30,7 @@ namespace DT
     template <typename T>
     class Resource
     {
-    private:
+    protected:
         HAS_METHOD_DECL(LoadResource);
         HAS_METHOD_DECL(SaveResource);
 

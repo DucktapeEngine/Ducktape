@@ -5,16 +5,16 @@
 
 namespace DT
 {
-        constexpr float DEG2RAD = 0.0174533f;
+	constexpr float DEG2RAD = 0.0174533f;
 
-        class Panel
-        {
-        public:
-                bool isOpen = false;
+	class Panel
+	{
+	public:
+		bool isOpen = false;
 
-                virtual void Start(Engine &engine) {}
-                virtual const char *GetWindowName() { return nullptr; }
-                virtual void Update(Engine &engine) {}
-                virtual void Destroy(Engine &engine) {}
-        };
+		virtual inline std::string GetWindowName() { return "Unnamed Window"; }
+		virtual void Start(Engine &engine) {}
+		virtual void Update(Engine &engine) {}
+		virtual void Destroy(Engine &engine) {}
+	};
 }

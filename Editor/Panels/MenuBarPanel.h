@@ -24,8 +24,11 @@ namespace DT
     public:
         int playIconId, pauseIconId, stopIconId;
 
+        inline std::string GetWindowName() override { return "Menu Bar"; }
+
         void Start(Engine &engine) override;
         void Update(Engine &engine) override;
-        bool RequestDefaultLayout=false;
+
+        void SetDefaultLayout();
     };
 }

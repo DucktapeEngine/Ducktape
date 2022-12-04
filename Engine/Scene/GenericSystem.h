@@ -30,7 +30,7 @@ namespace DT
     template <typename T>
     class GenericSystem : public System
     {
-    private:
+    protected:
         HAS_METHOD_DECL(Init);
         HAS_METHOD_DECL(Tick);
         HAS_METHOD_DECL(SceneView);

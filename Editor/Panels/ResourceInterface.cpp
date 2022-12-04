@@ -124,6 +124,17 @@ namespace DT
         return interfaces.find(extension) != interfaces.end();
     }
 
+    unsigned int ResourceInterface::GetIcon(const std::string &extension)
+    {
+        unsigned int iconId;
+        Interface *interface = ResourceInterface::GetInterface(extension);
+        if (interface != nullptr)
+            iconId = interface->iconId;
+        if (iconId == 0)
+            iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "file.png"))->id;
+        return iconId;
+    }
+
     void ResourceInterface::AddDefault()
     {
         RegisterInterface<MaterialInterface>(".mtl", ".dtmaterial");

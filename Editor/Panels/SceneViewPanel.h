@@ -11,18 +11,16 @@ namespace DT
 	class SceneViewPanel : public Panel
 	{
 	public:
+		inline std::string GetWindowName() override { return "Scene View"; }
+
 		void Start(Engine &engine) override;
 		void Update(Engine &engine) override;
-		const char *GetWindowName() override;
-		const char *GetToolbarWindowName();
 
-	private:
+	protected:
 		ImVec2 windowPos;
 
 		int translateIconId, rotateIconId, scaleIconId;
 
-		const char *windowName = "Scene View";
-		const char *toolbarWindowName = "Toolbar";
 		bool sceneViewActive = false;
 		float yaw = 0.f, pitch = 0.f;
 		Entity selectedEntity;

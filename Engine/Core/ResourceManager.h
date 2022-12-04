@@ -44,7 +44,7 @@ namespace DT
 
         IN_SERIALIZE(ResourceManager, resourceMap);
 
-    private:
+    protected:
         ResourceManager() = default;
     };
 }

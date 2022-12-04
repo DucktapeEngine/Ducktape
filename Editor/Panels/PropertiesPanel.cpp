@@ -2,9 +2,7 @@
 
 namespace DT
 {
-    const char *InspectorPanel::GetWindowName() { return windowName; }
-
-    void InspectorPanel::RenderAddComponentMenu(Engine &engine)
+    void PropertiesPanel::RenderAddComponentMenu(Engine &engine)
     {
         // Add Component Menu
         static const std::array<std::string, 6> builtinComponentList = {"Camera", "DirectionalLight", "MeshRenderer", "PointLight", "Tag", "Transform"};
@@ -70,7 +68,7 @@ namespace DT
     {
         selectedEntity = engine.activeScene->selectedEntity;
 
-        ImGui::Begin(windowName, &isOpen);
+        ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
         for (System *system : engine.activeScene->GetSystems())
             system->Inspector(engine.activeScene, engine.ctx);

@@ -14,14 +14,15 @@ namespace DT
 	class PropertiesPanel : public Panel
 	{
 	public:
-		void Update(Engine &engine) override;
-		const char* GetWindowName() override;
+		inline std::string GetWindowName() override { return "Properties"; }
 
-	private:
-		void RenderAddComponentMenu(Engine &engine);
-		const char* windowName = "Inspector";
+		void Update(Engine &engine) override;
+
+	protected:
 		Entity selectedEntity;
 		bool openAddComponentMenu = false;
 		std::string addComponentInput;
+
+		void RenderAddComponentMenu(Engine &engine);
 	};
 }

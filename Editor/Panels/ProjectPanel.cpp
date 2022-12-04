@@ -4,7 +4,7 @@ namespace DT
 {
     void ProjectPanel::Update(Engine &engine)
     {
-        ImGui::Begin("Project", &isOpen);
+        ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
         Configuration &config = engine.project.config;
 
