@@ -14,10 +14,10 @@ set(GLFW_BUILD_TESTS OFF)
 set(GLFW_BUILD_EXAMPLES OFF)
 
 set(BUILD_SHARED_LIBS ON)
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Extern/assimp/cmake-modules/;${CMAKE_MODULE_PATH}")
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Extern/assimp/cmake-modules;${CMAKE_MODULE_PATH}")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/Build")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/Build")
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/Build")
 
 if(WIN32)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/assimp")
@@ -27,8 +27,8 @@ endif(WIN32)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/glad")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/imgui")
 
-add_subdirectory("${PROJECT_SOURCE_DIR}/Engine/")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Engine")
 set(BUILD_SHARED_LIBS OFF)
 
-add_subdirectory("${PROJECT_SOURCE_DIR}/Editor/")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Editor")
 
