@@ -27,7 +27,7 @@ jobs:
   build-linux:
     name: Linux Build
     runs-on: ubuntu-latest
-    steps:
+    steps: 
       - uses: actions/checkout@v3
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
