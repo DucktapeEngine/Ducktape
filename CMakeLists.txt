@@ -17,7 +17,7 @@ set(BUILD_SHARED_LIBS ON)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Extern/assimp/cmake-modules;${CMAKE_MODULE_PATH}")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/Build")
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/Build") // Fails for reasons: https://github.com/DucktapeEngine/Ducktape/actions/runs/3621178282/jobs/6104292087#step:5:125
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/Build") # Fails for reasons: https://github.com/DucktapeEngine/Ducktape/actions/runs/3621178282/jobs/6104292087#step:5:125
 # Using manual copying as a temporary work around in Editor's CMakeLists.txt file
 
 if(WIN32)

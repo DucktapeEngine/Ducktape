@@ -126,12 +126,12 @@ namespace DT
 
     unsigned int ResourceInterface::GetIcon(const std::string &extension)
     {
-        unsigned int iconId;
+        unsigned int iconId = 0;
         Interface *interface = ResourceInterface::GetInterface(extension);
         if (interface != nullptr)
             iconId = interface->iconId;
         if (iconId == 0)
-            iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "file.png"))->id;
+            iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "file.png"))->id;
         return iconId;
     }
 
