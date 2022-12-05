@@ -117,7 +117,7 @@ namespace DT
 
         ImGuiID consoleResourceBrowser;
         ImGui::DockBuilderSplitNode(sceneViewConsoleResourceBrowser, ImGuiDir_Up, 0.7f, &sceneView, &consoleResourceBrowser);
-        ImGui::DockBuilderDockWindow("Scene View", sceneView);
+        ImGui::DockBuilderDockWindow(Editor::GetPanel<SceneViewPanel>()->GetWindowName().c_str(), sceneView);
 
         // Properties & Resource Inspector
         ImGui::DockBuilderDockWindow("Properties", propertiesResourceInspector);

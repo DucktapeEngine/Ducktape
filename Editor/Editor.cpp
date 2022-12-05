@@ -39,6 +39,8 @@ namespace DT
         io.Fonts->AddFontFromFileTTF((DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Fonts" / "Roboto" / "Roboto-Regular.ttf").string().c_str(), 15.f);
         SetDarkTheme();
 
+        MaximizeWindow();
+
         NewFrame();
         dockspaceId = ImGui::DockSpaceOverViewport();
 
@@ -46,8 +48,6 @@ namespace DT
             panel->Start(engine);
 
         EndFrame(engine.renderer);
-
-        MaximizeWindow();
     }
 
     void Editor::NewFrame()

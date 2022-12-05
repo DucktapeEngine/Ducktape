@@ -20,8 +20,6 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
-
 #include <Core/Platform.h>
 
 namespace DT

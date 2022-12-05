@@ -28,6 +28,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/glad")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Extern/imgui")
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/Engine/")
+set(BUILD_SHARED_LIBS OFF)
+
 add_subdirectory("${PROJECT_SOURCE_DIR}/Editor/")
 
-set(BUILD_SHARED_LIBS OFF)

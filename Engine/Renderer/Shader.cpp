@@ -141,7 +141,7 @@ namespace DT
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     void Shader::SetVec2(std::string name, const glm::vec2 &value) const
