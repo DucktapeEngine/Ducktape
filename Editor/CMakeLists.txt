@@ -30,6 +30,9 @@ set(CMAKE_CXX_FLAGS "-fPIC")
 add_executable (Editor
     ${source_list}
 )
+add_custom_command (TARGET Editor 
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Editor> "${PROJECT_SOURCE_DIR}/Build")
 
 set_target_properties (Editor PROPERTIES
     CXX_STANDARD 20
