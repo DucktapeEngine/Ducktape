@@ -22,30 +22,27 @@ cmake_minimum_required (VERSION 3.8)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Editor
+# DucktapeEditor
 file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/Editor/**/*.cpp" "${PROJECT_SOURCE_DIR}/Editor/*.cpp")
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
-add_executable (Editor
+add_executable (DucktapeEditor
     ${source_list}
 )
-# add_custom_command (TARGET Editor 
-#     POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Editor> "${PROJECT_SOURCE_DIR}/Build")
 
-set_target_properties (Editor PROPERTIES
+set_target_properties (DucktapeEditor PROPERTIES
     CXX_STANDARD 20
     CXX_EXTENSIONS OFF
 )
 
-target_compile_features (Editor PRIVATE cxx_std_17)
+target_compile_features (DucktapeEditor PRIVATE cxx_std_17)
 
-target_include_directories(Editor PUBLIC "${PROJECT_SOURCE_DIR}/Editor")
+target_include_directories(DucktapeEditor PUBLIC "${PROJECT_SOURCE_DIR}/Editor")
 
 # Ducktape
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_MODULE_PATH}")
-set(TARGET Editor)
+set(TARGET DucktapeEditor)
 set(Ducktape_ROOT_DIR "${PROJECT_SOURCE_DIR}")
 find_package (Ducktape REQUIRED)
 
@@ -55,5 +52,5 @@ else (Ducktape_FOUND)
     message ("-- Ducktape not found.")
 endif ()
 
-target_include_directories (Editor PUBLIC ${Ducktape_INCLUDE_DIR})
-target_link_libraries (Editor PUBLIC ${Ducktape_LIBRARY})
+target_include_directories (DucktapeEditor PUBLIC ${Ducktape_INCLUDE_DIR})
+target_link_libraries (DucktapeEditor PUBLIC ${Ducktape_LIBRARY})

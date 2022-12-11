@@ -58,8 +58,8 @@ namespace DT
         {
             if (ImGui::BeginMenuBar())
             {
-                ImGui::Text(engine.debug.GetErr().c_str());
-                ImGui::Text(engine.debug.GetOut().c_str());
+                ImGui::TextUnformatted(engine.debug.GetErr().c_str());
+                ImGui::TextUnformatted(engine.debug.GetOut().c_str());
 
                 if (ImGui::IsWindowHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     Editor::GetPanel<ConsolePanel>()->isOpen = true;

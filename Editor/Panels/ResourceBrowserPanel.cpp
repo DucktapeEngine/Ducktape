@@ -145,7 +145,7 @@ namespace DT
             if (ImGui::BeginPopupModal("Delete"))
             {
                 std::string prompt = std::string("Are you sure you want to delete \"") + selectedFile.filename().string() + (!selectedFile.has_extension() ? "\" and its contents?" : "\"?");
-                ImGui::TextWrapped(prompt.c_str());
+                ImGui::TextUnformatted(prompt.c_str());
                 ImGui::Separator();
                 if (ImGui::Button("No", {36, 24}))
                 {
