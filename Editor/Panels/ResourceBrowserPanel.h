@@ -5,7 +5,6 @@
 
 #include <Core/ImGui.h>
 #include <Panels/Panel.h>
-#include <Panels/ResourceImporter.h>
 #include <Renderer/Texture.h>
 #include <Core/Platform.h>
 #include <Core/EventHandler.h>

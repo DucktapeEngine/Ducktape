@@ -36,6 +36,8 @@ namespace DT
                     Editor::GetPanel<SceneViewPanel>()->isOpen = true;
                 if (ImGui::MenuItem("Resource Inspector"))
                     Editor::GetPanel<ResourceInspectorPanel>()->isOpen = true;
+                if (ImGui::MenuItem("Project Browser"))
+                    Editor::GetPanel<DucktapeEditorPanel>()->isOpen = true;
                 ImGui::EndMenu();
             }
             if (ImGui::BeginMenu("Editor"))

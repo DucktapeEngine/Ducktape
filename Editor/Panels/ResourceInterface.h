@@ -3,12 +3,23 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <filesystem>
+#include <fstream>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <json/json.hpp>
+using json = nlohmann::json;
 
 #include <Renderer/Texture.h>
 #include <Renderer/Material.h>
 #include <Core/Macro.h>
 #include <Core/Resource.h>
 #include <Core/ImGui.h>
+#include <Renderer/Mesh.h>
+#include <Scene/Entity.h>
+#include <Core/ResourceManager.h>
 
 namespace DT
 {
@@ -19,7 +30,7 @@ namespace DT
 
         virtual void Init() {}
         virtual void Inspect() {}
-        virtual void Import() {}
+        virtual void Import(RID rid) {}
         virtual void OpenInspect(RID rid) {}
         virtual void CloseInspect() {}
     };
@@ -84,6 +95,30 @@ namespace DT
         void Inspect() override;
         void OpenInspect(RID rid) override;
         void CloseInspect() override;
+    };
+
+    class ModelImporter
+    {
+    public:
+        std::filesystem::path directory;
+        std::string modelName;
+
+        ModelImporter(std::filesystem::path path);
+
+        void ProcessNode(aiNode *node, const aiScene *scene);
+        void ProcessMesh(aiMesh *mesh, const aiScene *scene);
+        std::vector<RID> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName, Texture::Type textureType);
+    };
+
+    class ModelInterface : public Interface
+    {
+    public:
+        std::string filename = "Unnamed Model";
+
+        void Init() override;
+        void OpenInspect(RID rid) override;
+        void Inspect() override;
+        void Import(RID rid) override;
     };
 
     class MarkdownInterface : public Interface

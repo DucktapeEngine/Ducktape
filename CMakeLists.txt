@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 
-project("Ducktape")
+project("Ducktape" VERSION 1.0.0)
+add_compile_definitions(DUCKTAPE_VERSION_MAJOR=${Ducktape_VERSION_MAJOR} DUCKTAPE_VERSION_MINOR=${Ducktape_VERSION_MINOR} DUCKTAPE_VERSION_PATCH=${Ducktape_VERSION_PATCH})
 
 set(ASSIMP_BUILD_ZLIB ON)
 set(BUILD_ASSIMP_TOOLS OFF)

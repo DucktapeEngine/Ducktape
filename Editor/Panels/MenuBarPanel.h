@@ -8,6 +8,7 @@
 #include <Panels/ProjectPanel.h>
 #include <Panels/ResourceBrowserPanel.h>
 #include <Panels/ResourceInspectorPanel.h>
+#include <Panels/DucktapeEditorPanel.h>
 #include <Panels/SceneViewPanel.h>
 #include <Components/Camera.h>
 #include <Components/Transform.h>

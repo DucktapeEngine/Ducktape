@@ -225,7 +225,7 @@ namespace DT
 
             if (!isDir && ImGui::MenuItem("Reimport"))
             {
-                ResourceImporter::Reimport(directoryEntry.path());
+                ResourceInterface::GetInterface(path.extension().string())->Import(ResourceManager::GetRID(path));
             }
 
             if (ImGui::BeginMenu("Create..."))

@@ -31,10 +31,10 @@ aryanbaburajan2007@gmail.com
 #include <Panels/MenuBarPanel.h>
 #include <Panels/ProjectPanel.h>
 #include <Panels/ResourceBrowserPanel.h>
-#include <Panels/ResourceImporter.h>
 #include <Panels/ResourceInspectorPanel.h>
 #include <Panels/ResourceInterface.h>
 #include <Panels/SceneViewPanel.h>
+#include <Panels/DucktapeEditorPanel.h>
 
 using namespace DT;
 
@@ -81,6 +81,7 @@ int main()
         Editor::AddPanel<PropertiesPanel>();
         Editor::AddPanel<MenuBarPanel>();
         Editor::AddPanel<ProjectPanel>();
+        Editor::AddPanel<DucktapeEditorPanel>();
         ResourceInterface::AddDefault();
 
         Editor::Init(e);
