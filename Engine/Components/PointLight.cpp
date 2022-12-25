@@ -30,6 +30,7 @@ namespace DT
         {
             PointLight &pl = scene->Get<PointLight>(entity);
 
+            pl.shader.Load(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl"));
             pl.transform = &scene->Require<Transform>(entity);
 
             if (ctx.renderer->GetFreePointLightSpot(&pl.lightSpot) == false)
@@ -39,10 +40,10 @@ namespace DT
 
             pl.propertyString = "pointLights[" + std::to_string(pl.lightSpot) + "].";
 
-            pl.shader->Use();
-            pl.shader->SetFloat(pl.propertyString + "constant", 1.0f);
-            pl.shader->SetFloat(pl.propertyString + "quadratic", 1.0f);
-            pl.shader->SetBool(pl.propertyString + "enabled", true);
+            pl.shader.Data()->Use();
+            pl.shader.Data()->SetFloat(pl.propertyString + "constant", 1.0f);
+            pl.shader.Data()->SetFloat(pl.propertyString + "quadratic", 1.0f);
+            pl.shader.Data()->SetBool(pl.propertyString + "enabled", true);
         }
     }
 
@@ -55,13 +56,13 @@ namespace DT
             if (pl.lightSpot == NAN)
                 return;
 
-            pl.shader->Use();
-            pl.shader->SetVec3(pl.propertyString + "position", pl.transform->translation);
+            pl.shader.Data()->Use();
+            pl.shader.Data()->SetVec3(pl.propertyString + "position", pl.transform->translation);
 
-            pl.shader->SetFloat(pl.propertyString + "linear", pl.intensity);
-            pl.shader->SetVec3(pl.propertyString + "ambient", pl.color * pl.intensity);
-            pl.shader->SetVec3(pl.propertyString + "diffuse", pl.color * pl.intensity);
-            pl.shader->SetVec3(pl.propertyString + "specular", pl.color * pl.intensity);
+            pl.shader.Data()->SetFloat(pl.propertyString + "linear", pl.intensity);
+            pl.shader.Data()->SetVec3(pl.propertyString + "ambient", pl.color * pl.intensity);
+            pl.shader.Data()->SetVec3(pl.propertyString + "diffuse", pl.color * pl.intensity);
+            pl.shader.Data()->SetVec3(pl.propertyString + "specular", pl.color * pl.intensity);
         }
     }
 
@@ -104,7 +105,7 @@ namespace DT
             PointLight &pl = scene->Get<PointLight>(entity);
 
             ctx.renderer->UnoccupyPointLightSpot(pl.lightSpot);
-            pl.shader->SetBool(pl.propertyString + "enabled", false); // TOFIX: Move this to Renderer class
+            pl.shader.Data()->SetBool(pl.propertyString + "enabled", false); // TOFIX: Move this to Renderer class
         }
     }
 }

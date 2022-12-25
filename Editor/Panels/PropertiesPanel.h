@@ -8,21 +8,23 @@
 #include <Components/MeshRenderer.h>
 #include <Components/PointLight.h>
 #include <Scene/Entity.h>
+#include <Core/EventHandler.h>
 
 namespace DT
 {
-	class PropertiesPanel : public Panel
+	class PropertiesPanel : public Panel, public EventHandler
 	{
 	public:
+		Entity selectedEntity;
+
+		enum Events
+		{
+			AssignPopup,
+			RemovePopup
+		};
+
 		inline std::string GetWindowName() override { return "Properties"; }
 
 		void Update(Engine &engine) override;
-
-	protected:
-		Entity selectedEntity;
-		bool openAddComponentMenu = false;
-		std::string addComponentInput;
-
-		void RenderAddComponentMenu(Engine &engine);
 	};
 }

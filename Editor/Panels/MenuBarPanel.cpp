@@ -22,6 +22,12 @@ namespace DT
                     Editor::GetPanel<ProjectPanel>()->isOpen = true;
                 ImGui::EndMenu();
             }
+            if (ImGui::BeginMenu("Scene"))
+            {
+                if (ImGui::MenuItem("Create Entity"))
+                    engine.activeScene->CreateEntity();
+                ImGui::EndMenu();
+            }
             if (ImGui::BeginMenu("Panels"))
             {
                 if (ImGui::MenuItem("Console"))

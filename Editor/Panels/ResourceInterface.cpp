@@ -25,6 +25,28 @@ namespace DT
         ImGui::Color("ambient color", &openedMaterial.Data()->ambientColor);
         ImGui::DragFloat("shininess", &openedMaterial.Data()->shininess);
         ImGui::Resource("texture", &openedMaterial.Data()->texture);
+
+        std::string textureType = "Unknown type";
+        switch (openedMaterial.Data()->textureType)
+        {
+        case Texture::Type::DIFFUSE:
+            textureType = "Diffuse";
+            break;
+        case Texture::Type::HEIGHT:
+            textureType = "Height";
+            break;
+        case Texture::Type::NORMAL:
+            textureType = "Normal";
+            break;
+        case Texture::Type::SPECULAR:
+            textureType = "Specular";
+            break;
+        }
+
+        int currentTextureType = openedMaterial.Data()->textureType;
+        ImGui::SliderInt("Texture Type", &currentTextureType, 0, 3, textureType.c_str());
+        openedMaterial.Data()->textureType = (Texture::Type)currentTextureType;
+
         // ImGui:: something for texture type
         ImGui::Resource("shader", &openedMaterial.Data()->shader);
     }
@@ -80,7 +102,7 @@ namespace DT
 
         ImGui::Text("materials");
         for (int i = 0; i < openedMesh.Data()->materials.size(); i++)
-            ImGui::Resource("materials##" + std::to_string(i), &openedMesh.Data()->materials[i]);
+            ImGui::Resource(std::to_string(i), &openedMesh.Data()->materials[i]);
     }
 
     void MeshInterface::CloseInspect()
@@ -200,10 +222,10 @@ namespace DT
     std::vector<RID> ModelImporter::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName, Texture::Type textureType)
     {
         std::vector<RID> materialRIDs;
+        std::string materialName = mat->GetName().C_Str();
+
         for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
         {
-            std::string materialName = mat->GetName().C_Str();
-
             aiString str;
             mat->GetTexture(type, i, &str);
             std::string textureName(str.C_Str());
@@ -221,7 +243,7 @@ namespace DT
             material.textureType = textureType;
 
             std::filesystem::path modelDir = directory / modelName;
-            std::string materialFileName = materialName + "-" + typeName + ".material.json";
+            std::string materialFileName = materialName + "-" + typeName + ".dtmaterial";
 
             std::filesystem::create_directories(modelDir / "Materials");
             std::ofstream out(modelDir / "Materials" / materialFileName);
@@ -229,6 +251,7 @@ namespace DT
 
             materialRIDs.push_back(ResourceManager::GetRID(modelDir / "Materials" / materialFileName));
         }
+
         return materialRIDs;
     }
 

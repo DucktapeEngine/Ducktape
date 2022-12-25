@@ -104,8 +104,7 @@
             if (pointLights[i].enabled)
                 result += CalculatePointLight(pointLights[i], norm, FragPos, viewDir);
                 
-        return vec4(vec3(texture(material.diffuse, TexCoords)), 1.0);
-        // return vec4(result, 1.0);
+        return vec4(result, 1.0);
     }
 #endif
 

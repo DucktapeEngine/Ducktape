@@ -35,6 +35,8 @@ aryanbaburajan2007@gmail.com
 #include <Panels/ResourceInterface.h>
 #include <Panels/SceneViewPanel.h>
 #include <Panels/DucktapeEditorPanel.h>
+#include <Panels/AssignComponentMenuPanel.h>
+#include <Panels/RemoveComponentMenuPanel.h>
 
 using namespace DT;
 
@@ -63,7 +65,7 @@ int main()
         mainScene.Assign<Tag>(camera).name = "Camera";
         mainScene.Assign<Transform>(camera);
         mainScene.Assign<Camera>(camera);
-        // mainScene.Assign<DirectionalLight>(camera);
+        mainScene.Assign<DirectionalLight>(camera);
 
         // for (const auto &meshAsset : std::filesystem::directory_iterator(e.project.directory / "Assets" / "Models" / "backpack" / "backpack"))
         //     if (!meshAsset.is_directory())
@@ -82,6 +84,8 @@ int main()
         Editor::AddPanel<MenuBarPanel>();
         Editor::AddPanel<ProjectPanel>();
         Editor::AddPanel<DucktapeEditorPanel>();
+        Editor::AddPanel<AssignComponentMenuPanel>();
+        Editor::AddPanel<RemoveComponentMenuPanel>();
         ResourceInterface::AddDefault();
 
         Editor::Init(e);

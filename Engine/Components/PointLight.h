@@ -27,6 +27,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Scene.h>
 #include <Core/Serialization.h>
 #include <Renderer/Renderer.h>
+#include <Core/Resource.h>
 
 namespace DT
 {
@@ -35,7 +36,7 @@ namespace DT
      */
     struct PointLight
     {
-        Shader *shader = nullptr;   ///< @brief Pointer to the Shader object.
+        Resource<Shader> shader;
         Transform *transform;       ///< @brief Pointer to the Transform object.
         unsigned int lightSpot;     ///< @brief used for instantiated point light's index
         std::string propertyString; ///< @brief property string of the point light

@@ -30,6 +30,7 @@ namespace DT
         {
             DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
 
+            dl.shader.Load(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl"));
             dl.transform = &scene->Require<Transform>(entity);
 
             if (ctx.renderer->GetFreeDirectionalLightSpot(&dl.lightSpot) == false)
@@ -39,8 +40,8 @@ namespace DT
             }
 
             dl.propertyString = "directionalLights[" + std::to_string(dl.lightSpot) + "].";
-            dl.shader->Use();
-            dl.shader->SetBool(dl.propertyString + "enabled", true);
+            dl.shader.Data()->Use();
+            dl.shader.Data()->SetBool(dl.propertyString + "enabled", true);
         }
     }
 
@@ -53,11 +54,11 @@ namespace DT
             if (dl.lightSpot == NAN)
                 continue;
 
-            dl.shader->Use();
-            dl.shader->SetVec3(dl.propertyString + "direction", dl.transform->Forward());
-            dl.shader->SetVec3(dl.propertyString + "ambient", dl.color * dl.intensity);
-            dl.shader->SetVec3(dl.propertyString + "diffuse", dl.color * dl.intensity);
-            dl.shader->SetVec3(dl.propertyString + "specular", dl.color * dl.intensity);
+            dl.shader.Data()->Use();
+            dl.shader.Data()->SetVec3(dl.propertyString + "direction", dl.transform->Forward());
+            dl.shader.Data()->SetVec3(dl.propertyString + "ambient", dl.color * dl.intensity);
+            dl.shader.Data()->SetVec3(dl.propertyString + "diffuse", dl.color * dl.intensity);
+            dl.shader.Data()->SetVec3(dl.propertyString + "specular", dl.color * dl.intensity);
         }
     }
 
@@ -68,7 +69,7 @@ namespace DT
             DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
 
             ctx.renderer->UnoccupyDirectionalLightSpot(dl.lightSpot);
-            dl.shader->SetBool(dl.propertyString + "enabled", true);
+            dl.shader.Data()->SetBool(dl.propertyString + "enabled", true);
         }
     }
 
@@ -98,7 +99,7 @@ namespace DT
 
             if (ImGui::CollapsingHeader("Directional Light"))
             {
-                ImGui::DragFloat("intensity", &dl.intensity);
+                ImGui::DragFloat("intensity", &dl.intensity, 0.1f, 0.f, 5.f);
                 ImGui::ColorEdit3("color", &dl.color.x);
             }
         }
