@@ -37,61 +37,17 @@ namespace DT
     class Debug
     {
     public:
-        Debug()
-        {
-            // oldOutBuffer = std::cout.rdbuf(outStream.rdbuf());
-            // oldErrBuffer = std::cerr.rdbuf(errStream.rdbuf());
-        }
+        std::stringstream log;
+        std::stringstream err;
 
-        ~Debug()
+        inline std::string GetLog()
         {
-            // std::cout.rdbuf(oldOutBuffer);
-            // std::cerr.rdbuf(oldErrBuffer);
-        }
-
-        inline std::string GetOut()
-        {
-            return outStream.str();
+            return log.str();
         }
 
         inline std::string GetErr()
         {
-            return errStream.str();
+            return err.str();
         }
-
-        inline std::stringstream &Out()
-        {
-            return outStream;
-        }
-
-        inline std::stringstream &Err()
-        {
-            return errStream;
-        }
-
-        inline void ClearOut()
-        {
-            outStream.str("");
-            errStream.clear();
-        }
-
-        inline void ClearErr()
-        {
-            errStream.str("");
-            errStream.clear();
-        }
-
-        inline void Clear()
-        {
-            ClearOut();
-            ClearErr();
-        }
-
-    protected:
-        std::stringstream outStream;
-        std::stringstream errStream;
-
-        std::streambuf *oldOutBuffer;
-        std::streambuf *oldErrBuffer;
     };
 }

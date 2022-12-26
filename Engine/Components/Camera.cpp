@@ -49,6 +49,9 @@ namespace DT
             ctx.renderer->isOrtho = &cam.isOrtho;
             ctx.renderer->fov = &cam.fov;
         }
+
+        ctx.debug->err << "Test\n";
+        std::cout << "wtf\n";
     }
 
     void CameraSystem::Inspector(Scene *scene, const Context &ctx)

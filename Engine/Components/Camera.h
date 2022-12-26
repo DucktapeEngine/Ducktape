@@ -26,6 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/System.h>
 #include <Core/Serialization.h>
 #include <Renderer/Renderer.h>
+#include <Core/Debug.h>
 
 namespace DT
 {

@@ -67,7 +67,7 @@ namespace DT
             if (ImGui::BeginMenuBar())
             {
                 ImGui::TextUnformatted(engine.debug.GetErr().c_str());
-                ImGui::TextUnformatted(engine.debug.GetOut().c_str());
+                ImGui::TextUnformatted(engine.debug.GetLog().c_str());
 
                 if (ImGui::IsWindowHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     Editor::GetPanel<ConsolePanel>()->isOpen = true;
@@ -83,11 +83,11 @@ namespace DT
         const float iconSize = 25.f;
 
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)playIconId, ImVec2(iconSize, iconSize)))
-            std::cout << "Game Runtime not yet supported." << std::endl;
+            engine.debug << "Game Runtime not yet supported." << std::endl;
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)pauseIconId, ImVec2(iconSize, iconSize)))
-            std::cout << "Game Runtime not yet supported." << std::endl;
+            engine.debug << "Game Runtime not yet supported." << std::endl;
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)stopIconId, ImVec2(iconSize, iconSize)))
-            std::cout << "Game Runtime not yet supported." << std::endl;
+            engine.debug << "Game Runtime not yet supported." << std::endl;
 
         playIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "start.png"))->id;
         pauseIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "pause.png"))->id;
