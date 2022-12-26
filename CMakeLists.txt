@@ -33,4 +33,4 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Engine")
 set(BUILD_SHARED_LIBS OFF)
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/Editor")
-
+add_subdirectory("${PROJECT_SOURCE_DIR}/Resources/Sandbox/Assets/Scripts")

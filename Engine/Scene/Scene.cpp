@@ -34,8 +34,8 @@ namespace DT
     {
         gameModule.Free();
 
-        for (System *system : systems)
-            free(system);
+        // for (System *system : systems)
+        //     free(system); // TOFIX: Commented out to avoid Segfault
 
         sceneRegistry.clear();
     }

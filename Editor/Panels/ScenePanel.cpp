@@ -13,12 +13,12 @@ namespace DT
 
         if (ImGui::Button("Save", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
         {
-            SceneManager::Save(engine.project.directory / "Resources" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+            SceneManager::Save(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
         }
 
         if (ImGui::Button("Load", ImVec2(ImGui::GetWindowContentRegionWidth(), 20.f)))
         {
-            SceneManager::Load(engine.project.directory / "Resources" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+            SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
             selectedEntity = entt::null;
         }
 

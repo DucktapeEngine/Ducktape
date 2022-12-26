@@ -37,21 +37,13 @@ aryanbaburajan2007@gmail.com
 #include <Panels/DucktapeEditorPanel.h>
 #include <Panels/AssignComponentMenuPanel.h>
 #include <Panels/RemoveComponentMenuPanel.h>
-
 using namespace DT;
-
-void window_close_callback(GLFWwindow *window)
-{
-    std::cout << "window_close_callback\n";
-}
 
 int main()
 {
     try
     {
         Engine e(Project(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox"));
-
-        glfwSetWindowCloseCallback(e.window.window, window_close_callback);
 
         Scene mainScene(e.project.config);
 

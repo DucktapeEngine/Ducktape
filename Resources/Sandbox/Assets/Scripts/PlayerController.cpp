@@ -29,9 +29,9 @@ struct PlayerController
     float speed = 2.5f;
     float sensitivity = 25.f;
 
-    void Inspector(Entity entity, Scene &scene, Engine &engine)
+    void Inspector(Entity entity, Scene *scene, const Context &ctx)
     {
-        if (entity != scene.selectedEntity)
+        if (entity != scene->selectedEntity)
             return;
 
         if (ImGui::CollapsingHeader("Player Controller"))
