@@ -12,9 +12,20 @@ namespace DT
             system->Inspector(engine.activeScene, engine.ctx);
 
         if (selectedEntity != entt::null && ImGui::Button("Assign", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
-            Invoke(Events::AssignPopup);
+        {
+            ComponentMenuPanel *componentMenuPanel = Editor::GetPanel<ComponentMenuPanel>();
+            componentMenuPanel->Open();
+            componentMenuPanel->OnEvent(ComponentMenuPanel::Events::Selected, [&](EventHandler *event)
+                                        { engine.activeScene->Assign(selectedEntity, componentMenuPanel->selectedComponent); });
+        }
+
         if (selectedEntity != entt::null && ImGui::Button("Remove", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
-            Invoke(Events::RemovePopup);
+        {
+            ComponentMenuPanel *componentMenuPanel = Editor::GetPanel<ComponentMenuPanel>();
+            componentMenuPanel->Open();
+            componentMenuPanel->OnEvent(ComponentMenuPanel::Events::Selected, [&](EventHandler *event)
+                                        { engine.activeScene->Remove(selectedEntity, static_cast<ComponentMenuPanel *>(event)->selectedComponent); });
+        }
 
         ImGui::End();
     }

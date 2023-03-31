@@ -8,20 +8,15 @@
 #include <Components/MeshRenderer.h>
 #include <Components/PointLight.h>
 #include <Scene/Entity.h>
+#include <Panels/ComponentMenuPanel.h>
 #include <Core/EventHandler.h>
 
 namespace DT
 {
-	class PropertiesPanel : public Panel, public EventHandler
+	class PropertiesPanel : public Panel
 	{
 	public:
 		Entity selectedEntity;
-
-		enum Events
-		{
-			AssignPopup,
-			RemovePopup
-		};
 
 		inline std::string GetWindowName() override { return "Properties"; }
 

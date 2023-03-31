@@ -14,7 +14,7 @@ using json = nlohmann::json;
 
 #include <Renderer/Texture.h>
 #include <Renderer/Material.h>
-#include <Core/Macro.h>
+#include <Core/Serialization.h>
 #include <Core/Resource.h>
 #include <Core/ImGui.h>
 #include <Renderer/Mesh.h>
@@ -39,16 +39,14 @@ namespace DT
     {
         inline std::unordered_map<std::string, Interface *> interfaces;
 
-        template <typename T, class... Args>
-        void RegisterInterface(const Args &...args)
+        template <typename T>
+        void RegisterInterface(std::vector<std::string> extensions)
         {
-            std::vector<std::string> extensions = {args...};
-
-            Interface *interface = new T();
-            interface->Init();
+            Interface *_interface = new Interface();
+            _interface->Init();
 
             for (unsigned i = 0; i < extensions.size(); i++)
-                interfaces[extensions[i]] = interface;
+                interfaces[extensions[i]] = _interface;
         }
 
         Interface *GetInterface(const std::string &extension);

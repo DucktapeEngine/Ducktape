@@ -22,15 +22,13 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Renderer/Shader.h>
-#include <Components/Transform.h>
-#include <Scene/System.h>
-#include <Core/Serialization.h>
-#include <Renderer/Renderer.h>
 #include <Core/Resource.h>
+#include <Renderer/Shader.h>
 
 namespace DT
 {
+    class Transform;
+    
     /**
      * @brief DirectionalLight struct for managing directional light.
      */
@@ -68,7 +66,7 @@ namespace DT
         /**
          * @brief Handles DirectionalLight serialization.
          */
-        void Serialize(Scene *scene, const Context &ctx) override;
+        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
 
         /**
          * @brief Handles Scene View lighting.

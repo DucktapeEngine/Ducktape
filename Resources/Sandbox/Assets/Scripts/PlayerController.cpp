@@ -20,31 +20,17 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Ducktape.h>
+#include "PlayerController.h"
 using namespace DT;
 
-struct PlayerController
+void PlayerController::Inspector(Entity entity, Scene *scene, const Context &ctx)
 {
-    float yaw = 0.f, pitch = 0.f;
-    float speed = 2.5f;
-    float sensitivity = 25.f;
+    if (entity != scene->selectedEntity)
+        return;
 
-    void Inspector(Entity entity, Scene *scene, const Context &ctx)
+    if (ImGui::CollapsingHeader("Player Controller"))
     {
-        if (entity != scene->selectedEntity)
-            return;
-
-        if (ImGui::CollapsingHeader("Player Controller"))
-        {
-            ImGui::DragFloat("speed", &speed);
-            ImGui::DragFloat("sensitivity", &sensitivity);
-        }
+        ImGui::DragFloat("speed", &speed);
+        ImGui::DragFloat("sensitivity", &sensitivity);
     }
-};
-
-DT_EXPORT void RegisterRuntime(Scene &scene)
-{
-    scene.Register<GenericSystem<PlayerController>>();
 }
-
-REGISTER(PlayerController);

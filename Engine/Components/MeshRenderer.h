@@ -22,16 +22,13 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Renderer/Mesh.h>
-#include <Core/ImGui.h>
-#include <Scene/Entity.h>
-#include <Renderer/Material.h>
-#include <Components/Transform.h>
-#include <Core/Serialization.h>
 #include <Core/Resource.h>
+#include <Renderer/Mesh.h>
 
 namespace DT
 {
+    class Transform;
+    
     /**
      * @brief MeshRenderer struct for mesh handling with a collection of shader, model transformation and material.
      */
@@ -64,7 +61,7 @@ namespace DT
         /**
          * @brief Handles MeshRenderer serialization.
          */
-        void Serialize(Scene *scene, const Context &ctx) override;
+        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
 
         /**
          * @brief Serializes MeshRenderer properties for Inspector.

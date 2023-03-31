@@ -20,7 +20,20 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Renderer/Mesh.h>
+#include <Renderer/Material.h>
+#include <Core/ResourceManager.h>
+#include <Core/Resource.h>
+#include <Scene/Entity.h>
+
 #include <Core/ImGui.h>
+
+void ImGui::Entity(const std::string &label, DT::Entity *entity)
+{
+    int handle = entt::to_integral(*entity);
+    ImGui::InputInt(label.c_str(), &handle);
+    *entity = entt::entity(handle);
+}
 
 void ImGui::Material(const std::string &label, DT::Material *material)
 {
@@ -138,9 +151,9 @@ bool ImGui::ImageButtonWithText(ImTextureID texId, const char *label, const ImVe
 }
 /// @brief This custom widget is not working properly as intended as because ImGui internal stuff
 /// is complicated about how to draw multiple items in same rect.
-bool ImGui::ImageWithInputText(ImTextureID texId, const char* label, char* buf, size_t buf_size, const ImVec2& imageSize, const ImVec2& uv0, const ImVec2& uv1, bool wrapContent,int frame_padding, const ImVec4& bg_col, const ImVec4& tint_col)
+bool ImGui::ImageWithInputText(ImTextureID texId, const char *label, char *buf, size_t buf_size, const ImVec2 &imageSize, const ImVec2 &uv0, const ImVec2 &uv1, bool wrapContent, int frame_padding, const ImVec4 &bg_col, const ImVec4 &tint_col)
 {
-    ImGuiWindow* window = GetCurrentWindow();
+    ImGuiWindow *window = GetCurrentWindow();
     if (window->SkipItems)
         return false;
 
@@ -158,8 +171,8 @@ bool ImGui::ImageWithInputText(ImTextureID texId, const char* label, char* buf, 
         size = size * window->FontWindowScale * ImGui::GetIO().FontGlobalScale;
     }
 
-    ImGuiContext& g = *GImGui;
-    const ImGuiStyle& style = g.Style;
+    ImGuiContext &g = *GImGui;
+    const ImGuiStyle &style = g.Style;
 
     const ImGuiID id = window->GetID(label);
     const ImVec2 textSize = ImGui::CalcTextSize("InputText", NULL, true);
@@ -170,7 +183,7 @@ bool ImGui::ImageWithInputText(ImTextureID texId, const char* label, char* buf, 
     const float innerSpacing = hasText ? ((frame_padding >= 0) ? (float)frame_padding : (style.ItemInnerSpacing.x)) : 0.f;
     ImVec2 padding = (frame_padding >= 0) ? ImVec2((float)frame_padding, (float)frame_padding) : style.FramePadding;
     ImVec2 totalSizeWithoutPadding(wrapContent ? size.x + innerSpacing + imageSize.x : fillX, wrapContent ? fillY : size.y > textSize.y ? size.y
-        : textSize.y);
+                                                                                                                                        : textSize.y);
     ImRect bb(window->DC.CursorPos, window->DC.CursorPos + totalSizeWithoutPadding + padding * 2);
     ImVec2 bbSize = bb.GetSize();
     ImVec2 start(0, 0);
@@ -197,7 +210,7 @@ bool ImGui::ImageWithInputText(ImTextureID texId, const char* label, char* buf, 
         window->DrawList->AddRectFilled(image_bb.Min, image_bb.Max, GetColorU32(bg_col));
 
     window->DrawList->AddImage(texId, image_bb.Min, image_bb.Max, uv0, uv1, GetColorU32(tint_col));
-    //SameLine(size.x+innerSpacing);
+    // SameLine(size.x+innerSpacing);
     ImVec2 prevPos = window->DC.CursorPos;
     window->DC.CursorPos = start;
     if (wrapContent)
@@ -205,14 +218,14 @@ bool ImGui::ImageWithInputText(ImTextureID texId, const char* label, char* buf, 
         start.y += size.y - (innerSpacing - (textSize.y / 2));
         start.x += (textSize.x >= bbSize.x ? 0 : bbSize.x - textSize.x - innerSpacing) / 2;
         window->DC.CursorPos = start;
-        InputTextEx(label, NULL, buf, (int)buf_size, ImVec2(totalSizeWithoutPadding.x,0), 0);
+        InputTextEx(label, NULL, buf, (int)buf_size, ImVec2(totalSizeWithoutPadding.x, 0), 0);
         start.y = prevPos.y;
         window->DC.CursorPos = start;
         // ImGui::RenderText(start,label);
     }
     else
         InputTextEx(label, NULL, buf, (int)buf_size, ImVec2(0, 0), 0);
-    //window->DC.CursorPos = prevPos;
+    // window->DC.CursorPos = prevPos;
     return true;
 }
 

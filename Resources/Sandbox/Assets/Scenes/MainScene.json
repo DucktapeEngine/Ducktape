@@ -1,94 +1,47 @@
 {
-    "components": [
+    "entities": [
         {
-            "entity": 0,
-            "fov": 45.0,
-            "id": "Camera",
-            "isOrtho": false
-        },
-        {
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "entity": 0,
-            "id": "DirectionalLight",
-            "intensity": 1.0
-        },
-        {
-            "entity": 1,
-            "id": "Tag",
-            "name": "Duckie"
-        },
-        {
-            "entity": 2,
-            "id": "Tag",
-            "name": "Matsuo"
-        },
-        {
-            "entity": 0,
-            "id": "Tag",
-            "name": "Camera"
-        },
-        {
-            "entity": 1,
-            "id": "Transform",
-            "rotation": {
-                "w": 1.0,
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translation": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0
+            "components": {
+                "Camera": {
+                    "fov": 45.0,
+                    "isOrtho": false
+                },
+                "DirectionalLight": {
+                    "color": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "intensity": 1.0
+                },
+                "Tag": {
+                    "name": "Camera"
+                },
+                "Transform": {
+                    "rotation": {
+                        "w": 1.0,
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "translation": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
+                }
             }
         },
         {
-            "entity": 2,
-            "id": "Transform",
-            "rotation": {
-                "w": 0.0,
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        {
-            "entity": 0,
-            "id": "Transform",
-            "rotation": {
-                "w": 1.0,
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+            "components": {
+                "Tag": {
+                    "name": "Bag"
+                }
             }
         }
     ]

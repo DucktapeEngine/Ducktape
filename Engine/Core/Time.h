@@ -22,8 +22,6 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <GLFW/glfw3.h>
-
 namespace DT
 {
     class Time

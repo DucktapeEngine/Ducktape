@@ -22,13 +22,6 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-
-#include <Core/Serialization.h>
-#include <Scene/System.h>
-#include <Scene/Scene.h>
-#include <Core/Context.h>
-
 namespace DT
 {
     /**
@@ -52,6 +45,6 @@ namespace DT
         /**
          * @brief Handles Tag serialization.
          */
-        void Serialize(Scene *scene, const Context &ctx) override;
+        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
     };
 }

@@ -87,9 +87,9 @@ namespace DT
 
         if (selectedEntity != entt::null && engine.activeScene->Has<Transform>(selectedEntity) && engine.activeScene->activeCamera != nullptr)
         {
-            Transform &transform = engine.activeScene->Get<Transform>(selectedEntity);
+            Transform *transform = engine.activeScene->Get<Transform>(selectedEntity);
 
-            glm::mat4 model = transform.GetModelMatrix();
+            glm::mat4 model = transform->GetModelMatrix();
 
             ImGuizmo::SetOrthographic(engine.activeScene->activeCamera->isOrtho);
             ImGuizmo::SetDrawlist();
@@ -103,7 +103,7 @@ namespace DT
 
             if (ImGuizmo::IsUsing())
             {
-                transform.SetModelMatrix(model);
+                transform->SetModelMatrix(model);
             }
         }
 

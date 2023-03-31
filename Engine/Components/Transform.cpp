@@ -20,6 +20,13 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <functional>
+
+#include <Scene/Scene.h>
+#include <Core/ImGui.h>
+#include <Core/Serialization.h>
+#include <Core/SerializationManager.h>
+
 #include <Components/Transform.h>
 
 namespace DT
@@ -72,32 +79,32 @@ namespace DT
             if (scene->selectedEntity != entity)
                 continue;
 
-            Transform &trans = scene->Get<Transform>(entity);
+            Transform *trans = scene->Get<Transform>(entity);
             if (ImGui::CollapsingHeader("Transform"))
             {
                 if (ImGui::BeginPopupContextItem())
                 {
                     if (ImGui::MenuItem("Reset##Transform"))
                     {
-                        trans.translation = glm::vec3(0);
-                        trans.SetEulerRotation(glm::vec3(0));
-                        trans.scale = glm::vec3(1);
+                        trans->translation = glm::vec3(0);
+                        trans->SetEulerRotation(glm::vec3(0));
+                        trans->scale = glm::vec3(1);
                     }
                     ImGui::EndPopup();
                 }
-                ImGui::Vec3("position", &trans.translation);
+                ImGui::Vec3("position", &trans->translation);
                 PopupContext("Position", [&]()
-                             { trans.translation = glm::vec3(0); });
+                             { trans->translation = glm::vec3(0); });
 
-                glm::vec3 eulerAngles = trans.GetEulerRotation();
+                glm::vec3 eulerAngles = trans->GetEulerRotation();
                 ImGui::Vec3("rotation", &eulerAngles);
                 PopupContext("Rotation", [&]()
                              { eulerAngles = glm::vec3(0); });
-                trans.SetEulerRotation(eulerAngles);
+                trans->SetEulerRotation(eulerAngles);
 
-                ImGui::Vec3("scale", &trans.scale);
+                ImGui::Vec3("scale", &trans->scale);
                 PopupContext("Scale", [&]()
-                             { trans.scale = glm::vec3(1); });
+                             { trans->scale = glm::vec3(1); });
             }
         }
     }
@@ -119,13 +126,8 @@ namespace DT
         }
     }
 
-    void TransformSystem::Serialize(Scene *scene, const Context &ctx)
+    void TransformSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
     {
-        for (Entity entity : scene->View<Transform>())
-        {
-            Transform &trans = scene->Get<Transform>(entity);
-
-            ctx.serialization->SerializeComponent("Transform", trans, entity);
-        }
+        ctx.serializationManager->SerializeComponent<Transform>("Transform", entity, *scene);
     }
 }

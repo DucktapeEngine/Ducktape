@@ -20,7 +20,10 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/Macro.h>
+#include <Input/Key.h>
+#include <Core/Context.h>
+#include <Core/Serialization.h>
+
 #include <Input/Input.h>
 
 namespace DT

@@ -40,4 +40,4 @@ include_directories (${Ducktape_INCLUDE_DIR})
 link_directories (${Ducktape_LIBRARY_DIR})
 link_libraries (${Ducktape_LIBRARY})
 
-add_library (Sandbox SHARED "${PROJECT_SOURCE_DIR}/Resources/Sandbox/Assets/Scripts/PlayerController.cpp")
+add_library (Sandbox SHARED "${PROJECT_SOURCE_DIR}/Resources/Sandbox/Assets/Scripts/PlayerController.cpp;${PROJECT_SOURCE_DIR}/Resources/Sandbox/Assets/Scripts/Main.cpp;")

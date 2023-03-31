@@ -27,52 +27,57 @@ namespace DT
     void SceneManager::Save(std::filesystem::path savePath, Scene &scene, Engine &engine)
     {
         std::ofstream output(savePath);
-        engine.serialization.data.clear();
-        engine.serialization.isSerializing = true;
+        engine.serializationManager.data.clear();
+        engine.serializationManager.isSerializing = true;
 
         for (System *system : scene.GetSystems())
-            system->Serialize(&scene, engine.ctx);
+            scene.sceneRegistry.each([&](const Entity entity)
+                                     { system->Serialize(&scene, engine.ctx, entity); });
 
-        output << engine.serialization.data.dump(4);
+        output << engine.serializationManager.data.dump(4);
     }
 
     void SceneManager::Load(std::filesystem::path loadPath, Scene &scene, Engine &engine)
     {
         std::ifstream input(loadPath);
-        std::stringstream inputBuffer;
-        inputBuffer << input.rdbuf();
-        engine.serialization.data = json::parse(inputBuffer.str());
+        engine.serializationManager.data = json::parse(input);
 
-        // Create EC-like Scene Data for easy scene construction
-        json sceneData;
-        for (json &component : engine.serialization.data["components"])
-        {
-            json editedComponent = component;
-            editedComponent.erase("entity");
-
-            sceneData["entities"][(int)component["entity"]]["components"].push_back(editedComponent);
-        }
-
+        scene.sceneRegistry.each([&](const Entity entity)
+                                 { scene.sceneRegistry.destroy(entity); });
         scene.sceneRegistry.clear();
 
-        // Create the scene structure
-        for (json &entityData : sceneData["entities"])
-        {
-            Entity entity = scene.CreateEntity();
+        engine.serializationManager.isSerializing = false;
 
-            for (json &componentData : entityData["components"])
-                scene.Assign(entity, componentData["id"]);
+        int handle = 0;
+        for (auto it = engine.serializationManager.data["entities"].begin(); it != engine.serializationManager.data["entities"].end(); ++it)
+        {
+            Entity entity = entt::null;
+            if (scene.sceneRegistry.valid(entt::entity(handle)))
+            {
+                entity = entt::entity(handle);
+            }
+            else
+            {
+                entity = scene.sceneRegistry.create(entt::entity(handle));
+            }
+
+            for (auto ct = it.value()["components"].begin(); ct != it.value()["components"].end(); ++ct)
+            {
+                scene.Assign(entity, ct.key());
+                for (System *system : scene.GetSystems())
+                    system->Serialize(&scene, engine.ctx, entity);
+            }
+
+            handle++;
         }
 
-        // Deserialize
-        engine.serialization.isSerializing = false;
+        std::cout << __LINE__ << "\n";
 
-        for (System *system : scene.GetSystems())
-            system->Serialize(&scene, engine.ctx);
+        std::cout << "Loaded scene successfully\n";
 
         for (System *system : scene.GetSystems())
             system->Init(&scene, engine.ctx);
 
-        std::cout << "Loaded scene successfully\n";
+        std::cout << "Initialized newly loaded components\n";
     }
 }

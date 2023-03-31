@@ -9,7 +9,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSengine.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -20,21 +20,17 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
+#include <Scene/Entity.h>
+#include <Core/Context.h>
+#include <Scene/Scene.h>
+#include <Core/ImGui.h>
+using namespace DT;
 
-#include <string>
-
-#include <glm/glm.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <json/json.hpp>
-using json = nlohmann::json;
-
-#define SERIALIZE NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
-#define IN_SERIALIZE NLOHMANN_DEFINE_TYPE_INTRUSIVE
-
-namespace glm
+struct PlayerController
 {
-    SERIALIZE(vec2, x, y);
-    SERIALIZE(vec3, x, y, z);
-    SERIALIZE(quat, x, y, z, w);
-}
+    float yaw = 0.f, pitch = 0.f;
+    float speed = 2.5f;
+    float sensitivity = 25.f;
+
+    void Inspector(Entity entity, Scene *scene, const Context &ctx);
+};

@@ -327,10 +327,10 @@ namespace DT
 
     void ResourceInterface::AddDefault()
     {
-        RegisterInterface<MaterialInterface>(".mtl", ".dtmaterial");
-        RegisterInterface<TextureInterface>(".jpg", ".png", ".jpeg");
-        RegisterInterface<ModelInterface>(".obj", ".fbx");
-        RegisterInterface<MeshInterface>(".dtmesh");
-        RegisterInterface<MarkdownInterface>(".md");
+        RegisterInterface<MaterialInterface>({".mtl", ".dtmaterial"});
+        RegisterInterface<TextureInterface>({".jpg", ".png", ".jpeg"});
+        RegisterInterface<ModelInterface>({".obj", ".fbx"});
+        RegisterInterface<MeshInterface>({".dtmesh"});
+        RegisterInterface<MarkdownInterface>({".md"});
     }
 }

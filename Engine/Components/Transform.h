@@ -30,7 +30,8 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 
-#include <Scene/Scene.h>
+#include <Scene/System.h>
+#include <Core/Context.h>
 #include <Core/Serialization.h>
 
 namespace DT
@@ -89,6 +90,8 @@ namespace DT
 
     SERIALIZE(Transform, translation, rotation, scale);
 
+    class Scene;
+
     class TransformSystem : public System // TOFIX: Register System only if DT_EDITOR flag is on
     {
     public:
@@ -100,7 +103,7 @@ namespace DT
         /**
          * @brief Handles Transform serialization.
          */
-        void Serialize(Scene *scene, const Context &ctx) override;
+        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
 
         void PopupContext(const char *label, std::function<void()> func);
     };

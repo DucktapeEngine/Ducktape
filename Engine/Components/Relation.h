@@ -24,40 +24,23 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    class Transform;
-
-    /**
-     * @brief Camera struct for managing camera.
-     */
-    struct Camera
+    struct Relation
     {
-        glm::mat4 view;       ///< @brief View matrix.
-        glm::mat4 projection; ///< @brief Projection matrix.
+        bool hasParent = false; // Serialization of entt::null has issues, using this as flag instead for now
+        Entity parent = entt::null;
+        std::unordered_set<Entity> children;
 
-        bool isOrtho = false; ///< @brief Whether it is orthographic projection or not.
-        float fov = 45.0f;    ///< @brief Field of view.
-
-        Transform *transform; ///< @brief Pointer to Transform class.
-
-        /**
-         * @brief Function to convert a 3D world point into 2D point after projection.
-         * @param worldPoint 3D vector for which projection has to be done.
-         * @param windowSize 2D size of game window (ctx.window.GetWindowSize()).
-         * @return 2D projected vector on the screen.
-         */
-        glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize);
+        void SetParent(Entity parent, Scene &scene);
+        void RemoveParent(Scene &scene);
+        void AddChild(Entity child, Scene &scene);
+        void RemoveChild(Entity child, Scene &scene);
     };
 
-    SERIALIZE(Camera, isOrtho, fov);
+    SERIALIZE(Relation, hasParent, parent, children);
 
-    class CameraSystem : System
+    class RelationSystem : System
     {
     public:
-        /**
-         * @brief Registers Camera in the rendering engine
-         */
-        void Init(Scene *scene, const Context &ctx) override;
-
         /**
          * @brief Serializes Camera properties for Inspector.
          */

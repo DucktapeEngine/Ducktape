@@ -20,6 +20,9 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <iostream>
+#include <fstream>
+
 #include <Core/ResourceManager.h>
 
 namespace DT

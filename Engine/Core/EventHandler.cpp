@@ -20,6 +20,8 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <iostream>
+
 #include <Core/EventHandler.h>
 
 namespace DT

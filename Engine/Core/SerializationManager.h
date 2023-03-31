@@ -22,51 +22,35 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <filesystem>
-#include <iostream>
-
-#ifdef _WIN32
-#include <windows.h>
-#define DT_EXPORT extern "C" __declspec(dllexport)
-#endif
-#ifdef __linux__
-#include <dlfcn.h>
-#define DT_EXPORT extern "C" __attribute__((visibility("default")))
-#endif
+#include <Scene/Entity.h>
+#include <Scene/Scene.h>
 
 namespace DT
 {
-	namespace Platform
-	{
-		std::string GetLastErrorAsString();
-		void Execute(const std::string command);
+    class SerializationManager
+    {
+    public:
+        json data;
+        bool isSerializing = true;
 
-		class Module
-		{
-		public:
-#ifdef _WIN32
-			HMODULE module;
-#endif
-#ifdef __linux__
-			void *module;
-#endif
+        template <typename T>
+        void SerializeComponent(const std::string componentName, Entity entity, Scene &scene)
+        {
+            try
+            {
+                T *component = scene.Get<T>(entity);
+                if (component == nullptr)
+                    return;
 
-			~Module();
-
-			void Load(std::filesystem::path path);
-			void Free();
-
-			template <typename T>
-			T GetSymbolAddress(const std::string &symbolName)
-			{
-#ifdef _WIN32
-				return (T)GetProcAddress(module, symbolName.c_str());
-#endif
-#ifdef __linux__
-				return (T)dlsym(module, symbolName.c_str());
-#endif
-			}
-		};
-	}
+                if (isSerializing)
+                    data["entities"][entt::to_integral(entity)]["components"][componentName] = *component;
+                else
+                    *component = data["entities"][entt::to_integral(entity)]["components"][componentName];
+            }
+            catch (json::exception &e)
+            {
+                std::cout << "json::exception " << e.what() << std::endl;
+            }
+        }
+    };
 }

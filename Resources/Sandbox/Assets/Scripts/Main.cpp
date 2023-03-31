@@ -9,7 +9,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSengine.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -20,21 +20,14 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#pragma once
+#include <Ducktape.h>
+#include <Components/DllRegister.h>
+#include "PlayerController.h"
+using namespace DT;
 
-#include <string>
-
-#include <glm/glm.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <json/json.hpp>
-using json = nlohmann::json;
-
-#define SERIALIZE NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
-#define IN_SERIALIZE NLOHMANN_DEFINE_TYPE_INTRUSIVE
-
-namespace glm
+DT_EXPORT void RegisterRuntime(Scene &scene)
 {
-    SERIALIZE(vec2, x, y);
-    SERIALIZE(vec3, x, y, z);
-    SERIALIZE(quat, x, y, z, w);
+    scene.Register<GenericSystem<PlayerController>>("PlayerController");
 }
+
+REGISTER(PlayerController);

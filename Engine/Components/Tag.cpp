@@ -20,6 +20,15 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <string>
+
+#include <Core/Serialization.h>
+#include <Scene/System.h>
+#include <Scene/Scene.h>
+#include <Core/ImGui.h>
+#include <Core/Context.h>
+#include <Core/SerializationManager.h>
+
 #include <Components/Tag.h>
 
 namespace DT
@@ -31,22 +40,17 @@ namespace DT
             if (scene->selectedEntity != entity)
                 continue;
 
-            Tag &tag = scene->Get<Tag>(entity);
+            Tag *tag = scene->Get<Tag>(entity);
 
             if (ImGui::CollapsingHeader("Tag"))
             {
-                ImGui::InputText("name", &tag.name);
+                ImGui::InputText("name", &tag->name);
             }
         }
     }
 
-    void TagSystem::Serialize(Scene *scene, const Context &ctx)
+    void TagSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
     {
-        for (Entity entity : scene->View<Tag>())
-        {
-            Tag &tag = scene->Get<Tag>(entity);
-
-            ctx.serialization->SerializeComponent("Tag", tag, entity);
-        }
+        ctx.serializationManager->SerializeComponent<Tag>("Tag", entity, *scene);
     }
 }

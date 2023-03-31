@@ -24,6 +24,15 @@ namespace DT
             }
             if (ImGui::BeginMenu("Scene"))
             {
+                if (ImGui::MenuItem("Save"))
+                    SceneManager::Save(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+
+                if (ImGui::MenuItem("Load"))
+                {
+                    SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+                    Editor::GetPanel<ScenePanel>()->selectedEntity = entt::null;
+                }
+
                 if (ImGui::MenuItem("Create Entity"))
                     engine.activeScene->CreateEntity();
                 ImGui::EndMenu();

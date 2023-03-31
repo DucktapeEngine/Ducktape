@@ -20,6 +20,14 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Components/Transform.h>
+#include <Scene/System.h>
+#include <Core/Serialization.h>
+#include <Core/SerializationManager.h>
+#include <Renderer/Renderer.h>
+#include <Core/Debug.h>
+#include <Core/ImGui.h>
+
 #include <Components/Camera.h>
 
 namespace DT
@@ -36,45 +44,40 @@ namespace DT
     {
         for (Entity entity : scene->View<Camera>())
         {
-            Camera &cam = scene->Get<Camera>(entity);
+            Camera *cam = scene->Get<Camera>(entity);
 
-            ctx.activeScene->activeCamera = &cam;
+            ctx.activeScene->activeCamera = cam;
 
-            cam.transform = &scene->Get<Transform>(entity);
+            cam->transform = scene->Get<Transform>(entity);
 
-            ctx.renderer->cameraView = &cam.view;
-            ctx.renderer->cameraProjection = &cam.projection;
-            ctx.renderer->cameraPosition = &cam.transform->translation;
-            ctx.renderer->cameraRotation = &cam.transform->rotation;
-            ctx.renderer->isOrtho = &cam.isOrtho;
-            ctx.renderer->fov = &cam.fov;
+            ctx.renderer->cameraView = &cam->view;
+            ctx.renderer->cameraProjection = &cam->projection;
+            ctx.renderer->cameraPosition = &cam->transform->translation;
+            ctx.renderer->cameraRotation = &cam->transform->rotation;
+            ctx.renderer->isOrtho = &cam->isOrtho;
+            ctx.renderer->fov = &cam->fov;
         }
     }
 
     void CameraSystem::Inspector(Scene *scene, const Context &ctx)
     {
-        // for (Entity entity : scene->View<Camera>())
+        for (Entity entity : scene->View<Camera>())
         {
-            // if (scene->selectedEntity != entity)
-            //     continue;
+            if (scene->selectedEntity != entity)
+                continue;
 
-            // Camera &cam = scene->Get<Camera>(entity);
+            Camera *cam = scene->Get<Camera>(entity);
 
-            // if (ImGui::CollapsingHeader("Camera"))
-            // {
-            //     ImGui::Checkbox("orthographic", &cam.isOrtho);
-            //     ImGui::DragFloat("field of view", &cam.fov);
-            // }
+            if (ImGui::CollapsingHeader("Camera"))
+            {
+                ImGui::Checkbox("orthographic", &cam->isOrtho);
+                ImGui::DragFloat("field of view", &cam->fov);
+            }
         }
     }
 
-    void CameraSystem::Serialize(Scene *scene, const Context &ctx)
+    void CameraSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
     {
-        for (Entity entity : scene->View<Camera>())
-        {
-            Camera &cam = scene->Get<Camera>(entity);
-
-            ctx.serialization->SerializeComponent("Camera", cam, entity);
-        }
+        ctx.serializationManager->SerializeComponent<Camera>("Camera", entity, *scene);
     }
 }

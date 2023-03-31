@@ -27,12 +27,10 @@ aryanbaburajan2007@gmail.com
 #include <array>
 
 #include <entt/entt.hpp>
-#include <Core/ImGui.h>
 
 #include <Core/Platform.h>
 #include <Scene/System.h>
 #include <Scene/Entity.h>
-#include <Core/Macro.h>
 #include <Core/Configuration.h>
 
 namespace DT
@@ -144,37 +142,29 @@ namespace DT
         template <typename T>
         T &Assign(Entity entity)
         {
-            DT_ASSERT(!Has<T>(entity), "Entity already has component.");
+            if (Has<T>(entity))
+                return *Get<T>(entity);
 
-            T &component = sceneRegistry.emplace<T>(entity);
-
-            return component;
+            return sceneRegistry.emplace<T>(entity);
         }
 
         template <typename T>
-        T &Require(Entity entity)
+        T *Get(Entity entity)
         {
             if (Has<T>(entity))
-                return Get<T>(entity);
-
-            return Assign<T>(entity);
-        }
-
-        template <typename T>
-        T &Get(Entity entity)
-        {
-            DT_ASSERT(Has<T>(entity), "Entity does not have component.");
-
-            return sceneRegistry.get<T>(entity);
+                return &sceneRegistry.get<T>(entity);
+            else
+                return nullptr;
         }
 
         template <typename T>
         void Remove(Entity entity)
         {
-            DT_ASSERT(Has<T>(entity), "Entity does not have component.");
-
-            // sceneRegistry.get<T>(entity).Destroy(); //TOFIX: Destroy currently not called
-            sceneRegistry.remove<T>(entity);
+            if (Has<T>(entity))
+            {
+                // sceneRegistry.get<T>(entity).Destroy(); //TOFIX: Destroy currently not called
+                sceneRegistry.remove<T>(entity);
+            }
         }
 
         template <typename... Components>

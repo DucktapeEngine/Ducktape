@@ -22,18 +22,11 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <vector>
-#include <stdexcept>
-#include <iostream>
-
-#include <imgui/imgui.h>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <utils/stb_image.h>
 
 #include <Core/Configuration.h>
-#include <Core/Context.h>
 
 namespace DT
 {

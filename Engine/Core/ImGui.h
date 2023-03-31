@@ -36,11 +36,13 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Material.h>
 #include <Core/ResourceManager.h>
 #include <Core/Resource.h>
+#include <Scene/Entity.h>
 
 namespace ImGui
 {
     inline FileBrowser fileDialog(ImGuiFileBrowserFlags_CloseOnEsc);
 
+    IMGUI_API void Entity(const std::string &label, DT::Entity *entity);
     IMGUI_API void Material(const std::string &label, DT::Material *material);
     IMGUI_API void Vec3(const std::string &label, glm::vec3 *vec3);
     IMGUI_API void Vec2(const std::string &label, glm::vec2 *vec2);

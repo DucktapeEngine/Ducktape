@@ -23,13 +23,6 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Scene/Scene.h>
-#include <Components/Camera.h>
-#include <Components/DirectionalLight.h>
-#include <Components/MeshRenderer.h>
-#include <Components/PointLight.h>
-#include <Components/Tag.h>
-#include <Components/Transform.h>
-#include <Core/Serialization.h>
 
 namespace DT
 {

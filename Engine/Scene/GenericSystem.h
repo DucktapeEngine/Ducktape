@@ -23,7 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Scene/System.h>
-#include <Core/Macro.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -31,6 +31,8 @@ namespace DT
     class GenericSystem : public System
     {
     protected:
+        const std::string componentName;
+
         HAS_METHOD_DECL(Init);
         HAS_METHOD_DECL(Tick);
         HAS_METHOD_DECL(SceneView);
@@ -39,46 +41,48 @@ namespace DT
         HAS_METHOD_DECL(Inspector);
 
     public:
+        GenericSystem(const std::string &compName) : componentName(compName) {}
+
         void Init(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasInit<T>::value)
                 for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity).Init(entity, scene, ctx);
+                    scene->Get<T>(entity)->Init(entity, scene, ctx);
         }
 
         void Tick(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasTick<T>::value)
                 for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity).Tick(entity, scene, ctx);
+                    scene->Get<T>(entity)->Tick(entity, scene, ctx);
         }
 
         void SceneView(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasSceneView<T>::value)
                 for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity).SceneView(entity, scene, ctx);
+                    scene->Get<T>(entity)->SceneView(entity, scene, ctx);
         }
 
         void Destroy(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasDestroy<T>::value)
                 for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity).Destroy(entity, scene, ctx);
+                    scene->Get<T>(entity)->Destroy(entity, scene, ctx);
         }
 
-        void Serialize(Scene *scene, const Context &ctx) override
+        void Serialize(Scene *scene, const Context &ctx, Entity entity) override
         {
-            // if constexpr (HasSerialize<T>::value)
-            //     for (Entity entity : scene->View<T>())
-            //         Serialize(engine.serializer, );
+            if constexpr (HasSerialize<T>::value)
+                for (Entity entity : scene->View<T>())
+                    ctx.serializationManager->SerializeComponent<T>(componentName, entity, *scene);
         }
 
         void Inspector(Scene *scene, const Context &ctx) override
         {
             if constexpr (HasInspector<T>::value)
                 for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity).Inspector(entity, scene, ctx);
+                    scene->Get<T>(entity)->Inspector(entity, scene, ctx);
         }
     };
 }

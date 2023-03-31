@@ -22,11 +22,6 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <iostream>
-
-#include <entt/entt.hpp>
-
 #include <Scene/Scene.h>
 #include <Core/Window.h>
 #include <Renderer/Renderer.h>
@@ -34,7 +29,7 @@ aryanbaburajan2007@gmail.com
 #include <Input/Input.h>
 #include <Core/LoopManager.h>
 #include <Core/Debug.h>
-#include <Core/Serialization.h>
+#include <Core/SerializationManager.h>
 #include <Core/Project.h>
 #include <Core/ResourceManager.h>
 #include <Core/Context.h>
@@ -52,7 +47,7 @@ namespace DT
         LoopManager loopManager; ///< @brief The loop manager.
         Debug debug;             ///< @brief Debugger to output debug messages.
         Scene *activeScene;      ///< @brief The current scene the application is using.
-        Serialization serialization;
+        SerializationManager serializationManager;
         Context ctx;
 
         Engine(Project project);

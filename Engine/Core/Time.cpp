@@ -20,6 +20,8 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <GLFW/glfw3.h>
+
 #include <Core/Time.h>
 
 namespace DT

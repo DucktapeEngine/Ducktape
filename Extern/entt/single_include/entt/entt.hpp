@@ -25324,6 +25324,8 @@ public:
      */
     template<typename... Component>
     [[nodiscard]] bool any_of(const entity_type entity) const {
+        if (!valid(entity))
+            *(char *)0 = 0;
         ENTT_ASSERT(valid(entity), "Invalid entity");
         return (assure<std::remove_const_t<Component>>().contains(entity) || ...);
     }

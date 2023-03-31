@@ -20,6 +20,15 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Renderer/Shader.h>
+#include <Components/Transform.h>
+#include <Scene/System.h>
+#include <Core/Serialization.h>
+#include <Renderer/Renderer.h>
+#include <Core/Resource.h>
+#include <Core/ImGui.h>
+#include <Core/SerializationManager.h>
+
 #include <Components/DirectionalLight.h>
 
 namespace DT
@@ -28,20 +37,20 @@ namespace DT
     {
         for (Entity entity : scene->View<DirectionalLight>())
         {
-            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
+            DirectionalLight *dl = scene->Get<DirectionalLight>(entity);
 
-            dl.shader.Load(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl"));
-            dl.transform = &scene->Require<Transform>(entity);
+            dl->shader.Load(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl"));
+            dl->transform = &scene->Assign<Transform>(entity);
 
-            if (ctx.renderer->GetFreeDirectionalLightSpot(&dl.lightSpot) == false)
+            if (ctx.renderer->GetFreeDirectionalLightSpot(&dl->lightSpot) == false)
             {
                 std::cerr << "DirectionalLight: No free light spots.\n";
                 continue;
             }
 
-            dl.propertyString = "directionalLights[" + std::to_string(dl.lightSpot) + "].";
-            dl.shader.Data()->Use();
-            dl.shader.Data()->SetBool(dl.propertyString + "enabled", true);
+            dl->propertyString = "directionalLights[" + std::to_string(dl->lightSpot) + "].";
+            dl->shader.Data()->Use();
+            dl->shader.Data()->SetBool(dl->propertyString + "enabled", true);
         }
     }
 
@@ -49,16 +58,16 @@ namespace DT
     {
         for (Entity entity : scene->View<DirectionalLight>())
         {
-            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
+            DirectionalLight *dl = scene->Get<DirectionalLight>(entity);
 
-            if (dl.lightSpot == NAN)
+            if (dl->lightSpot == NAN)
                 continue;
 
-            dl.shader.Data()->Use();
-            dl.shader.Data()->SetVec3(dl.propertyString + "direction", dl.transform->Forward());
-            dl.shader.Data()->SetVec3(dl.propertyString + "ambient", dl.color * dl.intensity);
-            dl.shader.Data()->SetVec3(dl.propertyString + "diffuse", dl.color * dl.intensity);
-            dl.shader.Data()->SetVec3(dl.propertyString + "specular", dl.color * dl.intensity);
+            dl->shader.Data()->Use();
+            dl->shader.Data()->SetVec3(dl->propertyString + "direction", dl->transform->Forward());
+            dl->shader.Data()->SetVec3(dl->propertyString + "ambient", dl->color * dl->intensity);
+            dl->shader.Data()->SetVec3(dl->propertyString + "diffuse", dl->color * dl->intensity);
+            dl->shader.Data()->SetVec3(dl->propertyString + "specular", dl->color * dl->intensity);
         }
     }
 
@@ -66,10 +75,10 @@ namespace DT
     {
         for (Entity entity : scene->View<DirectionalLight>())
         {
-            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
+            DirectionalLight *dl = scene->Get<DirectionalLight>(entity);
 
-            ctx.renderer->UnoccupyDirectionalLightSpot(dl.lightSpot);
-            dl.shader.Data()->SetBool(dl.propertyString + "enabled", true);
+            ctx.renderer->UnoccupyDirectionalLightSpot(dl->lightSpot);
+            dl->shader.Data()->SetBool(dl->propertyString + "enabled", true);
         }
     }
 
@@ -78,14 +87,9 @@ namespace DT
         Tick(scene, ctx);
     }
 
-    void DirectionalLightSystem::Serialize(Scene *scene, const Context &ctx)
+    void DirectionalLightSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
     {
-        for (Entity entity : scene->View<DirectionalLight>())
-        {
-            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
-
-            ctx.serialization->SerializeComponent("DirectionalLight", dl, entity);
-        }
+        ctx.serializationManager->SerializeComponent<DirectionalLight>("DirectionalLight", entity, *scene);
     }
 
     void DirectionalLightSystem::Inspector(Scene *scene, const Context &ctx)
@@ -95,12 +99,12 @@ namespace DT
             if (scene->selectedEntity != entity)
                 continue;
 
-            DirectionalLight &dl = scene->Get<DirectionalLight>(entity);
+            DirectionalLight *dl = scene->Get<DirectionalLight>(entity);
 
             if (ImGui::CollapsingHeader("Directional Light"))
             {
-                ImGui::DragFloat("intensity", &dl.intensity, 0.1f, 0.f, 5.f);
-                ImGui::ColorEdit3("color", &dl.color.x);
+                ImGui::DragFloat("intensity", &dl->intensity, 0.1f, 0.f, 5.f);
+                ImGui::ColorEdit3("color", &dl->color.x);
             }
         }
     }

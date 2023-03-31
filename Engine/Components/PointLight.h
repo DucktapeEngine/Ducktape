@@ -22,15 +22,10 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <Renderer/Shader.h>
-#include <Components/Transform.h>
-#include <Scene/Scene.h>
-#include <Core/Serialization.h>
-#include <Renderer/Renderer.h>
-#include <Core/Resource.h>
-
 namespace DT
 {
+    class Transform;
+    
     /**
      * @brief PointLight struct for managing point light.
      */
@@ -68,7 +63,7 @@ namespace DT
         /**
          * @brief Handles PointLight serialization.
          */
-        void Serialize(Scene *scene, const Context &ctx) override;
+        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
 
         /**
          * @brief Handles Scene View lighting.

@@ -34,7 +34,7 @@ namespace DT
     class LoopManager;
     class Debug;
     class Scene;
-    class Serialization;
+    class SerializationManager;
 
     class Context
     {
@@ -48,6 +48,6 @@ namespace DT
         LoopManager *loopManager;
         Debug *debug;
         Scene *&activeScene;
-        Serialization *serialization;
+        SerializationManager *serializationManager;
     };
 }

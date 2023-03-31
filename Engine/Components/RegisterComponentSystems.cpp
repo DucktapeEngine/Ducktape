@@ -20,6 +20,16 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Scene/Scene.h>
+#include <Components/Camera.h>
+#include <Components/DirectionalLight.h>
+#include <Components/MeshRenderer.h>
+#include <Components/PointLight.h>
+#include <Components/Tag.h>
+#include <Components/Transform.h>
+#include <Components/Relation.h>
+#include <Core/Serialization.h>
+
 #include <Components/RegisterComponentSystems.h>
 
 namespace DT
@@ -32,5 +42,6 @@ namespace DT
         scene.Register<PointLightSystem>();
         scene.Register<TagSystem>();
         scene.Register<TransformSystem>();
+        scene.Register<RelationSystem>();
     }
 }

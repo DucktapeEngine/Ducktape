@@ -20,6 +20,14 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <vector>
+#include <stdexcept>
+#include <iostream>
+
+#include <imgui/imgui.h>
+#include <utils/stb_image.h>
+
+#include <Core/Serialization.h>
 #include <Core/Window.h>
 #include <Core/Macro.h>
 

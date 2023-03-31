@@ -35,8 +35,7 @@ aryanbaburajan2007@gmail.com
 #include <Panels/ResourceInterface.h>
 #include <Panels/SceneViewPanel.h>
 #include <Panels/DucktapeEditorPanel.h>
-#include <Panels/AssignComponentMenuPanel.h>
-#include <Panels/RemoveComponentMenuPanel.h>
+#include <Panels/ComponentMenuPanel.h>
 using namespace DT;
 
 int main()
@@ -49,9 +48,7 @@ int main()
 
         RegisterComponentSystems(mainScene);
 
-        // std::cout << __LINE__ << std::endl;
-        // SceneManager::Load(e.project.directory / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
-        // std::cout << __LINE__ << std::endl;
+        // SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
 
         Entity camera = mainScene.CreateEntity();
         mainScene.Assign<Tag>(camera).name = "Camera";
@@ -59,9 +56,19 @@ int main()
         mainScene.Assign<Camera>(camera);
         mainScene.Assign<DirectionalLight>(camera);
 
+        Entity bag = mainScene.CreateEntity();
+        mainScene.Assign<Tag>(bag).name = "Bag";
+        mainScene.Assign<Relation>(bag).SetParent(camera, mainScene);
+
         // for (const auto &meshAsset : std::filesystem::directory_iterator(e.project.directory / "Assets" / "Models" / "backpack" / "backpack"))
+        // {
         //     if (!meshAsset.is_directory())
-        //         mainScene.Assign<MeshRenderer>(mainScene.CreateEntity()).mesh = ResourceManager::GetRID(meshAsset);
+        //     {
+        //         Entity mesh = mainScene.CreateEntity();
+        //         mainScene.Assign<Relation>(mesh).SetParent(bag, mainScene);
+        //         mainScene.Assign<MeshRenderer>(mesh).mesh = ResourceManager::GetRID(meshAsset);
+        //     }
+        // }
 
         e.loopManager.sceneTick = false;
 
@@ -76,8 +83,7 @@ int main()
         Editor::AddPanel<MenuBarPanel>();
         Editor::AddPanel<ProjectPanel>();
         Editor::AddPanel<DucktapeEditorPanel>();
-        Editor::AddPanel<AssignComponentMenuPanel>();
-        Editor::AddPanel<RemoveComponentMenuPanel>();
+        Editor::AddPanel<ComponentMenuPanel>();
         ResourceInterface::AddDefault();
 
         Editor::Init(e);

@@ -23,6 +23,14 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Components/RegisterComponentSystems.h>
+#include <Components/Camera.h>
+#include <Components/DirectionalLight.h>
+#include <Components/MeshRenderer.h>
+#include <Components/PointLight.h>
+#include <Components/Tag.h>
+#include <Components/Transform.h>
+#include <Components/Relation.h>
+#include <Core/Serialization.h>
 using namespace DT;
 
 REGISTER(Camera);
@@ -31,3 +39,4 @@ REGISTER(MeshRenderer);
 REGISTER(PointLight);
 REGISTER(Tag);
 REGISTER(Transform);
+REGISTER(Relation);

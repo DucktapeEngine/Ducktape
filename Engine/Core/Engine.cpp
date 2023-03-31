@@ -20,11 +20,14 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <string>
+#include <iostream>
+
 #include <Core/Engine.h>
 
 namespace DT
 {
-    Engine::Engine(Project project) : project(project), window(project.config), renderer(window, project.config), input(window.window), ctx{this, &project, &window, &renderer, &input, &time, &loopManager, &debug, activeScene, &serialization}
+    Engine::Engine(Project project) : project(project), window(project.config), renderer(window, project.config), input(window.window), ctx{this, &project, &window, &renderer, &input, &time, &loopManager, &debug, activeScene, &serializationManager}
     {
         std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
                      "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"

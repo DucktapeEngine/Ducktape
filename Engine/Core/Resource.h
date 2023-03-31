@@ -23,6 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Core/ResourceManager.h>
+#include <Core/Serialization.h>
 #include <Core/Macro.h>
 
 namespace DT

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Panels/Panel.h>
-#include <Core/Macro.h>
+#include <Core/Serialization.h>
 
 namespace DT
 {

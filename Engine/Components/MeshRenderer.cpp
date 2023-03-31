@@ -20,6 +20,15 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <Renderer/Mesh.h>
+#include <Core/ImGui.h>
+#include <Scene/Entity.h>
+#include <Renderer/Material.h>
+#include <Components/Transform.h>
+#include <Core/Serialization.h>
+#include <Core/Resource.h>
+#include <Core/SerializationManager.h>
+
 #include <Components/MeshRenderer.h>
 
 namespace DT
@@ -28,11 +37,11 @@ namespace DT
     {
         for (Entity entity : scene->View<MeshRenderer>())
         {
-            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
+            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
 
-            mr.transform = &scene->Require<Transform>(entity);
+            mr->transform = &scene->Assign<Transform>(entity);
 
-            mr.mesh.Data()->Setup();
+            mr->mesh.Data()->Setup();
         }
     }
 
@@ -40,9 +49,9 @@ namespace DT
     {
         for (Entity entity : scene->View<MeshRenderer>())
         {
-            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
+            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
 
-            mr.mesh.Data()->Draw(mr.transform->GetModelMatrix(), *ctx.renderer);
+            mr->mesh.Data()->Draw(mr->transform->GetModelMatrix(), *ctx.renderer);
         }
     }
 
@@ -51,14 +60,9 @@ namespace DT
         Tick(scene, ctx);
     }
 
-    void MeshRendererSystem::Serialize(Scene *scene, const Context &ctx)
+    void MeshRendererSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
     {
-        for (Entity entity : scene->View<MeshRenderer>())
-        {
-            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
-
-            ctx.serialization->SerializeComponent("MeshRenderer", mr, entity);
-        }
+        ctx.serializationManager->SerializeComponent<MeshRenderer>("MeshRenderer", entity, *scene);
     }
 
     void MeshRendererSystem::Inspector(Scene *scene, const Context &ctx)
@@ -68,12 +72,12 @@ namespace DT
             if (scene->selectedEntity != entity)
                 continue;
 
-            MeshRenderer &mr = scene->Get<MeshRenderer>(entity);
+            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
 
             if (ImGui::CollapsingHeader("Mesh Renderer"))
             {
-                ImGui::Resource("mesh", &mr.mesh);
-                // ImGui::Resource("material", mr.material);
+                ImGui::Resource("mesh", &mr->mesh);
+                // ImGui::Resource("material", mr->material);
             }
         }
     }
