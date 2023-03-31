@@ -30,8 +30,6 @@ namespace DT
 
     void ScenePanel::DrawSelectibleEntity(Entity entity, Engine &engine)
     {
-        // std::cout << entt::to_integral(entity) << std::endl;
-
         std::string label = "Entity " + std::to_string(entt::to_integral(entity));
 
         if (engine.activeScene->Has<Tag>(entity))
@@ -57,18 +55,15 @@ namespace DT
             ImGui::EndPopup();
         }
 
-        // std::cout << "i am " << engine.activeScene->Assign<Tag>(entity).name << ". my children are ";
         if (engine.activeScene->Has<Relation>(entity))
         {
             Relation &relation = *engine.activeScene->Get<Relation>(entity);
             for (Entity child : relation.children)
             {
                 ImGui::Indent();
-                // std::cout << engine.activeScene->Assign<Tag>(child).name << " ";
                 DrawSelectibleEntity(child, engine);
                 ImGui::Unindent();
             }
         }
-        // std::cout << std::endl;
     }
 }

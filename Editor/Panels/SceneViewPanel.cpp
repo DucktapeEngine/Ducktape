@@ -8,6 +8,10 @@ namespace DT
         rotateIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "rotate.png"))->id;
         scaleIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "scale.png"))->id;
 
+        playIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "start.png"))->id;
+        pauseIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "pause.png"))->id;
+        stopIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "stop.png"))->id;
+
         engine.input.OnKeyEvent([&](Key key, Action action)
                                 {
                                     if (key == KEY_T && action == PRESS)
@@ -56,7 +60,6 @@ namespace DT
         ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
         sceneViewActive = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
-        // ImVec2 windowSize = ImGui::GetWindowSize();
         ImVec2 vMin = ImGui::GetWindowContentRegionMin();
         ImVec2 vMax = ImGui::GetWindowContentRegionMax();
 
@@ -125,11 +128,12 @@ namespace DT
         ImGui::Begin("Tool Bar", NULL, windowFlags);
         ImGui::PopStyleVar();
 
+        // Transform control
         ImGuizmo::OPERATION currentGizmoOperation = gizmoOperation;
 
         if (currentGizmoOperation == ImGuizmo::TRANSLATE)
         {
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(64.f / 255.f, 64.f / 255.f, 64.f / 255.f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_Button));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
         }
@@ -144,7 +148,7 @@ namespace DT
 
         if (currentGizmoOperation == ImGuizmo::ROTATE)
         {
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(64.f / 255.f, 64.f / 255.f, 64.f / 255.f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_Button));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
         }
@@ -159,13 +163,61 @@ namespace DT
 
         if (currentGizmoOperation == ImGuizmo::SCALE)
         {
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(64.f / 255.f, 64.f / 255.f, 64.f / 255.f, 1.f));
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_Button));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
         }
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)scaleIconId, ImVec2(iconSize, iconSize)))
             gizmoOperation = ImGuizmo::SCALE;
         if (currentGizmoOperation == ImGuizmo::SCALE)
+        {
+            ImGui::PopStyleColor();
+            ImGui::PopStyleColor();
+            ImGui::PopStyleColor();
+        }
+
+        // Runtime state control
+        RuntimeState currentRuntimeState = runtimeState;
+
+        if (currentRuntimeState == RuntimeState::Play)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_Button));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
+        }
+        if (ImGui::ImageButton((ImTextureID)(uintptr_t)playIconId, ImVec2(iconSize, iconSize)))
+            runtimeState = RuntimeState::Play;
+        if (currentRuntimeState == RuntimeState::Play)
+        {
+            ImGui::PopStyleColor();
+            ImGui::PopStyleColor();
+            ImGui::PopStyleColor();
+        }
+
+        if (currentRuntimeState == RuntimeState::Pause)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_Button));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
+        }
+        if (ImGui::ImageButton((ImTextureID)(uintptr_t)pauseIconId, ImVec2(iconSize, iconSize)))
+            runtimeState = RuntimeState::Pause;
+        if (currentRuntimeState == RuntimeState::Pause)
+        {
+            ImGui::PopStyleColor();
+            ImGui::PopStyleColor();
+            ImGui::PopStyleColor();
+        }
+
+        if (currentRuntimeState == RuntimeState::Stop)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_Button));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
+        }
+        if (ImGui::ImageButton((ImTextureID)(uintptr_t)stopIconId, ImVec2(iconSize, iconSize)))
+            runtimeState = RuntimeState::Stop;
+        if (currentRuntimeState == RuntimeState::Stop)
         {
             ImGui::PopStyleColor();
             ImGui::PopStyleColor();

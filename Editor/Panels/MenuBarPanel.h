@@ -23,8 +23,6 @@ namespace DT
     class MenuBarPanel : public Panel
     {
     public:
-        int playIconId, pauseIconId, stopIconId;
-
         inline std::string GetWindowName() override { return "Menu Bar"; }
 
         void Start(Engine &engine) override;

@@ -85,23 +85,6 @@ namespace DT
             }
             ImGui::End();
         }
-
-        /*
-        Use this for the play/pause/stop features in the Game window.
-
-        const float iconSize = 25.f;
-
-        if (ImGui::ImageButton((ImTextureID)(uintptr_t)playIconId, ImVec2(iconSize, iconSize)))
-            engine.debug << "Game Runtime not yet supported." << std::endl;
-        if (ImGui::ImageButton((ImTextureID)(uintptr_t)pauseIconId, ImVec2(iconSize, iconSize)))
-            engine.debug << "Game Runtime not yet supported." << std::endl;
-        if (ImGui::ImageButton((ImTextureID)(uintptr_t)stopIconId, ImVec2(iconSize, iconSize)))
-            engine.debug << "Game Runtime not yet supported." << std::endl;
-
-        playIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "start.png"))->id;
-        pauseIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "pause.png"))->id;
-        stopIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "stop.png"))->id;
-        */
     }
 
     void MenuBarPanel::SetDefaultLayout()
