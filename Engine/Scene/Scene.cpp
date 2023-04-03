@@ -26,18 +26,28 @@ namespace DT
 {
     Scene::Scene(Configuration &config)
     {
+        scenes.insert(this);
         if (config.gameModule != "")
             LoadModule(config.gameModule);
     }
 
     Scene::~Scene()
     {
+        scenes.erase(scenes.find(this));
         gameModule.Free();
 
         // for (System *system : systems)
         //     free(system); // TOFIX: Commented out to avoid Segfault
 
-        sceneRegistry.clear();
+        registry.clear();
+    }
+
+    Scene *Scene::GetScene(entt::registry &registry)
+    {
+        for (Scene *scene : scenes)
+            if (&scene->registry == &registry)
+                return scene;
+        return nullptr;
     }
 
     void Scene::LoadModule(std::filesystem::path path)
@@ -54,19 +64,14 @@ namespace DT
             registerRuntimeFunc(*this);
     }
 
-    Scene::SystemPool &Scene::GetSystems()
-    {
-        return systems;
-    }
-
     Entity Scene::CreateEntity()
     {
-        return sceneRegistry.create();
+        return registry.create();
     }
 
     void Scene::DestroyEntity(Entity entity)
     {
-        sceneRegistry.destroy(entity);
+        registry.destroy(entity);
     }
 
     void Scene::Assign(Entity entity, const std::string &name)

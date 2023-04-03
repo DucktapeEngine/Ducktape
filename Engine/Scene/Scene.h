@@ -114,16 +114,20 @@ namespace DT
             }
         };
 
+    public:
         SystemPool systems;
 
-    public:
-        entt::registry sceneRegistry;       /// @brief Registry of all the components and entities in the scene
+        static inline std::set<Scene *> scenes;
+
+        entt::registry registry;            /// @brief Registry of all the components and entities in the scene
         Camera *activeCamera = nullptr;     /// @brief Active camera of the scene
         Platform::Module gameModule;        /// @brief Dll containing the game
         Entity selectedEntity = entt::null; /// @brief FIXME: Find cause of buggy identifier and why we have to pass null
 
         Scene(Configuration &config);
         ~Scene();
+
+        static Scene *GetScene(entt::registry &registry);
 
         template <typename T, typename... Args>
         T *Register(Args &&...args)
@@ -136,7 +140,7 @@ namespace DT
         template <typename T>
         bool Has(Entity entity)
         {
-            return sceneRegistry.any_of<T>(entity);
+            return registry.any_of<T>(entity);
         }
 
         template <typename T>
@@ -145,14 +149,14 @@ namespace DT
             if (Has<T>(entity))
                 return *Get<T>(entity);
 
-            return sceneRegistry.emplace<T>(entity);
+            return registry.emplace<T>(entity);
         }
 
         template <typename T>
         T *Get(Entity entity)
         {
             if (Has<T>(entity))
-                return &sceneRegistry.get<T>(entity);
+                return &registry.get<T>(entity);
             else
                 return nullptr;
         }
@@ -163,23 +167,22 @@ namespace DT
             if (Has<T>(entity))
             {
                 // sceneRegistry.get<T>(entity).Destroy(); //TOFIX: Destroy currently not called
-                sceneRegistry.remove<T>(entity);
+                registry.remove<T>(entity);
             }
         }
 
         template <typename... Components>
         auto View()
         {
-            return sceneRegistry.view<Components...>();
+            return registry.view<Components...>();
         }
 
         template <typename T>
         static Entity From(T &component, Scene &scene)
         {
-            return entt::to_entity(scene.sceneRegistry, component);
+            return entt::to_entity(scene.registry, component);
         }
 
-        SystemPool &GetSystems();
         void LoadModule(std::filesystem::path path);
         Entity CreateEntity();
         void DestroyEntity(Entity entity);

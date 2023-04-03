@@ -41,7 +41,7 @@ namespace DT
     {
         activeScene = &scene;
 
-        for (System *system : scene.GetSystems())
+        for (System *system : scene.systems)
             system->Init(&scene, ctx);
     }
 
@@ -71,7 +71,7 @@ namespace DT
         renderer.Render(window, project.config, activeScene);
 
         if (loopManager.sceneTick)
-            for (System *system : activeScene->GetSystems())
+            for (System *system : activeScene->systems)
                 system->Tick(activeScene, ctx);
     }
 

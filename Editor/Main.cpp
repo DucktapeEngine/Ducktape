@@ -96,22 +96,16 @@ int main()
                 break;
 
             e.StartFrame();
-            // std::cout << "StartFrame\n";
 
             Editor::NewFrame();
-            // std::cout << "NewFrame\n";
 
-            for (System *system : mainScene.GetSystems())
+            for (System *system : mainScene.systems)
                 system->SceneView(&mainScene, e.ctx);
-            // std::cout << "SceneView\n";
 
             Editor::Render(e);
-            // std::cout << "Render\n";
 
             Editor::EndFrame(e.renderer);
-            // std::cout << "EndFrame\n";
             e.EndFrame();
-            // std::cout << "EndFrame\n";
         }
 
         e.project.Save();

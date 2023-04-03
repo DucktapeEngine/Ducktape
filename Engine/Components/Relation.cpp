@@ -83,6 +83,20 @@ namespace DT
         childRelation.hasParent = false;
     }
 
+    template <typename T>
+    void ListenerForwarder(entt::registry &registry, entt::entity entity)
+    {
+    }
+
+    void RelationSystem::Init(Scene *scene, const Context &ctx)
+    {
+        for (Entity entity : scene->View<Relation>())
+        {
+            scene->Get<Relation>(entity);
+            scene->registry.on_destroy<Relation>().connect<&RelationSystem::OnDestroy>(*this);
+        }
+    }
+
     void RelationSystem::Inspector(Scene *scene, const Context &ctx)
     {
         for (Entity entity : scene->View<Relation>())
@@ -102,5 +116,14 @@ namespace DT
     void RelationSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
     {
         ctx.serializationManager->SerializeComponent<Relation>("Relation", entity, *scene);
+    }
+
+    void RelationSystem::OnDestroy(entt::registry &registry, Entity entity)
+    {
+        Scene *scene = Scene::GetScene(registry);
+        Relation *relation = scene->Get<Relation>(entity);
+        relation->RemoveParent(*scene);
+        for (const Entity &child : relation->children)
+            relation->RemoveChild(child, *scene);
     }
 }

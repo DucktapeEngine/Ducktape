@@ -30,9 +30,9 @@ namespace DT
         engine.serializationManager.data.clear();
         engine.serializationManager.isSerializing = true;
 
-        for (System *system : scene.GetSystems())
-            scene.sceneRegistry.each([&](const Entity entity)
-                                     { system->Serialize(&scene, engine.ctx, entity); });
+        for (System *system : scene.systems)
+            scene.registry.each([&](const Entity entity)
+                                { system->Serialize(&scene, engine.ctx, entity); });
 
         output << engine.serializationManager.data.dump(4);
     }
@@ -42,9 +42,9 @@ namespace DT
         std::ifstream input(loadPath);
         engine.serializationManager.data = json::parse(input);
 
-        scene.sceneRegistry.each([&](const Entity entity)
-                                 { scene.sceneRegistry.destroy(entity); });
-        scene.sceneRegistry.clear();
+        scene.registry.each([&](const Entity entity)
+                            { scene.registry.destroy(entity); });
+        scene.registry.clear();
 
         engine.serializationManager.isSerializing = false;
 
@@ -52,32 +52,28 @@ namespace DT
         for (auto it = engine.serializationManager.data["entities"].begin(); it != engine.serializationManager.data["entities"].end(); ++it)
         {
             Entity entity = entt::null;
-            if (scene.sceneRegistry.valid(entt::entity(handle)))
+            if (scene.registry.valid(entt::entity(handle)))
             {
                 entity = entt::entity(handle);
             }
             else
             {
-                entity = scene.sceneRegistry.create(entt::entity(handle));
+                entity = scene.registry.create(entt::entity(handle));
             }
 
             for (auto ct = it.value()["components"].begin(); ct != it.value()["components"].end(); ++ct)
             {
                 scene.Assign(entity, ct.key());
-                for (System *system : scene.GetSystems())
+                for (System *system : scene.systems)
                     system->Serialize(&scene, engine.ctx, entity);
             }
 
             handle++;
         }
 
-        std::cout << __LINE__ << "\n";
-
-        std::cout << "Loaded scene successfully\n";
-
-        for (System *system : scene.GetSystems())
+        for (System *system : scene.systems)
             system->Init(&scene, engine.ctx);
 
-        std::cout << "Initialized newly loaded components\n";
+        std::cout << "Loaded scene successfully\n";
     }
 }

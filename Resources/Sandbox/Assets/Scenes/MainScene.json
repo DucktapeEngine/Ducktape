@@ -14,6 +14,13 @@
                     },
                     "intensity": 1.0
                 },
+                "Relation": {
+                    "children": [
+                        1
+                    ],
+                    "hasParent": false,
+                    "parent": 4294967295
+                },
                 "Tag": {
                     "name": "Camera"
                 },
@@ -39,6 +46,11 @@
         },
         {
             "components": {
+                "Relation": {
+                    "children": [],
+                    "hasParent": true,
+                    "parent": 0
+                },
                 "Tag": {
                     "name": "Bag"
                 }

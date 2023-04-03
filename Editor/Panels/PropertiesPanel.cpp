@@ -8,7 +8,7 @@ namespace DT
 
         ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
-        for (System *system : engine.activeScene->GetSystems())
+        for (System *system : engine.activeScene->systems)
             system->Inspector(engine.activeScene, engine.ctx);
 
         if (selectedEntity != entt::null && ImGui::Button("Assign", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
@@ -16,7 +16,7 @@ namespace DT
             ComponentMenuPanel *componentMenuPanel = Editor::GetPanel<ComponentMenuPanel>();
             componentMenuPanel->Open();
             componentMenuPanel->OnEvent(ComponentMenuPanel::Events::Selected, [&](EventHandler *event)
-                                        { engine.activeScene->Assign(selectedEntity, componentMenuPanel->selectedComponent); });
+                                        { engine.activeScene->Assign(selectedEntity, static_cast<ComponentMenuPanel *>(event)->selectedComponent); });
         }
 
         if (selectedEntity != entt::null && ImGui::Button("Remove", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))

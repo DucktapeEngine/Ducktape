@@ -41,6 +41,8 @@ namespace DT
     class RelationSystem : System
     {
     public:
+        void Init(Scene *scene, const Context &ctx) override;
+
         /**
          * @brief Serializes Camera properties for Inspector.
          */
@@ -50,5 +52,7 @@ namespace DT
          * @brief Handles Camera serialization.
          */
         void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
+
+        void OnDestroy(entt::registry &registry, entt::entity entity);
     };
 }

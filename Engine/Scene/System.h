@@ -55,5 +55,6 @@ namespace DT
         virtual void Destroy(Scene *scene, const Context &ctx) {}
         virtual void Inspector(Scene *scene, const Context &ctx) {}
         virtual void Serialize(Scene *scene, const Context &ctx, Entity entity) {}
+        virtual void OnDestroy(Scene *scene, const Context &ctx, Entity entity) {}
     };
 }

@@ -11,8 +11,8 @@ namespace DT
 
         ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
-        engine.activeScene->sceneRegistry.each([&](const Entity entity)
-                                               {
+        engine.activeScene->registry.each([&](const Entity entity)
+                                          {
                                                    if (engine.activeScene->Has<Relation>(entity))
                                                    {
                                                        if (!engine.activeScene->Get<Relation>(entity)->hasParent)
@@ -34,7 +34,7 @@ namespace DT
 
         if (engine.activeScene->Has<Tag>(entity))
         {
-            std::string _label = engine.activeScene->sceneRegistry.get<Tag>(entity).name;
+            std::string _label = engine.activeScene->registry.get<Tag>(entity).name;
 
             if (_label != "Unnamed")
                 label = _label;

@@ -6,3 +6,4 @@ Docs/*
 !Docs/header.html
 Resources/Sandbox/Scenes/*
 *.hint
+Installer/__pycache__/*
