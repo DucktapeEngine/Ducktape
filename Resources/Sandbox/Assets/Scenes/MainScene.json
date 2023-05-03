@@ -26,10 +26,10 @@
                 },
                 "Transform": {
                     "rotation": {
-                        "w": 1.0,
-                        "x": 0.0,
-                        "y": 0.0,
-                        "z": 0.0
+                        "w": 0.5807381868362427,
+                        "x": 0.10273973643779755,
+                        "y": -0.7952327132225037,
+                        "z": 0.14068645238876343
                     },
                     "scale": {
                         "x": 1.0,
@@ -47,12 +47,46 @@
         {
             "components": {
                 "Relation": {
-                    "children": [],
+                    "children": [
+                        2
+                    ],
                     "hasParent": true,
                     "parent": 0
                 },
                 "Tag": {
                     "name": "Bag"
+                }
+            }
+        },
+        {
+            "components": {
+                "MeshRenderer": {
+                    "mesh": {
+                        "rid": 22
+                    }
+                },
+                "Relation": {
+                    "children": [],
+                    "hasParent": true,
+                    "parent": 1
+                },
+                "Transform": {
+                    "rotation": {
+                        "w": 0.0,
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "translation": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    }
                 }
             }
         }

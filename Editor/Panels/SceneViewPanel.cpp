@@ -186,7 +186,10 @@ namespace DT
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
         }
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)playIconId, ImVec2(iconSize, iconSize)))
+        {
             runtimeState = RuntimeState::Play;
+            engine.loopManager.gameTick = true;
+        }
         if (currentRuntimeState == RuntimeState::Play)
         {
             ImGui::PopStyleColor();
@@ -201,7 +204,10 @@ namespace DT
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
         }
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)pauseIconId, ImVec2(iconSize, iconSize)))
+        {
             runtimeState = RuntimeState::Pause;
+            engine.loopManager.gameTick = false;
+        }
         if (currentRuntimeState == RuntimeState::Pause)
         {
             ImGui::PopStyleColor();
@@ -216,7 +222,11 @@ namespace DT
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::GetStyleColorVec4(ImGuiCol_Button));
         }
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)stopIconId, ImVec2(iconSize, iconSize)))
+        {
             runtimeState = RuntimeState::Stop;
+            engine.loopManager.gameTick = false;
+            engine.loopManager.sceneTick = true;
+        }
         if (currentRuntimeState == RuntimeState::Stop)
         {
             ImGui::PopStyleColor();

@@ -36,14 +36,13 @@ namespace DT
         {
             std::string _label = engine.activeScene->registry.get<Tag>(entity).name;
 
-            if (_label != "Unnamed")
+            if (_label != "Unnamed" && _label != "")
                 label = _label;
         }
 
-        if (ImGui::Selectable(label.c_str(), selectedEntity == entity))
+        if (ImGui::Selectable((label + "##" + std::to_string(entt::to_integral(entity))).c_str(), engine.activeScene->selectedEntity == entity))
         {
-            selectedEntity = entity;
-            engine.activeScene->selectedEntity = selectedEntity;
+            engine.activeScene->selectedEntity = entity;
         }
 
         if (ImGui::BeginPopupContextItem())

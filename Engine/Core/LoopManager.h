@@ -22,7 +22,6 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-
 namespace DT
 {
     /**
@@ -31,6 +30,7 @@ namespace DT
     class LoopManager
     {
     public:
-        bool sceneTick = true;          ///< @brief whether to update/tick current scene loop or not
+        bool sceneTick = false; ///< @brief whether to update/tick current scene loop or not
+        bool gameTick = false;
     };
 }

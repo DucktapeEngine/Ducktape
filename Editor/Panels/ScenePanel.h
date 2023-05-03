@@ -15,7 +15,5 @@ namespace DT
 
 		void DrawSelectibleEntity(Entity entity, Engine &engine);
 		void Update(Engine &engine) override;
-
-		Entity selectedEntity;
 	};
 }

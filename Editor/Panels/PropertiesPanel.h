@@ -16,8 +16,6 @@ namespace DT
 	class PropertiesPanel : public Panel
 	{
 	public:
-		Entity selectedEntity;
-
 		inline std::string GetWindowName() override { return "Properties"; }
 
 		void Update(Engine &engine) override;

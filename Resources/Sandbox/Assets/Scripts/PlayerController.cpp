@@ -23,6 +23,11 @@ aryanbaburajan2007@gmail.com
 #include "PlayerController.h"
 using namespace DT;
 
+void PlayerController::Tick(Entity entity, Scene *scene, const Context &ctx)
+{
+    ctx.debug->log << ctx.loopManager->gameTick << "\n";
+}
+
 void PlayerController::Inspector(Entity entity, Scene *scene, const Context &ctx)
 {
     if (entity != scene->selectedEntity)

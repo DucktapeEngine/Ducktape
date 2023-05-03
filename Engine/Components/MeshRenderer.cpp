@@ -52,12 +52,20 @@ namespace DT
             MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
 
             mr->mesh.Data()->Draw(mr->transform->GetModelMatrix(), *ctx.renderer);
+
+            Transform *transform = scene->Get<Transform>(entity);
+            transform->translation += glm::vec3(1.f);
         }
     }
 
     void MeshRendererSystem::SceneView(Scene *scene, const Context &ctx)
     {
-        Tick(scene, ctx);
+        for (Entity entity : scene->View<MeshRenderer>())
+        {
+            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
+
+            mr->mesh.Data()->Draw(mr->transform->GetModelMatrix(), *ctx.renderer);
+        }
     }
 
     void MeshRendererSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)

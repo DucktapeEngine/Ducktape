@@ -48,17 +48,18 @@ int main()
 
         RegisterComponentSystems(mainScene);
 
-        // SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
+        SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
 
-        Entity camera = mainScene.CreateEntity();
-        mainScene.Assign<Tag>(camera).name = "Camera";
-        mainScene.Assign<Transform>(camera);
-        mainScene.Assign<Camera>(camera);
-        mainScene.Assign<DirectionalLight>(camera);
+        // Entity camera = mainScene.CreateEntity();
+        // mainScene.Assign<Tag>(camera).name = "Camera";
+        // mainScene.Assign<Transform>(camera);
+        // mainScene.Assign<Camera>(camera);
+        // mainScene.Assign<DirectionalLight>(camera);
 
-        Entity bag = mainScene.CreateEntity();
-        mainScene.Assign<Tag>(bag).name = "Bag";
-        mainScene.Assign<Relation>(bag).SetParent(camera, mainScene);
+        // Entity bag = mainScene.CreateEntity();
+        // mainScene.Assign<Tag>(bag).name = "Bag";
+        // mainScene.Assign<Relation>(bag).SetParent(camera, mainScene);
+        // mainScene.Assign(bag, "PlayerController");
 
         // for (const auto &meshAsset : std::filesystem::directory_iterator(e.project.directory / "Assets" / "Models" / "backpack" / "backpack"))
         // {
@@ -67,10 +68,9 @@ int main()
         //         Entity mesh = mainScene.CreateEntity();
         //         mainScene.Assign<Relation>(mesh).SetParent(bag, mainScene);
         //         mainScene.Assign<MeshRenderer>(mesh).mesh = ResourceManager::GetRID(meshAsset);
+        //         break;
         //     }
         // }
-
-        e.loopManager.sceneTick = false;
 
         e.Init(mainScene);
 
@@ -88,6 +88,8 @@ int main()
 
         Editor::Init(e);
 
+        e.loopManager.sceneTick = true;
+
         while (e.IsOpen())
         {
             e.PollEvents();
@@ -99,8 +101,9 @@ int main()
 
             Editor::NewFrame();
 
-            for (System *system : mainScene.systems)
-                system->SceneView(&mainScene, e.ctx);
+            if (e.loopManager.sceneTick)
+                for (System *system : mainScene.systems)
+                    system->SceneView(&mainScene, e.ctx);
 
             Editor::Render(e);
 

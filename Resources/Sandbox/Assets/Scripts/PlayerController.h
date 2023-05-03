@@ -23,6 +23,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Entity.h>
 #include <Core/Context.h>
 #include <Scene/Scene.h>
+#include <Core/LoopManager.h>
 #include <Core/ImGui.h>
 using namespace DT;
 
@@ -32,5 +33,6 @@ struct PlayerController
     float speed = 2.5f;
     float sensitivity = 25.f;
 
+    void Tick(Entity entity, Scene *scene, const Context &ctx);
     void Inspector(Entity entity, Scene *scene, const Context &ctx);
 };

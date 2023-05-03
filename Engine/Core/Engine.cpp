@@ -70,7 +70,7 @@ namespace DT
 
         renderer.Render(window, project.config, activeScene);
 
-        if (loopManager.sceneTick)
+        if (loopManager.gameTick)
             for (System *system : activeScene->systems)
                 system->Tick(activeScene, ctx);
     }
