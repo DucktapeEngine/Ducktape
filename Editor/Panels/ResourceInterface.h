@@ -28,11 +28,11 @@ namespace DT
     public:
         unsigned int iconId = 0;
 
-        virtual void Init() {}
-        virtual void Inspect() {}
-        virtual void Import(RID rid) {}
-        virtual void OpenInspect(RID rid) {}
-        virtual void CloseInspect() {}
+        virtual void Init(ContextPtr& ctx) {}
+        virtual void Inspect(ContextPtr& ctx) {}
+        virtual void Import(RID rid, ContextPtr &ctx) {}
+        virtual void OpenInspect(RID rid, ContextPtr& ctx) {}
+        virtual void CloseInspect(ContextPtr& ctx) {}
     };
 
     namespace ResourceInterface
@@ -40,10 +40,10 @@ namespace DT
         inline std::unordered_map<std::string, Interface *> interfaces;
 
         template <typename T>
-        void RegisterInterface(std::vector<std::string> extensions)
+        void RegisterInterface(std::vector<std::string> extensions, ContextPtr &ctx)
         {
             Interface *_interface = new Interface();
-            _interface->Init();
+            _interface->Init(ctx);
 
             for (unsigned i = 0; i < extensions.size(); i++)
                 interfaces[extensions[i]] = _interface;
@@ -51,9 +51,9 @@ namespace DT
 
         Interface *GetInterface(const std::string &extension);
         bool HasInterface(const std::string &extension);
-        void AddDefault();
+        void AddDefault(ContextPtr &ctx);
 
-        unsigned int GetIcon(const std::string &extension);
+        unsigned int GetIcon(const std::string &extension, ContextPtr &ctx);
     }
 
     class MaterialInterface : public Interface
@@ -63,10 +63,10 @@ namespace DT
         Resource<Material> openedMaterial;
         std::string filename = "Unnamed Material";
 
-        void Init() override;
-        void Inspect() override;
-        void OpenInspect(RID rid) override;
-        void CloseInspect() override;
+        void Init(ContextPtr &ctx) override;
+        void Inspect(ContextPtr &ctx) override;
+        void OpenInspect(RID rid, ContextPtr& ctx) override;
+        void CloseInspect(ContextPtr &ctx) override;
     };
 
     class TextureInterface : public Interface
@@ -76,10 +76,10 @@ namespace DT
         Resource<Texture> openedTexture;
         std::string filename = "Unnamed Texture";
 
-        void Init() override;
-        void Inspect() override;
-        void OpenInspect(RID rid) override;
-        void CloseInspect() override;
+        void Init(ContextPtr &ctx) override;
+        void Inspect(ContextPtr &ctx) override;
+        void OpenInspect(RID rid, ContextPtr& ctx) override;
+        void CloseInspect(ContextPtr &ctx) override;
     };
 
     class MeshInterface : public Interface
@@ -89,10 +89,10 @@ namespace DT
         Resource<Mesh> openedMesh;
         std::string filename = "Unnamed Mesh";
 
-        void Init() override;
-        void Inspect() override;
-        void OpenInspect(RID rid) override;
-        void CloseInspect() override;
+        void Init(ContextPtr &ctx) override;
+        void Inspect(ContextPtr &ctx) override;
+        void OpenInspect(RID rid, ContextPtr& ctx) override;
+        void CloseInspect(ContextPtr &ctx) override;
     };
 
     class ModelImporter
@@ -101,11 +101,11 @@ namespace DT
         std::filesystem::path directory;
         std::string modelName;
 
-        ModelImporter(std::filesystem::path path);
+        ModelImporter(std::filesystem::path path, ContextPtr &ctx);
 
-        void ProcessNode(aiNode *node, const aiScene *scene);
-        void ProcessMesh(aiMesh *mesh, const aiScene *scene);
-        std::vector<RID> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName, Texture::Type textureType);
+        void ProcessNode(aiNode *node, const aiScene *scene, ContextPtr &ctx);
+        void ProcessMesh(aiMesh *mesh, const aiScene *scene, ContextPtr &ctx);
+        std::vector<RID> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName, Texture::Type textureType, ContextPtr &ctx);
     };
 
     class ModelInterface : public Interface
@@ -113,10 +113,10 @@ namespace DT
     public:
         std::string filename = "Unnamed Model";
 
-        void Init() override;
-        void OpenInspect(RID rid) override;
-        void Inspect() override;
-        void Import(RID rid) override;
+        void Init(ContextPtr &ctx) override;
+        void OpenInspect(RID rid, ContextPtr& ctx) override;
+        void Inspect(ContextPtr &ctx) override;
+        void Import(RID rid, ContextPtr &ctx) override;
     };
 
     class MarkdownInterface : public Interface
@@ -126,8 +126,8 @@ namespace DT
         std::string filename = "Unnamed Mesh";
         std::string data;
 
-        void Init() override;
-        void Inspect() override;
-        void OpenInspect(RID rid) override;
+        void Init(ContextPtr &ctx) override;
+        void Inspect(ContextPtr &ctx) override;
+        void OpenInspect(RID rid, ContextPtr& ctx) override;
     };
 }

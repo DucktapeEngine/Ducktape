@@ -31,8 +31,8 @@ namespace DT
         {
             glActiveTexture(GL_TEXTURE0 + i);
 
-            Material *material = materials[i].Data();
-            Shader *shader = material->shader.Data();
+            Material *material = materials[i].data;
+            Shader *shader = material->shader.data;
             renderer.ActivateShader(shader);
 
             Texture::Type type = material->textureType;
@@ -53,7 +53,7 @@ namespace DT
                 shader->SetInt("material.normal", i);
             else if (type == Texture::Type::HEIGHT)
                 shader->SetInt("material.height", i);
-            glBindTexture(GL_TEXTURE_2D, material->texture.Data()->id);
+            glBindTexture(GL_TEXTURE_2D, material->texture.data->id);
         }
 
         // Draw mesh

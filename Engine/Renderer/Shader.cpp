@@ -20,13 +20,14 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <iostream>
 #include <Renderer/Shader.h>
 
 namespace DT
 {
-    Shader::Shader(RID shaderRID)
+    Shader::Shader(RID shaderRID, ContextPtr& ctx)
     {
-        std::filesystem::path shaderPath = ResourceManager::GetPath(shaderRID);
+        std::filesystem::path shaderPath = ctx.resourceManager->GetPath(shaderRID);
 
         // Load the vertex/fragment source code from filePath
         std::string fShader;
@@ -84,6 +85,8 @@ namespace DT
         glDeleteShader(fragment);
 
         loaded = true;
+
+        std::cout << "[LOG] Loaded shader at " << shaderPath.string() << "\n";
     }
 
     Shader::~Shader()
@@ -189,12 +192,12 @@ namespace DT
         glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 
-    Shader *Shader::LoadResource(RID rid)
+    Shader *Shader::LoadResource(RID rid, ContextPtr& ctx)
     {
         if (factoryData.count(rid))
             return factoryData[rid];
 
-        factoryData[rid] = new Shader(rid);
+        factoryData[rid] = new Shader(rid, ctx);
 
         return factoryData[rid];
     }

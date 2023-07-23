@@ -3,7 +3,7 @@
 namespace DT
 {
     /// @brief Handles main imgui render for resource browser window.
-    void ResourceBrowserPanel::RenderImGuiWindow()
+    void ResourceBrowserPanel::RenderImGuiWindow(ContextPtr &ctx)
     {
         isOpen = true;
         ImGui::Begin(GetWindowName().c_str(), &isOpen);
@@ -107,7 +107,7 @@ namespace DT
                     std::string filename = path.filename().string();
                     if (filter.PassFilter(filename.c_str()))
                     {
-                        RenderDirectoryItem(directoryEntry, itemSize);
+                        RenderDirectoryItem(directoryEntry, itemSize, ctx);
                         totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
 
                         // Custom wrap for items for column-like layout
@@ -123,7 +123,7 @@ namespace DT
             {
                 for (std::filesystem::directory_entry directoryEntry : std::filesystem::directory_iterator(currentDir))
                 {
-                    RenderDirectoryItem(directoryEntry, itemSize);
+                    RenderDirectoryItem(directoryEntry, itemSize, ctx);
                     totalSizeOnColumn += ImGui::GetItemRectSize().x + itemSize;
                     // Custom wrap for items for column-like layout
                     if (itemSize >= columnSwitchSize && totalSizeOnColumn < avail.x)
@@ -134,7 +134,7 @@ namespace DT
             }
             if (fileAction == FileAction_Create)
             {
-                RenderEditItem(itemSize);
+                RenderEditItem(itemSize, ctx);
             }
             else if (fileAction == FileAction_Delete)
             {
@@ -183,7 +183,7 @@ namespace DT
     /// @brief Renders each item for resource browser.
     /// @param directoryEntry entry on file path
     /// @param itemSize item's size for resource browser (controlled by slider)
-    void ResourceBrowserPanel::RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, int &itemSize)
+    void ResourceBrowserPanel::RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, int &itemSize, ContextPtr &ctx)
     {
         std::filesystem::path path = directoryEntry.path();
         std::string filename = path.filename().string();
@@ -191,7 +191,7 @@ namespace DT
         // Render editable label instead when renaming this file
         if (fileAction == FileAction_Rename && path == selectedFile)
         {
-            RenderEditItem(itemSize);
+            RenderEditItem(itemSize, ctx);
             return;
         }
 
@@ -199,7 +199,7 @@ namespace DT
         const bool onColumnLayout = itemSize >= columnSwitchSize;
         ImVec2 avail = ImGui::GetContentRegionAvail();
 
-        unsigned int iconId = isDir ? folderIconId : ResourceInterface::GetIcon(path.extension().string());
+        unsigned int iconId = isDir ? folderIconId : ResourceInterface::GetIcon(path.extension().string(), ctx);
 
         ImGui::PushID(filename.c_str());
 
@@ -225,7 +225,7 @@ namespace DT
 
             if (!isDir && ImGui::MenuItem("Reimport"))
             {
-                ResourceInterface::GetInterface(path.extension().string())->Import(ResourceManager::GetRID(path));
+                ResourceInterface::GetInterface(path.extension().string())->Import(ctx.resourceManager->GetRID(path), ctx);
             }
 
             if (ImGui::BeginMenu("Create..."))
@@ -270,7 +270,7 @@ namespace DT
 
     /// @brief Renders edit action based items (create, rename, ...) for resource browser.
     /// @param itemSize Current item size on resource browser.
-    void ResourceBrowserPanel::RenderEditItem(int &itemSize)
+    void ResourceBrowserPanel::RenderEditItem(int &itemSize, ContextPtr &ctx)
     {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape))
         {
@@ -282,7 +282,7 @@ namespace DT
         unsigned int iconId = creatingFileType == FileCreateType_Folder ? folderIconId : fileIconId;
 
         if (fileAction == FileAction_Rename)
-            iconId = selectedFile.has_extension() ? ResourceInterface::GetIcon(selectedFile.extension().string()) : folderIconId;
+            iconId = selectedFile.has_extension() ? ResourceInterface::GetIcon(selectedFile.extension().string(), ctx) : folderIconId;
 
         /*ImGui::Image((ImTextureID)(uintptr_t)iconId, { itemSize,itemSize }, { 0, 1 }, { 1, 0 });
         if (itemSize < columnSwitchSize)
@@ -384,7 +384,7 @@ namespace DT
     }
 
     /// @brief Called when this panel is added and ready to start.
-    void ResourceBrowserPanel::Start(Engine &engine)
+    void ResourceBrowserPanel::Start(ContextPtr &ctx)
     {
         rootDir = DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox";
         resourceDir = DUCKTAPE_ROOT_DIR / "Resources" / "Editor";
@@ -392,13 +392,13 @@ namespace DT
         // Note that icons are from https://www.icons8.com and not fully copyright free.
         // TODO: Add self drawn icons
 
-        folderIconId = Texture::LoadResource(ResourceManager::GetRID(resourceDir / "Icons" / "ResourceBrowser" / "folder.png"))->id;
-        fileIconId = Texture::LoadResource(ResourceManager::GetRID(resourceDir / "Icons" / "ResourceBrowser" / "file.png"))->id;
+        folderIconId = Texture::LoadResource(ctx.resourceManager->GetRID(resourceDir / "Icons" / "ResourceBrowser" / "folder.png"), ctx)->id;
+        fileIconId = Texture::LoadResource(ctx.resourceManager->GetRID(resourceDir / "Icons" / "ResourceBrowser" / "file.png"), ctx)->id;
     }
 
     /// @brief Called when this panel is updated each frame.
-    void ResourceBrowserPanel::Update(Engine &engine)
+    void ResourceBrowserPanel::Update(ContextPtr &ctx)
     {
-        RenderImGuiWindow();
+        RenderImGuiWindow(ctx);
     }
 }

@@ -28,13 +28,31 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief The EventHandler class for managing event handlers.
+     */
     class EventHandler
     {
     protected:
+        /**
+         * @brief A map that associates event IDs with a vector of event handler functions.
+         */
         std::unordered_map<int, std::vector<std::function<void(EventHandler *)>>> eventHandlers;
 
     public:
+        /**
+         * @brief Register an event handler for a specific event ID.
+         *
+         * @param event The event ID to register the handler for.
+         * @param eventHandler The event handler function.
+         */
         void OnEvent(int event, std::function<void(EventHandler *)> eventHandler);
+
+        /**
+         * @brief Invoke all event handlers associated with a specific event ID.
+         *
+         * @param event The event ID to invoke the handlers for.
+         */
         void Invoke(int event);
     };
 }

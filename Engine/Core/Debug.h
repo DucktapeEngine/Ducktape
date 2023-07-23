@@ -32,19 +32,34 @@ aryanbaburajan2007@gmail.com
 namespace DT
 {
     /**
-     * @brief Debug class for collecting runtime log
+     * @brief The Debug class for collecting runtime logs and errors.
      */
     class Debug
     {
     public:
+        /**
+         * @brief The stream for collecting log messages.
+         */
         std::stringstream log;
+
+        /**
+         * @brief The stream for collecting error messages.
+         */
         std::stringstream err;
 
+        /**
+         * @brief Get the collected log messages as a string.
+         * @return A string containing the log messages.
+         */
         inline std::string GetLog()
         {
             return log.str();
         }
 
+        /**
+         * @brief Get the collected error messages as a string.
+         * @return A string containing the error messages.
+         */
         inline std::string GetErr()
         {
             return err.str();

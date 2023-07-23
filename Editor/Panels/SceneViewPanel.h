@@ -13,8 +13,8 @@ namespace DT
 	public:
 		inline std::string GetWindowName() override { return "Scene View"; }
 
-		void Start(Engine &engine) override;
-		void Update(Engine &engine) override;
+		void Start(ContextPtr &ctx) override;
+		void Update(ContextPtr &ctx) override;
 
 	protected:
 		ImVec2 windowPos, windowSize;
@@ -36,6 +36,6 @@ namespace DT
 		ImGuizmo::OPERATION gizmoOperation = ImGuizmo::TRANSLATE;
 		ImGuizmo::MODE currentGizmoMode = ImGuizmo::WORLD;
 
-		void RenderToolbarPanel(Engine &engine);
+		void RenderToolbarPanel(ContextPtr &ctx);
 	};
 }

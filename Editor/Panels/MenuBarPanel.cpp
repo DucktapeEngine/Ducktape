@@ -2,7 +2,7 @@
 
 namespace DT
 {
-    void MenuBarPanel::Start(Engine &engine)
+    void MenuBarPanel::Start(ContextPtr &ctx)
     {
         isOpen = true;
 
@@ -10,14 +10,15 @@ namespace DT
             SetDefaultLayout();
     }
 
-    void MenuBarPanel::Update(Engine &engine)
+    void MenuBarPanel::Update(ContextPtr &ctx)
     {
         if (ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("Project"))
             {
                 if (ImGui::MenuItem("Save"))
-                    engine.project.Save();
+                    // engine.project.Save();
+                    ;
                 if (ImGui::MenuItem("Edit"))
                     Editor::GetPanel<ProjectPanel>()->isOpen = true;
                 ImGui::EndMenu();
@@ -25,18 +26,19 @@ namespace DT
             if (ImGui::BeginMenu("Scene"))
             {
                 if (ImGui::MenuItem("Save"))
-                    SceneManager::Save(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+                    // SceneManager::Save(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+                    ;
 
                 if (ImGui::MenuItem("Load"))
                 {
-                    SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
-                    engine.activeScene->selectedEntity = entt::null;
+                    // SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+                    ctx.sceneManager->GetActiveScene().selectedEntity = entt::null;
                 }
 
                 if (ImGui::MenuItem("Create Entity"))
-                    engine.activeScene->selectedEntity = engine.activeScene->CreateEntity();
+                    ctx.sceneManager->GetActiveScene().selectedEntity = ctx.sceneManager->GetActiveScene().CreateEntity();
                 if (ImGui::MenuItem("Destroy Entity"))
-                    engine.activeScene->DestroyEntity(engine.activeScene->selectedEntity);
+                    ctx.sceneManager->GetActiveScene().DestroyEntity(ctx.sceneManager->GetActiveScene().selectedEntity);
                 ImGui::EndMenu();
             }
             if (ImGui::BeginMenu("Panels"))
@@ -77,8 +79,8 @@ namespace DT
         {
             if (ImGui::BeginMenuBar())
             {
-                ImGui::TextUnformatted(engine.debug.GetErr().c_str());
-                ImGui::TextUnformatted(engine.debug.GetLog().c_str());
+                ImGui::TextUnformatted(ctx.debug->GetErr().c_str());
+                ImGui::TextUnformatted(ctx.debug->GetLog().c_str());
 
                 if (ImGui::IsWindowHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
                     Editor::GetPanel<ConsolePanel>()->isOpen = true;

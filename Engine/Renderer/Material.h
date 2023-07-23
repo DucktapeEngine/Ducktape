@@ -28,6 +28,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Texture.h>
 #include <Renderer/Shader.h>
 #include <Core/Resource.h>
+#include <Core/ContextPtr.h>
 
 namespace DT
 {
@@ -43,12 +44,12 @@ namespace DT
 
         static inline std::unordered_map<RID, Material *> factoryData;
 
-        static Material *LoadResource(RID rid)
+        static Material *LoadResource(RID rid, ContextPtr &ctx)
         {
             if (factoryData.count(rid))
                 return factoryData[rid];
 
-            factoryData[rid] = new Material(json::parse(std::ifstream(ResourceManager::GetPath(rid))));
+            factoryData[rid] = new Material(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))));
             return factoryData[rid];
         }
 
@@ -58,9 +59,9 @@ namespace DT
             factoryData.erase(rid);
         }
 
-        static void SaveResource(RID rid)
+        static void SaveResource(RID rid, ContextPtr &ctx)
         {
-            std::ofstream out(ResourceManager::GetPath(rid));
+            std::ofstream out(ctx.resourceManager->GetPath(rid));
             json j = *factoryData[rid];
             out << j;
         }

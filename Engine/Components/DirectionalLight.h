@@ -28,54 +28,34 @@ aryanbaburajan2007@gmail.com
 namespace DT
 {
     class Transform;
-    
+
     /**
-     * @brief DirectionalLight struct for managing directional light.
+     * @brief DirectionalLight component for casting direction based lighting.
      */
     struct DirectionalLight
     {
-        Resource<Shader> shader;
-        Transform *transform;       ///< @brief Pointer to the Transform object.
-        unsigned int lightSpot;     ///< @brief used for instantiated directional light's index
-        std::string propertyString; ///< @brief property string of the directional light
+        Resource<Shader> shader;          /// @brief Shader used by the directional light.
+        float intensity = 1.f;            /// @brief Intensity of the directional light.
+        glm::vec3 color = glm::vec3(1.f); /// @brief Color of the directional light.
 
-        float intensity = 1.f;            ///< @brief Intensity of the directional light.
-        glm::vec3 color = glm::vec3(1.f); ///< @brief Color of the directional light.
+    private:
+        Transform *transform;
+        unsigned int lightSpot;     /// @brief Index of this Light in the Shader's light container.
+        std::string propertyString; /// @brief Shader property access code stored to avoid repetitive reconstruction.
+
+        friend class DirectionalLightSystem;
     };
 
     SERIALIZE(DirectionalLight, intensity, color);
 
-    class DirectionalLightSystem : System
+    class DirectionalLightSystem : public System
     {
     public:
-        /**
-         * @brief Registers Directional Light to rendering engine and shader on Initiation.
-         */
-        void Init(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Updates corresponding Directional Light properties in shader every frame.
-         */
-        void Tick(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Serializes DirectionalLight properties for Inspector.
-         */
-        void Inspector(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Handles DirectionalLight serialization.
-         */
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
-
-        /**
-         * @brief Handles Scene View lighting.
-         */
-        void SceneView(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Unregisters Directional Light from rendering engine and shader on destruction.
-         */
-        void Destroy(Scene *scene, const Context &ctx) override;
+        void Init(ContextPtr &ctx) override;
+        void Tick(ContextPtr &ctx) override;
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
+        void Serialize(ContextPtr &ctx, Entity entity) override;
+        void SceneView(ContextPtr &ctx) override;
+        void Destroy(ContextPtr &ctx) override;
     };
 }

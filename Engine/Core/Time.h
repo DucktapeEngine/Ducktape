@@ -24,13 +24,19 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief The Time class for managing time-related information.
+     */
     class Time
     {
     public:
-        float deltaTime;            ///< @brief Time elapsed between the current frame and the previous frame.
-        float elapsedTime = 0.0f;   ///< @brief The total elapsed time. 
-        float fps;                  ///< @brief The frames per second.
-        
+        float deltaTime;          /// Time elapsed between the current frame and the previous frame.
+        float elapsedTime = 0.0f; /// The total elapsed time.
+        float fps;                /// Frames per second.
+
+        /**
+         * @brief Updates the time information.
+         */
         void Update();
     };
 }

@@ -10,12 +10,12 @@ namespace DT
     public:
         inline std::string GetWindowName() override { return "Ducktape Editor " + std::to_string(DUCKTAPE_VERSION_MAJOR) + "." + std::to_string(DUCKTAPE_VERSION_MINOR) + "." + std::to_string(DUCKTAPE_VERSION_PATCH); }
 
-        void Start(Engine &engine) override
+        void Start(ContextPtr &ctx) override
         {
             isOpen = true;
         }
 
-        void Update(Engine &engine) override
+        void Update(ContextPtr &ctx) override
         {
             ImGui::Begin(GetWindowName().c_str(), &isOpen);
 

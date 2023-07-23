@@ -42,11 +42,11 @@ namespace DT
         FileCreateType creatingFileType;         /// @brief The file type user trying to create.
         std::filesystem::path selectedFile = ""; /// @brief Holds selected file for actions such as delete / rename that needs confirm.
 
-        void RenderImGuiWindow();
-        void RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, int &itemSize);
+        void RenderImGuiWindow(ContextPtr &ctx);
+        void RenderDirectoryItem(std::filesystem::directory_entry directoryEntry, int &itemSize, ContextPtr &ctx);
         void HandleItemSelected(bool isDir, std::filesystem::path path);
         void HandleItemDoubleClicked(bool isDir, std::filesystem::path path);
-        void RenderEditItem(int &itemSize);
+        void RenderEditItem(int &itemSize, ContextPtr &ctx);
 
     public:
         std::filesystem::path selectedItemPath;
@@ -58,7 +58,7 @@ namespace DT
 
         inline std::string GetWindowName() override { return "Resource Browser"; }
 
-        void Start(Engine &engine) override;
-        void Update(Engine &engine) override;
+        void Start(ContextPtr &ctx) override;
+        void Update(ContextPtr &ctx) override;
     };
 }

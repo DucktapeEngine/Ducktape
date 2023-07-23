@@ -28,35 +28,58 @@ aryanbaburajan2007@gmail.com
 #include <Core/Time.h>
 #include <Input/Input.h>
 #include <Core/LoopManager.h>
-#include <Core/Debug.h>
-#include <Core/SerializationManager.h>
-#include <Core/Project.h>
-#include <Core/ResourceManager.h>
-#include <Core/Context.h>
+#include <Core/Resource.h>
+#include <Core/ContextPtr.h>
+#include <Scene/SceneManager.h>
 
 namespace DT
 {
+    /**
+     * @brief The Engine class responsible for initializing and running the game engine.
+     */
     class Engine
     {
     public:
-        Project project;
-        Window window;           ///< @brief The application window.
-        Renderer renderer;       ///< @brief The application renderer.
-        Input input;             ///< @brief .
-        Time time;               ///< @brief The time object to track time fields.
-        LoopManager loopManager; ///< @brief The loop manager.
-        Debug debug;             ///< @brief Debugger to output debug messages.
-        Scene *activeScene;      ///< @brief The current scene the application is using.
-        SerializationManager serializationManager;
-        Context ctx;
+        /**
+         * @brief Destructor for the Engine class.
+         */
+        ~Engine();
 
-        Engine(Project project);
+        /**
+         * @brief Initialize the game engine with the specified context.
+         *
+         * @param ctx The context pointer containing various engine components.
+         */
+        void Init(ContextPtr &ctx);
 
-        void Init(Scene &scene);
-        bool IsOpen();
-        void StartFrame();
-        void EndFrame();
-        void PollEvents();
-        void Run(Scene &scene);
+        /**
+         * @brief Check if the game engine is currently running.
+         *
+         * @param ctx The context pointer containing various engine components.
+         * @return True if the engine is running, false otherwise.
+         */
+        bool IsRunning(ContextPtr &ctx);
+
+        /**
+         * @brief Start a new frame in the game engine.
+         *
+         * @param ctx The context pointer containing various engine components.
+         */
+        void StartFrame(ContextPtr &ctx);
+
+        /**
+         * @brief End the current frame in the game engine.
+         *
+         * @param window The window object used for rendering.
+         */
+        void EndFrame(Window &window);
+
+        /**
+         * @brief Poll and process events from the game window.
+         *
+         * @param window The window object to poll events from.
+         */
+        void PollEvents(Window &window);
     };
+
 }

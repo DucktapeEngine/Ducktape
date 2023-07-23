@@ -30,7 +30,7 @@ namespace DT
     class LoopManager
     {
     public:
-        bool sceneTick = false; ///< @brief whether to update/tick current scene loop or not
-        bool gameTick = false;
+        bool sceneTick = false; /// @brief Whether to update/tick current scene loop or not.
+        bool gameTick = false;  /// @brief Whether to update/tick current game loop or not.
     };
 }

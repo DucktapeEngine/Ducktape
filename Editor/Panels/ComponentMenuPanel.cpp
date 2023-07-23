@@ -7,7 +7,7 @@ namespace DT
         isOpen = true;
     }
 
-    void ComponentMenuPanel::Update(Engine &engine)
+    void ComponentMenuPanel::Update(ContextPtr &ctx)
     {
         ImGui::Begin(GetWindowName().c_str(), &isOpen);
 

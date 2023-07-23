@@ -23,16 +23,13 @@ aryanbaburajan2007@gmail.com
 #include "PlayerController.h"
 using namespace DT;
 
-void PlayerController::Tick(Entity entity, Scene *scene, const Context &ctx)
+void PlayerController::Tick(Entity entity, ContextPtr &ctx)
 {
     ctx.debug->log << ctx.loopManager->gameTick << "\n";
 }
 
-void PlayerController::Inspector(Entity entity, Scene *scene, const Context &ctx)
+void PlayerController::Inspector(Entity entity, ContextPtr &ctx, Entity selectedEntity)
 {
-    if (entity != scene->selectedEntity)
-        return;
-
     if (ImGui::CollapsingHeader("Player Controller"))
     {
         ImGui::DragFloat("speed", &speed);

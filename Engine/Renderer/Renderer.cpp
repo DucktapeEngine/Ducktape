@@ -21,6 +21,8 @@ aryanbaburajan2007@gmail.com
 */
 
 #include <Renderer/Renderer.h>
+#include <Scene/Scene.h>
+#include <Core/Engine.h>
 
 GLenum glCheckError_(const char *file, int line)
 {
@@ -46,18 +48,19 @@ GLenum glCheckError_(const char *file, int line)
             error = "INVALID_FRAMEBUFFER_OPERATION";
             break;
         }
-        std::cout << error << " | " << file << " (" << line << ")" << std::endl;
+        std::cout << error << " | " << file << " (" << line << ")\n";
     }
     return errorCode;
 }
 
 namespace DT
 {
-    Renderer::Renderer(Window &window, Configuration &config) : skyboxCubemap(config.skyboxCubemapPaths)
+    Renderer::Renderer(ContextPtr &ctx) : screenShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Screen.glsl"), ctx), skyboxShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Skybox.glsl"), ctx)
     {
         glEnable(GL_DEPTH_TEST);
 
-        glfwSetFramebufferSizeCallback(window.window, FramebufferSizeCallback);
+        assert(ctx.window->window != nullptr);
+        glfwSetFramebufferSizeCallback(ctx.window->window, FramebufferSizeCallback); // TOFIX
 
         // FBO
         glGenFramebuffers(1, &FBO);
@@ -66,7 +69,7 @@ namespace DT
         // Texture
         glGenTextures(1, &renderTexture);
         glBindTexture(GL_TEXTURE_2D, renderTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, window.GetWindowSize().x, window.GetWindowSize().y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ctx.window->GetWindowSize().x, ctx.window->GetWindowSize().y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderTexture, 0);
@@ -74,12 +77,12 @@ namespace DT
         // RBO
         glGenRenderbuffers(1, &RBO);
         glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, window.GetWindowSize().x, window.GetWindowSize().y);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, ctx.window->GetWindowSize().x, ctx.window->GetWindowSize().y);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
-            std::cout << "Framebuffer not complete!" << std::endl;
+            std::cout << "Framebuffer not complete!\n";
             return;
         }
 
@@ -156,14 +159,16 @@ namespace DT
         glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+
+        std::cout << "[LOG] Renderer Constructed\n";
     }
 
-    void Renderer::Render(Window &window, Configuration &config, Scene *scene)
+    void Renderer::Render(ContextPtr &ctx)
     {
-        if (window.GetMinimized())
+        if (ctx.window->GetMinimized())
             return;
 
-        if (scene->activeCamera == nullptr)
+        if (ctx.sceneManager->GetActiveScene().activeCamera == nullptr)
         {
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             return;
@@ -173,27 +178,27 @@ namespace DT
         *cameraView = glm::lookAt(*cameraPosition, *cameraPosition + *cameraRotation * glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.0f, 1.0f, 0.0f));
 
         if (*isOrtho)
-            *cameraProjection = glm::ortho(0.f, window.GetWindowSize().x, 0.f, window.GetWindowSize().y, 0.1f, 100.0f);
+            *cameraProjection = glm::ortho(0.f, ctx.window->GetWindowSize().x, 0.f, ctx.window->GetWindowSize().y, 0.1f, 100.0f);
         else
-            *cameraProjection = glm::perspective(glm::radians(*fov), window.GetWindowSize().x / window.GetWindowSize().y, 0.1f, 100.0f);
+            *cameraProjection = glm::perspective(glm::radians(*fov), ctx.window->GetWindowSize().x / ctx.window->GetWindowSize().y, 0.1f, 100.0f);
 
-        // Draw skybox
-        glDepthMask(GL_FALSE);
+        // // Draw skybox TODO: Switch to HDRI
+        // glDepthMask(GL_FALSE);
 
-        skyboxShader.Use();
-        skyboxShader.SetMat4("projection", *cameraProjection);
-        skyboxShader.SetMat4("view", glm::mat4(glm::mat3(*cameraView)));
+        // skyboxShader.Use();
+        // skyboxShader.SetMat4("projection", *cameraProjection);
+        // skyboxShader.SetMat4("view", glm::mat4(glm::mat3(*cameraView)));
 
-        glBindVertexArray(skyboxVAO);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxCubemap.id);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        // glBindVertexArray(skyboxVAO);
+        // glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxCubemap.id);
+        // glDrawArrays(GL_TRIANGLES, 0, 36);
 
         glDepthMask(GL_TRUE);
 
         glCheckError();
 
         // Draw render texture on to a quad
-        if (config.drawToQuad)
+        if (drawToQuad)
         {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
             glDisable(GL_DEPTH_TEST);
@@ -227,10 +232,10 @@ namespace DT
         glBindRenderbuffer(GL_RENDERBUFFER, 0);
     }
 
-    void Renderer::LoadSkybox(std::array<std::filesystem::path, 6> paths)
-    {
-        skyboxCubemap = Cubemap(paths);
-    }
+    // void Renderer::LoadSkybox(std::array<std::filesystem::path, 6> paths)
+    // {
+    //     skyboxCubemap = Cubemap(paths);
+    // }
 
     bool Renderer::GetFreeDirectionalLightSpot(unsigned int *spot)
     {
@@ -280,7 +285,7 @@ namespace DT
 
     void Renderer::FramebufferSizeCallback(GLFWwindow *glfwWindow, int width, int height)
     {
-        reinterpret_cast<Context *>(glfwGetWindowUserPointer(glfwWindow))->window->SetWindowSize({width, height});
-        reinterpret_cast<Context *>(glfwGetWindowUserPointer(glfwWindow))->renderer->SetViewport({width, height});
+        reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(glfwWindow))->window->SetWindowSize({width, height});
+        reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(glfwWindow))->renderer->SetViewport({width, height});
     }
 }

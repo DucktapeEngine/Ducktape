@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <iostream>
+#include <iosfwd>
 
 #include <Core/ImGui.h>
 #include <imgui_impl_glfw.h>
@@ -37,7 +37,7 @@ namespace DT
 {
     namespace Editor
     {
-        inline Engine *enginePtr;
+        inline ContextPtr *ctx;
         inline std::vector<Panel *> panels;
 
         inline ImGuiID dockspaceId; /// @brief Persistent id for dockspace.
@@ -59,10 +59,10 @@ namespace DT
             return nullptr;
         }
 
-        void Init(Engine &engine);
+        void Init(ContextPtr &ctx);
         void NewFrame();
-        void Render(Engine &engine);
-        void EndFrame(Renderer &renderer);
+        void Render();
+        void EndFrame();
         void Terminate();
 
         void Close();

@@ -26,8 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Serialization.h>
 #include <Scene/Scene.h>
 #include <Core/ImGui.h>
-#include <Core/SerializationManager.h>
-
+#include <Scene/SceneManager.h>
 #include <Components/Relation.h>
 
 namespace DT
@@ -88,23 +87,23 @@ namespace DT
     {
     }
 
-    void RelationSystem::Init(Scene *scene, const Context &ctx)
+    void RelationSystem::Init(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<Relation>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Relation>())
         {
-            scene->Get<Relation>(entity);
-            scene->registry.on_destroy<Relation>().connect<&RelationSystem::OnDestroy>(*this);
+            ctx.sceneManager->GetActiveScene().Get<Relation>(entity);
+            ctx.sceneManager->GetActiveScene().registry.on_destroy<Relation>().connect<&RelationSystem::OnDestroy>(*this);
         }
     }
 
-    void RelationSystem::Inspector(Scene *scene, const Context &ctx)
+    void RelationSystem::Inspector(ContextPtr &ctx, Entity selectedEntity)
     {
-        for (Entity entity : scene->View<Relation>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Relation>())
         {
-            if (scene->selectedEntity != entity)
+            if (selectedEntity != entity)
                 continue;
 
-            Relation *relation = scene->Get<Relation>(entity);
+            Relation *relation = ctx.sceneManager->GetActiveScene().Get<Relation>(entity);
 
             if (ImGui::CollapsingHeader("Relation"))
             {
@@ -113,14 +112,14 @@ namespace DT
         }
     }
 
-    void RelationSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
+    void RelationSystem::Serialize(ContextPtr &ctx, Entity entity)
     {
-        ctx.serializationManager->SerializeComponent<Relation>("Relation", entity, *scene);
+        ctx.sceneManager->GetActiveScene().SerializeComponent<Relation>("Relation", entity, ctx.sceneManager->GetActiveScene());
     }
 
     void RelationSystem::OnDestroy(entt::registry &registry, Entity entity)
     {
-        Scene *scene = Scene::GetScene(registry);
+        Scene *scene = Scene::GetSceneFromRegistry(registry);
         Relation *relation = scene->Get<Relation>(entity);
         relation->RemoveParent(*scene);
         for (const Entity &child : relation->children)

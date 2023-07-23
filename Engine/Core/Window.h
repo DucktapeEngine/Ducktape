@@ -26,7 +26,8 @@ aryanbaburajan2007@gmail.com
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <Core/Configuration.h>
+#include <Core/Serialization.h>
+#include <Core/ContextPtr.h>
 
 namespace DT
 {
@@ -35,15 +36,21 @@ namespace DT
     class Window
     {
     public:
-        glm::vec2 viewportSize;       ///< @brief The size of the window viewport.
-        GLFWwindow *window = nullptr; ///< @brief The pointer to the OpenGL window.
+        GLFWwindow *window = nullptr; /// The GLFW window handle.
 
-        Window(const Configuration &config);
+        bool hideWindow = false;                         /// Flag indicating whether the window is hidden.
+        glm::vec2 windowSize = glm::vec2(500.f, 500.f);  /// The size of the window.
+        std::string windowTitle = "Welcome to Ducktape"; /// The title of the window.
+        bool drawWireframe = false;                      /// Flag indicating whether to draw in wireframe mode.
+        std::filesystem::path windowIconPath;            /// The path to the window icon.
+        bool vsync = true;                               /// Flag indicating whether VSync is enabled.
+
+        Window(ContextPtr &ctx);
+        ~Window();
 
         void Clear(glm::vec4 color);
         void PollEvents();
         void SwapBuffers();
-        ~Window();
 
         void Close();
         void SetTitle(const std::string &title);
@@ -67,5 +74,7 @@ namespace DT
 
         static void ErrorCallback(int code, const char *description);
         static void APIENTRY GlDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char *message, const void *userParam);
+
+        IN_SERIALIZE(Window, hideWindow, windowSize, windowTitle, drawWireframe, windowIconPath, vsync);
     };
 }

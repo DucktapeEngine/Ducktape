@@ -28,21 +28,51 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    typedef unsigned int RID; // RID 0 is assigned to an invalid Resource
+    /**
+     * @brief Resource ID type.
+     */
+    typedef unsigned int RID;
 
+    /**
+     * @brief The ResourceManager class for managing resources.
+     */
     class ResourceManager
     {
     public:
+        ResourceManager();
+
+        /**
+         * @brief Mapping of resource IDs to file paths.
+         */
         std::unordered_map<RID, std::filesystem::path> resourceMap;
 
-        static ResourceManager &Instance();
-        static std::filesystem::path GetPath(RID rid);
-        static RID GetRID(const std::filesystem::path &path);
-        static bool HasRID(RID rid);
+        /**
+         * @brief Retrieves the file path associated with a resource ID.
+         *
+         * @param rid The resource ID.
+         * @return The file path associated with the resource ID.
+         */
+        std::filesystem::path GetPath(RID rid);
 
+        /**
+         * @brief Retrieves the resource ID associated with a file path.
+         *
+         * @param path The file path.
+         * @return The resource ID associated with the file path.
+         */
+        RID GetRID(const std::filesystem::path &path);
+
+        /**
+         * @brief Checks if a resource ID exists.
+         *
+         * @param rid The resource ID to check.
+         * @return True if the resource ID exists, false otherwise.
+         */
+        bool HasRID(RID rid);
+
+        /**
+         * @brief Serializes the resource manager.
+         */
         IN_SERIALIZE(ResourceManager, resourceMap);
-
-    protected:
-        ResourceManager() = default;
     };
 }

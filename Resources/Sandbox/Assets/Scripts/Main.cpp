@@ -20,14 +20,15 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Ducktape.h>
 #include <Components/DllRegister.h>
+#include <Scene/GenericSystem.h>
+#include <Scene/System.h>
 #include "PlayerController.h"
 using namespace DT;
 
 DT_EXPORT void RegisterRuntime(Scene &scene)
 {
-    scene.Register<GenericSystem<PlayerController>>("PlayerController");
+    // scene.Register<GenericSystem<PlayerController>>("PlayerController");
 }
 
 REGISTER(PlayerController);

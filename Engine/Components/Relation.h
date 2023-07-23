@@ -24,35 +24,55 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Relation component for Parent-Child relationships.
+     */
     struct Relation
     {
-        bool hasParent = false; // Serialization of entt::null has issues, using this as flag instead for now
-        Entity parent = entt::null;
-        std::unordered_set<Entity> children;
+        bool hasParent = false;              /// @brief Flag indicating whether the current Entity has a parent.
+        Entity parent = entt::null;          /// @brief Parent of the current Entity. Equals to `entt::null` when `hasParent` is `false`.
+        std::unordered_set<Entity> children; /// @brief List of children owned by current Entity.
 
+        /**
+         * @brief Sets the parent of the current Entity.
+         *
+         * @param parent The Entity to set as the parent.
+         * @param scene Reference to the Scene object.
+         */
         void SetParent(Entity parent, Scene &scene);
+
+        /**
+         * @brief Removes the parent of the current Entity.
+         *
+         * @param scene Reference to the Scene object.
+         */
         void RemoveParent(Scene &scene);
+
+        /**
+         * @brief Adds a child to the current Entity.
+         *
+         * @param child The Entity to add as a child.
+         * @param scene Reference to the Scene object.
+         */
         void AddChild(Entity child, Scene &scene);
+
+        /**
+         * @brief Removes a child from the current Entity.
+         *
+         * @param child The Entity to remove as a child.
+         * @param scene Reference to the Scene object.
+         */
         void RemoveChild(Entity child, Scene &scene);
     };
 
     SERIALIZE(Relation, hasParent, parent, children);
 
-    class RelationSystem : System
+    class RelationSystem : public System
     {
     public:
-        void Init(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Serializes Camera properties for Inspector.
-         */
-        void Inspector(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Handles Camera serialization.
-         */
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
-
-        void OnDestroy(entt::registry &registry, entt::entity entity);
+        void Init(ContextPtr &ctx) override;
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
+        void Serialize(ContextPtr &ctx, Entity entity) override;
+        void OnDestroy(entt::registry &registry, entt::entity entity) override;
     };
 }

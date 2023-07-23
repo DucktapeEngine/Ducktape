@@ -2,27 +2,27 @@
 
 namespace DT
 {
-    void PropertiesPanel::Update(Engine &engine)
+    void PropertiesPanel::Update(ContextPtr &ctx)
     {
         ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
-        for (System *system : engine.activeScene->systems)
-            system->Inspector(engine.activeScene, engine.ctx);
+        for (System *system : ctx.sceneManager->GetActiveScene().systems)
+            system->Inspector(ctx, ctx.sceneManager->GetActiveScene().selectedEntity);
 
-        if (engine.activeScene->selectedEntity != entt::null && ImGui::Button("Assign", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
+        if (ctx.sceneManager->GetActiveScene().selectedEntity != entt::null && ImGui::Button("Assign", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
         {
             ComponentMenuPanel *componentMenuPanel = Editor::GetPanel<ComponentMenuPanel>();
             componentMenuPanel->Open();
             componentMenuPanel->OnEvent(ComponentMenuPanel::Events::Selected, [&](EventHandler *event)
-                                        { engine.activeScene->Assign(engine.activeScene->selectedEntity, static_cast<ComponentMenuPanel *>(event)->selectedComponent); });
+                                        { ctx.sceneManager->GetActiveScene().Assign(ctx.sceneManager->GetActiveScene().selectedEntity, static_cast<ComponentMenuPanel *>(event)->selectedComponent, ctx); });
         }
 
-        if (engine.activeScene->selectedEntity != entt::null && ImGui::Button("Remove", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
+        if (ctx.sceneManager->GetActiveScene().selectedEntity != entt::null && ImGui::Button("Remove", ImVec2(ImGui::GetContentRegionAvail().x, 20.f)))
         {
             ComponentMenuPanel *componentMenuPanel = Editor::GetPanel<ComponentMenuPanel>();
             componentMenuPanel->Open();
             componentMenuPanel->OnEvent(ComponentMenuPanel::Events::Selected, [&](EventHandler *event)
-                                        { engine.activeScene->Remove(engine.activeScene->selectedEntity, static_cast<ComponentMenuPanel *>(event)->selectedComponent); });
+                                        { ctx.sceneManager->GetActiveScene().Remove(ctx.sceneManager->GetActiveScene().selectedEntity, static_cast<ComponentMenuPanel *>(event)->selectedComponent, ctx); });
         }
 
         ImGui::End();

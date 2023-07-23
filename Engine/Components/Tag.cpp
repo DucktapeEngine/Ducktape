@@ -27,20 +27,19 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Scene.h>
 #include <Core/ImGui.h>
 #include <Core/Context.h>
-#include <Core/SerializationManager.h>
 
 #include <Components/Tag.h>
 
 namespace DT
 {
-    void TagSystem::Inspector(Scene *scene, const Context &ctx)
+    void TagSystem::Inspector(ContextPtr &ctx, Entity selectedEntity)
     {
-        for (Entity entity : scene->View<Tag>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Tag>())
         {
-            if (scene->selectedEntity != entity)
+            if (selectedEntity != entity)
                 continue;
 
-            Tag *tag = scene->Get<Tag>(entity);
+            Tag *tag = ctx.sceneManager->GetActiveScene().Get<Tag>(entity);
 
             if (ImGui::CollapsingHeader("Tag"))
             {
@@ -49,8 +48,8 @@ namespace DT
         }
     }
 
-    void TagSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
+    void TagSystem::Serialize(ContextPtr &ctx, Entity entity)
     {
-        ctx.serializationManager->SerializeComponent<Tag>("Tag", entity, *scene);
+        ctx.sceneManager->GetActiveScene().SerializeComponent<Tag>("Tag", entity, ctx.sceneManager->GetActiveScene());
     }
 }

@@ -1,0 +1,29 @@
+{
+    "window": {
+        "hideWindow": false,
+        "windowSize": {
+            "x": 500.0,
+            "y": 500.0
+        },
+        "windowTitle": "Welcome to Ducktape",
+        "drawWireframe": false,
+        "windowIconPath": "D:\\Duckie\\Programming\\Ducktape\\Resources\\Editor\\Textures\\logo.png",
+        "vsync": true
+    },
+    "renderer": {
+        "drawToQuad": true
+    },
+    "sceneManager": {
+        "activeScene": {
+            "rid": 1
+        }
+    },
+    "resourceManager": {
+        "resourceMap": [
+            [
+                1,
+                "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Scene\\MainScene.json"
+            ]
+        ]
+    }
+}

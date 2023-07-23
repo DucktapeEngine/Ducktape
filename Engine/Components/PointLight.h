@@ -25,19 +25,22 @@ aryanbaburajan2007@gmail.com
 namespace DT
 {
     class Transform;
-    
+
     /**
-     * @brief PointLight struct for managing point light.
+     * @brief PointLight component
      */
     struct PointLight
     {
-        Resource<Shader> shader;
-        Transform *transform;       ///< @brief Pointer to the Transform object.
-        unsigned int lightSpot;     ///< @brief used for instantiated point light's index
-        std::string propertyString; ///< @brief property string of the point light
+        Resource<Shader> shader;          /// @brief Shader used by the point light.
+        float intensity = 1.f;            /// @brief Intensity of the point light.
+        glm::vec3 color = glm::vec3(1.f); /// @brief Color of the point light.
 
-        float intensity = 1.f;            ///< @brief Intensity of the point light.
-        glm::vec3 color = glm::vec3(1.f); ///< @brief Color of the point light.
+    private:
+        Transform *transform;
+        unsigned int lightSpot;     /// @brief Index of this Light in the Shader's light container.
+        std::string propertyString; /// @brief Shader property access code stored to avoid repetitive reconstruction.
+
+        friend class PointLightSystem;
     };
 
     SERIALIZE(PointLight, intensity, color);
@@ -48,31 +51,31 @@ namespace DT
         /**
          * @brief Registers Point Light to rendering engine and shader on Initiation.
          */
-        void Init(Scene *scene, const Context &ctx) override;
+        void Init(ContextPtr &ctx) override;
 
         /**
          * @brief Updates corresponding Point Light properties in shader every frame.
          */
-        void Tick(Scene *scene, const Context &ctx) override;
+        void Tick(ContextPtr &ctx) override;
 
         /**
          * @brief Serializes PointLight properties for Inspector.
          */
-        void Inspector(Scene *scene, const Context &ctx) override;
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
 
         /**
          * @brief Handles PointLight serialization.
          */
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
+        void Serialize(ContextPtr &ctx, Entity entity) override;
 
         /**
          * @brief Handles Scene View lighting.
          */
-        void SceneView(Scene *scene, const Context &ctx) override;
+        void SceneView(ContextPtr &ctx) override;
 
         /**
          * @brief Unregisters Point Light from rendering engine and shader on destruction.
          */
-        void Destroy(Scene *scene, const Context &ctx) override;
+        void Destroy(ContextPtr &ctx) override;
     };
 }

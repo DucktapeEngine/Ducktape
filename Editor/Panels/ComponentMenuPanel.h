@@ -19,7 +19,7 @@ namespace DT
 
         void Open();
 
-        void Update(Engine &engine) override;
+        void Update(ContextPtr &ctx) override;
 
     protected:
         std::string componentInput;

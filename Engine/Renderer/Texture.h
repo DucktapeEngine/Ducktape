@@ -24,7 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <stdexcept>
-#include <iostream>
+#include <fstream>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -32,6 +32,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Serialization.h>
 #include <Core/ResourceManager.h>
+#include <Core/ContextPtr.h>
 
 namespace DT
 {
@@ -41,11 +42,12 @@ namespace DT
     class Texture
     {
     public:
-        int width;  ///< @brief Width of the image/texture.
-        int height; ///< @brief Height of the image/texture.
+        int width;  /// @brief Width of the image/texture.
+        int height; /// @brief Height of the image/texture.
         int nrChannels;
-        unsigned int id;     ///< @brief Unique id of the texture.
-        bool loaded = false; ///< @brief Whether the texture is loaded or not.
+        unsigned int id;                   /// @brief Unique id of the texture.
+        bool loaded = false;               /// @brief Whether the texture is loaded or not.
+        std::filesystem::path texturePath; /// @brief Path to the loaded texture file.
 
         enum Type
         {
@@ -61,17 +63,15 @@ namespace DT
 
         /**
          * @brief Create a new Texture class
-         * @param _path path to the texture/image to be loaded
-         * @param _type type flag for the texture
          */
-        Texture(RID rid);
+        Texture(RID rid, ContextPtr &ctx);
 
-        static Texture *LoadResource(RID rid)
+        static Texture *LoadResource(RID rid, ContextPtr &ctx)
         {
             if (factoryData.count(rid))
                 return factoryData[rid];
 
-            factoryData[rid] = new Texture(rid);
+            factoryData[rid] = new Texture(rid, ctx);
             return factoryData[rid];
         }
 
@@ -81,9 +81,16 @@ namespace DT
             factoryData.erase(rid);
         }
 
+        static void SaveResource(RID rid, ContextPtr &ctx)
+        {
+            // yet to be implemented
+        }
+
         /**
          * @brief  deletes the texture
          */
         void Delete();
+
+        IN_SERIALIZE(Texture, texturePath);
     };
 }

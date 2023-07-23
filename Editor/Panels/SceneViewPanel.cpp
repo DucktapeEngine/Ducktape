@@ -2,18 +2,18 @@
 
 namespace DT
 {
-    void SceneViewPanel::Start(Engine &engine)
+    void SceneViewPanel::Start(ContextPtr &ctx)
     {
-        translateIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "translate.png"))->id;
-        rotateIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "rotate.png"))->id;
-        scaleIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "scale.png"))->id;
+        translateIconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "translate.png"), ctx)->id;
+        rotateIconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "rotate.png"), ctx)->id;
+        scaleIconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "SceneView" / "scale.png"), ctx)->id;
 
-        playIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "start.png"))->id;
-        pauseIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "pause.png"))->id;
-        stopIconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "stop.png"))->id;
+        playIconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "start.png"), ctx)->id;
+        pauseIconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "pause.png"), ctx)->id;
+        stopIconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "MenuBar" / "stop.png"), ctx)->id;
 
-        engine.input.OnKeyEvent([&](Key key, Action action)
-                                {
+        ctx.input->OnKeyEvent([&](Key key, Action action)
+                              {
                                     if (key == KEY_T && action == PRESS)
                                         gizmoOperation = ImGuizmo::TRANSLATE;
                                     if (key == KEY_R && action == PRESS)
@@ -22,37 +22,37 @@ namespace DT
                                         gizmoOperation = ImGuizmo::SCALE; });
     }
 
-    void SceneViewPanel::Update(Engine &engine)
+    void SceneViewPanel::Update(ContextPtr &ctx)
     {
-        selectedEntity = engine.activeScene->selectedEntity;
-        if (sceneViewActive && engine.activeScene->activeCamera != nullptr)
+        selectedEntity = ctx.sceneManager->GetActiveScene().selectedEntity;
+        if (sceneViewActive && ctx.sceneManager->GetActiveScene().activeCamera != nullptr)
         {
             // Controls
             // Move
             const float speed = 2.5f, sensitivity = 25.f;
-            bool holdingRightButton = engine.input.IsMouseButtonHeld(MOUSE_BUTTON_RIGHT);
+            bool holdingRightButton = ctx.input->IsMouseButtonHeld(MOUSE_BUTTON_RIGHT);
 
-            if (engine.input.IsKeyHeld(KEY_UP))
-                engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
-            if (engine.input.IsKeyHeld(KEY_DOWN))
-                engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Forward();
-            if (engine.input.IsKeyHeld(KEY_LEFT))
-                engine.activeScene->activeCamera->transform->translation += speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
-            if (engine.input.IsKeyHeld(KEY_RIGHT))
-                engine.activeScene->activeCamera->transform->translation -= speed * engine.time.deltaTime * engine.activeScene->activeCamera->transform->Right();
+            if (ctx.input->IsKeyHeld(KEY_UP))
+                ctx.sceneManager->GetActiveScene().activeCamera->transform->translation += speed * ctx.time->deltaTime * ctx.sceneManager->GetActiveScene().activeCamera->transform->Forward();
+            if (ctx.input->IsKeyHeld(KEY_DOWN))
+                ctx.sceneManager->GetActiveScene().activeCamera->transform->translation -= speed * ctx.time->deltaTime * ctx.sceneManager->GetActiveScene().activeCamera->transform->Forward();
+            if (ctx.input->IsKeyHeld(KEY_LEFT))
+                ctx.sceneManager->GetActiveScene().activeCamera->transform->translation += speed * ctx.time->deltaTime * ctx.sceneManager->GetActiveScene().activeCamera->transform->Right();
+            if (ctx.input->IsKeyHeld(KEY_RIGHT))
+                ctx.sceneManager->GetActiveScene().activeCamera->transform->translation -= speed * ctx.time->deltaTime * ctx.sceneManager->GetActiveScene().activeCamera->transform->Right();
 
             // Look
             if (holdingRightButton)
             {
-                yaw += -engine.input.mouseDelta.x * sensitivity * engine.time.deltaTime;
-                pitch += engine.input.mouseDelta.y * sensitivity * engine.time.deltaTime;
+                yaw += -ctx.input->mouseDelta.x * sensitivity * ctx.time->deltaTime;
+                pitch += ctx.input->mouseDelta.y * sensitivity * ctx.time->deltaTime;
 
                 if (pitch > 89.0f)
                     pitch = 89.0f;
                 if (pitch < -89.0f)
                     pitch = -89.0f;
             }
-            engine.activeScene->activeCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
+            ctx.sceneManager->GetActiveScene().activeCamera->transform->rotation = glm::quat({pitch * DEG2RAD, yaw * DEG2RAD, 0.0f});
         }
 
         // Transform
@@ -72,37 +72,37 @@ namespace DT
 
         ImVec2 windowSize = ImVec2(vMax.x - vMin.x, vMax.y - vMin.y);
 
-        if (engine.window.GetWindowSize() != glm::vec2(windowSize.x, windowSize.y))
+        if (ctx.window->GetWindowSize() != glm::vec2(windowSize.x, windowSize.y))
         {
             if (glm::vec2(windowSize.x, windowSize.y) != glm::vec2(0.f, 0.f))
             {
-                engine.window.SetWindowSize({windowSize.x, windowSize.y});
-                engine.renderer.SetViewport({windowSize.x, windowSize.y});
+                ctx.window->SetWindowSize({windowSize.x, windowSize.y});
+                ctx.renderer->SetViewport({windowSize.x, windowSize.y});
             }
         }
 
         ImGui::GetWindowDrawList()->AddImage(
-            (ImTextureID)(uintptr_t)engine.renderer.renderTexture,
+            (ImTextureID)(uintptr_t)ctx.renderer->renderTexture,
             vMin,
             vMax,
             ImVec2(0, 1),
             ImVec2(1, 0));
 
-        if (selectedEntity != entt::null && engine.activeScene->Has<Transform>(selectedEntity) && engine.activeScene->activeCamera != nullptr)
+        if (selectedEntity != entt::null && ctx.sceneManager->GetActiveScene().Has<Transform>(selectedEntity) && ctx.sceneManager->GetActiveScene().activeCamera != nullptr)
         {
-            Transform *transform = engine.activeScene->Get<Transform>(selectedEntity);
+            Transform *transform = ctx.sceneManager->GetActiveScene().Get<Transform>(selectedEntity);
 
             glm::mat4 model = transform->GetModelMatrix();
 
-            ImGuizmo::SetOrthographic(engine.activeScene->activeCamera->isOrtho);
+            ImGuizmo::SetOrthographic(ctx.sceneManager->GetActiveScene().activeCamera->isOrtho);
             ImGuizmo::SetDrawlist();
-            ImGuizmo::SetRect(vMin.x, vMin.y, engine.window.GetWindowSize().x, engine.window.GetWindowSize().y);
+            ImGuizmo::SetRect(vMin.x, vMin.y, ctx.window->GetWindowSize().x, ctx.window->GetWindowSize().y);
 
             float snap = 1.f;
             if (gizmoOperation == ImGuizmo::OPERATION::ROTATE)
                 snap = 45.f;
 
-            ImGuizmo::Manipulate(glm::value_ptr(engine.activeScene->activeCamera->view), glm::value_ptr(engine.activeScene->activeCamera->projection), gizmoOperation, currentGizmoMode, glm::value_ptr(model), NULL, engine.input.IsKeyHeld(KEY_LEFT_SHIFT) ? &snap : NULL);
+            ImGuizmo::Manipulate(glm::value_ptr(ctx.sceneManager->GetActiveScene().activeCamera->view), glm::value_ptr(ctx.sceneManager->GetActiveScene().activeCamera->projection), gizmoOperation, currentGizmoMode, glm::value_ptr(model), NULL, ctx.input->IsKeyHeld(KEY_LEFT_SHIFT) ? &snap : NULL);
 
             if (ImGuizmo::IsUsing())
             {
@@ -113,10 +113,10 @@ namespace DT
         ImGui::End();
         ImGui::PopStyleVar();
 
-        RenderToolbarPanel(engine);
+        RenderToolbarPanel(ctx);
     }
 
-    void SceneViewPanel::RenderToolbarPanel(Engine &engine)
+    void SceneViewPanel::RenderToolbarPanel(ContextPtr &ctx)
     {
         const float padding = 10.f;
         const float iconSize = 25.f;
@@ -188,7 +188,7 @@ namespace DT
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)playIconId, ImVec2(iconSize, iconSize)))
         {
             runtimeState = RuntimeState::Play;
-            engine.loopManager.gameTick = true;
+            ctx.loopManager->gameTick = true;
         }
         if (currentRuntimeState == RuntimeState::Play)
         {
@@ -206,7 +206,7 @@ namespace DT
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)pauseIconId, ImVec2(iconSize, iconSize)))
         {
             runtimeState = RuntimeState::Pause;
-            engine.loopManager.gameTick = false;
+            ctx.loopManager->gameTick = false;
         }
         if (currentRuntimeState == RuntimeState::Pause)
         {
@@ -224,8 +224,8 @@ namespace DT
         if (ImGui::ImageButton((ImTextureID)(uintptr_t)stopIconId, ImVec2(iconSize, iconSize)))
         {
             runtimeState = RuntimeState::Stop;
-            engine.loopManager.gameTick = false;
-            engine.loopManager.sceneTick = true;
+            ctx.loopManager->gameTick = false;
+            ctx.loopManager->sceneTick = true;
         }
         if (currentRuntimeState == RuntimeState::Stop)
         {

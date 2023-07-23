@@ -27,20 +27,18 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Renderer.h>
 #include <Core/Resource.h>
 #include <Core/ImGui.h>
-#include <Core/SerializationManager.h>
-
 #include <Components/PointLight.h>
 
 namespace DT
 {
-    void PointLightSystem::Init(Scene *scene, const Context &ctx)
+    void PointLightSystem::Init(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<PointLight>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<PointLight>())
         {
-            PointLight *pl = scene->Get<PointLight>(entity);
+            PointLight *pl = ctx.sceneManager->GetActiveScene().Get<PointLight>(entity);
 
-            pl->shader.Load(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl"));
-            pl->transform = &scene->Assign<Transform>(entity);
+            pl->shader.Load(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl"), ctx);
+            pl->transform = &ctx.sceneManager->GetActiveScene().Assign<Transform>(entity);
 
             if (ctx.renderer->GetFreePointLightSpot(&pl->lightSpot) == false)
             {
@@ -49,40 +47,40 @@ namespace DT
 
             pl->propertyString = "pointLights[" + std::to_string(pl->lightSpot) + "].";
 
-            pl->shader.Data()->Use();
-            pl->shader.Data()->SetFloat(pl->propertyString + "constant", 1.0f);
-            pl->shader.Data()->SetFloat(pl->propertyString + "quadratic", 1.0f);
-            pl->shader.Data()->SetBool(pl->propertyString + "enabled", true);
+            pl->shader.data->Use();
+            pl->shader.data->SetFloat(pl->propertyString + "constant", 1.0f);
+            pl->shader.data->SetFloat(pl->propertyString + "quadratic", 1.0f);
+            pl->shader.data->SetBool(pl->propertyString + "enabled", true);
         }
     }
 
-    void PointLightSystem::Tick(Scene *scene, const Context &ctx)
+    void PointLightSystem::Tick(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<PointLight>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<PointLight>())
         {
-            PointLight *pl = scene->Get<PointLight>(entity);
+            PointLight *pl = ctx.sceneManager->GetActiveScene().Get<PointLight>(entity);
 
             if (pl->lightSpot == NAN)
                 return;
 
-            pl->shader.Data()->Use();
-            pl->shader.Data()->SetVec3(pl->propertyString + "position", pl->transform->translation);
+            pl->shader.data->Use();
+            pl->shader.data->SetVec3(pl->propertyString + "position", pl->transform->translation);
 
-            pl->shader.Data()->SetFloat(pl->propertyString + "linear", pl->intensity);
-            pl->shader.Data()->SetVec3(pl->propertyString + "ambient", pl->color * pl->intensity);
-            pl->shader.Data()->SetVec3(pl->propertyString + "diffuse", pl->color * pl->intensity);
-            pl->shader.Data()->SetVec3(pl->propertyString + "specular", pl->color * pl->intensity);
+            pl->shader.data->SetFloat(pl->propertyString + "linear", pl->intensity);
+            pl->shader.data->SetVec3(pl->propertyString + "ambient", pl->color * pl->intensity);
+            pl->shader.data->SetVec3(pl->propertyString + "diffuse", pl->color * pl->intensity);
+            pl->shader.data->SetVec3(pl->propertyString + "specular", pl->color * pl->intensity);
         }
     }
 
-    void PointLightSystem::Inspector(Scene *scene, const Context &ctx)
+    void PointLightSystem::Inspector(ContextPtr &ctx, Entity selectedEntity)
     {
-        for (Entity entity : scene->View<PointLight>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<PointLight>())
         {
-            if (scene->selectedEntity != entity)
+            if (selectedEntity != entity)
                 continue;
 
-            PointLight *pl = scene->Get<PointLight>(entity);
+            PointLight *pl = ctx.sceneManager->GetActiveScene().Get<PointLight>(entity);
 
             if (ImGui::CollapsingHeader("Point Light"))
             {
@@ -92,24 +90,24 @@ namespace DT
         }
     }
 
-    void PointLightSystem::SceneView(Scene *scene, const Context &ctx)
+    void PointLightSystem::SceneView(ContextPtr &ctx)
     {
-        Tick(scene, ctx);
+        Tick(ctx);
     }
 
-    void PointLightSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
+    void PointLightSystem::Serialize(ContextPtr &ctx, Entity entity)
     {
-        ctx.serializationManager->SerializeComponent<PointLight>("PointLight", entity, *scene);
+        ctx.sceneManager->GetActiveScene().SerializeComponent<PointLight>("PointLight", entity, ctx.sceneManager->GetActiveScene());
     }
 
-    void PointLightSystem::Destroy(Scene *scene, const Context &ctx)
+    void PointLightSystem::Destroy(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<PointLight>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<PointLight>())
         {
-            PointLight *pl = scene->Get<PointLight>(entity);
+            PointLight *pl = ctx.sceneManager->GetActiveScene().Get<PointLight>(entity);
 
             ctx.renderer->UnoccupyPointLightSpot(pl->lightSpot);
-            pl->shader.Data()->SetBool(pl->propertyString + "enabled", false); // TOFIX: Move this to Renderer class
+            pl->shader.data->SetBool(pl->propertyString + "enabled", false); // TOFIX: Move this to Renderer class
         }
     }
 }

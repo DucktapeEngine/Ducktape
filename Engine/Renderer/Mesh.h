@@ -42,14 +42,14 @@ namespace DT
     class Mesh
     {
     public:
-        std::vector<Vertex> vertices;      ///< @brief vector of Vertex objects
-        std::vector<unsigned int> indices; ///< @brief vector of indices of vertices vector
+        std::vector<Vertex> vertices;      /// @brief vector of Vertex objects
+        std::vector<unsigned int> indices; /// @brief vector of indices of vertices vector
         std::vector<Resource<Material>> materials;
         static inline std::unordered_map<RID, Mesh *> factoryData;
 
-        unsigned int VBO; ///< @brief id of vertex buffer object
-        unsigned int EBO; ///< @brief id of element array buffer object
-        unsigned int VAO; ///< @brief id of vertex array buffer object
+        unsigned int VBO; /// @brief id of vertex buffer object
+        unsigned int EBO; /// @brief id of element array buffer object
+        unsigned int VAO; /// @brief id of vertex array buffer object
 
         /**
          * @brief Draws the mesh with given shader object
@@ -62,12 +62,12 @@ namespace DT
          */
         void Setup();
 
-        static Mesh *LoadResource(RID rid)
+        static Mesh *LoadResource(RID rid, ContextPtr &ctx)
         {
             if (factoryData.count(rid))
                 return factoryData[rid];
 
-            factoryData[rid] = new Mesh(json::parse(std::ifstream(ResourceManager::GetPath(rid))));
+            factoryData[rid] = new Mesh(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))));
             return factoryData[rid];
         }
 
@@ -75,6 +75,10 @@ namespace DT
         {
             delete factoryData[rid];
             factoryData.erase(rid);
+        }
+        static void SaveResource(RID rid, ContextPtr &ctx)
+        {
+            // yet to be implemented
         }
 
         IN_SERIALIZE(Mesh, vertices, indices, materials);

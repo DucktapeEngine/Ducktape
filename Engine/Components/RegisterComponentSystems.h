@@ -26,5 +26,8 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
+    /**
+     * @brief Function to register systems of all the built-in components.
+     */
     void RegisterComponentSystems(Scene &scene);
 }

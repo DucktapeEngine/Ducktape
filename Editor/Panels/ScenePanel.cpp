@@ -2,7 +2,7 @@
 
 namespace DT
 {
-    void ScenePanel::Update(Engine &engine)
+    void ScenePanel::Update(ContextPtr &ctx)
     {
         if (ImGui::BeginPopupContextWindow())
         {
@@ -11,56 +11,56 @@ namespace DT
 
         ImGui::Begin(GetWindowName().c_str(), &isOpen);
 
-        engine.activeScene->registry.each([&](const Entity entity)
-                                          {
-                                                   if (engine.activeScene->Has<Relation>(entity))
+        ctx.sceneManager->GetActiveScene().registry.each([&](const Entity entity)
+                                                         {
+                                                   if (ctx.sceneManager->GetActiveScene().Has<Relation>(entity))
                                                    {
-                                                       if (!engine.activeScene->Get<Relation>(entity)->hasParent)
+                                                       if (!ctx.sceneManager->GetActiveScene().Get<Relation>(entity)->hasParent)
                                                        {
-                                                           DrawSelectibleEntity(entity, engine);
+                                                           DrawSelectibleEntity(entity, ctx);
                                                        }
                                                    }
                                                    else
                                                    {
-                                                       DrawSelectibleEntity(entity, engine);
+                                                       DrawSelectibleEntity(entity, ctx);
                                                    } });
 
         ImGui::End();
     }
 
-    void ScenePanel::DrawSelectibleEntity(Entity entity, Engine &engine)
+    void ScenePanel::DrawSelectibleEntity(Entity entity, ContextPtr &ctx)
     {
         std::string label = "Entity " + std::to_string(entt::to_integral(entity));
 
-        if (engine.activeScene->Has<Tag>(entity))
+        if (ctx.sceneManager->GetActiveScene().Has<Tag>(entity))
         {
-            std::string _label = engine.activeScene->registry.get<Tag>(entity).name;
+            std::string _label = ctx.sceneManager->GetActiveScene().registry.get<Tag>(entity).name;
 
             if (_label != "Unnamed" && _label != "")
                 label = _label;
         }
 
-        if (ImGui::Selectable((label + "##" + std::to_string(entt::to_integral(entity))).c_str(), engine.activeScene->selectedEntity == entity))
+        if (ImGui::Selectable((label + "##" + std::to_string(entt::to_integral(entity))).c_str(), ctx.sceneManager->GetActiveScene().selectedEntity == entity))
         {
-            engine.activeScene->selectedEntity = entity;
+            ctx.sceneManager->GetActiveScene().selectedEntity = entity;
         }
 
         if (ImGui::BeginPopupContextItem())
         {
             if (ImGui::MenuItem("Create Entity"))
-                engine.activeScene->CreateEntity();
+                ctx.sceneManager->GetActiveScene().CreateEntity();
             if (ImGui::MenuItem("Destroy Entity"))
-                engine.activeScene->DestroyEntity(entity);
+                ctx.sceneManager->GetActiveScene().DestroyEntity(entity);
             ImGui::EndPopup();
         }
 
-        if (engine.activeScene->Has<Relation>(entity))
+        if (ctx.sceneManager->GetActiveScene().Has<Relation>(entity))
         {
-            Relation &relation = *engine.activeScene->Get<Relation>(entity);
+            Relation &relation = *ctx.sceneManager->GetActiveScene().Get<Relation>(entity);
             for (Entity child : relation.children)
             {
                 ImGui::Indent();
-                DrawSelectibleEntity(child, engine);
+                DrawSelectibleEntity(child, ctx);
                 ImGui::Unindent();
             }
         }

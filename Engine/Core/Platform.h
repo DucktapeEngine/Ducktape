@@ -24,7 +24,6 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <filesystem>
-#include <iostream>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -39,12 +38,29 @@ namespace DT
 {
 	namespace Platform
 	{
+		/**
+		 * @brief Retrieves the last error message as a string.
+		 *
+		 * @return A string containing the last error message.
+		 */
 		std::string GetLastErrorAsString();
+
+		/**
+		 * @brief Executes a command.
+		 *
+		 * @param command The command to execute.
+		 */
 		void Execute(const std::string command);
 
+		/**
+		 * @brief The Module class for loading and managing dynamic libraries.
+		 */
 		class Module
 		{
 		public:
+			/**
+			 * @brief The handle to the loaded module.
+			 */
 #ifdef _WIN32
 			HMODULE module;
 #endif
@@ -52,11 +68,30 @@ namespace DT
 			void *module;
 #endif
 
+			/**
+			 * @brief Destructor for the Module class. Unloads the module.
+			 */
 			~Module();
 
+			/**
+			 * @brief Loads a dynamic library from the specified path.
+			 *
+			 * @param path The path to the dynamic library.
+			 */
 			void Load(std::filesystem::path path);
+
+			/**
+			 * @brief Unloads the dynamic library.
+			 */
 			void Free();
 
+			/**
+			 * @brief Retrieves the address of a symbol from the loaded module.
+			 *
+			 * @tparam T The type of the symbol.
+			 * @param symbolName The name of the symbol.
+			 * @return The address of the symbol.
+			 */
 			template <typename T>
 			T GetSymbolAddress(const std::string &symbolName)
 			{

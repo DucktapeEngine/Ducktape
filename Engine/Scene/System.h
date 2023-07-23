@@ -24,7 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Platform.h>
 #include <Scene/Entity.h>
-#include <Core/Context.h>
+#include <Core/ContextPtr.h>
 
 #define REGISTER(component)                                                                            \
     DT_EXPORT void Register##component(DT::Entity entity, DT::Scene *scene, DT::RegisterAction action) \
@@ -46,15 +46,55 @@ namespace DT
 
     class Scene;
 
+    /**
+     * @brief The System class represents a base class for systems in the application.
+     */
     class System
     {
     public:
-        virtual void Init(Scene *scene, const Context &ctx) {}
-        virtual void Tick(Scene *scene, const Context &ctx) {}
-        virtual void SceneView(Scene *scene, const Context &ctx) {}
-        virtual void Destroy(Scene *scene, const Context &ctx) {}
-        virtual void Inspector(Scene *scene, const Context &ctx) {}
-        virtual void Serialize(Scene *scene, const Context &ctx, Entity entity) {}
-        virtual void OnDestroy(Scene *scene, const Context &ctx, Entity entity) {}
+        /**
+         * @brief Initializes the system.
+         * @param ctx A pointer to the application context.
+         */
+        virtual void Init(ContextPtr &ctx) {}
+
+        /**
+         * @brief Performs a system tick.
+         * @param ctx A pointer to the application context.
+         */
+        virtual void Tick(ContextPtr &ctx) {}
+
+        /**
+         * @brief Performs scene view rendering for the system.
+         * @param ctx A pointer to the application context.
+         */
+        virtual void SceneView(ContextPtr &ctx) {}
+
+        /**
+         * @brief Cleans up the system resources.
+         * @param ctx A pointer to the application context.
+         */
+        virtual void Destroy(ContextPtr &ctx) {}
+
+        /**
+         * @brief Renders the inspector GUI for the selected entity.
+         * @param ctx A pointer to the application context.
+         * @param selectedEntity The entity currently selected in the editor.
+         */
+        virtual void Inspector(ContextPtr &ctx, Entity selectedEntity) {}
+
+        /**
+         * @brief Serializes the system data for an entity.
+         * @param ctx A pointer to the application context.
+         * @param entity The entity to serialize the system data for.
+         */
+        virtual void Serialize(ContextPtr &ctx, Entity entity) {}
+
+        /**
+         * @brief Called when an entity is destroyed.
+         * @param registry The entity registry.
+         * @param entity The entity that was destroyed.
+         */
+        virtual void OnDestroy(entt::registry &registry, entt::entity entity) {}
     };
 }

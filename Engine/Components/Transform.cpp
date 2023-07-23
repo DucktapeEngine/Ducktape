@@ -25,7 +25,6 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Scene.h>
 #include <Core/ImGui.h>
 #include <Core/Serialization.h>
-#include <Core/SerializationManager.h>
 
 #include <Components/Transform.h>
 
@@ -72,14 +71,14 @@ namespace DT
         rotation = glm::radians(eulerRotation);
     }
 
-    void TransformSystem::Inspector(Scene *scene, const Context &ctx)
+    void TransformSystem::Inspector(ContextPtr &ctx, Entity selectedEntity)
     {
-        for (Entity entity : scene->View<Transform>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Transform>())
         {
-            if (scene->selectedEntity != entity)
+            if (selectedEntity != entity)
                 continue;
 
-            Transform *trans = scene->Get<Transform>(entity);
+            Transform *trans = ctx.sceneManager->GetActiveScene().Get<Transform>(entity);
             if (ImGui::CollapsingHeader("Transform"))
             {
                 if (ImGui::BeginPopupContextItem())
@@ -126,8 +125,8 @@ namespace DT
         }
     }
 
-    void TransformSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
+    void TransformSystem::Serialize(ContextPtr &ctx, Entity entity)
     {
-        ctx.serializationManager->SerializeComponent<Transform>("Transform", entity, *scene);
+        ctx.sceneManager->GetActiveScene().SerializeComponent<Transform>("Transform", entity, ctx.sceneManager->GetActiveScene());
     }
 }

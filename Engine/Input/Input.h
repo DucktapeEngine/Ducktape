@@ -36,27 +36,75 @@ namespace DT
 {
     class Engine;
 
+    /**
+     * @class Input
+     * @brief Handles input events from the user.
+     */
     class Input
     {
     public:
-        glm::vec2 mousePosition = glm::vec2(0.f); ///< @brief The position of the mouse.
-        glm::vec2 mouseDelta = glm::vec2(0.f);    ///< @brief The position change of the mouse.
+        glm::vec2 mousePosition = glm::vec2(0.f); /// The position of the mouse.
+        glm::vec2 mouseDelta = glm::vec2(0.f);    /// The position change of the mouse.
 
-        std::vector<std::function<void(Key, Action)>> onKeyEvents;
-        std::vector<std::function<void(Button, Action)>> onMouseEvents;
+        std::vector<std::function<void(Key, Action)>> onKeyEvents;      /// List of functions to be called on key events.
+        std::vector<std::function<void(Button, Action)>> onMouseEvents; /// List of functions to be called on mouse events.
 
-        GLFWwindow *window; ///< @brief Pointer to the OpenGL window.
+        GLFWwindow *window; /// Pointer to the OpenGL window.
 
-        Input(GLFWwindow *window);
+        /**
+         * @brief Constructs an Input object.
+         * @param ctx A pointer to the context.
+         */
+        Input(ContextPtr &ctx);
 
+        /**
+         * @brief Checks if a key is currently held.
+         * @param key The key to check.
+         * @return True if the key is held, false otherwise.
+         */
         bool IsKeyHeld(int key);
+
+        /**
+         * @brief Checks if a mouse button is currently held.
+         * @param button The button to check.
+         * @return True if the button is held, false otherwise.
+         */
         bool IsMouseButtonHeld(int button);
 
+        /**
+         * @brief Sets the callback function for key events.
+         * @param onKeyEvent The callback function to set.
+         */
         void OnKeyEvent(std::function<void(Key, Action)> onKeyEvent);
+
+        /**
+         * @brief Sets the callback function for mouse events.
+         * @param onMouseEvent The callback function to set.
+         */
         void OnMouseEvent(std::function<void(Button, Action)> onMouseEvent);
 
+        /**
+         * @brief Processes input events.
+         */
         void Process();
+
+        /**
+         * @brief Callback function for key events.
+         * @param window The window that received the event.
+         * @param key The keyboard key that was pressed or released.
+         * @param scancode The system-specific scancode of the key.
+         * @param action GLFW_PRESS, GLFW_RELEASE, or GLFW_REPEAT.
+         * @param mods Bit field describing which modifier keys were held down.
+         */
         static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+
+        /**
+         * @brief Callback function for mouse button events.
+         * @param window The window that received the event.
+         * @param button The mouse button that was pressed or released.
+         * @param action GLFW_PRESS or GLFW_RELEASE.
+         * @param mods Bit field describing which modifier keys were held down.
+         */
         static void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
     };
 }

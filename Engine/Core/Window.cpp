@@ -40,7 +40,7 @@ namespace DT
         if (id == 131169 || id == 131185 || id == 131218 || id == 131204)
             return;
 
-        std::cout << "---------------" << std::endl;
+        std::cout << "---------------\n";
         std::cout << "Debug message (" << id << "): " << message << std::endl;
 
         switch (source)
@@ -122,7 +122,7 @@ namespace DT
         std::cout << "GL::ERROR::" << code << ": " << description << std::endl;
     }
 
-    Window::Window(const Configuration &config)
+    Window::Window(ContextPtr &ctx)
     {
         glfwInit();
 
@@ -133,26 +133,28 @@ namespace DT
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
-        if (config.hideWindow)
+        if (hideWindow)
             glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+        else
+            glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
 
-        window = glfwCreateWindow(config.windowSize.x, config.windowSize.y, config.windowTitle.c_str(), nullptr, (config.shareContextWith != nullptr) ? config.shareContextWith : nullptr);
-
-        glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
+        window = glfwCreateWindow(windowSize.x, windowSize.y, windowTitle.c_str(), nullptr, nullptr);
 
         if (window == nullptr)
         {
-            std::cout << "Failed to create GLFW window" << std::endl;
+            std::cout << "[ERR] Failed to create GLFW window\n";
             return;
         }
+        std::cout << "[LOG] Created GLFW Window.\n";
 
         glfwMakeContextCurrent(window);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            std::cout << "Failed to initialize GLAD" << std::endl;
+            std::cout << "[ERR] Failed to initialize GLAD\n";
             return;
         }
+        std::cout << "[LOG] Initialized GLAD.\n";
 
         int flags;
         glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -164,17 +166,21 @@ namespace DT
             glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
         }
 
-        viewportSize = config.windowSize;
-        glViewport(0, 0, config.windowSize.x, config.windowSize.y);
+        windowSize = windowSize;
+        glViewport(0, 0, windowSize.x, windowSize.y);
 
-        if (config.drawWireframe)
+        if (drawWireframe)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-        if (config.windowIconPath != "")
-            SetIcon(config.windowIconPath);
+        if (windowIconPath != "")
+            SetIcon(windowIconPath);
 
-        if (config.vsync)
+        if (vsync)
             glfwSwapInterval(1);
+
+        glfwSetWindowUserPointer(window, reinterpret_cast<void *>(&ctx));
+
+        std::cout << "[LOG] Window Constructed\n";
     }
 
     void Window::Clear(glm::vec4 color)
@@ -223,7 +229,7 @@ namespace DT
         }
         else
         {
-            std::cout << "Failed to load icon." << std::endl;
+            std::cout << "[LOG] Failed to load window icon.\n";
         }
     }
 
@@ -241,12 +247,12 @@ namespace DT
 
     glm::vec2 Window::GetWindowSize()
     {
-        return viewportSize;
+        return windowSize;
     }
 
     void Window::SetWindowSize(const glm::vec2 &size)
     {
-        viewportSize = size;
+        windowSize = size;
         glViewport(0, 0, size.x, size.y);
     }
 

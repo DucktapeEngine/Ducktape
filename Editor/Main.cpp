@@ -22,7 +22,7 @@ aryanbaburajan2007@gmail.com
 
 #define DT_DEBUG
 
-#include <Core/Engine.h>
+#include <Core/Context.h>
 #include <Components/RegisterComponentSystems.h>
 #include <Editor.h>
 #include <Panels/ConsolePanel.h>
@@ -42,37 +42,35 @@ int main()
 {
     try
     {
-        Engine e(Project(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox"));
+        Context ctx(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "DucktapeProjectSettings.json");
 
-        Scene mainScene(e.project.config);
+        // RegisterComponentSystems(mainScene);
 
-        RegisterComponentSystems(mainScene);
+        // SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScenctx.engine.json", mainScene, e);
 
-        SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", mainScene, e);
+        // Entity camera = mainScenctx.engine.CreateEntity();
+        // mainScenctx.engine.Assign<Tag>(camera).name = "Camera";
+        // mainScenctx.engine.Assign<Transform>(camera);
+        // mainScenctx.engine.Assign<Camera>(camera);
+        // mainScenctx.engine.Assign<DirectionalLight>(camera);
 
-        // Entity camera = mainScene.CreateEntity();
-        // mainScene.Assign<Tag>(camera).name = "Camera";
-        // mainScene.Assign<Transform>(camera);
-        // mainScene.Assign<Camera>(camera);
-        // mainScene.Assign<DirectionalLight>(camera);
+        // Entity bag = mainScenctx.engine.CreateEntity();
+        // mainScenctx.engine.Assign<Tag>(bag).name = "Bag";
+        // mainScenctx.engine.Assign<Relation>(bag).SetParent(camera, mainScene);
+        // mainScenctx.engine.Assign(bag, "PlayerController");
 
-        // Entity bag = mainScene.CreateEntity();
-        // mainScene.Assign<Tag>(bag).name = "Bag";
-        // mainScene.Assign<Relation>(bag).SetParent(camera, mainScene);
-        // mainScene.Assign(bag, "PlayerController");
-
-        // for (const auto &meshAsset : std::filesystem::directory_iterator(e.project.directory / "Assets" / "Models" / "backpack" / "backpack"))
+        // for (const auto &meshAsset : std::filesystem::directory_iterator(ctx.engine.project.directory / "Assets" / "Models" / "backpack" / "backpack"))
         // {
         //     if (!meshAsset.is_directory())
         //     {
-        //         Entity mesh = mainScene.CreateEntity();
-        //         mainScene.Assign<Relation>(mesh).SetParent(bag, mainScene);
-        //         mainScene.Assign<MeshRenderer>(mesh).mesh = ResourceManager::GetRID(meshAsset);
+        //         Entity mesh = mainScenctx.engine.CreateEntity();
+        //         mainScenctx.engine.Assign<Relation>(mesh).SetParent(bag, mainScene);
+        //         mainScenctx.engine.Assign<MeshRenderer>(mesh).mesh = ctx.resourceManager->GetRID(meshAsset);
         //         break;
         //     }
         // }
 
-        e.Init(mainScene);
+        ctx.engine.Init(ctx.pointer);
 
         Editor::AddPanel<SceneViewPanel>();
         Editor::AddPanel<ScenePanel>();
@@ -84,34 +82,34 @@ int main()
         Editor::AddPanel<ProjectPanel>();
         Editor::AddPanel<DucktapeEditorPanel>();
         Editor::AddPanel<ComponentMenuPanel>();
-        ResourceInterface::AddDefault();
+        ResourceInterface::AddDefault(ctx.pointer);
 
-        Editor::Init(e);
+        Editor::Init(ctx.pointer);
 
-        e.loopManager.sceneTick = true;
+        ctx.loopManager.sceneTick = true;
 
-        while (e.IsOpen())
+        while (ctx.engine.IsRunning(ctx.pointer))
         {
-            e.PollEvents();
+            ctx.engine.PollEvents(ctx.window);
 
-            if (!e.IsOpen())
+            if (!ctx.engine.IsRunning(ctx.pointer))
                 break;
 
-            e.StartFrame();
+            ctx.engine.StartFrame(ctx.pointer);
 
             Editor::NewFrame();
 
-            if (e.loopManager.sceneTick)
-                for (System *system : mainScene.systems)
-                    system->SceneView(&mainScene, e.ctx);
+            if (ctx.loopManager.sceneTick)
+                for (System *system : ctx.sceneManager.GetActiveScene().systems)
+                    system->SceneView(ctx.pointer);
 
-            Editor::Render(e);
+            Editor::Render();
 
-            Editor::EndFrame(e.renderer);
-            e.EndFrame();
+            Editor::EndFrame();
+            ctx.engine.EndFrame(ctx.window);
         }
 
-        e.project.Save();
+        // ctx.project.Save(); Implement ctx.Save();
         Editor::Terminate();
     }
     catch (const std::exception &e)

@@ -33,6 +33,6 @@ struct PlayerController
     float speed = 2.5f;
     float sensitivity = 25.f;
 
-    void Tick(Entity entity, Scene *scene, const Context &ctx);
-    void Inspector(Entity entity, Scene *scene, const Context &ctx);
+    void Tick(Entity entity, ContextPtr &ctx);
+    void Inspector(Entity entity, ContextPtr &ctx, Entity selectedEntity);
 };

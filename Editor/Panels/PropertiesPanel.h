@@ -18,6 +18,6 @@ namespace DT
 	public:
 		inline std::string GetWindowName() override { return "Properties"; }
 
-		void Update(Engine &engine) override;
+		void Update(ContextPtr &ctx) override;
 	};
 }

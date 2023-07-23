@@ -13,7 +13,7 @@ namespace DT
 	public:
 		inline std::string GetWindowName() override { return "Scene"; }
 
-		void DrawSelectibleEntity(Entity entity, Engine &engine);
-		void Update(Engine &engine) override;
+		void DrawSelectibleEntity(Entity entity, ContextPtr &ctx);
+		void Update(ContextPtr &ctx) override;
 	};
 }

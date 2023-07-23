@@ -20,16 +20,17 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <iostream>
 #include "Editor.h"
 
 namespace DT
 {
-    void Editor::Init(Engine &engine)
+    void Editor::Init(ContextPtr &context)
     {
-        enginePtr = &engine;
+        ctx = &context;
 
         ImGui::CreateContext();
-        ImGui_ImplGlfw_InitForOpenGL(engine.window.window, true);
+        ImGui_ImplGlfw_InitForOpenGL(ctx->window->window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
 
         ImGuiIO &io = ImGui::GetIO();
@@ -45,9 +46,9 @@ namespace DT
         dockspaceId = ImGui::DockSpaceOverViewport();
 
         for (Panel *panel : panels)
-            panel->Start(engine);
+            panel->Start(*ctx);
 
-        EndFrame(engine.renderer);
+        EndFrame();
     }
 
     void Editor::NewFrame()
@@ -57,7 +58,7 @@ namespace DT
         ImGui::NewFrame();
     }
 
-    void Editor::Render(Engine &engine)
+    void Editor::Render()
     {
         dockspaceId = ImGui::DockSpaceOverViewport();
 
@@ -65,10 +66,10 @@ namespace DT
 
         for (Panel *panel : panels)
             if (panel->isOpen)
-                panel->Update(engine);
+                panel->Update(*ctx);
     }
 
-    void Editor::EndFrame(Renderer &renderer)
+    void Editor::EndFrame()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -76,7 +77,7 @@ namespace DT
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        glBindFramebuffer(GL_FRAMEBUFFER, renderer.FBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, ctx->renderer->FBO);
     }
 
     void Editor::Terminate()
@@ -92,12 +93,12 @@ namespace DT
 
     void Editor::Close()
     {
-        glfwSetWindowShouldClose(enginePtr->window.window, true);
+        glfwSetWindowShouldClose(ctx->window->window, true);
     }
 
     void Editor::SetTitle(const std::string &title)
     {
-        glfwSetWindowTitle(enginePtr->window.window, title.c_str());
+        glfwSetWindowTitle(ctx->window->window, title.c_str());
     }
 
     void Editor::SetIcon(std::filesystem::path path)
@@ -110,7 +111,7 @@ namespace DT
             image.width = width;
             image.height = height;
             image.pixels = data;
-            glfwSetWindowIcon(enginePtr->window.window, 1, &image);
+            glfwSetWindowIcon(ctx->window->window, 1, &image);
             stbi_image_free(data);
         }
         else
@@ -122,87 +123,87 @@ namespace DT
     glm::vec2 Editor::GetWindowPos()
     {
         int x, y;
-        glfwGetWindowPos(enginePtr->window.window, &x, &y);
+        glfwGetWindowPos(ctx->window->window, &x, &y);
         return glm::vec2(x, y);
     }
 
     void Editor::SetWindowPos(const glm::vec2 &pos)
     {
-        glfwSetWindowPos(enginePtr->window.window, pos.x, pos.y);
+        glfwSetWindowPos(ctx->window->window, pos.x, pos.y);
     }
 
     glm::vec2 Editor::GetWindowSize()
     {
         int width, height;
-        glfwGetWindowSize(enginePtr->window.window, &width, &height);
+        glfwGetWindowSize(ctx->window->window, &width, &height);
         return glm::vec2(width, height);
     }
 
     void Editor::SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize)
     {
-        glfwSetWindowSizeLimits(enginePtr->window.window, minSize.x, minSize.y, maxSize.x, maxSize.y);
+        glfwSetWindowSizeLimits(ctx->window->window, minSize.x, minSize.y, maxSize.x, maxSize.y);
     }
 
     void Editor::SetWindowAspectRatio(const int &numerator, const int &denominator)
     {
-        glfwSetWindowAspectRatio(enginePtr->window.window, numerator, denominator);
+        glfwSetWindowAspectRatio(ctx->window->window, numerator, denominator);
     }
 
     void Editor::SetWindowSize(const glm::vec2 &size)
     {
-        glfwSetWindowSize(enginePtr->window.window, size.x, size.y);
+        glfwSetWindowSize(ctx->window->window, size.x, size.y);
     }
 
     glm::vec2 Editor::GetWindowContentScale()
     {
         float x, y;
-        glfwGetWindowContentScale(enginePtr->window.window, &x, &y);
+        glfwGetWindowContentScale(ctx->window->window, &x, &y);
         return glm::vec2(x, y);
     }
 
     float Editor::GetWindowOpacity()
     {
-        return glfwGetWindowOpacity(enginePtr->window.window);
+        return glfwGetWindowOpacity(ctx->window->window);
     }
 
     void Editor::SetWindowOpacity(const float &opacity)
     {
-        glfwSetWindowOpacity(enginePtr->window.window, opacity);
+        glfwSetWindowOpacity(ctx->window->window, opacity);
     }
 
     void Editor::IconifyWindow()
     {
-        glfwIconifyWindow(enginePtr->window.window);
+        glfwIconifyWindow(ctx->window->window);
     }
 
     void Editor::RestoreWindow()
     {
-        glfwRestoreWindow(enginePtr->window.window);
+        glfwRestoreWindow(ctx->window->window);
     }
 
     void Editor::MaximizeWindow()
     {
-        glfwMaximizeWindow(enginePtr->window.window);
+        glfwMaximizeWindow(ctx->window->window);
     }
 
     void Editor::ShowWindow()
     {
-        glfwShowWindow(enginePtr->window.window);
+        glfwShowWindow(ctx->window->window);
     }
 
     void Editor::HideWindow()
     {
-        glfwHideWindow(enginePtr->window.window);
+        glfwHideWindow(ctx->window->window);
     }
 
     void Editor::FocusWindow()
     {
-        glfwFocusWindow(enginePtr->window.window);
+        glfwFocusWindow(ctx->window->window);
     }
 
     void Editor::RequestWindowAttention()
     {
-        glfwRequestWindowAttention(enginePtr->window.window);
+        glfwRequestWindowAttention(ctx->window->window);
     }
 
     void Editor::SetVSync(const bool &vsync)

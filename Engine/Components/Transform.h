@@ -41,49 +41,49 @@ namespace DT
      */
     struct Transform
     {
-        glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);    ///< Translation vector
-        glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f); ///< Rotation in quaternion form
-        glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);          ///< Scale vector
+        glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);    /// Translation vector
+        glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f); /// Rotation in quaternion form
+        glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);          /// Scale vector
 
         /**
-         * @brief Returns the Translation->Rotation->Scale model matrix
+         * @brief Returns the Translation->Rotation->Scale model matrix.
          * @return GLM 4x4 transform matrix
          */
         glm::mat4 GetModelMatrix();
 
         /**
-         * @brief Updates all Transform members from GLM 4x4 combined transform matrix decomposition
-         * @param model GLM 4x4 combined transform matrix
+         * @brief Updates all Transform members from GLM 4x4 combined transform matrix decomposition.
+         * @param model GLM 4x4 combined transform matrix.
          */
         void SetModelMatrix(glm::mat4 model);
 
         /**
-         * @brief Returns right vector of Transform rotated model
-         * @return GLM 3-vector (rotated X axis)
+         * @brief Returns right vector of Transform rotated model.
+         * @return GLM 3-vector (rotated X axis).
          */
         glm::vec3 Right();
 
         /**
-         * @brief Returns forward vector of Transform rotated model
-         * @return GLM 3-vector (rotated Z axis)
+         * @brief Returns forward vector of Transform rotated model.
+         * @return GLM 3-vector (rotated Z axis).
          */
         glm::vec3 Forward();
 
         /**
-         * @brief Returns up vector of Transform rotated model
-         * @return GLM 3-vector (rotated Y axis)
+         * @brief Returns up vector of Transform rotated model.
+         * @return GLM 3-vector (rotated Y axis).
          */
         glm::vec3 Up();
 
         /**
-         * @brief Returns the euler rotation of the transform
-         * @return GLM 3-vector Euler angles formed from the quaternion rotation
+         * @brief Returns the euler rotation of the transform.
+         * @return GLM 3-vector Euler angles formed from the quaternion rotation.
          */
         glm::vec3 GetEulerRotation();
 
         /**
-         * @brief Sets the quaternion rotation based on euler angles
-         * @param eulerRotation GLM 3-vector Rotation to set in eulers
+         * @brief Sets the quaternion rotation based on euler angles.
+         * @param eulerRotation GLM 3-vector Rotation to set in eulers.
          */
         void SetEulerRotation(glm::vec3 eulerRotation);
     };
@@ -92,19 +92,11 @@ namespace DT
 
     class Scene;
 
-    class TransformSystem : public System // TOFIX: Register System only if DT_EDITOR flag is on
+    class TransformSystem : public System
     {
     public:
-        /**
-         * @brief Serializes Transform properties for Inspector.
-         */
-        void Inspector(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Handles Transform serialization.
-         */
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
-
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
+        void Serialize(ContextPtr &ctx, Entity entity) override;
         void PopupContext(const char *label, std::function<void()> func);
     };
 }

@@ -22,34 +22,39 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-#include <array>
-#include <iostream>
-#include <filesystem>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <utils/stb_image.h>
-
 namespace DT
 {
+    class Engine;
+    class ResourceManager;
+    class Window;
+    class Renderer;
+    class Input;
+    class Time;
+    class LoopManager;
+    class Debug;
+    class Context;
+    class Scene;
+    class SceneManager;
+    class Game;
+
     /**
-     * @brief Cubemap class for managing cubemap
+     * @brief A light (light on compilation time) class alternative to the Context class. Allows for access to various systems in the Engine.
      */
-    class Cubemap
+    class ContextPtr
     {
     public:
-        unsigned int id;     ///< @brief Unique ID for each cubemap
+        Engine *engine{NULL};
+        Window *window{NULL};
+        Renderer *renderer{NULL};
+        Input *input{NULL};
+        Time *time{NULL};
+        LoopManager *loopManager{NULL};
+        Debug *debug{NULL};
+        Context *ctx{NULL};
+        SceneManager *sceneManager{NULL};
+        Game *game{NULL};
+        ResourceManager *resourceManager{NULL};
 
-        /**
-         * @brief Creare a new Cubemap object.
-         * @param paths list of 6 texture/image path for the each side of cubemap
-         */
-        Cubemap(std::array<std::filesystem::path, 6> paths);
-
-        /**
-         * @brief Destroys a Cubemap object.
-         */
-        ~Cubemap();
+        friend class Context;
     };
 }

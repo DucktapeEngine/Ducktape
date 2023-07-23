@@ -37,6 +37,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/ResourceManager.h>
 #include <Core/Resource.h>
 #include <Scene/Entity.h>
+#include <Core/ContextPtr.h>
 
 namespace ImGui
 {
@@ -59,18 +60,16 @@ namespace ImGui
     ImVec2 operator+(const ImVec2 &iv2, const ImVec2 &otheriv2);
 
     template <typename T>
-    IMGUI_API void Resource(const std::string &label, DT::Resource<T> *resource)
+    IMGUI_API void Resource(const std::string &label, DT::Resource<T> *resource, DT::ContextPtr &ctx)
     {
         ImGuiWindow *window = GetCurrentWindow();
         if (window->SkipItems)
             return;
 
-        DT::ResourceManager &rm = DT::ResourceManager::Instance();
-
         BeginGroup();
         PushID(label.c_str());
 
-        if (ImGui::Button(rm.GetPath(resource->rid).filename().string().c_str(), ImVec2(ImGui::GetWindowSize().x * 0.65f, 0.0f)))
+        if (ImGui::Button(ctx.resourceManager->GetPath(resource->rid).filename().string().c_str(), ImVec2(ImGui::GetWindowSize().x * 0.65f, 0.0f)))
         {
             fileDialog.Open();
             fileDialog.SetTitle(label);
@@ -79,7 +78,7 @@ namespace ImGui
 
         if (fileDialog.HasSelected())
         {
-            resource->rid = DT::ResourceManager::GetRID(fileDialog.GetSelected());
+            resource->rid = ctx.resourceManager->GetRID(fileDialog.GetSelected());
             fileDialog.ClearSelected();
         }
 

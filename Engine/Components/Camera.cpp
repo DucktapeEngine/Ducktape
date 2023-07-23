@@ -23,7 +23,6 @@ aryanbaburajan2007@gmail.com
 #include <Components/Transform.h>
 #include <Scene/System.h>
 #include <Core/Serialization.h>
-#include <Core/SerializationManager.h>
 #include <Renderer/Renderer.h>
 #include <Core/Debug.h>
 #include <Core/ImGui.h>
@@ -40,15 +39,15 @@ namespace DT
         return windowSpacePos;
     }
 
-    void CameraSystem::Init(Scene *scene, const Context &ctx)
+    void CameraSystem::Init(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<Camera>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Camera>())
         {
-            Camera *cam = scene->Get<Camera>(entity);
+            Camera *cam = ctx.sceneManager->GetActiveScene().Get<Camera>(entity);
 
-            ctx.activeScene->activeCamera = cam;
+            ctx.sceneManager->GetActiveScene().activeCamera = cam;
 
-            cam->transform = scene->Get<Transform>(entity);
+            cam->transform = ctx.sceneManager->GetActiveScene().Get<Transform>(entity);
 
             ctx.renderer->cameraView = &cam->view;
             ctx.renderer->cameraProjection = &cam->projection;
@@ -59,14 +58,14 @@ namespace DT
         }
     }
 
-    void CameraSystem::Inspector(Scene *scene, const Context &ctx)
+    void CameraSystem::Inspector(ContextPtr &ctx, Entity selectedEntity)
     {
-        for (Entity entity : scene->View<Camera>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Camera>())
         {
-            if (scene->selectedEntity != entity)
+            if (selectedEntity != entity)
                 continue;
 
-            Camera *cam = scene->Get<Camera>(entity);
+            Camera *cam = ctx.sceneManager->GetActiveScene().Get<Camera>(entity);
 
             if (ImGui::CollapsingHeader("Camera"))
             {
@@ -76,8 +75,8 @@ namespace DT
         }
     }
 
-    void CameraSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
+    void CameraSystem::Serialize(ContextPtr &ctx, Entity entity)
     {
-        ctx.serializationManager->SerializeComponent<Camera>("Camera", entity, *scene);
+        ctx.sceneManager->GetActiveScene().SerializeComponent<Camera>("Camera", entity, ctx.sceneManager->GetActiveScene());
     }
 }

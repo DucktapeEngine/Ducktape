@@ -21,47 +21,28 @@ aryanbaburajan2007@gmail.com
 */
 
 #include <Scene/Scene.h>
+#include <fstream>
 
 namespace DT
 {
-    Scene::Scene(Configuration &config)
+    Scene::Scene(RID rid, ContextPtr &ctx)
     {
         scenes.insert(this);
-        if (config.gameModule != "")
-            LoadModule(config.gameModule);
+        from_json(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))), *this);
     }
 
     Scene::~Scene()
     {
         scenes.erase(scenes.find(this));
-        gameModule.Free();
-
-        // for (System *system : systems)
-        //     free(system); // TOFIX: Commented out to avoid Segfault
-
         registry.clear();
     }
 
-    Scene *Scene::GetScene(entt::registry &registry)
+    Scene *Scene::GetSceneFromRegistry(entt::registry &registry)
     {
         for (Scene *scene : scenes)
             if (&scene->registry == &registry)
                 return scene;
         return nullptr;
-    }
-
-    void Scene::LoadModule(std::filesystem::path path)
-    {
-        gameModule.Load(path);
-        if (!gameModule.module)
-        {
-            std::cout << "Failed to load Module: " << path << std::endl;
-            return;
-        }
-
-        RegisterRuntimeFunc registerRuntimeFunc = gameModule.GetSymbolAddress<RegisterRuntimeFunc>("RegisterRuntime");
-        if (registerRuntimeFunc)
-            registerRuntimeFunc(*this);
     }
 
     Entity Scene::CreateEntity()
@@ -74,29 +55,60 @@ namespace DT
         registry.destroy(entity);
     }
 
-    void Scene::Assign(Entity entity, const std::string &name)
+    void Scene::Assign(Entity entity, const std::string &name, ContextPtr &ctx)
     {
-        RegisterFunc registerFunc = gameModule.GetSymbolAddress<RegisterFunc>("Register" + name);
+        RegisterFunc registerFunc = ctx.game->gameModule.GetSymbolAddress<RegisterFunc>("Register" + name);
 
         if (!registerFunc)
         {
-            std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
+            std::cout << "Failed to get REGISTER(" << name << ") function from Game Module.\n";
             return;
         }
 
         (*registerFunc)(entity, this, RegisterAction::Assign);
     }
 
-    void Scene::Remove(Entity entity, const std::string &name)
+    void Scene::Remove(Entity entity, const std::string &name, ContextPtr &ctx)
     {
-        RegisterFunc registerFunc = gameModule.GetSymbolAddress<RegisterFunc>("Register" + name);
+        RegisterFunc registerFunc = ctx.game->gameModule.GetSymbolAddress<RegisterFunc>("Register" + name);
 
         if (!registerFunc)
         {
-            std::cout << "Failed to get REGISTER(" << name << ") function from Game Module." << std::endl;
+            std::cout << "Failed to get REGISTER(" << name << ") function from Game Module.\n";
             return;
         }
 
         (*registerFunc)(entity, this, RegisterAction::Remove);
+    }
+
+    Scene *Scene::LoadResource(RID rid, ContextPtr &ctx)
+    {
+        if (factoryData.count(rid))
+            return factoryData[rid];
+
+        factoryData[rid] = new Scene(rid, ctx);
+
+        return factoryData[rid];
+    }
+
+    void Scene::UnLoadResource(RID rid)
+    {
+        delete factoryData[rid];
+        factoryData.erase(rid);
+    }
+
+    void to_json(json &json, Scene &scene)
+    {
+        scene.isSerializing = true;
+
+        for (System *system : scene.systems)
+            scene.registry.each([&](const Entity entity)
+                                { system->Serialize(*scene.ctx, entity); });
+
+        json = scene.serializedData;
+    }
+
+    void from_json(const json &j, Scene &scene)
+    {
     }
 }

@@ -25,7 +25,6 @@ aryanbaburajan2007@gmail.com
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 #include <filesystem>
 
 #include <glad/glad.h>
@@ -36,6 +35,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Serialization.h>
 #include <Core/ResourceManager.h>
 #include <Core/Serialization.h>
+#include <Core/ContextPtr.h>
 
 namespace DT
 {
@@ -45,8 +45,8 @@ namespace DT
     class Shader
     {
     public:
-        unsigned int id = 0; ///< @brief Unique id of the shader.
-        bool loaded = false; ///< @brief Boolean variable about whether the shader has been loaded or not.
+        unsigned int id = 0; /// @brief Unique id of the shader.
+        bool loaded = false; /// @brief Boolean variable about whether the shader has been loaded or not.
 
         static inline const std::string versionInclude = "#version 440 core\n";
         static inline const std::string ducktapeInclude = "#ifdef DT_SHADER_FRAG\n"
@@ -63,7 +63,7 @@ namespace DT
 
         Shader() = default;
 
-        Shader(RID shader);
+        Shader(RID shader, ContextPtr& ctx);
 
         /**
          * @brief Destroy the Shader object
@@ -165,8 +165,12 @@ namespace DT
          */
         void SetMat4(std::string name, const glm::mat4 &mat) const;
 
-        static Shader *LoadResource(RID rid);
+        static Shader *LoadResource(RID rid, ContextPtr& ctx);
         static void UnLoadResource(RID rid);
+        static void SaveResource(RID rid)
+        {
+            // yet to be implemented
+        }
 
     protected:
         bool CheckCompileErrors(unsigned int shader, std::string type, const std::filesystem::path &path);

@@ -29,7 +29,7 @@ namespace DT
      */
     struct Tag
     {
-        std::string name = "Unnamed"; ///< @brief Tag name
+        std::string name = "Unnamed"; /// @brief Name of the current Entity.
     };
 
     SERIALIZE(Tag, name);
@@ -37,14 +37,7 @@ namespace DT
     class TagSystem : public System
     {
     public:
-        /**
-         * @brief Serializes Tag properties for Inspector.
-         */
-        void Inspector(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Handles Tag serialization.
-         */
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
+        void Serialize(ContextPtr &ctx, Entity entity) override;
     };
 }

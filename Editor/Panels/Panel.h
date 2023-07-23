@@ -13,8 +13,8 @@ namespace DT
 		bool isOpen = false;
 
 		virtual inline std::string GetWindowName() { return "Unnamed Window"; }
-		virtual void Start(Engine &engine) {}
-		virtual void Update(Engine &engine) {}
-		virtual void Destroy(Engine &engine) {}
+		virtual void Start(ContextPtr &ctx) {}
+		virtual void Update(ContextPtr &ctx) {}
+		virtual void Destroy(ContextPtr &ctx) {}
 	};
 }

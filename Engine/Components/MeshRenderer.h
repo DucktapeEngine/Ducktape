@@ -28,44 +28,29 @@ aryanbaburajan2007@gmail.com
 namespace DT
 {
     class Transform;
-    
+
     /**
-     * @brief MeshRenderer struct for mesh handling with a collection of shader, model transformation and material.
+     * @brief MeshRenderer component for rendering mesh.
      */
     struct MeshRenderer
     {
-        Resource<Mesh> mesh;  ///< @brief Mesh data and buffers for runtime drawing
-        Transform *transform; ///< @brief Pointer to model transform
+        Resource<Mesh> mesh; /// @brief Resource of the Mesh object to be rendered.
 
-        IN_SERIALIZE(MeshRenderer, mesh);
+    private:
+        Transform *transform;
+
+        friend class MeshRendererSystem;
     };
 
-    class MeshRendererSystem : System
+    SERIALIZE(MeshRenderer, mesh);
+
+    class MeshRendererSystem : public System
     {
     public:
-        /**
-         * @brief Initializes entity model transform, shader and mesh buffers.
-         */
-        void Init(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Draws current mesh for current scene->
-         */
-        void Tick(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Handles Scene View rendering.
-         */
-        void SceneView(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Handles MeshRenderer serialization.
-         */
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
-
-        /**
-         * @brief Serializes MeshRenderer properties for Inspector.
-         */
-        void Inspector(Scene *scene, const Context &ctx) override;
+        void Init(ContextPtr &ctx) override;
+        void Tick(ContextPtr &ctx) override;
+        void SceneView(ContextPtr &ctx) override;
+        void Serialize(ContextPtr &ctx, Entity entity) override;
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
     };
 }

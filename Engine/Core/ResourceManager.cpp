@@ -27,20 +27,20 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    ResourceManager &ResourceManager::Instance()
+    ResourceManager::ResourceManager()
     {
-        static ResourceManager instance;
-        return instance;
+        std::cout << "[LOG] ResourceManager Constructed\n";
     }
 
     std::filesystem::path ResourceManager::GetPath(RID rid)
     {
-        return Instance().resourceMap[rid];
+
+        return resourceMap[rid];
     }
 
     RID ResourceManager::GetRID(const std::filesystem::path &path)
     {
-        for (auto &resource : Instance().resourceMap)
+        for (auto &resource : resourceMap)
             if (resource.second == path)
                 return resource.first;
 
@@ -48,13 +48,13 @@ namespace DT
         while (HasRID(rid))
             rid++;
 
-        Instance().resourceMap[rid] = path;
+        resourceMap[rid] = path;
         return rid;
     }
 
     bool ResourceManager::HasRID(RID rid)
     {
-        if (Instance().resourceMap.count(rid))
+        if (resourceMap.count(rid))
             return true;
         return false;
     }

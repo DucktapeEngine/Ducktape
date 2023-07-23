@@ -20,19 +20,20 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
+#include <iostream>
 #include <Renderer/Texture.h>
 
 namespace DT
 {
-    Texture::Texture(RID rid)
+    Texture::Texture(RID rid, ContextPtr &ctx)
     {
         stbi_set_flip_vertically_on_load(true);
 
         glGenTextures(1, &id);
 
-        std::filesystem::path path = ResourceManager::GetPath(rid);
+        texturePath = ctx.resourceManager->GetPath(rid);
 
-        unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &nrChannels, 0);
+        unsigned char *data = stbi_load(texturePath.string().c_str(), &width, &height, &nrChannels, 0);
 
         if (data)
         {
@@ -59,7 +60,7 @@ namespace DT
         }
         else
         {
-            std::cout << "Texture failed to load at path: " << path << std::endl;
+            std::cout << "Texture failed to load at path: " << texturePath << std::endl;
             std::cout << "STBI: " << stbi_failure_reason() << std::endl;
             stbi_image_free(data);
             return;

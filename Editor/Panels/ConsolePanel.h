@@ -9,6 +9,6 @@ namespace DT
 	public:
 		inline std::string GetWindowName() override { return "Console"; }
 
-		void Update(Engine &engine) override;
+		void Update(ContextPtr &ctx) override;
 	};
 }

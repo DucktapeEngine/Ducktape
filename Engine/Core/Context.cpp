@@ -20,35 +20,28 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Core/ResourceManager.h>
+#include <functional>
 
-#include <Core/Project.h>
+#include <Core/Context.h>
 
 namespace DT
 {
-    void Project::Load()
+    void Context::InitializeContextPtr()
     {
-        *this = json::parse(std::ifstream(directory / "DucktapeProjectSettings.json"));
-    }
+        pointer.engine = &engine;
+        pointer.window = &window;
+        pointer.renderer = &renderer;
+        pointer.input = &input;
+        pointer.time = &time;
+        pointer.loopManager = &loopManager;
+        pointer.debug = &debug;
+        pointer.sceneManager = &sceneManager;
+        pointer.game = &game;
+        pointer.resourceManager = &resourceManager;
+        assert(pointer.resourceManager != nullptr);
+        std::cout << __LINE__ << std::endl;
+        pointer.ctx = this;
 
-    void Project::Save()
-    {
-        std::ofstream output(directory / "DucktapeProjectSettings.json");
-        json j = *this;
-        output << j;
-    }
-
-    void to_json(json &j, const Project &value)
-    {
-        j["directory"] = value.directory;
-        j["config"] = value.config;
-        j["resourceManager"] = ResourceManager::Instance();
-    }
-
-    void from_json(const json &j, Project &value)
-    {
-        j.at("directory").get_to(value.directory);
-        j.at("config").get_to(value.config);
-        j.at("resourceManager").get_to(ResourceManager::Instance());
+        std::cout << "[LOG] ContextPtr Initialized\n";
     }
 }

@@ -2,32 +2,32 @@
 
 namespace DT
 {
-    void MaterialInterface::Init()
+    void MaterialInterface::Init(ContextPtr& ctx)
     {
-        iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "material.png"))->id;
+        iconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "material.png"), ctx)->id;
     }
 
-    void MaterialInterface::OpenInspect(RID rid)
+    void MaterialInterface::OpenInspect(RID rid, ContextPtr& ctx)
     {
-        openedMaterial.Load(rid);
-        filename = ResourceManager::GetPath(rid).filename().string();
+        openedMaterial.Load(rid, ctx);
+        filename = ctx.resourceManager->GetPath(rid).filename().string();
     }
 
-    void MaterialInterface::Inspect()
+    void MaterialInterface::Inspect(ContextPtr &ctx)
     {
         ImGui::Text(filename.c_str());
         ImGui::TextDisabled("Material");
 
         ImGui::Separator();
 
-        ImGui::Color("diffuse color", &openedMaterial.Data()->diffuseColor);
-        ImGui::Color("specular color", &openedMaterial.Data()->specularColor);
-        ImGui::Color("ambient color", &openedMaterial.Data()->ambientColor);
-        ImGui::DragFloat("shininess", &openedMaterial.Data()->shininess);
-        ImGui::Resource("texture", &openedMaterial.Data()->texture);
+        ImGui::Color("diffuse color", &openedMaterial.data->diffuseColor);
+        ImGui::Color("specular color", &openedMaterial.data->specularColor);
+        ImGui::Color("ambient color", &openedMaterial.data->ambientColor);
+        ImGui::DragFloat("shininess", &openedMaterial.data->shininess);
+        ImGui::Resource("texture", &openedMaterial.data->texture, ctx);
 
         std::string textureType = "Unknown type";
-        switch (openedMaterial.Data()->textureType)
+        switch (openedMaterial.data->textureType)
         {
         case Texture::Type::DIFFUSE:
             textureType = "Diffuse";
@@ -43,57 +43,57 @@ namespace DT
             break;
         }
 
-        int currentTextureType = openedMaterial.Data()->textureType;
+        int currentTextureType = openedMaterial.data->textureType;
         ImGui::SliderInt("Texture Type", &currentTextureType, 0, 3, textureType.c_str());
-        openedMaterial.Data()->textureType = (Texture::Type)currentTextureType;
+        openedMaterial.data->textureType = (Texture::Type)currentTextureType;
 
         // ImGui:: something for texture type
-        ImGui::Resource("shader", &openedMaterial.Data()->shader);
+        ImGui::Resource("shader", &openedMaterial.data->shader, ctx);
     }
 
-    void MaterialInterface::CloseInspect()
+    void MaterialInterface::CloseInspect(ContextPtr &ctx)
     {
-        openedMaterial.Save();
+        openedMaterial.Save(ctx);
     }
 
-    void TextureInterface::Init()
+    void TextureInterface::Init(ContextPtr &ctx)
     {
-        iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "image.png"))->id;
+        iconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "image.png"), ctx)->id;
     }
 
-    void TextureInterface::OpenInspect(RID rid)
+    void TextureInterface::OpenInspect(RID rid, ContextPtr& ctx)
     {
-        openedTexture.Load(rid);
-        filename = ResourceManager::GetPath(rid).filename().string();
+        openedTexture.Load(rid, ctx);
+        filename = ctx.resourceManager->GetPath(rid).filename().string();
     }
 
-    void TextureInterface::Inspect()
+    void TextureInterface::Inspect(ContextPtr &ctx)
     {
         ImGui::Text(filename.c_str());
         ImGui::TextDisabled("Texture");
 
         ImGui::Separator();
 
-        ImGui::Image((ImTextureID)(uintptr_t)openedTexture.Data()->id, ImVec2(ImGui::GetWindowContentRegionWidth(), openedTexture.Data()->height * (ImGui::GetWindowContentRegionWidth() / openedTexture.Data()->width)), ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::Image((ImTextureID)(uintptr_t)openedTexture.data->id, ImVec2(ImGui::GetWindowContentRegionWidth(), openedTexture.data->height * (ImGui::GetWindowContentRegionWidth() / openedTexture.data->width)), ImVec2(0, 1), ImVec2(1, 0));
     }
 
-    void TextureInterface::CloseInspect()
+    void TextureInterface::CloseInspect(ContextPtr &ctx)
     {
-        openedTexture.Save();
+        openedTexture.Save(ctx);
     }
 
-    void MeshInterface::Init()
+    void MeshInterface::Init(ContextPtr &ctx)
     {
-        iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "mesh.png"))->id;
+        iconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "mesh.png"), ctx)->id;
     }
 
-    void MeshInterface::OpenInspect(RID rid)
+    void MeshInterface::OpenInspect(RID rid, ContextPtr& ctx)
     {
-        openedMesh.Load(rid);
-        filename = ResourceManager::GetPath(rid).filename().string();
+        openedMesh.Load(rid, ctx);
+        filename = ctx.resourceManager->GetPath(rid).filename().string();
     }
 
-    void MeshInterface::Inspect()
+    void MeshInterface::Inspect(ContextPtr &ctx)
     {
         ImGui::Text(filename.c_str());
         ImGui::TextDisabled("Mesh");
@@ -101,16 +101,16 @@ namespace DT
         ImGui::Separator();
 
         ImGui::Text("materials");
-        for (int i = 0; i < openedMesh.Data()->materials.size(); i++)
-            ImGui::Resource(std::to_string(i), &openedMesh.Data()->materials[i]);
+        for (int i = 0; i < openedMesh.data->materials.size(); i++)
+            ImGui::Resource(std::to_string(i), &openedMesh.data->materials[i], ctx);
     }
 
-    void MeshInterface::CloseInspect()
+    void MeshInterface::CloseInspect(ContextPtr &ctx)
     {
-        openedMesh.Save();
+        openedMesh.Save(ctx);
     }
 
-    ModelImporter::ModelImporter(std::filesystem::path path)
+    ModelImporter::ModelImporter(std::filesystem::path path, ContextPtr &ctx)
     {
         modelName = path.filename().replace_extension().string();
 
@@ -125,19 +125,19 @@ namespace DT
 
         directory = path.parent_path();
 
-        ProcessNode(scene->mRootNode, scene);
+        ProcessNode(scene->mRootNode, scene, ctx);
     }
 
-    void ModelImporter::ProcessNode(aiNode *node, const aiScene *scene)
+    void ModelImporter::ProcessNode(aiNode *node, const aiScene *scene, ContextPtr &ctx)
     {
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
-            ProcessMesh(scene->mMeshes[node->mMeshes[i]], scene);
+            ProcessMesh(scene->mMeshes[node->mMeshes[i]], scene, ctx);
 
         for (unsigned int i = 0; i < node->mNumChildren; i++)
-            ProcessNode(node->mChildren[i], scene);
+            ProcessNode(node->mChildren[i], scene, ctx);
     }
 
-    void ModelImporter::ProcessMesh(aiMesh *mesh, const aiScene *scene)
+    void ModelImporter::ProcessMesh(aiMesh *mesh, const aiScene *scene, ContextPtr &ctx)
     {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
@@ -194,13 +194,13 @@ namespace DT
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 
         std::vector<RID> materials;
-        std::vector<RID> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse", Texture::Type::DIFFUSE);
+        std::vector<RID> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse", Texture::Type::DIFFUSE, ctx);
         materials.insert(materials.end(), diffuseMaps.begin(), diffuseMaps.end());
-        std::vector<RID> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "specular", Texture::Type::SPECULAR);
+        std::vector<RID> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "specular", Texture::Type::SPECULAR, ctx);
         materials.insert(materials.end(), specularMaps.begin(), specularMaps.end());
-        std::vector<RID> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "normal", Texture::Type::NORMAL);
+        std::vector<RID> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "normal", Texture::Type::NORMAL, ctx);
         materials.insert(materials.end(), normalMaps.begin(), normalMaps.end());
-        std::vector<RID> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "height", Texture::Type::HEIGHT);
+        std::vector<RID> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "height", Texture::Type::HEIGHT, ctx);
         materials.insert(materials.end(), heightMaps.begin(), heightMaps.end());
 
         std::filesystem::path modelDir = directory / modelName;
@@ -219,7 +219,7 @@ namespace DT
         out << json(resultMesh);
     }
 
-    std::vector<RID> ModelImporter::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName, Texture::Type textureType)
+    std::vector<RID> ModelImporter::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName, Texture::Type textureType, ContextPtr &ctx)
     {
         std::vector<RID> materialRIDs;
         std::string materialName = mat->GetName().C_Str();
@@ -238,8 +238,8 @@ namespace DT
             material.specularColor = {color.r, color.g, color.b};
             mat->Get(AI_MATKEY_COLOR_AMBIENT, color);
             material.ambientColor = {color.r, color.g, color.b};
-            material.texture.rid = ResourceManager::GetRID(directory / textureName);
-            material.shader.rid = ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl");
+            material.texture.rid = ctx.resourceManager->GetRID(directory / textureName);
+            material.shader.rid = ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Default.glsl");
             material.textureType = textureType;
 
             std::filesystem::path modelDir = directory / modelName;
@@ -249,18 +249,18 @@ namespace DT
             std::ofstream out(modelDir / "Materials" / materialFileName);
             out << json(material);
 
-            materialRIDs.push_back(ResourceManager::GetRID(modelDir / "Materials" / materialFileName));
+            materialRIDs.push_back(ctx.resourceManager->GetRID(modelDir / "Materials" / materialFileName));
         }
 
         return materialRIDs;
     }
 
-    void ModelInterface::Init()
+    void ModelInterface::Init(ContextPtr &ctx)
     {
-        iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "model.png"))->id;
+        iconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "model.png"), ctx)->id;
     }
 
-    void ModelInterface::Inspect()
+    void ModelInterface::Inspect(ContextPtr &ctx)
     {
         ImGui::Text(filename.c_str());
         ImGui::TextDisabled("Model");
@@ -268,31 +268,31 @@ namespace DT
         ImGui::Separator();
     }
 
-    void ModelInterface::OpenInspect(RID rid)
+    void ModelInterface::OpenInspect(RID rid, ContextPtr& ctx)
     {
-        filename = ResourceManager::GetPath(rid).filename().string();
+        filename = ctx.resourceManager->GetPath(rid).filename().string();
     }
 
-    void ModelInterface::Import(RID rid)
+    void ModelInterface::Import(RID rid, ContextPtr &ctx)
     {
-        ModelImporter modelImporter(ResourceManager::GetPath(rid));
+        ModelImporter modelImporter(ctx.resourceManager->GetPath(rid), ctx);
     }
 
-    void MarkdownInterface::Init()
+    void MarkdownInterface::Init(ContextPtr &ctx)
     {
-        iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "markdown.png"))->id;
+        iconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "markdown.png"), ctx)->id;
     }
 
-    void MarkdownInterface::OpenInspect(RID rid)
+    void MarkdownInterface::OpenInspect(RID rid, ContextPtr& ctx)
     {
         std::ifstream in("file.txt");
         std::stringstream buffer;
         buffer << in.rdbuf();
         data = buffer.str();
-        filename = ResourceManager::GetPath(rid).filename().string();
+        filename = ctx.resourceManager->GetPath(rid).filename().string();
     }
 
-    void MarkdownInterface::Inspect()
+    void MarkdownInterface::Inspect(ContextPtr &ctx)
     {
         ImGui::Text(filename.c_str());
         ImGui::TextDisabled("Markdown");
@@ -314,23 +314,23 @@ namespace DT
         return interfaces.find(extension) != interfaces.end();
     }
 
-    unsigned int ResourceInterface::GetIcon(const std::string &extension)
+    unsigned int ResourceInterface::GetIcon(const std::string &extension, ContextPtr &ctx)
     {
         unsigned int iconId = 0;
         Interface *interface = ResourceInterface::GetInterface(extension);
         if (interface != nullptr)
             iconId = interface->iconId;
         if (iconId == 0)
-            iconId = Texture::LoadResource(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "file.png"))->id;
+            iconId = Texture::LoadResource(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Icons" / "ResourceBrowser" / "file.png"), ctx)->id;
         return iconId;
     }
 
-    void ResourceInterface::AddDefault()
+    void ResourceInterface::AddDefault(ContextPtr &ctx)
     {
-        RegisterInterface<MaterialInterface>({".mtl", ".dtmaterial"});
-        RegisterInterface<TextureInterface>({".jpg", ".png", ".jpeg"});
-        RegisterInterface<ModelInterface>({".obj", ".fbx"});
-        RegisterInterface<MeshInterface>({".dtmesh"});
-        RegisterInterface<MarkdownInterface>({".md"});
+        RegisterInterface<MaterialInterface>({".mtl", ".dtmaterial"}, ctx);
+        RegisterInterface<TextureInterface>({".jpg", ".png", ".jpeg"}, ctx);
+        RegisterInterface<ModelInterface>({".obj", ".fbx"}, ctx);
+        RegisterInterface<MeshInterface>({".dtmesh"}, ctx);
+        RegisterInterface<MarkdownInterface>({".md"}, ctx);
     }
 }

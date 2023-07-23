@@ -27,72 +27,52 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Engine::Engine(Project project) : project(project), window(project.config), renderer(window, project.config), input(window.window), ctx{this, &project, &window, &renderer, &input, &time, &loopManager, &debug, activeScene, &serializationManager}
+    Engine::~Engine()
     {
-        std::cout << "Ducktape  Copyright (C) 2022  Aryan Baburajan\n"
-                     "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
-                     "This is free software, and you are welcome to redistribute it\n"
-                     "under certain conditions; type `show c' for details.\n";
-
-        glfwSetWindowUserPointer(window.window, reinterpret_cast<void *>(&ctx));
+        // for (System *system : systems)
+        //     free(system); // TOFIX: Commented out to avoid Segfault
     }
 
-    void Engine::Init(Scene &scene)
+    void Engine::Init(ContextPtr &ctx)
     {
-        activeScene = &scene;
-
-        for (System *system : scene.systems)
-            system->Init(&scene, ctx);
+        for (System *system : ctx.sceneManager->GetActiveScene().systems)
+            system->Init(ctx);
     }
 
-    bool Engine::IsOpen()
+    bool Engine::IsRunning(ContextPtr &ctx)
     {
-        return !glfwWindowShouldClose(window.window);
+        return !glfwWindowShouldClose(ctx.window->window);
     }
 
-    void Engine::StartFrame()
+    void Engine::StartFrame(ContextPtr &ctx)
     {
-        window.PollEvents();
+        ctx.window->PollEvents();
 
-        if (!IsOpen())
+        if (!IsRunning(ctx))
             return;
 
-        if (window.GetMinimized())
-        {
-            window.PollEvents();
+        if (ctx.window->GetMinimized())
             return;
-        }
 
-        time.Update();
-        input.Process();
+        ctx.time->Update();
+        ctx.input->Process();
 
-        window.Clear({0.2f, 0.3f, 0.3f, 1.0f});
+        ctx.window->Clear({0.2f, 0.3f, 0.3f, 1.0f});
 
-        renderer.Render(window, project.config, activeScene);
+        ctx.renderer->Render(ctx);
 
-        if (loopManager.gameTick)
-            for (System *system : activeScene->systems)
-                system->Tick(activeScene, ctx);
+        if (ctx.loopManager->gameTick)
+            for (System *system : ctx.sceneManager->GetActiveScene().systems)
+                system->Tick(ctx);
     }
 
-    void Engine::EndFrame()
+    void Engine::EndFrame(Window &window)
     {
         window.SwapBuffers();
     }
 
-    void Engine::PollEvents()
+    void Engine::PollEvents(Window &window)
     {
         window.PollEvents();
-    }
-
-    void Engine::Run(Scene &scene)
-    {
-        Init(scene);
-
-        while (IsOpen())
-        {
-            StartFrame();
-            EndFrame();
-        }
     }
 }

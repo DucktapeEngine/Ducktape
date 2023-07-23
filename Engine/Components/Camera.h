@@ -27,20 +27,20 @@ namespace DT
     class Transform;
 
     /**
-     * @brief Camera struct for managing camera.
+     * @brief Camera component for handling Camera related properties.
      */
     struct Camera
     {
-        glm::mat4 view;       ///< @brief View matrix.
-        glm::mat4 projection; ///< @brief Projection matrix.
+        glm::mat4 view;       /// @brief View matrix.
+        glm::mat4 projection; /// @brief Projection matrix.
 
-        bool isOrtho = false; ///< @brief Whether it is orthographic projection or not.
-        float fov = 45.0f;    ///< @brief Field of view.
+        bool isOrtho = false; /// @brief Flag for orthographic projection.
+        float fov = 45.0f;    /// @brief Field of view.
 
-        Transform *transform; ///< @brief Pointer to Transform class.
+        Transform *transform;
 
         /**
-         * @brief Function to convert a 3D world point into 2D point after projection.
+         * @brief Function to convert a 3D world point into a 2D point on the screen after projection.
          * @param worldPoint 3D vector for which projection has to be done.
          * @param windowSize 2D size of game window (ctx.window.GetWindowSize()).
          * @return 2D projected vector on the screen.
@@ -50,22 +50,11 @@ namespace DT
 
     SERIALIZE(Camera, isOrtho, fov);
 
-    class CameraSystem : System
+    class CameraSystem : public System
     {
     public:
-        /**
-         * @brief Registers Camera in the rendering engine
-         */
-        void Init(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Serializes Camera properties for Inspector.
-         */
-        void Inspector(Scene *scene, const Context &ctx) override;
-
-        /**
-         * @brief Handles Camera serialization.
-         */
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override;
+        void Init(ContextPtr &ctx) override;
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
+        void Serialize(ContextPtr &ctx, Entity entity) override;
     };
 }

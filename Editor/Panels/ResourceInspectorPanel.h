@@ -22,7 +22,7 @@ namespace DT
     public:
         inline std::string GetWindowName() override { return "Resource Inspector"; }
 
-        void Start(Engine &engine) override;
-        void Update(Engine &engine) override;
+        void Start(ContextPtr &ctx) override;
+        void Update(ContextPtr &ctx) override;
     };
 }

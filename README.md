@@ -37,8 +37,8 @@
 </p>
 
 <p align="center">
-    <a href="http://www.youtube.com/watch?feature=player_embedded&v=mG02Xjd5GGA" target="_blank">
-        <img src="./Screenshot.png" alt="Demo Engine Footage" width="80%"/>
+    <a href="https://www.youtube.com/watch?v=TGBrZrPsNwQ&ab_channel=AryanB" target="_blank">
+        <img src="./Screenshot.png" alt="Demo Engine Footage" width="100%"/>
     </a>
 </p>
 

@@ -22,63 +22,100 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <iostream>
+
 #include <Core/ResourceManager.h>
 #include <Core/Serialization.h>
-#include <Core/Macro.h>
+#include <Core/ContextPtr.h>
 
 namespace DT
 {
+    /**
+     * @brief The Resource class template for managing resources.
+     *
+     * @tparam T The resource type.
+     */
     template <typename T>
     class Resource
     {
-    protected:
-        HAS_METHOD_DECL(LoadResource);
-        HAS_METHOD_DECL(SaveResource);
-
     public:
+        /**
+         * @brief The resource ID.
+         */
         RID rid;
 
-        T *Load(RID loadRid)
+        /**
+         * @brief Pointer to the resource data.
+         */
+        T *data;
+
+        /**
+         * @brief Reloads the resource.
+         */
+        void Reload(ContextPtr &ctx)
         {
-            rid = loadRid;
             data = nullptr;
-            return Data();
+            Load(rid, ctx);
         }
 
-        T *Data()
+        /**
+         * @brief Loads the resource with the specified resource ID.
+         *
+         * @param loadRid The resource ID to load.
+         */
+        void Load(RID loadRid, ContextPtr &ctx)
         {
+            rid = loadRid;
             try
             {
-                if constexpr (HasLoadResource<T>::value)
-                    if (data == nullptr)
-                        data = T::LoadResource(rid);
+                data = T::LoadResource(rid, ctx);
             }
             catch (json::exception &e)
             {
-                std::cout << e.what() << std::endl;
+                std::cout << "[ERR] " << e.what() << std::endl;
             }
-            return data;
         }
 
-        void Save()
+        /**
+         * @brief Copies the resource to the specified resource ID.
+         *
+         * @param copyRid The resource ID to copy to.
+         */
+        void Copy(RID copyRid)
         {
-            if constexpr (HasSaveResource<T>::value)
-                T::SaveResource(rid);
+            T::SaveResource(copyRid);
         }
 
+        /**
+         * @brief Saves the resource.
+         */
+        void Save(ContextPtr &ctx)
+        {
+            T::SaveResource(rid, ctx);
+        }
+
+        /**
+         * @brief Unloads the resource.
+         */
+        void Unload()
+        {
+            data = nullptr;
+            T::UnloadResource(rid);
+        }
+
+        /**
+         * @brief Conversion operator to T* for accessing the resource data.
+         *
+         * @return A pointer to the resource data.
+         */
         operator T *()
         {
             return data;
         }
 
-        void operator=(const RID &newRID)
-        {
-            rid = newRID;
-        }
-
+        /**
+         * @brief Serializes the resource.
+         */
         IN_SERIALIZE(Resource, rid);
-
-    protected:
-        T *data;
     };
 }

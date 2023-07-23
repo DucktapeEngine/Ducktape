@@ -26,65 +26,65 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    std::string Platform::GetLastErrorAsString()
-    {
-#ifdef _WIN32
-        DWORD errorMessageID = ::GetLastError();
-        if (errorMessageID == 0)
+        std::string Platform::GetLastErrorAsString()
         {
-            return std::string();
+#ifdef _WIN32
+                DWORD errorMessageID = ::GetLastError();
+                if (errorMessageID == 0)
+                {
+                        return std::string();
+                }
+
+                LPSTR messageBuffer = nullptr;
+
+                size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
+
+                std::string message(messageBuffer, size);
+
+                LocalFree(messageBuffer);
+
+                return message;
+#endif
+#ifdef __linux__
+                // Write Linux specific code here
+#endif
         }
 
-        LPSTR messageBuffer = nullptr;
-
-        size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
-
-        std::string message(messageBuffer, size);
-
-        LocalFree(messageBuffer);
-
-        return message;
-#endif
-#ifdef __linux__
-        // Write Linux specific code here
-#endif
-    }
-
-    void Platform::Execute(const std::string command)
-    {
+        void Platform::Execute(const std::string command)
+        {
 #ifdef _WIN32
-        ShellExecute(NULL, NULL, command.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+                ShellExecute(NULL, NULL, command.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 #endif
 #ifdef __linux__
-        system(command.c_str());
+                system(command.c_str());
 #endif
-    }
+        }
 
-    Platform::Module::~Module()
-    {
-        Free();
-    }
+        Platform::Module::~Module()
+        {
+                Free();
+        }
 
-    void Platform::Module::Load(std::filesystem::path path)
-    {
+        void Platform::Module::Load(std::filesystem::path path)
+        {
 #ifdef _WIN32
-        module = LoadLibrary(path.string().c_str());
-
-        if (!module)
-            std::cout << GetLastErrorAsString();
+                module = LoadLibrary(path.string().c_str());
 #endif
 #ifdef __linux__
-        module = dlopen(path.string().c_str(), RTLD_LAZY);
+                module = dlopen(path.string().c_str(), RTLD_LAZY);
 #endif
-    }
 
-    void Platform::Module::Free()
-    {
+                if (!module)
+                        std::cout << GetLastErrorAsString();
+        }
+
+        void Platform::Module::Free()
+        {
 #ifdef _WIN32
-        FreeLibrary(module);
+                FreeLibrary(module);
 #endif
 #ifdef __linux__
-        dlclose(module);
+                dlclose(module);
 #endif
-    }
+        }
 }

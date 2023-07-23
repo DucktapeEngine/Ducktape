@@ -43,46 +43,53 @@ namespace DT
     public:
         GenericSystem(const std::string &compName) : componentName(compName) {}
 
-        void Init(Scene *scene, const Context &ctx) override
+        void Init(ContextPtr &ctx) override
         {
             if constexpr (HasInit<T>::value)
-                for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity)->Init(entity, scene, ctx);
+                for (Entity entity : ctx.sceneManager->GetActiveScene().View<T>())
+                    ctx.sceneManager->GetActiveScene().Get<T>(entity)->Init(entity, ctx);
         }
 
-        void Tick(Scene *scene, const Context &ctx) override
+        void Tick(ContextPtr &ctx) override
         {
             if constexpr (HasTick<T>::value)
-                for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity)->Tick(entity, scene, ctx);
+                for (Entity entity : ctx.sceneManager->GetActiveScene().View<T>())
+                    ctx.sceneManager->GetActiveScene().Get<T>(entity)->Tick(entity, ctx);
         }
 
-        void SceneView(Scene *scene, const Context &ctx) override
+        void SceneView(ContextPtr &ctx) override
         {
             if constexpr (HasSceneView<T>::value)
-                for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity)->SceneView(entity, scene, ctx);
+                for (Entity entity : ctx.sceneManager->GetActiveScene().View<T>())
+                    ctx.sceneManager->GetActiveScene().Get<T>(entity)->SceneView(entity, ctx);
         }
 
-        void Destroy(Scene *scene, const Context &ctx) override
+        void Destroy(ContextPtr &ctx) override
         {
             if constexpr (HasDestroy<T>::value)
-                for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity)->Destroy(entity, scene, ctx);
+                for (Entity entity : ctx.sceneManager->GetActiveScene().View<T>())
+                    ctx.sceneManager->GetActiveScene().Get<T>(entity)->Destroy(entity, ctx);
         }
 
-        void Serialize(Scene *scene, const Context &ctx, Entity entity) override
+        void Serialize(ContextPtr &ctx, Entity entity) override
         {
             if constexpr (HasSerialize<T>::value)
-                for (Entity entity : scene->View<T>())
-                    ctx.serializationManager->SerializeComponent<T>(componentName, entity, *scene);
+                for (Entity entity : ctx.sceneManager->GetActiveScene().View<T>())
+                    ctx.sceneManager->GetActiveScene().SerializeComponent<T>(componentName, entity, ctx.sceneManager->GetActiveScene());
         }
 
-        void Inspector(Scene *scene, const Context &ctx) override
+        void Inspector(ContextPtr &ctx, Entity selectedEntity) override
         {
             if constexpr (HasInspector<T>::value)
-                for (Entity entity : scene->View<T>())
-                    scene->Get<T>(entity)->Inspector(entity, scene, ctx);
+            {
+                for (Entity entity : ctx.sceneManager->GetActiveScene().View<T>())
+                {
+                    if (entity != selectedEntity)
+                        continue;
+
+                    ctx.sceneManager->GetActiveScene().Get<T>(entity)->Inspector(entity, ctx, selectedEntity);
+                }
+            }
         }
     };
 }

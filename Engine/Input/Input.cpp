@@ -28,11 +28,13 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    Input::Input(GLFWwindow *_window)
+    Input::Input(ContextPtr &ctx)
     {
-        window = _window;
+        window = ctx.window->window;
         glfwSetKeyCallback(window, KeyCallback);
         glfwSetMouseButtonCallback(window, MouseButtonCallback);
+
+        std::cout << "[LOG] Input Constructed\n";
     }
 
     void Input::Process()
@@ -69,7 +71,7 @@ namespace DT
     {
         UNUSED(scancode);
         UNUSED(mods);
-        Input *input = reinterpret_cast<Context *>(glfwGetWindowUserPointer(window))->input;
+        Input *input = reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(window))->input;
 
         for (auto &onKeyEvent : input->onKeyEvents)
             onKeyEvent(key, action);
@@ -78,7 +80,7 @@ namespace DT
     void Input::MouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
     {
         UNUSED(mods);
-        Input *input = reinterpret_cast<Context *>(glfwGetWindowUserPointer(window))->input;
+        Input *input = reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(window))->input;
 
         for (auto &onMouseEvent : input->onMouseEvents)
             onMouseEvent(button, action);

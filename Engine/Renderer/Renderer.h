@@ -32,11 +32,8 @@ aryanbaburajan2007@gmail.com
 
 #include <Renderer/Shader.h>
 #include <Renderer/Texture.h>
-#include <Core/Configuration.h>
 #include <Core/Window.h>
 #include <Core/Debug.h>
-#include <Renderer/Cubemap.h>
-#include <Core/Context.h>
 #include <Core/Macro.h>
 #include <Scene/Scene.h>
 
@@ -45,42 +42,102 @@ GLenum glCheckError_(const char *file, int line);
 
 namespace DT
 {
+	/**
+	 * @class Renderer
+	 * @brief Handles rendering operations and manages rendering resources.
+	 */
 	class Renderer
 	{
 	public:
-		unsigned int FBO, RBO, renderTexture;
-		unsigned int quadVAO, quadVBO;
-		unsigned int skyboxVAO, skyboxVBO;
-		Cubemap skyboxCubemap;
-		Shader screenShader = Shader(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Screen.glsl"));
-		Shader skyboxShader = Shader(ResourceManager::GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Skybox.glsl"));
-		glm::vec2 customViewportSize;
+		unsigned int FBO;													/**< Framebuffer object ID. */
+		unsigned int RBO;													/**< Renderbuffer object ID. */
+		unsigned int renderTexture;											/**< ID of the texture used for rendering. */
+		unsigned int quadVAO;												/**< Vertex Array Object ID for the quad. */
+		unsigned int quadVBO;												/**< Vertex Buffer Object ID for the quad. */
+		unsigned int skyboxVAO;												/**< Vertex Array Object ID for the skybox. */
+		unsigned int skyboxVBO;												/**< Vertex Buffer Object ID for the skybox. */
+		glm::mat4 *cameraView = nullptr;									/**< Pointer to the view matrix of the camera. */
+		glm::mat4 *cameraProjection = nullptr;								/**< Pointer to the projection matrix of the camera. */
+		glm::vec3 *cameraPosition = nullptr;								/**< Pointer to the position of the camera. */
+		glm::quat *cameraRotation = nullptr;								/**< Pointer to the rotation of the camera. */
+		bool *isOrtho = nullptr;											/**< Pointer to a boolean indicating if the camera is in orthographic mode. */
+		float *fov = nullptr;												/**< Pointer to the field of view of the camera. */
+		std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false}; /**< Array to track occupied directional light spots. */
+		std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};		/**< Array to track occupied point light spots. */
 
-		glm::mat4 *cameraView = nullptr;
-		glm::mat4 *cameraProjection = nullptr;
-		glm::vec3 *cameraPosition = nullptr;
-		glm::quat *cameraRotation = nullptr;
-		bool *isOrtho = nullptr;
-		float *fov = nullptr;
+		Shader screenShader;
+		Shader skyboxShader;
+		glm::vec2 customViewportSize; /**< Custom viewport size. */
 
-		std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
-		std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};
+		bool drawToQuad = true; /**< Flag indicating whether to draw to the quad. */
 
-		Renderer(Window &window, Configuration &config);
-		void Render(Window &window, Configuration &config, Scene *scene);
+		/**
+		 * @brief Constructs a Renderer object.
+		 * @param ctx A pointer to the Context.
+		 */
+		Renderer(ContextPtr &ctx);
+
+		/**
+		 * @brief Destructs a Renderer object.
+		 */
 		~Renderer();
 
+		/**
+		 * @brief Renders the scene.
+		 * @param ctx A pointer to the Context.
+		 */
+		void Render(ContextPtr &ctx);
+
+		/**
+		 * @brief Sets the viewport size.
+		 * @param viewportsize The size of the viewport.
+		 */
 		void SetViewport(glm::vec2 viewportsize);
 
-		void LoadSkybox(std::array<std::filesystem::path, 6> paths);
+		// void LoadSkybox(std::array<std::filesystem::path, 6> paths);
 
+		/**
+		 * @brief Retrieves a free spot for a directional light.
+		 * @param spot A pointer to the variable to store the free spot index.
+		 * @return True if a free spot is available, false otherwise.
+		 */
 		bool GetFreeDirectionalLightSpot(unsigned int *spot);
+
+		/**
+		 * @brief Unoccupies a spot for a directional light.
+		 * @param spot The spot index to unoccupy.
+		 */
 		void UnoccupyDirectionalLightSpot(unsigned int spot);
+
+		/**
+		 * @brief Retrieves a free spot for a point light.
+		 * @param spot A pointer to the variable to store the free spot index.
+		 * @return True if a free spot is available, false
+		 */
 		bool GetFreePointLightSpot(unsigned int *spot);
+
+		/**
+		 * @brief Unoccupies a spot for a point light.
+		 * @param spot The spot index to unoccupy.
+		 */
 		void UnoccupyPointLightSpot(unsigned int spot);
 
+		/**
+		 * @brief Activates a shader for rendering.
+		 * @param shader A pointer to the shader to activate.
+		 */
 		void ActivateShader(Shader *shader);
 
+		/**
+		 * @brief Callback function for handling framebuffer size changes.
+		 * @param window A pointer to the GLFW window.
+		 * @param width The new width of the framebuffer.
+		 * @param height The new height of the framebuffer.
+		 */
 		static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
+
+		IN_SERIALIZE(Renderer, drawToQuad); /**< Serialize function for Renderer. */
+
+		friend class CameraSystem;
 	};
 }

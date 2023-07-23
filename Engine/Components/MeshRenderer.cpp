@@ -27,64 +27,63 @@ aryanbaburajan2007@gmail.com
 #include <Components/Transform.h>
 #include <Core/Serialization.h>
 #include <Core/Resource.h>
-#include <Core/SerializationManager.h>
 
 #include <Components/MeshRenderer.h>
 
 namespace DT
 {
-    void MeshRendererSystem::Init(Scene *scene, const Context &ctx)
+    void MeshRendererSystem::Init(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<MeshRenderer>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<MeshRenderer>())
         {
-            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
+            MeshRenderer *mr = ctx.sceneManager->GetActiveScene().Get<MeshRenderer>(entity);
 
-            mr->transform = &scene->Assign<Transform>(entity);
+            mr->transform = &ctx.sceneManager->GetActiveScene().Assign<Transform>(entity);
 
-            mr->mesh.Data()->Setup();
+            mr->mesh.data->Setup();
         }
     }
 
-    void MeshRendererSystem::Tick(Scene *scene, const Context &ctx)
+    void MeshRendererSystem::Tick(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<MeshRenderer>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<MeshRenderer>())
         {
-            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
+            MeshRenderer *mr = ctx.sceneManager->GetActiveScene().Get<MeshRenderer>(entity);
 
-            mr->mesh.Data()->Draw(mr->transform->GetModelMatrix(), *ctx.renderer);
+            mr->mesh.data->Draw(mr->transform->GetModelMatrix(), *ctx.renderer);
 
-            Transform *transform = scene->Get<Transform>(entity);
+            Transform *transform = ctx.sceneManager->GetActiveScene().Get<Transform>(entity);
             transform->translation += glm::vec3(1.f);
         }
     }
 
-    void MeshRendererSystem::SceneView(Scene *scene, const Context &ctx)
+    void MeshRendererSystem::SceneView(ContextPtr &ctx)
     {
-        for (Entity entity : scene->View<MeshRenderer>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<MeshRenderer>())
         {
-            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
+            MeshRenderer *mr = ctx.sceneManager->GetActiveScene().Get<MeshRenderer>(entity);
 
-            mr->mesh.Data()->Draw(mr->transform->GetModelMatrix(), *ctx.renderer);
+            mr->mesh.data->Draw(mr->transform->GetModelMatrix(), *ctx.renderer);
         }
     }
 
-    void MeshRendererSystem::Serialize(Scene *scene, const Context &ctx, Entity entity)
+    void MeshRendererSystem::Serialize(ContextPtr &ctx, Entity entity)
     {
-        ctx.serializationManager->SerializeComponent<MeshRenderer>("MeshRenderer", entity, *scene);
+        ctx.sceneManager->GetActiveScene().SerializeComponent<MeshRenderer>("MeshRenderer", entity, ctx.sceneManager->GetActiveScene());
     }
 
-    void MeshRendererSystem::Inspector(Scene *scene, const Context &ctx)
+    void MeshRendererSystem::Inspector(ContextPtr &ctx, Entity selectedEntity)
     {
-        for (Entity entity : scene->View<MeshRenderer>())
+        for (Entity entity : ctx.sceneManager->GetActiveScene().View<MeshRenderer>())
         {
-            if (scene->selectedEntity != entity)
+            if (selectedEntity != entity)
                 continue;
 
-            MeshRenderer *mr = scene->Get<MeshRenderer>(entity);
+            MeshRenderer *mr = ctx.sceneManager->GetActiveScene().Get<MeshRenderer>(entity);
 
             if (ImGui::CollapsingHeader("Mesh Renderer"))
             {
-                ImGui::Resource("mesh", &mr->mesh);
+                ImGui::Resource("mesh", &mr->mesh, ctx);
                 // ImGui::Resource("material", mr->material);
             }
         }

@@ -22,17 +22,32 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <fstream>
-
+#include <Core/Resource.h>
 #include <Scene/Scene.h>
 #include <Core/Serialization.h>
-#include <Core/Engine.h>
 
 namespace DT
 {
-    namespace SceneManager
+    /**
+     * @brief The SceneManager class handles the management of scenes.
+     */
+    class SceneManager
     {
-        void Save(std::filesystem::path savePath, Scene &scene, Engine &engine);
-        void Load(std::filesystem::path savePath, Scene &scene, Engine &engine);
-    }
+    public:
+        Resource<Scene> activeScene; /// Pointer to the active scene resource.
+
+        SceneManager(ContextPtr &ctx);
+
+        /**
+         * @brief Returns the active scene.
+         * @return A reference to the active scene.
+         */
+        inline Scene &GetActiveScene()
+        {
+            return *activeScene.data;
+        }
+
+        IN_SERIALIZE(SceneManager, activeScene);
+    };
+
 }
