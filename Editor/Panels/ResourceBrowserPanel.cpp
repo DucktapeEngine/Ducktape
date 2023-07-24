@@ -159,7 +159,7 @@ namespace DT
                 {
                     if (!std::filesystem::remove_all(selectedFile))
                     {
-                        std::cout << "Couldn't delete file: " << selectedFile.filename().string() << std::endl;
+                        std::cout << "[ERR] Couldn't delete file: " << selectedFile.filename().string() << std::endl;
                     }
                     selectedFile = "";
                     ImGui::CloseCurrentPopup();
@@ -323,7 +323,7 @@ namespace DT
                 }
                 catch (...)
                 {
-                    std::cout << "[Error] Failed to rename file: " << selectedFile.stem().string() << " to " << buf << std::endl;
+                    std::cout << "[ERR] Failed to rename file: " << selectedFile.stem().string() << " to " << buf << std::endl;
                 }
             }
             else if (creatingFileType == FileCreateType_File)
@@ -331,7 +331,7 @@ namespace DT
                 std::ofstream file((currentDir / buf).string());
                 if (!file)
                 {
-                    std::cout << "[Error] Can't create requested file: " << buf << std::endl;
+                    std::cout << "[ERR] Can't create requested file: " << buf << std::endl;
                 }
                 else
                     fileAction = FileAction_None;
@@ -345,7 +345,7 @@ namespace DT
                 }
                 else
                 {
-                    std::cout << "[Error] Failed to create folder: " << buf << std::endl;
+                    std::cout << "[ERR] Failed to create folder: " << buf << std::endl;
                 }
             }
         }

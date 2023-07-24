@@ -33,22 +33,22 @@ GLenum glCheckError_(const char *file, int line)
         switch (errorCode)
         {
         case GL_INVALID_ENUM:
-            error = "INVALID_ENUM";
+            error = "[INVALID_ENUM]";
             break;
         case GL_INVALID_VALUE:
-            error = "INVALID_VALUE";
+            error = "[INVALID_VALUE]";
             break;
         case GL_INVALID_OPERATION:
-            error = "INVALID_OPERATION";
+            error = "[INVALID_OPERATION]";
             break;
         case GL_OUT_OF_MEMORY:
-            error = "OUT_OF_MEMORY";
+            error = "[OUT_OF_MEMORY]";
             break;
         case GL_INVALID_FRAMEBUFFER_OPERATION:
-            error = "INVALID_FRAMEBUFFER_OPERATION";
+            error = "[INVALID_FRAMEBUFFER_OPERATION]";
             break;
         }
-        std::cout << error << " | " << file << " (" << line << ")\n";
+        std::cout << "[ERR] " << error << " [" << file << "] [" << line << "]\n";
     }
     return errorCode;
 }
@@ -82,7 +82,7 @@ namespace DT
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
-            std::cout << "Framebuffer not complete!\n";
+            std::cout << "[ERR] Framebuffer not complete!\n";
             return;
         }
 

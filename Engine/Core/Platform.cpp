@@ -75,7 +75,7 @@ namespace DT
 #endif
 
                 if (!module)
-                        std::cout << GetLastErrorAsString();
+                        std::cout << "[ERR] " << GetLastErrorAsString();
         }
 
         void Platform::Module::Free()

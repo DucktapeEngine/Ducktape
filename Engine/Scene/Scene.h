@@ -188,7 +188,7 @@ namespace DT
             }
             catch (json::exception &e)
             {
-                std::cout << "json::exception " << e.what() << std::endl;
+                std::cout << "[ERR] [JSON] " << e.what() << std::endl;
             }
         }
 

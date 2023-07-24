@@ -60,8 +60,8 @@ namespace DT
         }
         else
         {
-            std::cout << "Texture failed to load at path: " << texturePath << std::endl;
-            std::cout << "STBI: " << stbi_failure_reason() << std::endl;
+            std::cout << "[ERR] [TEXTURE_LOAD_FAIL] [" << texturePath << "]\n";
+            std::cout << "[ERR] [STBI] " << stbi_failure_reason() << std::endl;
             stbi_image_free(data);
             return;
         }

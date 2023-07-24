@@ -116,7 +116,7 @@ namespace DT
         }
         else
         {
-            std::cout << "Failed to load icon." << std::endl;
+            std::cout << "[ERR] Failed to load icon." << std::endl;
         }
     }
 

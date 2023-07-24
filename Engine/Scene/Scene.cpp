@@ -61,7 +61,7 @@ namespace DT
 
         if (!registerFunc)
         {
-            std::cout << "Failed to get REGISTER(" << name << ") function from Game Module.\n";
+            std::cout << "[ERR] Failed to get REGISTER(" << name << ") function from Game Module.\n";
             return;
         }
 
@@ -74,7 +74,7 @@ namespace DT
 
         if (!registerFunc)
         {
-            std::cout << "Failed to get REGISTER(" << name << ") function from Game Module.\n";
+            std::cout << "[ERR] Failed to get REGISTER(" << name << ") function from Game Module.\n";
             return;
         }
 

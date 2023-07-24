@@ -32,7 +32,7 @@ aryanbaburajan2007@gmail.com
     {                                                                                                     \
         if (condition == false)                                                                           \
         {                                                                                                 \
-            std::cout << "Assertion failed: " + std::string(message) << '\n'                              \
+            std::cout << "[ERR] Assertion failed: " + std::string(message) << '\n'                              \
                       << "In file: " << std::string(__FILE__) << ":" << std::to_string(__LINE__) << '\n'; \
             exit(1);                                                                                      \
         }                                                                                                 \

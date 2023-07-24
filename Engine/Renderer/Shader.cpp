@@ -47,7 +47,7 @@ namespace DT
         }
         catch (std::ifstream::failure &e)
         {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << shaderPath << std::endl
+            std::cout << "[ERR] [SHADER] [FILE_NOT_SUCCESFULLY_READ] [" << shaderPath << "]\n"
                       << e.what() << std::endl;
         }
 
@@ -63,15 +63,13 @@ namespace DT
         vertex = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertex, 1, &vShaderCode, NULL);
         glCompileShader(vertex);
-        if (!CheckCompileErrors(vertex, "VERTEX", shaderPath))
-            std::cout << vShaderCode << std::endl;
+        CheckCompileErrors(vertex, "VERTEX", shaderPath);
 
         // Fragment shader
         fragment = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragment, 1, &fShaderCode, NULL);
         glCompileShader(fragment);
-        if (!CheckCompileErrors(fragment, "FRAGMENT", shaderPath))
-            std::cout << fShaderCode << std::endl;
+        CheckCompileErrors(fragment, "FRAGMENT", shaderPath);
 
         // Link program
         id = glCreateProgram();
@@ -128,7 +126,7 @@ namespace DT
             if (!success)
             {
                 glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::SHADER_COMPILATION_ERROR: " << path.string() << "\ntype: " << type << "\n"
+                std::cout << "[ERR] [SHADER_COMPILATION_ERROR] [" << path.string() << "]\n [" << type << "]\n"
                           << infoLog << std::endl;
                 return false;
             }
@@ -139,7 +137,7 @@ namespace DT
             if (!success)
             {
                 glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::PROGRAM_LINKING_ERROR: " << path.string() << "\ntype: " << type << "\n"
+                std::cout << "[ERR] [PROGRAM_LINKING_ERROR] [" << path.string() << "]\n [" << type << "]\n"
                           << infoLog << std::endl;
                 return false;
             }
