@@ -27,6 +27,7 @@ aryanbaburajan2007@gmail.com
 #include <Components/Transform.h>
 #include <Core/Serialization.h>
 #include <Core/Resource.h>
+#include <Scene/SceneManager.h>
 
 #include <Components/MeshRenderer.h>
 
@@ -40,6 +41,7 @@ namespace DT
 
             mr->transform = &ctx.sceneManager->GetActiveScene().Assign<Transform>(entity);
 
+            mr->mesh.Reload(ctx);
             mr->mesh.data->Setup();
         }
     }

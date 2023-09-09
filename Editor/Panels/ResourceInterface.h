@@ -9,8 +9,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include <json/json.hpp>
-using json = nlohmann::json;
 
 #include <Renderer/Texture.h>
 #include <Renderer/Material.h>

@@ -25,7 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <Core/Platform.h>
 #include <Core/ContextPtr.h>
 
-typedef void (*GameFunc)(DT::ContextPtr &);
+typedef void (*RegisterRuntimeFunc)(DT::ContextPtr &);
 
 namespace DT
 {
@@ -51,15 +51,19 @@ namespace DT
             gameModule.Load(std::filesystem::current_path() / "Game.dll");
 
             // Get the symbol address of the "RegisterRuntime" function from the game module
-            GameFunc GameFunc = gameModule.GetSymbolAddress<void (*)(ContextPtr &)>("RegisterRuntime");
+            RegisterRuntimeFunc runtimeRegisterer = gameModule.GetSymbolAddress<void (*)(ContextPtr &)>("RegisterRuntime");
 
-            // Call the "RegisterRuntime" function if it exists
-            if (GameFunc)
-                GameFunc(ctx);
+            if (!runtimeRegisterer)
+            {
+                std::cout << "[ERR] Failed to get symbol address of RegisterRuntime function\n";
+                return;
+            }
+
+            runtimeRegisterer(ctx);
 
             std::cout << "[LOG] Runtime Registered\n";
         }
-
+        
         /**
          * @brief Destructor for the Game class. Frees the game module.
          */

@@ -67,7 +67,9 @@ namespace DT
             if (factoryData.count(rid))
                 return factoryData[rid];
 
+            JLOG();
             factoryData[rid] = new Mesh(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))));
+            std::cout << "[LOG] Loaded mesh at " << ctx.resourceManager->GetPath(rid).string() << "\n";
             return factoryData[rid];
         }
 

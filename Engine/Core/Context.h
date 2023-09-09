@@ -31,11 +31,9 @@ aryanbaburajan2007@gmail.com
 #include <Core/Debug.h>
 #include <Core/Project.h>
 #include <Core/ResourceManager.h>
-#include <Core/Context.h>
 #include <Core/ContextPtr.h>
 #include <Scene/SceneManager.h>
 #include <Core/Game.h>
-#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -58,43 +56,25 @@ namespace DT
         Time time;                       /// @brief The time instance.
         LoopManager loopManager;         /// @brief The loop manager instance.
         Debug debug;                     /// @brief The debug instance.
-        SceneManager sceneManager;       /// @brief The scene manager instance.
         Game game;                       /// @brief The game instance.
+        SceneManager sceneManager;       /// @brief The scene manager instance.
 
         /**
          * @brief Constructs a new Context object with the specified project path.
          *
          * @param projectPath The path to the project.
          */
-        Context(const std::filesystem::path &projectPath) : resourceManager(), ctxPath(projectPath), window((InitializeContextPtr(), pointer)), renderer(pointer), input(pointer), game(pointer), sceneManager(pointer)
-        {
-            // Load context data from a JSON file
-            from_json(json::parse(std::ifstream(ctxPath)), *this);
-            std::cout << "[LOG] Context loaded from " << ctxPath.string() << "\n";
-        }
-
-        /**
-         * @brief Serializes the window and renderer components for serialization.
-         */
-        friend void to_json(nlohmann::json &nlohmann_json_j, const Context &nlohmann_json_t)
-        {
-            nlohmann_json_j["window"] = nlohmann_json_t.window;
-            nlohmann_json_j["renderer"] = nlohmann_json_t.renderer;
-            nlohmann_json_j["sceneManager"] = nlohmann_json_t.sceneManager;
-            nlohmann_json_j["resourceManager"] = nlohmann_json_t.resourceManager;
-        }
-        friend void from_json(const nlohmann::json &nlohmann_json_j, Context &nlohmann_json_t)
-        {
-            nlohmann_json_j.at("window").get_to(nlohmann_json_t.window);
-            nlohmann_json_j.at("renderer").get_to(nlohmann_json_t.renderer);
-            nlohmann_json_j.at("sceneManager").get_to(nlohmann_json_t.sceneManager);
-            // nlohmann_json_j.at("resourceManager").get_to(nlohmann_json_t.resourceManager);
-        }
+        Context(const std::filesystem::path &projectPath);
 
     private:
-        /**
-         * @brief Initialize the context (including pointers).
-         */
-        void InitializeContextPtr();
+        json contextData;
+
+        json &FetchContextData();
     };
+
+    /**
+     * @brief Serializes the window and renderer components for serialization.
+     */
+    void to_json(nlohmann::json &nlohmann_json_j, const Context &nlohmann_json_t);
+    void from_json(const nlohmann::json &nlohmann_json_j, Context &nlohmann_json_t);
 }

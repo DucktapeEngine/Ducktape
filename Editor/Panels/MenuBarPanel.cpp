@@ -26,12 +26,11 @@ namespace DT
             if (ImGui::BeginMenu("Scene"))
             {
                 if (ImGui::MenuItem("Save"))
-                    // SceneManager::Save(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
-                    ;
+                    ctx.sceneManager->Save(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *ctx.sceneManager->activeScene.data, ctx);
 
                 if (ImGui::MenuItem("Load"))
                 {
-                    // SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *engine.activeScene, engine);
+                    ctx.sceneManager->Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScene.json", *ctx.sceneManager->activeScene.data, ctx);
                     ctx.sceneManager->GetActiveScene().selectedEntity = entt::null;
                 }
 

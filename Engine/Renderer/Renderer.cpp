@@ -55,11 +55,10 @@ GLenum glCheckError_(const char *file, int line)
 
 namespace DT
 {
-    Renderer::Renderer(ContextPtr &ctx) : screenShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Screen.glsl"), ctx), skyboxShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Skybox.glsl"), ctx)
+    Renderer::Renderer(const json &data, ContextPtr &ctx) : drawToQuad(data.at("drawToQuad")), skybox(data.at("skybox")), screenShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Screen.glsl"), ctx), skyboxShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Skybox.glsl"), ctx)
     {
         glEnable(GL_DEPTH_TEST);
 
-        assert(ctx.window->window != nullptr);
         glfwSetFramebufferSizeCallback(ctx.window->window, FramebufferSizeCallback); // TOFIX
 
         // FBO

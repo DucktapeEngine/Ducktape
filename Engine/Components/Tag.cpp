@@ -26,7 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/System.h>
 #include <Scene/Scene.h>
 #include <Core/ImGui.h>
-#include <Core/Context.h>
+#include <Scene/SceneManager.h>
 
 #include <Components/Tag.h>
 

@@ -26,6 +26,7 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Renderer.h>
 #include <Core/Debug.h>
 #include <Core/ImGui.h>
+#include <Scene/SceneManager.h>
 
 #include <Components/Camera.h>
 

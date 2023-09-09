@@ -24,7 +24,6 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Resource.h>
 #include <Scene/Scene.h>
-#include <Core/Serialization.h>
 
 namespace DT
 {
@@ -35,8 +34,10 @@ namespace DT
     {
     public:
         Resource<Scene> activeScene; /// Pointer to the active scene resource.
+        std::set<System *> systems;
 
-        SceneManager(ContextPtr &ctx);
+        SceneManager(const json &data, ContextPtr &ctx);
+        ~SceneManager();
 
         /**
          * @brief Returns the active scene.
@@ -46,6 +47,24 @@ namespace DT
         {
             return *activeScene.data;
         }
+
+        /**
+         * @brief Registers a system of type T and returns a pointer to it.
+         * @tparam T The type of the system to register.
+         * @tparam Args The types of arguments to forward to the system's constructor.
+         * @param args The arguments to forward to the system's constructor.
+         * @return A pointer to the registered system.
+         */
+        template <typename T, typename... Args>
+        T *RegisterSystem(Args &&...args)
+        {
+            System *system = new T(std::forward<Args>(args)...);
+            systems.insert(system);
+            return (T *)system;
+        }
+
+        void Save(std::filesystem::path savePath, Scene &scene, ContextPtr &ctx);
+        void Load(std::filesystem::path savePath, Scene &scene, ContextPtr &ctx);
 
         IN_SERIALIZE(SceneManager, activeScene);
     };

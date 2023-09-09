@@ -121,7 +121,7 @@ namespace DT
         std::cout << "[ERR] [OPENGL] [" << code << "] " << description << std::endl;
     }
 
-    Window::Window(ContextPtr &ctx)
+    Window::Window(const json &data, ContextPtr &ctx) : hideWindow(data["hideWindow"]), windowSize(data["windowSize"]), windowTitle(data["windowTitle"]), drawWireframe(data["drawWireframe"]), windowIconPath(data["windowIconPath"]), vsync(data["vsync"])
     {
         glfwInit();
 

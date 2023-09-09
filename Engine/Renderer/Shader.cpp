@@ -82,8 +82,6 @@ namespace DT
         glDeleteShader(vertex);
         glDeleteShader(fragment);
 
-        loaded = true;
-
         std::cout << "[LOG] Loaded shader at " << shaderPath.string() << "\n";
     }
 
@@ -196,7 +194,6 @@ namespace DT
             return factoryData[rid];
 
         factoryData[rid] = new Shader(rid, ctx);
-
         return factoryData[rid];
     }
 

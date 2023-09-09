@@ -31,7 +31,6 @@ aryanbaburajan2007@gmail.com
 #include <glm/gtx/matrix_decompose.hpp>
 
 #include <Scene/System.h>
-#include <Core/Context.h>
 #include <Core/Serialization.h>
 
 namespace DT

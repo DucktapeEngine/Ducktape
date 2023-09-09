@@ -46,6 +46,8 @@ namespace DT
          * @return 2D projected vector on the screen.
          */
         glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize);
+
+        // TODO: ScreenToWorldPoint();
     };
 
     SERIALIZE(Camera, isOrtho, fov);

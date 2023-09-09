@@ -26,9 +26,9 @@ aryanbaburajan2007@gmail.com
 #include "PlayerController.h"
 using namespace DT;
 
-DT_EXPORT void RegisterRuntime(Scene &scene)
+DT_EXPORT void RegisterRuntime(ContextPtr &ctx)
 {
-    // scene.Register<GenericSystem<PlayerController>>("PlayerController");
+    ctx.sceneManager->RegisterSystem<GenericSystem<PlayerController>>("PlayerController");
 }
 
 REGISTER(PlayerController);

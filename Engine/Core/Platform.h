@@ -24,6 +24,7 @@ aryanbaburajan2007@gmail.com
 
 #include <string>
 #include <filesystem>
+#include <iostream>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -101,6 +102,7 @@ namespace DT
 #ifdef __linux__
 				return (T)dlsym(module, symbolName.c_str());
 #endif
+				std::cout << Platform::GetLastErrorAsString() << std::endl;
 			}
 		};
 	}

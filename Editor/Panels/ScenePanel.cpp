@@ -36,7 +36,7 @@ namespace DT
         {
             std::string _label = ctx.sceneManager->GetActiveScene().registry.get<Tag>(entity).name;
 
-            if (_label != "Unnamed" && _label != "")
+            if (_label != "")
                 label = _label;
         }
 

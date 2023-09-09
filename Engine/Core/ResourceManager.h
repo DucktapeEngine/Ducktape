@@ -39,8 +39,6 @@ namespace DT
     class ResourceManager
     {
     public:
-        ResourceManager();
-
         /**
          * @brief Mapping of resource IDs to file paths.
          */
@@ -53,6 +51,8 @@ namespace DT
          * @return The file path associated with the resource ID.
          */
         std::filesystem::path GetPath(RID rid);
+
+        ResourceManager(const json &data);
 
         /**
          * @brief Retrieves the resource ID associated with a file path.

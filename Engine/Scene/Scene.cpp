@@ -28,7 +28,13 @@ namespace DT
     Scene::Scene(RID rid, ContextPtr &ctx)
     {
         scenes.insert(this);
-        from_json(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))), *this);
+        std::cout << "heh\n";
+        std::cout << ctx.resourceManager->GetPath(rid).string() << std::endl;
+        std::cout << rid << std::endl;
+        
+        JLOG();
+        // from_json(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))), *this);
+        std::cout << "[LOG] Load scene at " << ctx.resourceManager->GetPath(rid).string() << "\n";
     }
 
     Scene::~Scene()
@@ -56,7 +62,7 @@ namespace DT
     }
 
     void Scene::Assign(Entity entity, const std::string &name, ContextPtr &ctx)
-    {
+    {        
         RegisterFunc registerFunc = ctx.game->gameModule.GetSymbolAddress<RegisterFunc>("Register" + name);
 
         if (!registerFunc)
@@ -97,18 +103,51 @@ namespace DT
         factoryData.erase(rid);
     }
 
-    void to_json(json &json, Scene &scene)
-    {
-        scene.isSerializing = true;
+    // void to_json(json &json, Scene &scene)
+    // {
+    //     scene.isSerializing = true;
 
-        for (System *system : scene.systems)
-            scene.registry.each([&](const Entity entity)
-                                { system->Serialize(*scene.ctx, entity); });
+    //     for (System *system : scene.ctx->sceneManager->systems)
+    //         scene.registry.each([&](const Entity entity)
+    //                             { system->Serialize(*scene.ctx, entity); });
 
-        json = scene.serializedData;
-    }
+    //     json = scene.serializedData;
+    // }
 
-    void from_json(const json &j, Scene &scene)
-    {
-    }
+    // void from_json(const json &j, Scene &scene)
+    // {
+    //     scene.serializedData = j;
+
+    //     scene.registry.each([&](const Entity entity)
+    //                         { scene.registry.destroy(entity); });
+    //     scene.registry.clear();
+
+    //     scene.isSerializing = false;
+
+    //     int handle = 0;
+    //     for (auto it = scene.serializedData["entities"].begin(); it != scene.serializedData["entities"].end(); ++it)
+    //     {
+    //         Entity entity = entt::null;
+    //         if (scene.registry.valid(entt::entity(handle)))
+    //         {
+    //             entity = entt::entity(handle);
+    //         }
+    //         else
+    //         {
+    //             entity = scene.registry.create(entt::entity(handle));
+    //         }
+
+    //         for (auto ct = it.value()["components"].begin(); ct != it.value()["components"].end(); ++ct)
+    //         {
+    //             scene.Assign(entity, ct.key(), *scene.ctx);
+    //             for (System *system : scene.systems)
+    //                 system->Serialize(*scene.ctx, entity);
+    //         }
+
+    //         handle++;
+    //     }
+
+    //     for (System *system : scene.systems)
+    //         system->Init(*scene.ctx);
+    // }
 }

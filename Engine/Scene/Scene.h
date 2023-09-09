@@ -55,7 +55,6 @@ namespace DT
         static inline std::unordered_map<RID, Scene *> factoryData;
 
     public:
-        std::vector<System *> systems;
         static inline std::set<Scene *> scenes;
 
         ContextPtr *ctx;
@@ -68,21 +67,6 @@ namespace DT
 
         Scene(RID rid, ContextPtr &ctx);
         ~Scene();
-
-        /**
-         * @brief Registers a system of type T and returns a pointer to it.
-         * @tparam T The type of the system to register.
-         * @tparam Args The types of arguments to forward to the system's constructor.
-         * @param args The arguments to forward to the system's constructor.
-         * @return A pointer to the registered system.
-         */
-        template <typename T, typename... Args>
-        T *Register(Args &&...args)
-        {
-            System *system = new T(std::forward<Args>(args)...);
-            systems.push_back(system);
-            return (T *)system;
-        }
 
         /**
          * @brief Checks if an entity has a component of type T.
@@ -239,6 +223,6 @@ namespace DT
         static Scene *GetSceneFromRegistry(entt::registry &registry);
     };
 
-    void to_json(json &json, Scene &scene);
-    void from_json(const json &j, Scene &scene);
+    // void to_json(json &json, Scene &scene);
+    // void from_json(const json &j, Scene &scene);
 }

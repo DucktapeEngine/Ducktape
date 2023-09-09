@@ -26,22 +26,41 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void Context::InitializeContextPtr()
+    Context::Context(const std::filesystem::path &projectPath) : 
+        pointer(&engine, &window, &renderer, &input, &time, &loopManager, &debug, this, &sceneManager, &game, &resourceManager),
+        ctxPath(projectPath),
+        resourceManager((FetchContextData(), contextData.at("resourceManager"))),
+        window(contextData.at("window"), pointer), 
+        renderer(contextData.at("renderer"), pointer), 
+        input(pointer), 
+        sceneManager(contextData.at("sceneManager"), pointer),
+        game(pointer)
     {
-        pointer.engine = &engine;
-        pointer.window = &window;
-        pointer.renderer = &renderer;
-        pointer.input = &input;
-        pointer.time = &time;
-        pointer.loopManager = &loopManager;
-        pointer.debug = &debug;
-        pointer.sceneManager = &sceneManager;
-        pointer.game = &game;
-        pointer.resourceManager = &resourceManager;
-        assert(pointer.resourceManager != nullptr);
-        std::cout << __LINE__ << std::endl;
-        pointer.ctx = this;
+        sceneManager.activeScene.Reload(pointer);
+        sceneManager.activeScene.data->ctx = &pointer;
+        std::cout << "[LOG] Context loaded from " << ctxPath.string() << "\n";
+    }
 
-        std::cout << "[LOG] ContextPtr Initialized\n";
+    json &Context::FetchContextData()
+    {
+        JLOG();
+        contextData = json::parse(std::ifstream(ctxPath));
+        return contextData;
+    }
+
+    void to_json(nlohmann::json &nlohmann_json_j, const Context &nlohmann_json_t)
+    {
+        nlohmann_json_j["window"] = nlohmann_json_t.window;
+        nlohmann_json_j["renderer"] = nlohmann_json_t.renderer;
+        nlohmann_json_j["sceneManager"] = nlohmann_json_t.sceneManager;
+        nlohmann_json_j["resourceManager"] = nlohmann_json_t.resourceManager;
+    }
+    
+    void from_json(const nlohmann::json &nlohmann_json_j, Context &nlohmann_json_t)
+    {
+        nlohmann_json_j.at("window").get_to(nlohmann_json_t.window);
+        nlohmann_json_j.at("renderer").get_to(nlohmann_json_t.renderer);
+        nlohmann_json_j.at("sceneManager").get_to(nlohmann_json_t.sceneManager);
+        nlohmann_json_j.at("resourceManager").get_to(nlohmann_json_t.resourceManager);
     }
 }

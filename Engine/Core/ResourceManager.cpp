@@ -27,14 +27,13 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    ResourceManager::ResourceManager()
+    ResourceManager::ResourceManager(const json &data) : resourceMap(data.at("resourceMap"))
     {
         std::cout << "[LOG] ResourceManager Constructed\n";
     }
 
     std::filesystem::path ResourceManager::GetPath(RID rid)
     {
-
         return resourceMap[rid];
     }
 

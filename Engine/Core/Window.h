@@ -35,17 +35,18 @@ namespace DT
 
     class Window
     {
-    public:
-        GLFWwindow *window = nullptr; /// The GLFW window handle.
-
+    protected:
         bool hideWindow = false;                         /// Flag indicating whether the window is hidden.
         glm::vec2 windowSize = glm::vec2(500.f, 500.f);  /// The size of the window.
-        std::string windowTitle = "Welcome to Ducktape"; /// The title of the window.
+        std::string windowTitle = "Ducktape Editor"; /// The title of the window.
         bool drawWireframe = false;                      /// Flag indicating whether to draw in wireframe mode.
         std::filesystem::path windowIconPath;            /// The path to the window icon.
         bool vsync = true;                               /// Flag indicating whether VSync is enabled.
+    
+    public:
+        GLFWwindow *window = nullptr; /// The GLFW window handle.
 
-        Window(ContextPtr &ctx);
+        Window(const json &data, ContextPtr &ctx);
         ~Window();
 
         void Clear(glm::vec4 color);

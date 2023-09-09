@@ -11,7 +11,8 @@
         "vsync": true
     },
     "renderer": {
-        "drawToQuad": true
+        "drawToQuad": true,
+        "skybox": "D:\\Duckie\\Programming\\Ducktape\\Resources\\Editor\\Textures\\Skybox\\Default.exr"
     },
     "sceneManager": {
         "activeScene": {
@@ -22,7 +23,7 @@
         "resourceMap": [
             [
                 1,
-                "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Scene\\MainScene.json"
+                "D:\\Duckie\\Programming\\Ducktape\\Resources\\Sandbox\\Assets\\Scenes\\MainScene.json"
             ]
         ]
     }

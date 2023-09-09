@@ -20,7 +20,7 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <Scene/Scene.h>
+#include <Scene/SceneManager.h>
 #include <Components/Camera.h>
 #include <Components/DirectionalLight.h>
 #include <Components/MeshRenderer.h>
@@ -34,14 +34,14 @@ aryanbaburajan2007@gmail.com
 
 namespace DT
 {
-    void RegisterComponentSystems(Scene &scene)
+    void RegisterComponentSystems(ContextPtr &ctx)
     {
-        scene.Register<CameraSystem>();
-        scene.Register<DirectionalLightSystem>();
-        scene.Register<MeshRendererSystem>();
-        scene.Register<PointLightSystem>();
-        scene.Register<TagSystem>();
-        scene.Register<TransformSystem>();
-        scene.Register<RelationSystem>();
+        ctx.sceneManager->RegisterSystem<CameraSystem>();
+        ctx.sceneManager->RegisterSystem<DirectionalLightSystem>();
+        ctx.sceneManager->RegisterSystem<MeshRendererSystem>();
+        ctx.sceneManager->RegisterSystem<PointLightSystem>();
+        ctx.sceneManager->RegisterSystem<TagSystem>();
+        ctx.sceneManager->RegisterSystem<TransformSystem>();
+        ctx.sceneManager->RegisterSystem<RelationSystem>();
     }
 }

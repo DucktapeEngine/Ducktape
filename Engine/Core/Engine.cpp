@@ -35,7 +35,7 @@ namespace DT
 
     void Engine::Init(ContextPtr &ctx)
     {
-        for (System *system : ctx.sceneManager->GetActiveScene().systems)
+        for (System *system : ctx.sceneManager->systems)
             system->Init(ctx);
     }
 
@@ -62,7 +62,7 @@ namespace DT
         ctx.renderer->Render(ctx);
 
         if (ctx.loopManager->gameTick)
-            for (System *system : ctx.sceneManager->GetActiveScene().systems)
+            for (System *system : ctx.sceneManager->systems)
                 system->Tick(ctx);
     }
 

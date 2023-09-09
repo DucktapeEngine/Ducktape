@@ -25,6 +25,7 @@ aryanbaburajan2007@gmail.com
 #include <Scene/Scene.h>
 #include <Core/ImGui.h>
 #include <Core/Serialization.h>
+#include <Scene/SceneManager.h>
 
 #include <Components/Transform.h>
 

@@ -27,6 +27,8 @@ aryanbaburajan2007@gmail.com
 #include <Renderer/Renderer.h>
 #include <Core/Resource.h>
 #include <Core/ImGui.h>
+#include <Scene/SceneManager.h>
+
 #include <Components/DirectionalLight.h>
 
 namespace DT

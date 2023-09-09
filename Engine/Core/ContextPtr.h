@@ -22,6 +22,8 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
+#include <iostream>
+
 namespace DT
 {
     class Engine;
@@ -54,6 +56,12 @@ namespace DT
         SceneManager *sceneManager{NULL};
         Game *game{NULL};
         ResourceManager *resourceManager{NULL};
+
+        ContextPtr(Engine *_engine, Window *_window, Renderer *_renderer, Input *_input, Time *_time, LoopManager *_loopManager, Debug *_debug, Context *_ctx, SceneManager *_sceneManager, Game *_game, ResourceManager *_resourceManager) :
+            engine(_engine), window(_window), renderer(_renderer), input(_input), time(_time), loopManager(_loopManager), debug(_debug), ctx(_ctx), sceneManager(_sceneManager), game(_game), resourceManager(_resourceManager) 
+        {
+            std::cout << "[LOG] ContextPtr Initialized\n";
+        }
 
         friend class Context;
     };

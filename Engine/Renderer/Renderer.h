@@ -70,12 +70,13 @@ namespace DT
 		glm::vec2 customViewportSize; /**< Custom viewport size. */
 
 		bool drawToQuad = true; /**< Flag indicating whether to draw to the quad. */
+		std::filesystem::path skybox = DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Textures" / "Skybox" / "Default.exr";
 
 		/**
 		 * @brief Constructs a Renderer object.
 		 * @param ctx A pointer to the Context.
 		 */
-		Renderer(ContextPtr &ctx);
+		Renderer(const json &data, ContextPtr &ctx);
 
 		/**
 		 * @brief Destructs a Renderer object.
@@ -136,7 +137,7 @@ namespace DT
 		 */
 		static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
 
-		IN_SERIALIZE(Renderer, drawToQuad); /**< Serialize function for Renderer. */
+		IN_SERIALIZE(Renderer, drawToQuad, skybox); /**< Serialize function for Renderer. */
 
 		friend class CameraSystem;
 	};

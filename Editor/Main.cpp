@@ -24,6 +24,10 @@ aryanbaburajan2007@gmail.com
 
 #include <Core/Context.h>
 #include <Components/RegisterComponentSystems.h>
+#include <Components/Tag.h>
+#include <Components/Camera.h>
+#include <Components/Transform.h>
+#include <Components/DirectionalLight.h>
 #include <Editor.h>
 #include <Panels/ConsolePanel.h>
 #include <Panels/ScenePanel.h>
@@ -44,20 +48,24 @@ int main()
     {
         Context ctx(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "DucktapeProjectSettings.json");
 
-        // RegisterComponentSystems(mainScene);
+        // json j = json::parse(std::ifstream(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "DucktapeProjectSettings.json"));
+        // std::cout << j.dump(4) << std::endl;
+        // j.get_to(ctx);
+
+        RegisterComponentSystems(*ctx.sceneManager.activeScene.data);
 
         // SceneManager::Load(DUCKTAPE_ROOT_DIR / "Resources" / "Sandbox" / "Assets" / "Scenes" / "MainScenctx.engine.json", mainScene, e);
 
-        // Entity camera = mainScenctx.engine.CreateEntity();
-        // mainScenctx.engine.Assign<Tag>(camera).name = "Camera";
-        // mainScenctx.engine.Assign<Transform>(camera);
-        // mainScenctx.engine.Assign<Camera>(camera);
-        // mainScenctx.engine.Assign<DirectionalLight>(camera);
+        // Entity camera = ctx.sceneManager.activeScene.data->CreateEntity();
+        // ctx.sceneManager.activeScene.data->Assign<Tag>(camera).name = "Camera";
+        // ctx.sceneManager.activeScene.data->Assign<Transform>(camera);
+        // ctx.sceneManager.activeScene.data->Assign<Camera>(camera);
+        // ctx.sceneManager.activeScene.data->Assign<DirectionalLight>(camera);
 
-        // Entity bag = mainScenctx.engine.CreateEntity();
-        // mainScenctx.engine.Assign<Tag>(bag).name = "Bag";
-        // mainScenctx.engine.Assign<Relation>(bag).SetParent(camera, mainScene);
-        // mainScenctx.engine.Assign(bag, "PlayerController");
+        // Entity bag = ctx.sceneManager.activeScene.data->CreateEntity();
+        // ctx.sceneManager.activeScene.data->Assign<Tag>(bag).name = "Bag";
+        // ctx.sceneManager.activeScene.data->Assign<Relation>(bag).SetParent(camera, mainScene);
+        // ctx.sceneManager.activeScene.data->Assign(bag, "PlayerController");
 
         // for (const auto &meshAsset : std::filesystem::directory_iterator(ctx.engine.project.directory / "Assets" / "Models" / "backpack" / "backpack"))
         // {

@@ -46,7 +46,6 @@ namespace DT
     {
     public:
         unsigned int id = 0; /// @brief Unique id of the shader.
-        bool loaded = false; /// @brief Boolean variable about whether the shader has been loaded or not.
 
         static inline const std::string versionInclude = "#version 440 core\n";
         static inline const std::string ducktapeInclude = "#ifdef DT_SHADER_FRAG\n"

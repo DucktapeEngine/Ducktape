@@ -49,6 +49,7 @@ namespace DT
             if (factoryData.count(rid))
                 return factoryData[rid];
 
+            JLOG();
             factoryData[rid] = new Material(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))));
             return factoryData[rid];
         }

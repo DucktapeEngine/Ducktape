@@ -23,6 +23,7 @@ aryanbaburajan2007@gmail.com
 #pragma once
 
 #include <Scene/System.h>
+#include <Scene/SceneManager.h>
 #include <Core/Serialization.h>
 
 namespace DT

@@ -21,8 +21,9 @@ aryanbaburajan2007@gmail.com
 */
 
 #include <Input/Key.h>
-#include <Core/Context.h>
 #include <Core/Serialization.h>
+#include <Core/ContextPtr.h>
+#include <Core/Window.h>
 
 #include <Input/Input.h>
 
