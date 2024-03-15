@@ -307,7 +307,7 @@ namespace DT
 
         bool onColumnLayout = itemSize >= columnSwitchSize;
 
-        ImGui::ImageWithInputText((ImTextureID)(uintptr_t)iconId, "##inputNewFile", buf, IM_ARRAYSIZE(buf), {itemSize, itemSize}, {0, 1}, {1, 0}, onColumnLayout);
+        ImGui::ImageWithInputText((ImTextureID)(uintptr_t)iconId, "##inputNewFile", buf, IM_ARRAYSIZE(buf), {static_cast<float>(itemSize), static_cast<float>(itemSize)}, {0, 1}, {1, 0}, onColumnLayout);
         ImGui::SetKeyboardFocusHere(-1);
         if (ImGui::IsItemDeactivatedAfterEdit() || ImGui::IsKeyPressed(ImGuiKey_Enter))
         {
