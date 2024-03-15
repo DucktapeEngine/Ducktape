@@ -1,1 +1,0 @@
-{"entities":[{"components":{"Camera":{"fov":45.0,"isOrtho":false},"Tag":{"name":"Camera"},"Transform":{"rotation":{"w":1.0,"x":0.0,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"translation":{"x":2.0,"y":2.0,"z":2.0}}}},{"components":{"Tag":{"name":"Parent"}}},{"components":{"Tag":{"name":"Child"}}}]}

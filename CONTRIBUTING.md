@@ -2,11 +2,11 @@
 
 If you are interested in contributing to this game engine, feel free to fork the repository and make your own changes.
 
-**Note**: Please do not submit pull requests with new features or major changes. Instead, please file an issue first for discussion. If you'd like a feature implemented into the Game Engine, feel free to use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=feature_request.md&title=). Or if you encountered a bug, you may use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=bug_report.md&title=) instead.
+**Note**: Please do not submit pull requests with entirely new features or major changes. Instead, please file an issue first for discussion. If you'd like a feature implemented into the engine, feel free to use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=feature_request.md&title=) to discuss it beforehand. Or if you encountered a bug, you may use [this issue template](https://github.com/DucktapeEngine/Ducktape/issues/new?assignees=&labels=&template=bug_report.md&title=) instead.
 
 ## Setting up Ducktape for development
 
-Before you proceed further, feel free to join [the Ducktape Discord Server](https://dsc.gg/ducktape) for any help that you may need!
+Before you proceed further, feel free to join [the Ducktape Discord Server](https://dsc.gg/ducktape) for any help regarding Ducktape.
 
 ### Clone the repository
 Fork this repository to your own account.
@@ -15,7 +15,7 @@ Then, clone the repository using:
 git clone https://github.com/<username>/Ducktape.git
 ```
 
-### Install dependencies
+### Install dependencies (For Linux users)
 #### Debian
 
 ```sh
@@ -38,64 +38,19 @@ sudo pacman -S libx11 libxrandr libxinerama libxcursor libxi mesa assimp glfw-x1
 ```
 
 ### Compile Ducktape
-Execute the build script (`Build.bat` if you're on Windows, `Build.sh` if you're on Linux):
-#### Windows
 ```bat
-cd Ducktape
-build.bat
+cmake -DCMAKE_BUILD_TYPE=Debug -S . -B ./Build
+cd Build
+cmake --build .
 ```
-#### Linux
-```sh
-cd Ducktape
-chmod +x build.sh
-./build.sh
-```
-
-Select the generator for CMake
-```
-Setting up Ducktape for compiling...
-Choose your generator:
-1) Borland Makefiles
-2) MSYS Makefiles
-3) MinGW Makefiles (Default for Windows)
-4) NMake Makefiles
-5) NMake Makefiles JOM
-6) Unix Makefiles (Default for Linux)
-7) Watcom WMake
-Enter your option (1,2,3,4,5,6,7):
-```
-Enter the path to your C++ compiler (or the compiler command name if it's in your environment PATH variable):
-
-Like, `g++` if you have the GNU compiler installed.
-```
-Specify your compiler:
-(You may enter a path to your compiler or just the compiler's command name if th
-e compiler path is already in your PATH environment variable)
-```
-Select the build type:
-```
-Choose the build type:
-1) Debug
-2) Release
-Enter your option (1,2):
-```
-Now the Engine and the Editor should compile.
-
-Note that before you run the Editor, you need to copy the Dll binaries of glfw, glad, assimp, and imgui to the same directory as the Editor exe (./Build/Editor).
-These files are usually situated in:
-- ./Build/Extern/glfw/src
-- ./Build/Extern/glad
-- ./Build/Extern/assimp/bin
-- ./Build/Extern/imgui
-
 Now run 
 ```
-./Editor/Editor.exe
+./DucktapeRuntime.exe
 ```
 
-### Commit naming in Ducktape follows a specific format:
+### Ducktape's commit message convention:
 ```
-[tag]: <Commit details>
+<tag>: <commit msg>
 ```
 where `[tag]` is:
 - **feat** - a new feature is introduced with the changes
@@ -112,5 +67,5 @@ where `[tag]` is:
 
 For example:
 ```
-feat: Added Linux support
+feat: added audio system
 ```

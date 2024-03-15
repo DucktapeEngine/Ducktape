@@ -1,29 +1,28 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
-
-#include <glm/glm.hpp>
-#include <Core/Serialization.h>
 
 #define MAX_BONE_INFLUENCE 4
 
@@ -31,14 +30,12 @@ namespace DT
 {
     struct Vertex
     {
-        glm::vec3 position;                  /// @brief position vector of the vertex 
-        glm::vec3 normal;                    /// @brief normal vector corresponding to the vertex
-        glm::vec2 texCoords;                 /// @brief texture coordinate vector corresponding to the vertex
-        glm::vec3 tangent;                   /// @brief tangent vector corresponding to the vertex
-        glm::vec3 bitangent;                 /// @brief bi-tangent vector corresponding to the vertex
-        int boneIDs[MAX_BONE_INFLUENCE];     /// @brief list of bone IDs
-        float weights[MAX_BONE_INFLUENCE];   /// @brief list of weights
+        glm::vec3 position;
+        glm::vec3 normal;
+        glm::vec2 texCoords;
+        glm::vec3 tangent;
+        glm::vec3 bitangent;
+        int boneIDs[MAX_BONE_INFLUENCE];
+        float weights[MAX_BONE_INFLUENCE];
     };
-    
-    SERIALIZE(Vertex, position, normal, texCoords, tangent, bitangent);
 }

@@ -1,56 +1,28 @@
-# Ducktape | An open source C++ 2D & 3D game Engine that focuses on being fast, and powerful.
-# Copyright (C) 2022 Aryan Baburajan
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-# 
-# In case of any further questions feel free to contact me at
-# the following email address:
-# aryanbaburajan2007@gmail.com
+# MIT License
 
-cmake_minimum_required (VERSION 3.8)
+# Copyright (c) 2021 - 2023 Aryan Baburajan
 
-set(CMAKE_CXX_STANDARD 20)
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 
-# DucktapeEditor
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/Editor/**/*.cpp" "${PROJECT_SOURCE_DIR}/Editor/*.cpp")
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 
-set(CMAKE_CXX_FLAGS "-fPIC")
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
-add_executable (DucktapeEditor
-    ${source_list}
-)
+cmake_minimum_required (VERSION 3.20)
 
-set_target_properties (DucktapeEditor PROPERTIES
-    CXX_STANDARD 20
-    CXX_EXTENSIONS OFF
-)
-
-target_compile_features (DucktapeEditor PRIVATE cxx_std_17)
-
-target_include_directories(DucktapeEditor PUBLIC "${PROJECT_SOURCE_DIR}/Editor")
-
-# Ducktape
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_MODULE_PATH}")
-set(TARGET DucktapeEditor)
-set(Ducktape_ROOT_DIR "${PROJECT_SOURCE_DIR}")
-find_package (Ducktape REQUIRED)
-
-if (Ducktape_FOUND)
-    message ("-- Ducktape found.")
-else (Ducktape_FOUND)
-    message ("-- Ducktape not found.")
-endif ()
-
-target_include_directories (DucktapeEditor PUBLIC ${Ducktape_INCLUDE_DIR})
-target_link_libraries (DucktapeEditor PUBLIC ${Ducktape_LIBRARY})
+file (GLOB_RECURSE dt_source_list "${PROJECT_SOURCE_DIR}/Editor/**/*.cpp" "${PROJECT_SOURCE_DIR}/Editor/*.cpp")
+add_library (DucktapeEditor SHARED ${dt_source_list})
+set_target_properties (DucktapeEditor PROPERTIES PREFIX "")
+target_precompile_headers(DucktapeEditor PUBLIC "${PROJECT_SOURCE_DIR}/Engine/dtpch.h")

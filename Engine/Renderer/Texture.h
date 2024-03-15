@@ -1,96 +1,52 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
-#include <string>
-#include <stdexcept>
-#include <fstream>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <utils/stb_image.h>
-
-#include <Core/Serialization.h>
-#include <Core/ResourceManager.h>
-#include <Core/ContextPtr.h>
+#include <Core/Error.h>
 
 namespace DT
 {
-    /**
-     * @brief Texture class for loading and using texture or image.
-     */
     class Texture
     {
     public:
-        int width;  /// @brief Width of the image/texture.
-        int height; /// @brief Height of the image/texture.
-        int nrChannels;
-        unsigned int id;                   /// @brief Unique id of the texture.
-        bool loaded = false;               /// @brief Whether the texture is loaded or not.
-        std::filesystem::path texturePath; /// @brief Path to the loaded texture file.
+        int width;
+        int height;
+        int noChannels;
+        unsigned int id;
 
         enum Type
         {
-            DIFFUSE,
-            SPECULAR,
-            NORMAL,
-            HEIGHT
+            Diffuse,
+            Specular,
+            Normal,
+            Height,
+            // Roughness
         };
 
-        static inline std::unordered_map<RID, Texture *> factoryData;
+        Texture(unsigned char *data, int _width, int _height, int _noChannels);
 
-        Texture() = default;
-
-        /**
-         * @brief Create a new Texture class
-         */
-        Texture(RID rid, ContextPtr &ctx);
-
-        static Texture *LoadResource(RID rid, ContextPtr &ctx)
-        {
-            if (factoryData.count(rid))
-                return factoryData[rid];
-
-            factoryData[rid] = new Texture(rid, ctx);
-            return factoryData[rid];
-        }
-
-        static void UnLoadResource(RID rid)
-        {
-            delete factoryData[rid];
-            factoryData.erase(rid);
-        }
-
-        static void SaveResource(RID rid, ContextPtr &ctx)
-        {
-            // yet to be implemented
-        }
-
-        /**
-         * @brief  deletes the texture
-         */
-        void Delete();
-
-        IN_SERIALIZE(Texture, texturePath);
+        static ErrorOr<Texture> Load(const std::filesystem::path &path);
     };
 }

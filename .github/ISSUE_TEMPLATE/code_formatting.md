@@ -2,7 +2,7 @@
 name: Code formatting
 about: Change scripts/files to follow good practices.
 title: ''
-labels: enhancement
+labels: 'enhancement'
 assignees: ''
 
 ---

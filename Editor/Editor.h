@@ -1,73 +1,48 @@
 /*
-Ducktape | An open source C++ 2D & 3D game Engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
-#include <iosfwd>
-
-#include <Core/ImGui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
-#include <Renderer/Renderer.h>
-#include <Core/Window.h>
-#include <Core/Engine.h>
-#include <Panels/Panel.h>
-
 namespace DT
 {
-    namespace Editor
+    class Window;
+    class Renderer;
+    class Panel;
+
+    class Editor
     {
-        inline ContextPtr *ctx;
-        inline std::vector<Panel *> panels;
+    public:
+        Editor(Context &ctx);
+        ~Editor();
 
-        inline ImGuiID dockspaceId; /// @brief Persistent id for dockspace.
-
-        template <typename T>
-        T *AddPanel()
-        {
-            T *Tptr = new T();
-            panels.push_back(Tptr);
-            return Tptr;
-        }
-
-        template <typename T>
-        T *GetPanel()
-        {
-            for (Panel *panel : panels)
-                if (T *ptr = dynamic_cast<T *>(panel))
-                    return ptr;
-            return nullptr;
-        }
-
-        void Init(ContextPtr &ctx);
+        void Init(Context &ctx);
         void NewFrame();
-        void Render();
+        void Tick(Context &ctx, const float &dt);
         void EndFrame();
-        void Terminate();
 
         void Close();
         void SetTitle(const std::string &title);
-        void SetIcon(std::filesystem::path path);
         glm::vec2 GetWindowPos();
         void SetWindowPos(const glm::vec2 &pos);
         glm::vec2 GetWindowSize();
@@ -85,6 +60,37 @@ namespace DT
         void FocusWindow();
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
-        void SetDarkTheme();
-    }
+        void SetupImGuiStyle();
+
+        template <typename T>
+        Error AttachPanel(T *panel)
+        {
+            PROFILE();
+
+            if (panels.find(std::type_index(typeid(T))) != panels.end())
+                return Error("Panel " + std::string(typeid(T).name()) + " already attached.\n");
+            panels[std::type_index(typeid(T))] = panel;
+            
+            panel->editor = this;
+
+            return Error();
+        }
+
+        template <typename T>
+        ErrorOr<T *> GetPanel()
+        {
+            PROFILE();
+
+            if (panels.find(std::type_index(typeid(T))) == panels.end())
+                return ErrorOr<T *>("Panel " + std::string(typeid(T).name()) + " not attached.\n");
+            return (T *)panels[std::type_index(typeid(T))];
+        }
+
+    private:
+        Window *window;
+        Renderer *renderer;
+
+        ImGuiID dockspaceId;
+        std::unordered_map<std::type_index, Panel *> panels;
+    };
 }

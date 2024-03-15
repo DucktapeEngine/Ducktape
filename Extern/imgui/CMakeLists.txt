@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.20)
 
 add_library(imgui 
     "${PROJECT_SOURCE_DIR}/Extern/imgui/imgui.cpp"

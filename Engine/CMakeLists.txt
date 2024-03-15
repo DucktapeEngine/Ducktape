@@ -1,74 +1,28 @@
-# Ducktape | An open source C++ 2D & 3D game Engine that focuses on being fast, and powerful.
-# Copyright (C) 2022 Aryan Baburajan
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
-# In case of any further questions feel free to contact me at
-# the following email address:
-# aryanbaburajan2007@gmail.com
+# MIT License
 
-cmake_minimum_required(VERSION 3.8)
+# Copyright (c) 2021 - 2023 Aryan Baburajan
 
-# Ducktape
-file(GLOB_RECURSE source_list "${PROJECT_SOURCE_DIR}/Engine/**/*.cpp" "${PROJECT_SOURCE_DIR}/Engine/*.cpp")
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 
-set(CMAKE_CXX_FLAGS "-fPIC")
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 
-if(BUILD_SHARED_LIBS)
-    add_library(Ducktape SHARED 
-        ${source_list}
-    )
-else()
-    add_library(Ducktape 
-        ${source_list}
-    )
-endif()
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
-set_target_properties(Ducktape PROPERTIES
-    CXX_EXTENSIONS OFF
-)
+cmake_minimum_required (VERSION 3.20)
 
-target_include_directories(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Engine/")
-target_compile_features(Ducktape PRIVATE cxx_std_17)
-
-# Dependencies
-find_package(OpenGL REQUIRED)
-
-if(OPENGL_FOUND)
-    message("-- OpenGL found.")
-else(OPENGL_FOUND)
-    message("-- OpenGL not found.")
-endif()
-
-target_include_directories(Ducktape PUBLIC
-    ${PROJECT_SOURCE_DIR}/Engine;
-    ${PROJECT_SOURCE_DIR}/Extern/;
-    ${PROJECT_SOURCE_DIR}/Extern/glm/;
-    ${PROJECT_SOURCE_DIR}/Extern/glfw/include/;
-    ${PROJECT_SOURCE_DIR}/Extern/glad/include/;
-    ${PROJECT_SOURCE_DIR}/Extern/entt/single_include;
-    ${PROJECT_SOURCE_DIR}/Extern/assimp/include;
-    ${PROJECT_SOURCE_DIR}/Build/Extern/assimp/include;
-    ${PROJECT_SOURCE_DIR}/Extern/imgui/backends/;
-    ${PROJECT_SOURCE_DIR}/Extern/imgui/;
-    ${PROJECT_SOURCE_DIR}/Extern/json/include/;
-)
-
-target_link_libraries(Ducktape PUBLIC
-    glfw
-    OpenGL::GL
-    glad
-    assimp
-    imgui
-)
+file (GLOB_RECURSE dt_source_list "${PROJECT_SOURCE_DIR}/Engine/**/*.cpp" "${PROJECT_SOURCE_DIR}/Engine/*.cpp")
+add_library (Ducktape SHARED ${dt_source_list})
+set_target_properties (Ducktape PROPERTIES PREFIX "")
+target_precompile_headers(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/Engine/dtpch.h")

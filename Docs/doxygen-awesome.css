@@ -29,9 +29,9 @@ SOFTWARE.
 
 html {
     /* primary theme color. This will affect the entire websites color scheme: links, arrows, labels, ... */
-    --primary-color: #1779c4;
-    --primary-dark-color: #335c80;
-    --primary-light-color: #70b1e9;
+    --primary-color: #F9D907;
+    --primary-dark-color: #F9D907;
+    --primary-light-color: #F9D907;
 
     /* page base colors */
     --page-background-color: #ffffff;
@@ -87,7 +87,7 @@ html {
     --note-color-dark: #f3a600;
     --note-color-darker: #5f4204;
     --todo-color: #e4f3ff;
-    --todo-color-dark: #1879C4;
+    --todo-color-dark: #F9D907;
     --todo-color-darker: #274a5c;
     --deprecated-color: #ecf0f3;
     --deprecated-color-dark: #5b6269;
@@ -144,7 +144,7 @@ html {
     --fragment-keywordflow: #d67c3b;
     --fragment-token: #438a59;
     --fragment-comment: #969696;
-    --fragment-link: #5383d6;
+    --fragment-link: #F9D907;
     --fragment-preprocessor: #46aaa5;
     --fragment-linenumber-color: #797979;
     --fragment-linenumber-background: #f4f4f5;
@@ -185,7 +185,7 @@ html {
     html:not(.light-mode) {
         color-scheme: dark;
 
-        --primary-color: #1982d2;
+        --primary-color: #F9D907;
         --primary-dark-color: #86a9c4;
         --primary-light-color: #4779ac;
 
@@ -215,7 +215,7 @@ html {
         --note-color-dark: #f1b602;
         --note-color-darker: #ceb670;
         --todo-color: #163750;
-        --todo-color-dark: #1982D2;
+        --todo-color-dark: #F9D907;
         --todo-color-darker: #dcf0fa;
         --deprecated-color: #2e323b;
         --deprecated-color-dark: #738396;
@@ -246,7 +246,7 @@ html {
 html.dark-mode {
     color-scheme: dark;
 
-    --primary-color: #1982d2;
+    --primary-color: #F9D907;
     --primary-dark-color: #86a9c4;
     --primary-light-color: #4779ac;
 
@@ -276,7 +276,7 @@ html.dark-mode {
     --note-color-dark: #f1b602;
     --note-color-darker: #ceb670;
     --todo-color: #163750;
-    --todo-color-dark: #1982D2;
+    --todo-color-dark: #F9D907;
     --todo-color-darker: #dcf0fa;
     --deprecated-color: #2e323b;
     --deprecated-color-dark: #738396;

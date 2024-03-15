@@ -1,28 +1,30 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
+#include <ECS/SceneManager.h>
 #include <Renderer/Renderer.h>
-#include <Scene/Scene.h>
-#include <Core/Engine.h>
+#include <Components/Tag.h>
 
 GLenum glCheckError_(const char *file, int line)
 {
@@ -55,46 +57,22 @@ GLenum glCheckError_(const char *file, int line)
 
 namespace DT
 {
-    Renderer::Renderer(const json &data, ContextPtr &ctx) : drawToQuad(data.at("drawToQuad")), skybox(data.at("skybox")), screenShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Screen.glsl"), ctx), skyboxShader(ctx.resourceManager->GetRID(DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Shaders" / "Skybox.glsl"), ctx)
+    Renderer::Renderer(Context &ctx, const json &rendererData) : screenShader(Shader::Load(ctx.projectPath / "Engine" / "Shaders" / "Screen.frag", ctx.projectPath / "Engine" / "Shaders" / "Screen.vert").Fatal("Renderer::Renderer()"))
     {
-        glEnable(GL_DEPTH_TEST);
+        renderFrameBuffer = rendererData.value("renderFrameBuffer", true);
+        window = ctx.GetService<Window>().Fatal("Renderer::Renderer()");
 
-        glfwSetFramebufferSizeCallback(ctx.window->window, FramebufferSizeCallback); // TOFIX
-
-        // FBO
-        glGenFramebuffers(1, &FBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-
-        // Texture
-        glGenTextures(1, &renderTexture);
-        glBindTexture(GL_TEXTURE_2D, renderTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ctx.window->GetWindowSize().x, ctx.window->GetWindowSize().y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderTexture, 0);
-
-        // RBO
-        glGenRenderbuffers(1, &RBO);
-        glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, ctx.window->GetWindowSize().x, ctx.window->GetWindowSize().y);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
-
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        {
-            std::cout << "[ERR] Framebuffer not complete!\n";
-            return;
-        }
+        glfwSetFramebufferSizeCallback(window->GetRawWindowPointer(), FramebufferSizeCallback);
 
         // Quad
-        float quadVertices[] = {// vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
-                                // positions   // texCoords
-                                -1.0f, 1.0f, 0.0f, 1.0f,
-                                -1.0f, -1.0f, 0.0f, 0.0f,
-                                1.0f, -1.0f, 1.0f, 0.0f,
+        float quadVertices[] = {
+            -1.0f, 1.0f, 0.0f, 1.0f,
+            -1.0f, -1.0f, 0.0f, 0.0f,
+            1.0f, -1.0f, 1.0f, 0.0f,
 
-                                -1.0f, 1.0f, 0.0f, 1.0f,
-                                1.0f, -1.0f, 1.0f, 0.0f,
-                                1.0f, 1.0f, 1.0f, 1.0f};
+            -1.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, -1.0f, 1.0f, 0.0f,
+            1.0f, 1.0f, 1.0f, 1.0f};
 
         glGenVertexArrays(1, &quadVAO);
         glGenBuffers(1, &quadVBO);
@@ -106,135 +84,56 @@ namespace DT
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
 
-        // Skybox
-        float skyboxVertices[] = {
-            // positions
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, 1.0f,
-            -1.0f, -1.0f, 1.0f,
-
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f,
-            -1.0f, -1.0f, 1.0f,
-
-            -1.0f, 1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, -1.0f,
-
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f};
-
-        glGenVertexArrays(1, &skyboxVAO);
-        glGenBuffers(1, &skyboxVBO);
-        glBindVertexArray(skyboxVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-
         std::cout << "[LOG] Renderer Constructed\n";
     }
 
-    void Renderer::Render(ContextPtr &ctx)
+    void Renderer::BeginScene(BaseCamera *camera)
     {
-        if (ctx.window->GetMinimized())
-            return;
+        activeRenderCamera = camera;
 
-        if (ctx.sceneManager->GetActiveScene().activeCamera == nullptr)
+        BindFrameBuffer(activeRenderCamera->FBO);
+        glEnable(GL_DEPTH_TEST);
+
+        glClearColor(activeRenderCamera->backgroundColor.r, activeRenderCamera->backgroundColor.g, activeRenderCamera->backgroundColor.b, activeRenderCamera->backgroundColor.a);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    void Renderer::EndScene()
+    {
+        BindFrameBuffer(0);
+        glDisable(GL_DEPTH_TEST);
+
+        glClearColor(0.f, 1.f, 0.f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        if (renderFrameBuffer)
         {
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-            return;
-        }
-
-        // Projection and View
-        *cameraView = glm::lookAt(*cameraPosition, *cameraPosition + *cameraRotation * glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-        if (*isOrtho)
-            *cameraProjection = glm::ortho(0.f, ctx.window->GetWindowSize().x, 0.f, ctx.window->GetWindowSize().y, 0.1f, 100.0f);
-        else
-            *cameraProjection = glm::perspective(glm::radians(*fov), ctx.window->GetWindowSize().x / ctx.window->GetWindowSize().y, 0.1f, 100.0f);
-
-        // // Draw skybox TODO: Switch to HDRI
-        // glDepthMask(GL_FALSE);
-
-        // skyboxShader.Use();
-        // skyboxShader.SetMat4("projection", *cameraProjection);
-        // skyboxShader.SetMat4("view", glm::mat4(glm::mat3(*cameraView)));
-
-        // glBindVertexArray(skyboxVAO);
-        // glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxCubemap.id);
-        // glDrawArrays(GL_TRIANGLES, 0, 36);
-
-        glDepthMask(GL_TRUE);
-
-        glCheckError();
-
-        // Draw render texture on to a quad
-        if (drawToQuad)
-        {
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            glDisable(GL_DEPTH_TEST);
-
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            screenShader.Use();
+            screenShader.Use().Fatal("Renderer::EndScene()");
             glBindVertexArray(quadVAO);
-            glBindTexture(GL_TEXTURE_2D, renderTexture);
+            glBindTexture(GL_TEXTURE_2D, activeRenderCamera->renderTexture);
             glDrawArrays(GL_TRIANGLES, 0, 6);
-
-            glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-            glEnable(GL_DEPTH_TEST);
         }
     }
 
-    Renderer::~Renderer()
+    void Renderer::SetViewport(const glm::vec2 &newViewportSize)
     {
-        glDeleteFramebuffers(1, &FBO);
+        viewportSize = newViewportSize;
+
+        for (BaseCamera *cam : BaseCamera::cameras)
+            cam->SetViewportSize(viewportSize);
     }
 
-    void Renderer::SetViewport(glm::vec2 viewportsize)
+    Error Renderer::ActivateShader(Shader &shader)
     {
-        glBindTexture(GL_TEXTURE_2D, renderTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportsize.x, viewportsize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-        glBindTexture(GL_TEXTURE_2D, 0);
+        Error err = shader.Use();
+        if (err.HasError())
+            return err;
+        shader.SetMat4("projection", activeRenderCamera->projection);
+        shader.SetMat4("view", activeRenderCamera->view);
+        shader.SetVec3("viewPos", activeRenderCamera->GetPosition());
 
-        glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportsize.x, viewportsize.y);
-        glBindRenderbuffer(GL_RENDERBUFFER, 0);
+        return Error();
     }
-
-    // void Renderer::LoadSkybox(std::array<std::filesystem::path, 6> paths)
-    // {
-    //     skyboxCubemap = Cubemap(paths);
-    // }
 
     bool Renderer::GetFreeDirectionalLightSpot(unsigned int *spot)
     {
@@ -259,9 +158,9 @@ namespace DT
     {
         for (int i = 0; i < MAX_LIGHT_NO; i++)
         {
-            if (occupiedPointLight[i] == false)
+            if (occupiedPointLights[i] == false)
             {
-                occupiedPointLight[i] = true;
+                occupiedPointLights[i] = true;
                 *spot = i;
                 return true;
             }
@@ -271,20 +170,12 @@ namespace DT
 
     void Renderer::UnoccupyPointLightSpot(unsigned int spot)
     {
-        occupiedPointLight[spot] = false;
-    }
-
-    void Renderer::ActivateShader(Shader *shader)
-    {
-        shader->Use();
-        shader->SetMat4("projection", *cameraProjection);
-        shader->SetMat4("view", *cameraView);
-        shader->SetVec3("viewPos", *cameraPosition);
+        occupiedPointLights[spot] = false;
     }
 
     void Renderer::FramebufferSizeCallback(GLFWwindow *glfwWindow, int width, int height)
     {
-        reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(glfwWindow))->window->SetWindowSize({width, height});
-        reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(glfwWindow))->renderer->SetViewport({width, height});
+        // reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(glfwWindow))->window->SetWindowSize({width, height});
+        // reinterpret_cast<ContextPtr *>(glfwGetWindowUserPointer(glfwWindow))->renderer->SetViewport({width, height});
     }
 }

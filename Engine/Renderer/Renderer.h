@@ -1,144 +1,97 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
 #define MAX_LIGHT_NO 25
 
-#include <array>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <Renderer/Shader.h>
-#include <Renderer/Texture.h>
+#include <Components/Camera.h>
+#include <Core/Error.h>
+#include <Core/Context.h>
 #include <Core/Window.h>
-#include <Core/Debug.h>
-#include <Core/Macro.h>
-#include <Scene/Scene.h>
+#include <Renderer/Shader.h>
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
 
 namespace DT
 {
-	/**
-	 * @class Renderer
-	 * @brief Handles rendering operations and manages rendering resources.
-	 */
-	class Renderer
-	{
-	public:
-		unsigned int FBO;													/**< Framebuffer object ID. */
-		unsigned int RBO;													/**< Renderbuffer object ID. */
-		unsigned int renderTexture;											/**< ID of the texture used for rendering. */
-		unsigned int quadVAO;												/**< Vertex Array Object ID for the quad. */
-		unsigned int quadVBO;												/**< Vertex Buffer Object ID for the quad. */
-		unsigned int skyboxVAO;												/**< Vertex Array Object ID for the skybox. */
-		unsigned int skyboxVBO;												/**< Vertex Buffer Object ID for the skybox. */
-		glm::mat4 *cameraView = nullptr;									/**< Pointer to the view matrix of the camera. */
-		glm::mat4 *cameraProjection = nullptr;								/**< Pointer to the projection matrix of the camera. */
-		glm::vec3 *cameraPosition = nullptr;								/**< Pointer to the position of the camera. */
-		glm::quat *cameraRotation = nullptr;								/**< Pointer to the rotation of the camera. */
-		bool *isOrtho = nullptr;											/**< Pointer to a boolean indicating if the camera is in orthographic mode. */
-		float *fov = nullptr;												/**< Pointer to the field of view of the camera. */
-		std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false}; /**< Array to track occupied directional light spots. */
-		std::array<bool, MAX_LIGHT_NO> occupiedPointLight = {false};		/**< Array to track occupied point light spots. */
+    class Renderer
+    {
+    public:
+        Renderer(Context &ctx, const json &rendererData);
 
-		Shader screenShader;
-		Shader skyboxShader;
-		glm::vec2 customViewportSize; /**< Custom viewport size. */
+        void BeginScene(BaseCamera *camera);
+        void EndScene();
 
-		bool drawToQuad = true; /**< Flag indicating whether to draw to the quad. */
-		std::filesystem::path skybox = DUCKTAPE_ROOT_DIR / "Resources" / "Editor" / "Textures" / "Skybox" / "Default.exr";
+        void SetViewport(const glm::vec2 &newViewportSize);
 
-		/**
-		 * @brief Constructs a Renderer object.
-		 * @param ctx A pointer to the Context.
-		 */
-		Renderer(const json &data, ContextPtr &ctx);
-
-		/**
-		 * @brief Destructs a Renderer object.
-		 */
-		~Renderer();
-
-		/**
-		 * @brief Renders the scene.
-		 * @param ctx A pointer to the Context.
-		 */
-		void Render(ContextPtr &ctx);
-
-		/**
-		 * @brief Sets the viewport size.
-		 * @param viewportsize The size of the viewport.
-		 */
-		void SetViewport(glm::vec2 viewportsize);
-
-		// void LoadSkybox(std::array<std::filesystem::path, 6> paths);
-
-		/**
-		 * @brief Retrieves a free spot for a directional light.
-		 * @param spot A pointer to the variable to store the free spot index.
-		 * @return True if a free spot is available, false otherwise.
-		 */
-		bool GetFreeDirectionalLightSpot(unsigned int *spot);
-
-		/**
-		 * @brief Unoccupies a spot for a directional light.
-		 * @param spot The spot index to unoccupy.
-		 */
+        Error ActivateShader(Shader &shader);
+        
+        bool GetFreeDirectionalLightSpot(unsigned int *spot);
 		void UnoccupyDirectionalLightSpot(unsigned int spot);
-
-		/**
-		 * @brief Retrieves a free spot for a point light.
-		 * @param spot A pointer to the variable to store the free spot index.
-		 * @return True if a free spot is available, false
-		 */
 		bool GetFreePointLightSpot(unsigned int *spot);
-
-		/**
-		 * @brief Unoccupies a spot for a point light.
-		 * @param spot The spot index to unoccupy.
-		 */
 		void UnoccupyPointLightSpot(unsigned int spot);
 
-		/**
-		 * @brief Activates a shader for rendering.
-		 * @param shader A pointer to the shader to activate.
-		 */
-		void ActivateShader(Shader *shader);
+        void SetRenderFrameBuffer(bool flag)
+        {
+            renderFrameBuffer = flag;
+        }
 
-		/**
-		 * @brief Callback function for handling framebuffer size changes.
-		 * @param window A pointer to the GLFW window.
-		 * @param width The new width of the framebuffer.
-		 * @param height The new height of the framebuffer.
-		 */
+        void BindFrameBuffer(unsigned int fbo)
+        {
+            if (bindedFBO == fbo)
+                return;
+            glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+            bindedFBO = fbo;
+        }
+
+        glm::vec2 GetViewportSize()
+        {
+            return viewportSize;
+        }
+
+        BaseCamera *GetActiveRenderCamera()
+        {
+            return activeRenderCamera;
+        }
+
 		static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
+    
+    private:
+        glm::vec2 viewportSize;
+        BaseCamera *activeRenderCamera;
 
-		IN_SERIALIZE(Renderer, drawToQuad, skybox); /**< Serialize function for Renderer. */
+        unsigned int bindedFBO = 0;
 
-		friend class CameraSystem;
-	};
+        bool renderFrameBuffer = true;
+        unsigned int quadVAO, quadVBO;
+
+        std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
+        std::array<bool, MAX_LIGHT_NO> occupiedPointLights = {false};
+        Window *window;
+
+        Shader screenShader;
+    };
 }

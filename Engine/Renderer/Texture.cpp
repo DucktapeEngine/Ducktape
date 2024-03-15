@@ -1,76 +1,82 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
-#include <iostream>
+#include <utils/stb_image.h>
+
 #include <Renderer/Texture.h>
 
 namespace DT
 {
-    Texture::Texture(RID rid, ContextPtr &ctx)
+    Texture::Texture(unsigned char *data, int _width, int _height, int _noChannels) : width(_width), height(_height), noChannels(_noChannels)
     {
-        stbi_set_flip_vertically_on_load(true);
+        PROFILE();
 
         glGenTextures(1, &id);
+        GLenum format;
+        if (noChannels == 1)
+            format = GL_RED;
+        else if (noChannels == 3)
+            format = GL_RGB;
+        else if (noChannels == 4)
+            format = GL_RGBA;
+        else
+            format = GL_RGB;
 
-        texturePath = ctx.resourceManager->GetPath(rid);
+        if (width % 4 == 0)
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        else
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-        unsigned char *data = stbi_load(texturePath.string().c_str(), &width, &height, &nrChannels, 0);
+        glBindTexture(GL_TEXTURE_2D, id);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
 
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        std::cout << "[LOG] Loaded texture of size " << width << "x" << height << " with ID " << id << "\n"; 
+    }
+
+    ErrorOr<Texture> Texture::Load(const std::filesystem::path &path)
+    {
+        PROFILE();
+
+        stbi_set_flip_vertically_on_load(true);
+        int width, height, noChannels;
+        unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &noChannels, 0);
         if (data)
         {
-            GLenum format;
-            if (nrChannels == 1)
-                format = GL_RED;
-            else if (nrChannels == 3)
-                format = GL_RGB;
-            else if (nrChannels == 4)
-                format = GL_RGBA;
-            else
-                format = GL_RGB;
-
-            glBindTexture(GL_TEXTURE_2D, id);
-            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+            Texture texture(data, width, height, noChannels);
             stbi_image_free(data);
+            return texture;
         }
         else
         {
-            std::cout << "[ERR] [TEXTURE_LOAD_FAIL] [" << texturePath << "]\n";
-            std::cout << "[ERR] [STBI] " << stbi_failure_reason() << std::endl;
             stbi_image_free(data);
-            return;
+            return ErrorOr<Texture>("Texture failed to load:\n" + std::string(stbi_failure_reason()));
         }
-
-        loaded = true;
-    }
-
-    void Texture::Delete()
-    {
-        glDeleteTextures(1, &id);
     }
 }

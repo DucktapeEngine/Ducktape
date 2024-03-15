@@ -1,9 +1,4 @@
 .vs
 .vscode
 Build
-Docs/*
-!Docs/doxygen-awesome*
-!Docs/header.html
-Resources/Sandbox/Scenes/*
-*.hint
-Installer/__pycache__/*
+Docs/html/

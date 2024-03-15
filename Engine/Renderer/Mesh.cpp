@@ -1,72 +1,39 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:material
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <Renderer/Mesh.h>
+#include <Renderer/Renderer.h>
 
 namespace DT
 {
-    void Mesh::Draw(const glm::mat4 &model, Renderer &renderer)
+    Mesh::Mesh(std::vector<Vertex> _vertices, std::vector<unsigned int> _indices) : vertices(_vertices), indices(_indices)
     {
-        // Bind appropriate textures
-        for (unsigned int i = 0; i < materials.size(); i++)
-        {
-            glActiveTexture(GL_TEXTURE0 + i);
+        PROFILE();
 
-            Material *material = materials[i].data;
-            Shader *shader = material->shader.data;
-            renderer.ActivateShader(shader);
-
-            Texture::Type type = material->textureType;
-
-            shader->Use();
-            shader->SetVec3("material.diffuseColor", material->diffuseColor);
-            shader->SetVec3("material.specularColor", material->specularColor);
-            shader->SetVec3("material.ambientColor", material->ambientColor);
-            shader->SetFloat("material.shininess", material->shininess);
-            shader->SetMat4("model", model);
-
-            shader->SetInt("material.diffuse", i);
-            if (type == Texture::Type::DIFFUSE)
-                shader->SetInt("material.diffuse", i);
-            else if (type == Texture::Type::SPECULAR)
-                shader->SetInt("material.specular", i);
-            else if (type == Texture::Type::NORMAL)
-                shader->SetInt("material.normal", i);
-            else if (type == Texture::Type::HEIGHT)
-                shader->SetInt("material.height", i);
-            glBindTexture(GL_TEXTURE_2D, material->texture.data->id);
-        }
-
-        // Draw mesh
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
-
-        // Good practice to set everything back to defaults once configured.
-        glBindVertexArray(0);
-        glActiveTexture(GL_TEXTURE0);
-    }
-
-    void Mesh::Setup()
-    {
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
@@ -103,5 +70,91 @@ namespace DT
         glEnableVertexAttribArray(6);
         glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, weights));
         glBindVertexArray(0);
+    }
+
+    Mesh &Mesh::Quad()
+    {
+        PROFILE();
+
+        std::vector<Vertex> vertices;
+        std::vector<unsigned int> indices;
+        Vertex v0, v1, v2, v3;
+        v0.position = glm::vec3(-0.5f, -0.5f, 0.0f);
+        v1.position = glm::vec3(0.5f, -0.5f, 0.0f);
+        v2.position = glm::vec3(0.5f, 0.5f, 0.0f);
+        v3.position = glm::vec3(-0.5f, 0.5f, 0.0f);
+        v0.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+        v1.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+        v2.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+        v3.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+        v0.texCoords = glm::vec2(0.0f, 0.0f);
+        v1.texCoords = glm::vec2(1.0f, 0.0f);
+        v2.texCoords = glm::vec2(1.0f, 1.0f);
+        v3.texCoords = glm::vec2(0.0f, 1.0f);
+        vertices.push_back(v0);
+        vertices.push_back(v1);
+        vertices.push_back(v2);
+        vertices.push_back(v3);
+        indices = {0, 1, 2, 0, 2, 3};
+
+        static Mesh mesh(vertices, indices);
+        return mesh;
+    }
+
+    void Mesh::Draw(Renderer &renderer, const glm::mat4 &model, Material &material)
+    {
+        PROFILE();
+
+        Shader &shader = material.shader;
+
+        renderer.ActivateShader(shader).Fatal("Mesh::Draw()");
+        shader.SetVec3("material.color", material.color);
+        shader.SetFloat("material.shininess", material.shininess);
+        shader.SetMat4("model", model);
+
+        int textureIndex = 0;
+        glActiveTexture(GL_TEXTURE0);
+
+        if (material.diffuseMap.has_value())
+        {
+            glBindTexture(GL_TEXTURE_2D, material.diffuseMap.value().id);
+            shader.SetInt("material.diffuse", textureIndex);
+            glActiveTexture(GL_TEXTURE0 + ++textureIndex);
+        }
+
+        if (material.specularMap.has_value())
+        {
+            glBindTexture(GL_TEXTURE_2D, material.specularMap.value().id);
+            shader.SetInt("material.specular", textureIndex);
+            glActiveTexture(GL_TEXTURE0 + ++textureIndex);
+        }
+
+        if (material.normalMap.has_value())
+        {
+            glBindTexture(GL_TEXTURE_2D, material.normalMap.value().id);
+            shader.SetInt("material.normal", textureIndex);
+            textureIndex++;
+            glActiveTexture(GL_TEXTURE0 + textureIndex);
+        }
+
+        if (material.heightMap.has_value())
+        {
+            glBindTexture(GL_TEXTURE_2D, material.heightMap.value().id);
+            shader.SetInt("material.height", textureIndex);
+            glActiveTexture(GL_TEXTURE0 + ++textureIndex);
+        }
+
+        // if (material.roughnessMap.has_value())
+        // {
+        //     glBindTexture(GL_TEXTURE_2D, material.roughnessMap.value().id);
+        //     shader.SetInt("material.roughness", textureIndex);
+        //     glActiveTexture(GL_TEXTURE0 + ++textureIndex);
+        // }
+
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
+
+        glBindVertexArray(0);
+        glActiveTexture(GL_TEXTURE0);
     }
 }
