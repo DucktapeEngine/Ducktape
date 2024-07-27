@@ -42,7 +42,6 @@ namespace DT
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
         io.ConfigDragClickToInputText = true;
 
         ImGui_ImplGlfw_InitForOpenGL(window->GetRawWindowPointer(), true);
