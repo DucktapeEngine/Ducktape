@@ -15,6 +15,6 @@ else
   DEPS="$DEPS glfw-x11"
 fi
 
-DEPS="libx11 libxrandr libxinerama libxcursor libxi mesa assimp"
+DEPS="$DEPS libx11 libxrandr libxinerama libxcursor libxi mesa assimp"
 echo -e "Installing dependencies... \n$DEPS"
 pacman -S $DEPS
