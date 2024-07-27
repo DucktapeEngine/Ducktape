@@ -48,7 +48,7 @@ namespace DT
         ImGui_ImplGlfw_InitForOpenGL(window->GetRawWindowPointer(), true);
         ImGui_ImplOpenGL3_Init("#version 440");
 
-        io.Fonts->AddFontFromFileTTF((ctx.projectPath / "Engine" / "Fonts" / "Roboto" / "Roboto-Regular.ttf").string().c_str(), 18.f);
+        io.Fonts->AddFontFromFileTTF((ctx.projectPath / "Engine" / "Fonts" / "Roboto" / "Roboto-Regular.ttf").string().c_str(), 15.f);
         SetupImGuiStyle();
         MaximizeWindow();
 

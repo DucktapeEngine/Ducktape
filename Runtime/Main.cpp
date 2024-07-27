@@ -155,7 +155,12 @@ int main(int argc, char *argv[])
     context.AttachService(&window).Fatal("main()");
 
     // Module
+#ifdef _WIN32
     Module gameModule(std::filesystem::current_path() / "DucktapeProject.dll", &err);
+#endif
+#ifdef __linux__
+    Module gameModule(std::filesystem::current_path() / "DucktapeProject.so", &err);
+#endif
     err.Fatal("main()");
     context.AttachService(&gameModule).Fatal("main()");
 
