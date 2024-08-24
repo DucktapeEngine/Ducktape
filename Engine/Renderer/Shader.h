@@ -1,178 +1,113 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <filesystem>
-
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <Core/Serialization.h>
-#include <Core/ResourceManager.h>
-#include <Core/Serialization.h>
-#include <Core/ContextPtr.h>
+#include <Core/Context.h>
 
 namespace DT
 {
-    /**
-     * @brief Shader class for creating and using vertex/fragment shader.
-     */
     class Shader
     {
     public:
-        unsigned int id = 0; /// @brief Unique id of the shader.
-        bool loaded = false; /// @brief Boolean variable about whether the shader has been loaded or not.
+        unsigned int id = 0;
 
-        static inline const std::string versionInclude = "#version 440 core\n";
-        static inline const std::string ducktapeInclude = "#ifdef DT_SHADER_FRAG\n"
-                                                          "out vec4 FragColor;\n"
-                                                          "#endif\n"
+        Shader(unsigned int _id) : id(_id) {}
+        Shader(const std::string &frag, const std::string &vert, Error *error);
 
-                                                          "#ifdef DT_SHADER_VERT\n"
-                                                          "#define DT_REGISTER_SHADER() void main() {gl_Position = Vert();}\n"
-                                                          "#endif\n"
-                                                          "#ifdef DT_SHADER_FRAG\n"
-                                                          "#define DT_REGISTER_SHADER() void main() {FragColor = Frag();}\n"
-                                                          "#endif\n";
-        static inline std::unordered_map<RID, Shader *> factoryData;
+        Error Use();
+        void Delete();
 
-        Shader() = default;
 
-        Shader(RID shader, ContextPtr& ctx);
-
-        /**
-         * @brief Destroy the Shader object
-         */
-        ~Shader();
-
-        /**
-         * @brief use the current shader
-         */
-        void Use();
-
-        /**
-         * @brief set the boolean variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable
-         */
-        void SetBool(std::string name, bool value) const;
-
-        /**
-         * @brief set the integer variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable
-         */
-        void SetInt(std::string name, int value) const;
-
-        /**
-         * @brief set the float variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable
-         */
-        void SetFloat(std::string name, float value) const;
-
-        /**
-         * @brief set the vec2 variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable. Should be of glm::vec2 type.
-         */
-        void SetVec2(std::string name, const glm::vec2 &value) const;
-
-        /**
-         * @brief set the vec2 variable value in the shader
-         * @param name name of the variable
-         * @param x float value to be assigned to the x component of vec2 variable
-         * @param y float value to be assigened to the y component of vec2 variable
-         */
-        void SetVec2(std::string name, float x, float y) const;
-
-        /**
-         * @brief set the vec3 variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable. Should be of glm::vec3 type.
-         */
-        void SetVec3(std::string name, const glm::vec3 &value) const;
-
-        /**
-         * @brief set the vec3 variable value in the shader
-         * @param name name of the variable
-         * @param x float value to be assigned to the x component of vec3 variable.
-         * @param y float value to be assigned to the y component of vec3 variable.
-         * @param z float value to be assigned to the z component of vec3 variable.
-         */
-        void SetVec3(std::string name, float x, float y, float z) const;
-
-        /**
-         * @brief set the vec4 variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable. Should be of glm::vec4 type.
-         */
-        void SetVec4(std::string name, const glm::vec4 &value) const;
-
-        /**
-         * @brief set the vec4 variable value in the shader
-         * @param name name of the variable
-         * @param x float value to be assigned to the x component of vec4 variable.
-         * @param y float value to be assigned to the y component of vec4 variable.
-         * @param z float value to be assigned to the z component of vec4 variable.
-         * @param w float value to be assigned to the w component of vec4 variable.
-         */
-        void SetVec4(std::string name, float x, float y, float z, float w);
-
-        /**
-         * @brief set the mat2 variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable. Should be of glm::mat2 type.
-         */
-        void SetMat2(std::string name, const glm::mat2 &mat) const;
-
-        /**
-         * @brief set the mat3 variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable. Should be of glm::mat3 type.
-         */
-        void SetMat3(std::string name, const glm::mat3 &mat) const;
-
-        /**
-         * @brief set the mat4 variable value in the shader
-         * @param name name of the variable
-         * @param value value to be assigned to the variable. Should be of glm::mat4 type.
-         */
-        void SetMat4(std::string name, const glm::mat4 &mat) const;
-
-        static Shader *LoadResource(RID rid, ContextPtr& ctx);
-        static void UnLoadResource(RID rid);
-        static void SaveResource(RID rid)
+        inline void SetBool(const std::string &name, bool value)
         {
-            // yet to be implemented
+            glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
         }
 
-    protected:
-        bool CheckCompileErrors(unsigned int shader, std::string type, const std::filesystem::path &path);
+        inline void SetInt(const std::string &name, int value)
+        {
+            glUniform1i(glGetUniformLocation(id, name.c_str()), value);
+        }
+
+        inline void SetFloat(const std::string &name, float value)
+        {
+            glUniform1f(glGetUniformLocation(id, name.c_str()), value);
+        }
+
+        inline void SetVec2(const std::string &name, const glm::vec2 &value)
+        {
+            glUniform2fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
+        }
+
+        inline void SetVec2(const std::string &name, float x, float y)
+        {
+            glUniform2f(glGetUniformLocation(id, name.c_str()), x, y);
+        }
+
+        inline void SetVec3(const std::string &name, const glm::vec3 &value)
+        {
+            glUniform3fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
+        }
+
+        inline void SetVec3(const std::string &name, float x, float y, float z)
+        {
+            glUniform3f(glGetUniformLocation(id, name.c_str()), x, y, z);
+        }
+
+        inline void SetVec4(const std::string &name, const glm::vec4 &value)
+        {
+            glUniform4fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
+        }
+
+        inline void SetVec4(const std::string &name, float x, float y, float z, float w)
+        {
+            glUniform4f(glGetUniformLocation(id, name.c_str()), x, y, z, w);
+        }
+
+        inline void SetMat2(const std::string &name, const glm::mat2 &mat)
+        {
+            glUniformMatrix2fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+        }
+
+        inline void SetMat3(const std::string &name, const glm::mat3 &mat)
+        {
+            glUniformMatrix3fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+        }
+
+        inline void SetMat4(const std::string &name, const glm::mat4 &mat)
+        {
+            glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+        }
+        
+        static ErrorOr<Shader> Load(const std::filesystem::path &fragPath, const std::filesystem::path &vertPath);
+        static Shader Default(Context &ctx);
+
+        static void CheckCompileErrors(unsigned int shader, const std::string &shaderCode, Error *error);
+        static void CheckLinkErrors(unsigned int program, Error *error);
+        static void ClearCache(Context &ctx);
+    
+    private:
+        static inline std::unordered_map<std::filesystem::path, Shader> cache;
     };
 }

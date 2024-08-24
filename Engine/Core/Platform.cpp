@@ -1,90 +1,57 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
-
-#include <iostream>
 
 #include <Core/Platform.h>
 
 namespace DT
 {
-        std::string Platform::GetLastErrorAsString()
-        {
+	void Platform::Execute(const std::string command)
+	{
 #ifdef _WIN32
-                DWORD errorMessageID = ::GetLastError();
-                if (errorMessageID == 0)
-                {
-                        return std::string();
-                }
-
-                LPSTR messageBuffer = nullptr;
-
-                size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
-
-                std::string message(messageBuffer, size);
-
-                LocalFree(messageBuffer);
-
-                return message;
+		ShellExecute(NULL, NULL, command.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 #endif
 #ifdef __linux__
-                // Write Linux specific code here
+		system(command.c_str());
 #endif
-        }
+	}
 
-        void Platform::Execute(const std::string command)
-        {
+	std::string Platform::GetLastErrorAsString()
+	{
 #ifdef _WIN32
-                ShellExecute(NULL, NULL, command.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+		DWORD errorMessageID = ::GetLastError();
+		if (errorMessageID == 0)
+			return std::string();
+
+		LPSTR messageBuffer = nullptr;
+		size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&messageBuffer, 0, NULL);
+		std::string message(messageBuffer, size);
+
+		LocalFree(messageBuffer);
+		return message;
 #endif
 #ifdef __linux__
-                system(command.c_str());
+		return "";
 #endif
-        }
-
-        Platform::Module::~Module()
-        {
-                Free();
-        }
-
-        void Platform::Module::Load(std::filesystem::path path)
-        {
-#ifdef _WIN32
-                module = LoadLibrary(path.string().c_str());
-#endif
-#ifdef __linux__
-                module = dlopen(path.string().c_str(), RTLD_LAZY);
-#endif
-
-                if (!module)
-                        std::cout << "[ERR] " << GetLastErrorAsString();
-        }
-
-        void Platform::Module::Free()
-        {
-#ifdef _WIN32
-                FreeLibrary(module);
-#endif
-#ifdef __linux__
-                dlclose(module);
-#endif
-        }
+	}
 }

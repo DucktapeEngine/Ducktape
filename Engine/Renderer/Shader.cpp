@@ -1,4 +1,28 @@
 /*
+MIT License
+
+Copyright (c) 2021 - 2023 Aryan Baburajan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+/*
 Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
 Copyright (C) 2022 Aryan Baburajan
 
@@ -20,189 +44,126 @@ the following email address:
 aryanbaburajan2007@gmail.com
 */
 
-#include <iostream>
+
+#include <Core/Context.h>
 #include <Renderer/Shader.h>
 
 namespace DT
-{
-    Shader::Shader(RID shaderRID, ContextPtr& ctx)
+{    
+    Shader::Shader(const std::string &frag, const std::string &vert, Error *error)
     {
-        std::filesystem::path shaderPath = ctx.resourceManager->GetPath(shaderRID);
-
-        // Load the vertex/fragment source code from filePath
-        std::string fShader;
-        std::string vShader;
-        std::ifstream shaderFile;
-
-        shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        try
-        {
-            shaderFile.open(shaderPath);
-            std::stringstream shaderStream;
-
-            shaderStream << shaderFile.rdbuf();
-            shaderFile.close();
-            fShader = shaderStream.str();
-            vShader = shaderStream.str();
-        }
-        catch (std::ifstream::failure &e)
-        {
-            std::cout << "[ERR] [SHADER] [FILE_NOT_SUCCESFULLY_READ] [" << shaderPath << "]\n"
-                      << e.what() << std::endl;
-        }
-
-        vShader = versionInclude + "#define DT_SHADER_VERT\n" + ducktapeInclude + vShader;
-        fShader = versionInclude + "#define DT_SHADER_FRAG\n" + ducktapeInclude + fShader;
-        const char *vShaderCode = vShader.c_str();
-        const char *fShaderCode = fShader.c_str();
-
         // Compile shaders
         unsigned int vertex, fragment;
+        const char *vertCode = vert.c_str();
+        const char *fragCode = frag.c_str();
 
         // Vertex shader
         vertex = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertex, 1, &vShaderCode, NULL);
+        glShaderSource(vertex, 1, &vertCode, NULL);
         glCompileShader(vertex);
-        CheckCompileErrors(vertex, "VERTEX", shaderPath);
+        CheckCompileErrors(vertex, vert, error);
 
         // Fragment shader
         fragment = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragment, 1, &fShaderCode, NULL);
+        glShaderSource(fragment, 1, &fragCode, NULL);
         glCompileShader(fragment);
-        CheckCompileErrors(fragment, "FRAGMENT", shaderPath);
+        CheckCompileErrors(fragment, frag, error);
 
         // Link program
         id = glCreateProgram();
         glAttachShader(id, vertex);
         glAttachShader(id, fragment);
         glLinkProgram(id);
-        CheckCompileErrors(id, "PROGRAM", shaderPath);
+        CheckLinkErrors(id, error);
 
         // Cleanup the shaders as they already have been linked and thus are no longer needed
         glDeleteShader(vertex);
         glDeleteShader(fragment);
 
-        loaded = true;
-
-        std::cout << "[LOG] Loaded shader at " << shaderPath.string() << "\n";
+        std::cout << "[LOG] Loaded shader with ID " << id << ".\n";
     }
 
-    Shader::~Shader()
-    {
-        glDeleteProgram(id);
-    }
-
-    void Shader::Use()
+    Error Shader::Use()
     {
         GLint valid = GL_FALSE;
         glValidateProgram(id);
         glGetProgramiv(id, GL_VALIDATE_STATUS, &valid);
-        assert(valid == GL_TRUE);
+        if (valid != GL_TRUE)
+            return Error("Shader " + std::to_string(id) + " invalid.");
         glUseProgram(id);
+        return Error();
     }
 
-    void Shader::SetBool(std::string name, bool value) const
+    void Shader::Delete()
     {
-        glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
+        std::cout << "[LOG] Deleted shader with ID " << id << ".\n";
+        glDeleteProgram(id);
     }
 
-    void Shader::SetInt(std::string name, int value) const
+    ErrorOr<Shader> Shader::Load(const std::filesystem::path &fragPath, const std::filesystem::path &vertPath)
     {
-        glUniform1i(glGetUniformLocation(id, name.c_str()), value);
-    }
+        if (cache.find(fragPath) != cache.end())
+            return Shader(cache.at(fragPath));
 
-    void Shader::SetFloat(std::string name, float value) const
-    {
-        glUniform1f(glGetUniformLocation(id, name.c_str()), value);
-    }
+        std::ifstream frag(fragPath);
+        std::stringstream fragStream;
+        fragStream << frag.rdbuf();
+        std::ifstream vert(vertPath);
+        std::stringstream vertStream;
+        vertStream << vert.rdbuf();
 
-    bool Shader::CheckCompileErrors(unsigned int shader, std::string type, const std::filesystem::path &path)
-    {
-        int success;
-        char infoLog[1024];
-        if (type != "PROGRAM")
+        Error error;
+        Shader shader(fragStream.str(), vertStream.str(), &error);
+        if (error.HasError())
         {
-            glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-            if (!success)
-            {
-                glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "[ERR] [SHADER_COMPILATION_ERROR] [" << path.string() << "]\n [" << type << "]\n"
-                          << infoLog << std::endl;
-                return false;
-            }
+            return ErrorOr<Shader>(error.GetError());
         }
         else
         {
-            glGetProgramiv(shader, GL_LINK_STATUS, &success);
-            if (!success)
-            {
-                glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "[ERR] [PROGRAM_LINKING_ERROR] [" << path.string() << "]\n [" << type << "]\n"
-                          << infoLog << std::endl;
-                return false;
-            }
+            cache.insert({fragPath, shader});
+            return shader;
         }
-        return true;
     }
 
-    void Shader::SetVec2(std::string name, const glm::vec2 &value) const
+    void Shader::ClearCache(Context &ctx)
     {
-        glUniform2fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
+        for (std::pair<const std::filesystem::path, Shader> &it : cache) {
+            it.second.Delete();
+        }
+        cache.clear();
     }
 
-    void Shader::SetVec2(std::string name, float x, float y) const
+    Shader Shader::Default(Context &ctx)
     {
-        glUniform2f(glGetUniformLocation(id, name.c_str()), x, y);
+        static ErrorOr<Shader> defaultShader = Shader::Load(ctx.projectPath / "Engine" / "Shaders" / "Default.frag", ctx.projectPath / "Engine" / "Shaders" / "Default.vert");
+        if (defaultShader.HasError())
+            ErrorOr<Shader>("Error loading Default shader: \n" + defaultShader.GetError()).Fatal("Shader::Default()");
+        return defaultShader.Fatal("Shader::Default()");
     }
 
-    void Shader::SetVec3(std::string name, const glm::vec3 &value) const
+    void Shader::CheckCompileErrors(unsigned int shader, const std::string &shaderCode, Error *error)
     {
-        glUniform3fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
+        int success;
+        char infoLog[1024];
+
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success)
+        {
+            glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+            *error = Error("Shadercode failed to compile: \n" + std::string(infoLog) + "\n" + shaderCode + "\n");
+        }
     }
 
-    void Shader::SetVec3(std::string name, float x, float y, float z) const
+    void Shader::CheckLinkErrors(unsigned int program, Error *error)
     {
-        glUniform3f(glGetUniformLocation(id, name.c_str()), x, y, z);
-    }
+        int success;
+        char infoLog[1024];
 
-    void Shader::SetVec4(std::string name, const glm::vec4 &value) const
-    {
-        glUniform4fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
-    }
-
-    void Shader::SetVec4(std::string name, float x, float y, float z, float w)
-    {
-        glUniform4f(glGetUniformLocation(id, name.c_str()), x, y, z, w);
-    }
-
-    void Shader::SetMat2(std::string name, const glm::mat2 &mat) const
-    {
-        glUniformMatrix2fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
-    }
-
-    void Shader::SetMat3(std::string name, const glm::mat3 &mat) const
-    {
-        glUniformMatrix3fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
-    }
-
-    void Shader::SetMat4(std::string name, const glm::mat4 &mat) const
-    {
-        glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
-    }
-
-    Shader *Shader::LoadResource(RID rid, ContextPtr& ctx)
-    {
-        if (factoryData.count(rid))
-            return factoryData[rid];
-
-        factoryData[rid] = new Shader(rid, ctx);
-
-        return factoryData[rid];
-    }
-
-    void Shader::UnLoadResource(RID rid)
-    {
-        delete factoryData[rid];
-        factoryData.erase(rid);
+        glGetProgramiv(program, GL_LINK_STATUS, &success);
+        if (!success)
+        {
+            glGetProgramInfoLog(program, 1024, NULL, infoLog);
+            *error = Error("Program failed to link: \n" + std::string(infoLog) + "\n" + std::to_string(program) + "\n");
+        }
     }
 }

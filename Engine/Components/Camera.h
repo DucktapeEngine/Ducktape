@@ -1,60 +1,72 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
+#include <ECS/Component.h>
+#include <Components/Transform.h>
+#include <ECS/SceneManager.h>
+#include <Core/Window.h>
+#include <Core/InputManager.h>
+#include <Renderer/BaseCamera.h>
+
 namespace DT
 {
-    class Transform;
-
-    /**
-     * @brief Camera component for handling Camera related properties.
-     */
-    struct Camera
-    {
-        glm::mat4 view;       /// @brief View matrix.
-        glm::mat4 projection; /// @brief Projection matrix.
-
-        bool isOrtho = false; /// @brief Flag for orthographic projection.
-        float fov = 45.0f;    /// @brief Field of view.
-
-        Transform *transform;
-
-        /**
-         * @brief Function to convert a 3D world point into a 2D point on the screen after projection.
-         * @param worldPoint 3D vector for which projection has to be done.
-         * @param windowSize 2D size of game window (ctx.window.GetWindowSize()).
-         * @return 2D projected vector on the screen.
-         */
-        glm::vec2 WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize);
-    };
-
-    SERIALIZE(Camera, isOrtho, fov);
-
-    class CameraSystem : public System
+    class Camera : public Component, public BaseCamera
     {
     public:
-        void Init(ContextPtr &ctx) override;
-        void Inspector(ContextPtr &ctx, Entity selectedEntity) override;
-        void Serialize(ContextPtr &ctx, Entity entity) override;
+        Camera(Context *ctx) : BaseCamera(ctx)
+        {
+            activeCamera = std::shared_ptr<Camera>(this);
+        }
+
+        void Init(Context *ctx) override;
+        void Tick(Context *ctx, const float &dt) override;
+        void InspectorMenu(Context *ctx, const float &dt) override;
+
+        glm::vec3 &GetPosition() override
+        {
+            PROFILE();
+
+            return transform->translation;
+        }
+
+        glm::quat &GetRotation() override
+        {
+            PROFILE();
+
+            return transform->rotation;
+        }
+
+        static std::shared_ptr<Camera> GetActiveCamera()
+        {
+            return activeCamera;
+        }
+
+    private:
+        std::shared_ptr<Transform> transform;
+        static inline std::shared_ptr<Camera> activeCamera;
+        Window *window;
     };
 }

@@ -1,71 +1,50 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
-#include <glm/glm.hpp>
-
-#include <Core/Serialization.h>
 #include <Renderer/Texture.h>
 #include <Renderer/Shader.h>
-#include <Core/Resource.h>
-#include <Core/ContextPtr.h>
 
 namespace DT
 {
     struct Material
     {
-        glm::vec3 diffuseColor = glm::vec3(1.0f);
-        glm::vec3 specularColor = glm::vec3(1.0f);
-        glm::vec3 ambientColor = glm::vec3(1.0f);
+        Shader shader;
+
+        glm::vec3 color = glm::vec3(1.0f);
         float shininess = 0.5f;
-        Resource<Texture> texture;
-        Texture::Type textureType = Texture::Type::DIFFUSE;
-        Resource<Shader> shader;
 
-        static inline std::unordered_map<RID, Material *> factoryData;
-
-        static Material *LoadResource(RID rid, ContextPtr &ctx)
+        std::optional<Texture> diffuseMap;
+        std::optional<Texture> specularMap;
+        std::optional<Texture> normalMap;
+        std::optional<Texture> heightMap;
+        // std::optional<Texture> roughnessMap;
+    
+        Material(Shader _shader) : shader(_shader)
         {
-            if (factoryData.count(rid))
-                return factoryData[rid];
-
-            factoryData[rid] = new Material(json::parse(std::ifstream(ctx.resourceManager->GetPath(rid))));
-            return factoryData[rid];
+            PROFILE();
         }
-
-        static void UnLoadResource(RID rid)
-        {
-            delete factoryData[rid];
-            factoryData.erase(rid);
-        }
-
-        static void SaveResource(RID rid, ContextPtr &ctx)
-        {
-            std::ofstream out(ctx.resourceManager->GetPath(rid));
-            json j = *factoryData[rid];
-            out << j;
-        }
-
-        IN_SERIALIZE(Material, diffuseColor, specularColor, ambientColor, shininess, texture, textureType, shader);
     };
 }

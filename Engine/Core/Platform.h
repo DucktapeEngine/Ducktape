@@ -1,107 +1,36 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
-#include <string>
-#include <filesystem>
-
-#ifdef _WIN32
-#include <windows.h>
-#define DT_EXPORT extern "C" __declspec(dllexport)
-#endif
-#ifdef __linux__
-#include <dlfcn.h>
-#define DT_EXPORT extern "C" __attribute__((visibility("default")))
-#endif
+#include <Core/Error.h>
 
 namespace DT
 {
 	namespace Platform
-	{
-		/**
-		 * @brief Retrieves the last error message as a string.
-		 *
-		 * @return A string containing the last error message.
-		 */
+	{        
 		std::string GetLastErrorAsString();
-
-		/**
-		 * @brief Executes a command.
-		 *
-		 * @param command The command to execute.
-		 */
 		void Execute(const std::string command);
-
-		/**
-		 * @brief The Module class for loading and managing dynamic libraries.
-		 */
-		class Module
-		{
-		public:
-			/**
-			 * @brief The handle to the loaded module.
-			 */
-#ifdef _WIN32
-			HMODULE module;
-#endif
-#ifdef __linux__
-			void *module;
-#endif
-
-			/**
-			 * @brief Destructor for the Module class. Unloads the module.
-			 */
-			~Module();
-
-			/**
-			 * @brief Loads a dynamic library from the specified path.
-			 *
-			 * @param path The path to the dynamic library.
-			 */
-			void Load(std::filesystem::path path);
-
-			/**
-			 * @brief Unloads the dynamic library.
-			 */
-			void Free();
-
-			/**
-			 * @brief Retrieves the address of a symbol from the loaded module.
-			 *
-			 * @tparam T The type of the symbol.
-			 * @param symbolName The name of the symbol.
-			 * @return The address of the symbol.
-			 */
-			template <typename T>
-			T GetSymbolAddress(const std::string &symbolName)
-			{
-#ifdef _WIN32
-				return (T)GetProcAddress(module, symbolName.c_str());
-#endif
-#ifdef __linux__
-				return (T)dlsym(module, symbolName.c_str());
-#endif
-			}
-		};
 	}
 }

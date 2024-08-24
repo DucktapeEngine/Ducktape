@@ -1,82 +1,62 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
-
-#include <Components/Transform.h>
-#include <Scene/System.h>
-#include <Core/Serialization.h>
-#include <Renderer/Renderer.h>
-#include <Core/Debug.h>
-#include <Core/ImGui.h>
 
 #include <Components/Camera.h>
 
 namespace DT
 {
-    glm::vec2 Camera::WorldToScreenPoint(glm::vec3 worldPoint, glm::vec2 &windowSize)
+    void Camera::Init(Context *ctx)
     {
-        glm::vec4 clipSpacePos = projection * (view * glm::vec4(worldPoint, 1.0));
-        glm::vec3 ndcSpacePos = glm::vec3(clipSpacePos.x, clipSpacePos.y, clipSpacePos.z) / clipSpacePos.w;
-        glm::vec2 windowSpacePos = glm::vec2(((ndcSpacePos.x + 1.0) / 2.0) * windowSize.x, ((1.0 - ndcSpacePos.y) / 2.0) * windowSize.y);
-        return windowSpacePos;
+        PROFILE();
+
+        transform = scene->Require<Transform>(entity).Fatal("Camera::Init()");
+        window = ctx->GetService<Window>().Fatal("Camera::Init()");
     }
 
-    void CameraSystem::Init(ContextPtr &ctx)
+    void Camera::Tick(Context *ctx, const float &dt)
     {
-        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Camera>())
+        PROFILE();
+
+        view = glm::lookAtLH(transform->translation, transform->translation + transform->Forward(), transform->Up());
+
+        glm::vec2 winSize = window->GetWindowSize();
+        float aspect = (float)winSize.x/winSize.y;
+        if (isOrthographic)
+            projection = glm::orthoLH(-aspect, aspect, -1.0f, 1.0f, nearPlane, farPlane);
+        else
+            projection = glm::perspectiveLH(glm::radians(fieldOfView), window->GetWindowSize().x / window->GetWindowSize().y, nearPlane, farPlane);
+    }
+
+    void Camera::InspectorMenu(Context *ctx, const float &dt)
+    {
+        if (ImGui::CollapsingHeader("Camera"))
         {
-            Camera *cam = ctx.sceneManager->GetActiveScene().Get<Camera>(entity);
-
-            ctx.sceneManager->GetActiveScene().activeCamera = cam;
-
-            cam->transform = ctx.sceneManager->GetActiveScene().Get<Transform>(entity);
-
-            ctx.renderer->cameraView = &cam->view;
-            ctx.renderer->cameraProjection = &cam->projection;
-            ctx.renderer->cameraPosition = &cam->transform->translation;
-            ctx.renderer->cameraRotation = &cam->transform->rotation;
-            ctx.renderer->isOrtho = &cam->isOrtho;
-            ctx.renderer->fov = &cam->fov;
+            ImGui::ColorEdit4("Background", &backgroundColor.x);
+            ImGui::Checkbox("Is Orthographic", &isOrthographic);
+            ImGui::DragFloat("Field Of View", &fieldOfView);
+            ImGui::DragFloat("Near Plane", &nearPlane);
+            ImGui::DragFloat("Far Plane", &farPlane);                        
         }
-    }
-
-    void CameraSystem::Inspector(ContextPtr &ctx, Entity selectedEntity)
-    {
-        for (Entity entity : ctx.sceneManager->GetActiveScene().View<Camera>())
-        {
-            if (selectedEntity != entity)
-                continue;
-
-            Camera *cam = ctx.sceneManager->GetActiveScene().Get<Camera>(entity);
-
-            if (ImGui::CollapsingHeader("Camera"))
-            {
-                ImGui::Checkbox("orthographic", &cam->isOrtho);
-                ImGui::DragFloat("field of view", &cam->fov);
-            }
-        }
-    }
-
-    void CameraSystem::Serialize(ContextPtr &ctx, Entity entity)
-    {
-        ctx.sceneManager->GetActiveScene().SerializeComponent<Camera>("Camera", entity, ctx.sceneManager->GetActiveScene());
     }
 }

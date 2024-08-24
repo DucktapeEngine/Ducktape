@@ -1,60 +1,78 @@
 /*
-Ducktape | An open source C++ 2D & 3D game engine that focuses on being fast, and powerful.
-Copyright (C) 2022 Aryan Baburajan
+MIT License
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Copyright (c) 2021 - 2023 Aryan Baburajan
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-In case of any further questions feel free to contact me at
-the following email address:
-aryanbaburajan2007@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
 
-#include <glm/glm.hpp>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <Core/Serialization.h>
-#include <Core/ContextPtr.h>
+#include <Core/Context.h>
+
+#define CURSOR_MODE_NORMAL GLFW_CURSOR_NORMAL
+#define CURSOR_MODE_HIDDEN GLFW_CURSOR_HIDDEN
+#define CURSOR_MODE_DISABLED GLFW_CURSOR_DISABLED
 
 namespace DT
 {
-    class Input;
+    class Error;
 
     class Window
     {
     public:
-        GLFWwindow *window = nullptr; /// The GLFW window handle.
-
-        bool hideWindow = false;                         /// Flag indicating whether the window is hidden.
-        glm::vec2 windowSize = glm::vec2(500.f, 500.f);  /// The size of the window.
-        std::string windowTitle = "Welcome to Ducktape"; /// The title of the window.
-        bool drawWireframe = false;                      /// Flag indicating whether to draw in wireframe mode.
-        std::filesystem::path windowIconPath;            /// The path to the window icon.
-        bool vsync = true;                               /// Flag indicating whether VSync is enabled.
-
-        Window(ContextPtr &ctx);
+        Window(Context &ctx, const json &windowData, Error *err);
         ~Window();
 
-        void Clear(glm::vec4 color);
-        void PollEvents();
-        void SwapBuffers();
+        GLFWwindow *GetRawWindowPointer()
+        {
+            PROFILE();
+
+            return window;
+        }
+
+        bool IsOpen()
+        {
+            PROFILE();
+
+            return !glfwWindowShouldClose(window);
+        }
+
+        void PollEvents()
+        {
+            PROFILE();
+
+            glfwPollEvents();
+            if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+                Close();
+        }
+
+        void SwapBuffers()
+        {
+            PROFILE();
+
+            glfwSwapBuffers(window);
+        }
 
         void Close();
         void SetTitle(const std::string &title);
-        void SetIcon(std::filesystem::path path);
         glm::vec2 GetWindowPos();
         void SetWindowPos(const glm::vec2 &pos);
         glm::vec2 GetWindowSize();
@@ -70,11 +88,14 @@ namespace DT
         void FocusWindow();
         void RequestWindowAttention();
         void SetVSync(const bool &vsync);
-        bool GetMinimized();
-
+        bool IsFocused();
+        void SetInputCursorMode(int mode);
+        
         static void ErrorCallback(int code, const char *description);
         static void APIENTRY GlDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char *message, const void *userParam);
 
-        IN_SERIALIZE(Window, hideWindow, windowSize, windowTitle, drawWireframe, windowIconPath, vsync);
+    private:
+        GLFWwindow *window = nullptr;
+        glm::vec2 windowSize;
     };
 }

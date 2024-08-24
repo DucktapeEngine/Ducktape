@@ -22,15 +22,18 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <string>
-
-#include <glm/glm.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <json/json.hpp>
-using json = nlohmann::json;
-
 #define SERIALIZE NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
 #define IN_SERIALIZE NLOHMANN_DEFINE_TYPE_INTRUSIVE
+
+#define JSON_DEBUG
+
+// #ifdef DEBUG // TODO: Add DEBUG flag with support for CMAKE
+#ifdef JSON_DEBUG
+#define JLOG() std::cout << "[JLOG] " << __FILE__ << ":" << __LINE__ << "\n";
+#endif
+#ifndef JSON_DEBUG
+#define JLOG() ;
+#endif
 
 namespace glm
 {
