@@ -51,7 +51,7 @@ namespace DT
 		return message;
 #endif
 #ifdef __linux__
-		// Write Linux specific code here
+		return "";
 #endif
 	}
 }
