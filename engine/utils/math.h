@@ -25,24 +25,21 @@ SOFTWARE.
 #pragma once
 
 #include <cmath>
+#include <glm/glm.hpp>
 
-namespace glm
-{
-    inline double normalize(const double value, const double start, const double end)
-    {
-        const double width = end - start;
-        const double offsetValue = value - start;
-        return (offsetValue - (floor(offsetValue / width) * width)) + start;
-    }
-
-    inline float angNormalize(const float &angle)
-    {
-        const float offset = angle + 180.f;
-        return (offset - (floor(offset / 360.f) * 360.f)) - 180.f;
-    }
-
-    inline glm::vec3 angNormalize(const glm::vec3 &angle)
-    {
-        return glm::vec3(angNormalize(angle.x), angNormalize(angle.y), angNormalize(angle.z));
-    }
+namespace glm {
+inline double normalize(const double value, const double start, const double end) {
+    const double width = end - start;
+    const double offset_value = value - start;
+    return (offset_value - (floor(offset_value / width) * width)) + start;
 }
+
+inline float angNormalize(float angle) {
+    const float offset = angle + 180.f;
+    return (offset - (floor(offset / 360.f) * 360.f)) - 180.f;
+}
+
+inline glm::vec3 angNormalize(const glm::vec3 &angle) {
+    return glm::vec3(angNormalize(angle.x), angNormalize(angle.y), angNormalize(angle.z));
+}
+} // namespace glm

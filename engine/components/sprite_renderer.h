@@ -24,32 +24,30 @@ SOFTWARE.
 
 #pragma once
 
-#include <renderer/mesh.h>
-#include <renderer/material.h>
-#include <scene/component.h>
-#include <components/transform.h>
+#include "core/asset.h"
+#include "renderer/material.h"
+#include "renderer/mesh.h"
 
-namespace DT
-{
-    class Renderer;
+namespace dt {
+class camera_component;
 
-    class SpriteRenderer : public Component
-    {
-    public:
-        SpriteRenderer(Context *ctx);
+class sprite_renderer_component {
+  public:
+    sprite_renderer_component() : mesh(mesh_t::quad()), material_asset("") {}
 
-        void SetSprite(const std::filesystem::path &texturePath);
+    void set_sprite(const std::string &path);
 
-        void Init(Context *ctx) override;
-        void Tick(Context *ctx, const float &dt) override;
-        void EditorTick(Context *ctx, const float &dt) override;
-        void InspectorMenu(Context *ctx, const float &dt) override;
+  protected:
+    asset<material_t> material_asset;
+    mesh_t &mesh;
 
-    private:
-        Mesh &mesh = Mesh::Quad();
-        std::shared_ptr<Transform> transform;
-        Material material;
+    friend class sprite_renderer_system_t;
+};
 
-        Renderer *renderer;
-    };
-}
+class sprite_renderer_system_t {
+  public:
+    void init(context_t *ctx);
+    void render(context_t *ctx, float dt, const camera_component *active_camera);
+    void inspector(context_t *ctx, float dt, entt::entity selected_entity);
+};
+} // namespace dt

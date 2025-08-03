@@ -24,23 +24,16 @@ SOFTWARE.
 
 #pragma once
 
-#include <scene/component.h>
+namespace dt {
+class context_t;
 
-namespace DT
-{
-    class Tag : public Component
-    {
-    public:
-        std::string name = "Untitled Entity";
+class tag_component {
+  public:
+    std::string name = "untitled entity";
+};
 
-        Tag(Context *ctx) {}
-
-        void InspectorMenu(Context *ctx, const float &dt) override
-        {
-            if (ImGui::CollapsingHeader("Tag"))
-            {
-                ImGui::InputText("name", &name);
-            }
-        }
-    };
-}
+class tag_system_t {
+  public:
+    void inspector(context_t *ctx, float dt, entt::entity selected_entity);
+};
+} // namespace dt

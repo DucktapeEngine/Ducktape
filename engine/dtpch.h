@@ -26,51 +26,46 @@ SOFTWARE.
 
 #ifdef _WIN32
 #include <windows.h>
-#define DT_DLL_EXPORT extern "C" __declspec(dllexport)
+#define DT_DLL_EXPORT extern "c" __declspec(dllexport)
 #endif
 #ifdef __linux__
 #include <dlfcn.h>
-#define DT_DLL_EXPORT extern "C" __attribute__((visibility("default")))
+#define DT_DLL_EXPORT extern "c" __attribute__((visibility("default")))
 #endif
 
+#include <cassert>
+#include <filesystem>
+#include <fstream>
+#include <functional>
 #include <iostream>
 #include <memory>
-#include <functional>
-#include <fstream>
-#include <filesystem>
-#include <cassert>
+#include <optional>
 #include <random>
 #include <sstream>
-#include <typeindex>
-
-#include <optional>
 #include <string>
-#include <vector>
+#include <typeindex>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
+
+#include <entt/entt.hpp>
+#include <fmt/core.h>
+#include <glad/glad.h>
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 #include <imgui/misc/cpp/imgui_stdlib.h>
+
 #include <imguizmo/ImGuizmo.h>
 
 #define JSON_DIAGNOSTICS 1
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
-#define SERIALIZE NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
-#define IN_SERIALIZE NLOHMANN_DEFINE_TYPE_INTRUSIVE
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <fmt/core.h>
-
-#include <core/profiler.h>

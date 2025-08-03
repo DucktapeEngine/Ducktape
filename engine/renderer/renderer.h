@@ -26,64 +26,41 @@ SOFTWARE.
 
 #define MAX_LIGHT_NO 25
 
-#include <components/camera.h>
-#include <core/error.h>
-#include <core/context.h>
-#include <core/window.h>
-#include <renderer/shader.h>
+// todo: remove unnecessary includes from headers and move it to source files across all files
+#include "components/camera.h"
+#include "core/window.h"
+#include "renderer/material.h"
+#include "renderer/mesh.h"
+#include "renderer/shader.h"
 
 GLenum glCheckError_(const char *file, int line);
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
 
-namespace DT
-{
-    class Renderer
-    {
-    public:
-        Renderer(Context &ctx);
+namespace dt {
+class renderer_t {
+  public:
+    renderer_t(window_t *window);
 
-        void BeginScene(BaseCamera *camera);
-        void EndScene();
+    void update_shader_uniforms(shader_t &shader, const camera_component *active_camera);
+    void render(context_t &ctx, float delta);
+    void draw(const glm::mat4 &model, const mesh_t &draw_mesh, material_t &material);
 
-        void SetViewport(const glm::vec2 &newViewportSize);
+    void update_viewport();
+    void update_viewport(glm::ivec2 viewport_size);
 
-        void ActivateShader(Shader &shader);
+    // todo: mark appropriate functions as const across all files
+    bool get_free_directional_light_spot(unsigned int *spot);
+    void unoccupy_directional_light_spot(unsigned int spot);
+    bool get_free_point_light_spot(unsigned int *spot);
+    void unoccupy_point_light_spot(unsigned int spot);
 
-        bool GetFreeDirectionalLightSpot(unsigned int *spot);
-        void UnoccupyDirectionalLightSpot(unsigned int spot);
-        bool GetFreePointLightSpot(unsigned int *spot);
-        void UnoccupyPointLightSpot(unsigned int spot);
+    static void APIENTRY gl_debug_output(GLenum source_enum, GLenum type_enum, GLuint id, GLenum severity_enum, GLsizei length, const GLchar *message, const void *userParam);
 
-        void SetRenderFrameBuffer(bool flag)
-        {
-            m_RenderFrameBuffer = flag;
-        }
+  private:
+    std::array<bool, MAX_LIGHT_NO> occupied_directional_lights = {false};
+    std::array<bool, MAX_LIGHT_NO> occupied_point_lights = {false};
 
-        glm::vec2 GetViewportSize()
-        {
-            return viewportSize;
-        }
-
-        BaseCamera *GetActiveRenderCamera()
-        {
-            return activeRenderCamera;
-        }
-
-        static void FramebufferSizeCallback(GLFWwindow *window, int width, int height);
-
-    private:
-        glm::vec2 viewportSize;
-        BaseCamera *activeRenderCamera;
-
-        unsigned int bindedFBO = 0;
-
-        bool m_RenderFrameBuffer = true;
-        unsigned int quadVAO, quadVBO;
-
-        std::array<bool, MAX_LIGHT_NO> occupiedDirectionalLights = {false};
-        std::array<bool, MAX_LIGHT_NO> occupiedPointLights = {false};
-        Window *window;
-
-        Shader screenShader;
-    };
-}
+    // todo: use m_ prefix for private members
+    const window_t *window;
+};
+} // namespace dt

@@ -24,29 +24,16 @@ SOFTWARE.
 
 #pragma once
 
-#include <core/error.h>
+namespace dt {
+class texture_t {
+  public:
+    int width;
+    int height;
+    int no_channels;
+    unsigned int id;
 
-namespace DT
-{
-    class Texture
-    {
-    public:
-        int width;
-        int height;
-        int noChannels;
-        unsigned int id;
+    texture_t(unsigned char *data, int _width, int _height, int _noChannels);
 
-        enum Type
-        {
-            Diffuse,
-            Specular,
-            Normal,
-            Height,
-            // Roughness
-        };
-
-        Texture(unsigned char *data, int _width, int _height, int _noChannels);
-
-        static Texture Load(const std::filesystem::path &path);
-    };
-}
+    static std::shared_ptr<texture_t> load(const std::filesystem::path &path);
+};
+} // namespace dt

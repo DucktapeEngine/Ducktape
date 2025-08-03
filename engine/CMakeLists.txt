@@ -22,7 +22,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-file(GLOB_RECURSE dt_source_list "${PROJECT_SOURCE_DIR}/engine/**/*.cc" "${PROJECT_SOURCE_DIR}/engine/*.cc")
+file(GLOB_RECURSE dt_source_list "${PROJECT_SOURCE_DIR}/engine/**/*.cpp" "${PROJECT_SOURCE_DIR}/engine/*.cpp")
 add_library(Ducktape ${dt_source_list})
 set_target_properties(Ducktape PROPERTIES prefix "")
 target_precompile_headers(Ducktape PUBLIC "${PROJECT_SOURCE_DIR}/engine/dtpch.h")

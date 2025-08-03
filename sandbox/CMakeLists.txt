@@ -22,7 +22,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-file(GLOB_RECURSE sandbox_source_list "${PROJECT_SOURCE_DIR}/sandbox/user/scripts/**/*.cc" "${PROJECT_SOURCE_DIR}/sandbox/user/scripts/*.cc")
+file(GLOB_RECURSE sandbox_source_list "${PROJECT_SOURCE_DIR}/sandbox/assets/scripts/**/*.cpp" "${PROJECT_SOURCE_DIR}/sandbox/assets/scripts/*.cpp")
 add_library(Sandbox SHARED ${sandbox_source_list})
 set_target_properties(Sandbox PROPERTIES prefix "")
 target_link_libraries(Sandbox PRIVATE Ducktape)

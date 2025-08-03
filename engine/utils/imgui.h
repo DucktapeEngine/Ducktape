@@ -24,16 +24,30 @@ SOFTWARE.
 
 #pragma once
 
-namespace ImGui
-{
-    void Vec3(const std::string &label, glm::vec3 &vec3);
-    void Vec2(const std::string &label, glm::vec2 &vec2);
-    void Color(const std::string &label, glm::vec3 &color);
-    void Color(const std::string &label, glm::vec4 &color);
-    
-    ImVec2 operator*(ImVec2 &iv2, float fl);
-    ImVec2 operator*(const ImVec2 &iv2, float fl);
-    ImVec2 operator*(ImVec2 &iv2, int i);
-    ImVec2 operator+(ImVec2 &iv2, ImVec2 &otheriv2);
-    ImVec2 operator+(const ImVec2 &iv2, const ImVec2 &otheriv2);
+#include <string>
+
+#include <glm/glm.hpp>
+#include <imgui/imgui.h>
+#include <imgui/misc/cpp/imgui_stdlib.h>
+
+#define IMGUI_VEC_DRAG_SPEED 0.1f
+
+#include "core/asset.h"
+
+namespace ImGui {
+ImVec2 operator*(ImVec2 &iv2, float fl);
+ImVec2 operator*(const ImVec2 &iv2, float fl);
+ImVec2 operator*(ImVec2 &iv2, int i);
+ImVec2 operator+(ImVec2 &iv2, ImVec2 &otheriv2);
+ImVec2 operator+(const ImVec2 &iv2, const ImVec2 &otheriv2);
+
+bool Vec2(const char *label, glm::vec2 *vec2, const float drag_speed = 0.1f);
+bool Vec3(const char *label, glm::vec3 *vec3, const float drag_speed = 0.1f);
+bool Color(const char *label, glm::vec3 *color, const float drag_speed = 1.0f);
+bool Color(const char *label, glm::vec4 *color, const float drag_speed = 1.0f);
+
+template <typename T>
+void Asset(const char *label, ::dt::asset<T> *asset) {
+    ImGui::InputText(label, &asset->path);
 }
+} // namespace ImGui

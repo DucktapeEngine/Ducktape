@@ -24,13 +24,16 @@ SOFTWARE.
 
 #pragma once
 
-#include <core/error.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
+#ifdef __linux__
+#include <dlfcn.h>
+#endif
 
-namespace DT
-{
-	namespace Platform
-	{        
-		std::string GetLastErrorAsString();
-		void Execute(const std::string command);
-	}
-}
+namespace dt {
+namespace platform {
+std::string get_last_error_as_string();
+void execute(const std::string &command);
+} // namespace platform
+} // namespace dt

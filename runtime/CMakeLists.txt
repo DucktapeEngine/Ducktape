@@ -23,6 +23,13 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Ducktape
-file(GLOB_RECURSE dtr_source_list "${PROJECT_SOURCE_DIR}/runtime/**/*.cc" "${PROJECT_SOURCE_DIR}/runtime/*.cc")
+file(GLOB_RECURSE dtr_source_list "${PROJECT_SOURCE_DIR}/runtime/**/*.cpp" "${PROJECT_SOURCE_DIR}/runtime/*.cpp")
 add_executable(DucktapeRuntime ${dtr_source_list})
-target_link_libraries(DucktapeRuntime PRIVATE Ducktape DucktapeEditor)
+
+if (DT_EDITOR)
+    set(RUNTIME_LINK_LIBRARIES Ducktape DucktapeEditor)
+else()
+    set(RUNTIME_LINK_LIBRARIES Ducktape)
+endif()
+
+target_link_libraries(DucktapeRuntime PRIVATE ${RUNTIME_LINK_LIBRARIES})

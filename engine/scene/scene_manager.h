@@ -24,25 +24,53 @@ SOFTWARE.
 
 #pragma once
 
-#include <core/serialization.h>
-#include <scene/scene.h>
-#include <core/context.h>
-#include <components/tag.h>
+#include <vector>
 
-namespace DT
-{
-    class SceneManager
-    {
-    public:
-        Scene activeScene;
+#include <entt/entt.hpp>
 
-        SceneManager(Context &ctx);
+#include "core/log.h"
+#include "core/stage.h"
+#include "utils/sfinae.h"
 
-        void LoadDemoScene();
-        void LoadScene();
+namespace dt {
+class context_t;
+class camera_component;
 
-        void Init(Context *ctx);
-        void Tick(Context *ctx, const float &deltaTime);
-        void EditorTick(Context *ctx, const float &deltaTime);
-    };
-}
+template <typename T>
+struct staged_delegate {
+    stage_t stage;
+    T delegate;
+};
+
+class system_group {
+  public:
+    std::vector<staged_delegate<entt::delegate<void(context_t *)>>> init;
+    std::vector<staged_delegate<entt::delegate<void(context_t *, float)>>> tick;
+    std::vector<staged_delegate<entt::delegate<void(context_t *, float, const camera_component *)>>> render;
+    std::vector<staged_delegate<entt::delegate<void(context_t *, float, entt::entity)>>> inspector;
+};
+
+class scene_manager_t {
+  public:
+    entt::registry scene;
+    system_group systems;
+
+    void load_demo_scene();
+    void load_scene();
+
+    template <auto FnPtr, typename System, typename Delegate>
+    void bind(System &sys, std::vector<staged_delegate<Delegate>> &list, stage_t stage) {
+        Delegate delegate{};
+        delegate.template connect<FnPtr>(sys);
+        list.push_back({stage, delegate});
+    }
+
+    template <typename... Args, typename Delegate>
+    void invoke_all(std::vector<staged_delegate<Delegate>> &list, stage_t active_stage, Args &&...args) {
+        for (auto &entry : list) {
+            if (entry.stage == stage_t::both || entry.stage == active_stage)
+                entry.delegate(std::forward<Args>(args)...);
+        }
+    }
+};
+} // namespace dt

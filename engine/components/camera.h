@@ -24,45 +24,32 @@ SOFTWARE.
 
 #pragma once
 
-#include <scene/component.h>
-#include <components/transform.h>
-#include <scene/scene_manager.h>
-#include <core/window.h>
-#include <core/input_manager.h>
-#include <renderer/base_camera.h>
+#include "components/transform.h"
+#include "core/input_manager.h"
+#include "core/window.h"
+#include "scene/scene_manager.h"
 
-namespace DT
-{
-    class Camera : public Component, public BaseCamera
-    {
-    public:
-        Camera(Context *ctx) : BaseCamera(ctx)
-        {
-            activeCamera = this;
-        }
+namespace dt {
+class transform_component;
 
-        void Init(Context *ctx) override;
-        void Tick(Context *ctx, const float &dt) override;
-        void InspectorMenu(Context *ctx, const float &dt) override;
+class camera_component {
+  public:
+    float field_of_view = 75.f, near_plane = 0.1f, far_plane = 100.f;
+    glm::mat4 projection, view;
+    bool is_orthographic = false;
+    unsigned int fbo, rbo, render_texture;
+    glm::vec4 background_color = glm::vec4(0.15f, 0.15f, 0.15f, 0.15f);
+    GLFWwindow *render_target_window;
 
-        glm::vec3 &GetPosition() override
-        {
-            return transform->translation;
-        }
+    transform_component *shared_transform;
 
-        glm::quat &GetRotation() override
-        {
-            return transform->rotation;
-        }
+    void update_projection_view_matrix(const glm::ivec2 &window_size);
+};
 
-        static Camera *GetActiveCamera()
-        {
-            return activeCamera;
-        }
-
-    private:
-        std::shared_ptr<Transform> transform;
-        static inline Camera *activeCamera;
-        Window *window;
-    };
-}
+class camera_system_t {
+  public:
+    void init(context_t *ctx);
+    void tick(context_t *ctx, float dt);
+    void inspector(context_t *ctx, float dt, entt::entity selected_entity);
+};
+} // namespace dt

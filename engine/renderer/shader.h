@@ -24,90 +24,38 @@ SOFTWARE.
 
 #pragma once
 
-#include <core/context.h>
-#include <core/error.h>
+#include <filesystem>
 
-namespace DT
-{
-    class Shader
-    {
-    public:
-        unsigned int id = 0;
+#include <glm/glm.hpp>
 
-        Shader(unsigned int _id) : id(_id) {}
-        Shader(const std::string &frag, const std::string &vert);
+#include "core/context.h"
 
-        void Use();
-        void Delete();
+namespace dt {
+class shader_t {
+  public:
+    unsigned int id = 0;
+    int compilation_status;
 
-        inline void SetBool(const std::string &name, bool value)
-        {
-            glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
-        }
+    shader_t(const std::unordered_map<GLenum, std::string> &shader_sources);
+    ~shader_t();
 
-        inline void SetInt(const std::string &name, int value)
-        {
-            glUniform1i(glGetUniformLocation(id, name.c_str()), value);
-        }
+    static std::shared_ptr<shader_t> load(const std::filesystem::path &path);
 
-        inline void SetFloat(const std::string &name, float value)
-        {
-            glUniform1f(glGetUniformLocation(id, name.c_str()), value);
-        }
+    void use() const;
+    void set_bool(const std::string &name, const bool value);
+    void set_int(const std::string &name, const int value);
+    void set_float(const std::string &name, const float value);
+    void set_vec2(const std::string &name, const glm::vec2 &value);
+    void set_vec2(const std::string &name, const float x, const float y);
+    void set_vec3(const std::string &name, const glm::vec3 &value);
+    void set_vec3(const std::string &name, const float x, const float y, const float z);
+    void set_vec4(const std::string &name, const glm::vec4 &value);
+    void set_vec4(const std::string &name, const float x, const float y, const float z, const float w);
+    void set_mat2(const std::string &name, const glm::mat2 &mat);
+    void set_mat3(const std::string &name, const glm::mat3 &mat);
+    void set_mat4(const std::string &name, const glm::mat4 &mat);
 
-        inline void SetVec2(const std::string &name, const glm::vec2 &value)
-        {
-            glUniform2fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
-        }
-
-        inline void SetVec2(const std::string &name, float x, float y)
-        {
-            glUniform2f(glGetUniformLocation(id, name.c_str()), x, y);
-        }
-
-        inline void SetVec3(const std::string &name, const glm::vec3 &value)
-        {
-            glUniform3fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
-        }
-
-        inline void SetVec3(const std::string &name, float x, float y, float z)
-        {
-            glUniform3f(glGetUniformLocation(id, name.c_str()), x, y, z);
-        }
-
-        inline void SetVec4(const std::string &name, const glm::vec4 &value)
-        {
-            glUniform4fv(glGetUniformLocation(id, name.c_str()), 1, &value[0]);
-        }
-
-        inline void SetVec4(const std::string &name, float x, float y, float z, float w)
-        {
-            glUniform4f(glGetUniformLocation(id, name.c_str()), x, y, z, w);
-        }
-
-        inline void SetMat2(const std::string &name, const glm::mat2 &mat)
-        {
-            glUniformMatrix2fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
-        }
-
-        inline void SetMat3(const std::string &name, const glm::mat3 &mat)
-        {
-            glUniformMatrix3fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
-        }
-
-        inline void SetMat4(const std::string &name, const glm::mat4 &mat)
-        {
-            glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
-        }
-
-        static ErrorOr<Shader> Load(const std::filesystem::path &fragPath, const std::filesystem::path &vertPath);
-        static Shader Default(Context &ctx);
-
-        static void CheckCompileErrors(unsigned int shader, const std::string &shaderCode, Error *error);
-        static void CheckLinkErrors(unsigned int program, Error *error);
-        static void ClearCache(Context &ctx);
-
-    private:
-        static inline std::unordered_map<std::filesystem::path, Shader> cache;
-    };
-}
+  private:
+    static inline std::unordered_map<std::filesystem::path, shader_t> cache;
+};
+} // namespace dt

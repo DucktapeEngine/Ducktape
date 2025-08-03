@@ -24,26 +24,25 @@ SOFTWARE.
 
 #pragma once
 
-#include <renderer/vertex.h>
-#include <renderer/material.h>
+#include <vector>
 
-namespace DT
-{
-    class Renderer;
+#include "renderer/material.h"
+#include "renderer/vertex.h"
 
-    class Mesh
-    {
-    public:
-        std::vector<Vertex> vertices;
-        std::vector<unsigned int> indices;
+namespace dt {
+class renderer_t;
 
-        unsigned int VBO;
-        unsigned int EBO;
-        unsigned int VAO;
+class mesh_t {
+  public:
+    std::vector<vertex> vertices;
+    std::vector<unsigned int> indices;
 
-        Mesh(std::vector<Vertex> _vertices, std::vector<unsigned int> _indices);
-        void Draw(Renderer &renderer, const glm::mat4 &model, Material &material);
+    unsigned int vbo;
+    unsigned int ebo;
+    unsigned int vao;
 
-        static Mesh &Quad();
-    };
-}
+    mesh_t(std::vector<vertex> _vertices, std::vector<unsigned int> _indices);
+
+    static mesh_t &quad();
+};
+} // namespace dt

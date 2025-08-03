@@ -24,26 +24,24 @@ SOFTWARE.
 
 #pragma once
 
-#include <renderer/texture.h>
-#include <renderer/shader.h>
+#include <unordered_map>
+#include <variant>
 
-namespace DT
-{
-    struct Material
-    {
-        Shader shader;
+#include "core/asset.h"
+#include "renderer/shader.h"
+#include "renderer/texture.h"
 
-        glm::vec3 color = glm::vec3(1.0f);
-        float shininess = 0.5f;
+namespace dt {
+using uniform_value = std::variant<int, float, glm::vec2, glm::vec3, glm::vec4, glm::mat3, glm::mat4>;
 
-        std::optional<Texture> diffuseMap;
-        std::optional<Texture> specularMap;
-        std::optional<Texture> normalMap;
-        std::optional<Texture> heightMap;
-        // std::optional<Texture> roughnessMap;
+class material_t {
+  public:
+    asset<shader_t> shader_asset;
+    std::unordered_map<std::string, asset<texture_t>> texture_assets;
+    std::unordered_map<std::string, uniform_value> uniforms;
 
-        Material(Shader _shader) : shader(_shader)
-        {
-        }
-    };
-}
+    material_t();
+
+    static std::shared_ptr<material_t> load(const std::filesystem::path &path);
+};
+} // namespace dt

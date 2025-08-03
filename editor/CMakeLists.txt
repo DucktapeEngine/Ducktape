@@ -22,7 +22,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-file(GLOB_RECURSE dt_source_list "${PROJECT_SOURCE_DIR}/editor/**/*.cc" "${PROJECT_SOURCE_DIR}/editor/*.cc")
+file(GLOB_RECURSE dt_source_list "${PROJECT_SOURCE_DIR}/editor/**/*.cpp" "${PROJECT_SOURCE_DIR}/editor/*.cpp")
 add_library(DucktapeEditor ${dt_source_list})
 set_target_properties(DucktapeEditor PROPERTIES PREFIX "")
 target_precompile_headers(DucktapeEditor PUBLIC "${PROJECT_SOURCE_DIR}/engine/dtpch.h")

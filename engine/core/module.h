@@ -24,37 +24,33 @@ SOFTWARE.
 
 #pragma once
 
-#include <core/context.h>
-#include <core/platform.h>
-#include <core/error.h>
+#include "core/context.h"
+#include "core/platform.h"
 
-namespace DT
-{
-        class Module
-        {
-        public:
+namespace dt {
+class module {
+  public:
 #ifdef _WIN32
-                HMODULE module;
+    hmodule dll_module;
 #endif
 #ifdef __linux__
-                void *module;
+    void *dll_module;
 #endif
 
-                Module(std::filesystem::path path);
-                ~Module();
+    module(std::filesystem::path path);
+    ~module();
 
-                template <typename T>
-                T GetSymbolAddress(const std::string &symbolName)
-                {
+    template <typename T>
+    T get_symbol_address(const std::string &symbol_name) {
 #ifdef _WIN32
-                        T address = (T)GetProcAddress(module, symbolName.c_str());
+        T address = (T)get_proc_address(dll_module, symbol_name.c_str());
 #endif
 #ifdef __linux__
-                        T address = (T)dlsym(module, symbolName.c_str());
+        T address = (T)dlsym(dll_module, symbol_name.c_str());
 #endif
-                        std::string lastError = Platform::GetLastErrorAsString();
-                        // if (lastError.size() == 0)
-                        return address;
-                }
-        };
-}
+        std::string last_error = platform::get_last_error_as_string();
+        // if (last_error.size() == 0)
+        return address;
+    }
+};
+} // namespace dt

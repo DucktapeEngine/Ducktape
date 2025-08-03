@@ -22,26 +22,25 @@ aryanbaburajan2007@gmail.com
 
 #pragma once
 
-#include <nlohmann/json.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <nlohmann/json.hpp>
 
-#define SERIALIZE NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
+#define serialize NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE
 #define IN_SERIALIZE NLOHMANN_DEFINE_TYPE_INTRUSIVE
 
 #define JSON_DEBUG
 
-// #ifdef DEBUG // TODO: Add DEBUG flag with support for CMAKE
+// #ifdef debug // todo: add debug flag with support for cmake // i'll be honest i've no idea what this todo is supposed to mean
 #ifdef JSON_DEBUG
-#define JLOG() std::cout << "[JLOG] " << __FILE__ << ":" << __LINE__ << "\n";
+#define jlog() std::cout << "[jlog] " << __FILE__ << ":" << __LINE__ << "\n";
 #endif
 #ifndef JSON_DEBUG
-#define JLOG() ;
+#define jlog() ;
 #endif
 
-namespace glm
-{
-    SERIALIZE(vec2, x, y);
-    SERIALIZE(vec3, x, y, z);
-    SERIALIZE(quat, x, y, z, w);
-}
+namespace glm {
+serialize(vec2, x, y);
+serialize(vec3, x, y, z);
+serialize(quat, x, y, z, w);
+} // namespace glm

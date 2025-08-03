@@ -24,7 +24,7 @@ SOFTWARE.
 
 #pragma once
 
-#include <core/context.h>
+#include "core/context.h"
 
 #define ACTION_RELEASE 0
 #define ACTION_PRESS 1
@@ -221,66 +221,45 @@ SOFTWARE.
 #define GAMEPAD_AXIS_RIGHT_TRIGGER 5
 #define GAMEPAD_AXIS_LAST GAMEPAD_AXIS_RIGHT_TRIGGER
 
+#include <array>
 #include <set>
-#include <core/window.h>
 
-namespace DT
-{
-	class InputManager
-	{
-	public:
-		InputManager(Context &ctx);
+#include <glm/glm.hpp>
 
-		void Process();
+#include "core/window.h"
 
-		glm::vec2 GetMousePosition()
-		{
-			return mousePosition;
-		}
+namespace dt {
+class input_manager_t {
+  public:
+    const static int MAX_KEYS = GLFW_KEY_LAST + 1;
+    const static int MAX_MOUSE_BUTTONS = GLFW_MOUSE_BUTTON_LAST + 1;
 
-		glm::vec2 GetMouseDelta()
-		{
-			return mouseDelta;
-		}
+    input_manager_t(window_t *window);
 
-		bool IsKeyHeld(int key)
-		{
-			return glfwGetKey(window->GetRawWindowPointer(), key) == GLFW_PRESS;
-		}
+    void process_input();
+    void clear_tick_state();
 
-		bool IsMouseButtonHeld(int button)
-		{
-			return glfwGetMouseButton(window->GetRawWindowPointer(), button) == GLFW_PRESS;
-		}
+    glm::vec2 get_mouse_position();
+    glm::vec2 get_mouse_delta();
+    bool is_mouse_down(int button);
 
-		void OnKeyEvent(int key, std::function<void(int)> event)
-		{
-			keyEvents[key].insert(event);
-		}
+    bool is_key_down(int key);
+    bool was_key_pressed(int key);
+    bool was_key_released(int key);
 
-		void OnMouseEvent(int button, std::function<void(int)> event)
-		{
-			keyEvents[button].insert(event);
-		}
+    static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+    static void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 
-		static void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
-		static void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
+  private:
+    window_t *window;
 
-	private:
-		struct FunctionComparator
-		{
-			using T = std::function<void(int)>;
-			bool operator()(const T &lhs, const T &rhs) const
-			{
-				return &lhs < &rhs;
-			}
-		};
+    glm::vec2 mouse_position, mouse_delta;
 
-		std::unordered_map<int, std::set<std::function<void(int)>, FunctionComparator>> keyEvents;
-		std::unordered_map<int, std::set<std::function<void(int)>, FunctionComparator>> mouseEvents;
+    bool key_down[MAX_KEYS]{};
+    bool key_down_prev[MAX_KEYS]{};
 
-		Window *window;
+    bool mouse_down[MAX_MOUSE_BUTTONS]{};
+    bool mouse_down_prev[MAX_MOUSE_BUTTONS]{};
+};
 
-		glm::vec2 mousePosition, mouseDelta;
-	};
-}
+} // namespace dt

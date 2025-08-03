@@ -24,30 +24,19 @@ SOFTWARE.
 
 #pragma once
 
-namespace DT
-{
-    class Context
-    {
-    public:
-        std::filesystem::path projectPath;
-        std::unordered_map<std::type_index, void *> services;
+namespace dt {
+class window_t;
+class scene_manager_t;
+class renderer_t;
+class input_manager_t;
+class editor_t;
 
-        template <typename T>
-        void AttachService(T *service)
-        {
-            services[std::type_index(typeid(T))] = service;
-        }
-
-        template <typename T>
-        T *GetService()
-        {
-            return (T *)services[std::type_index(typeid(T))];
-        }
-
-        template <typename T>
-        bool HasService()
-        {
-            return services.find(std::type_index(typeid(T))) != services.end();
-        }
-    };
-}
+class context_t {
+  public:
+    dt::window_t *window = nullptr;
+    dt::scene_manager_t *scene_manager = nullptr;
+    dt::renderer_t *renderer = nullptr;
+    dt::input_manager_t *input_manager = nullptr;
+    dt::editor_t *editor = nullptr;
+};
+} // namespace dt

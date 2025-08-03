@@ -24,62 +24,42 @@ SOFTWARE.
 
 #pragma once
 
-namespace DT
-{
-    class Window;
-    class Renderer;
-    class Panel;
+#include "panels/panel_base.h"
 
-    class Editor
-    {
-    public:
-        Editor(Context &ctx);
-        ~Editor();
+namespace dt {
+class context_t;
 
-        void Init(Context &ctx);
-        void NewFrame();
-        void Tick(Context &ctx, const float &dt);
-        void EndFrame();
+class editor_t {
+  public:
+    std::vector<std::shared_ptr<panel_base>> panels;
 
-        void Close();
-        void SetTitle(const std::string &title);
-        glm::vec2 GetWindowPos();
-        void SetWindowPos(const glm::vec2 &pos);
-        glm::vec2 GetWindowSize();
-        void SetWindowSizeLimits(const glm::vec2 &minSize, const glm::vec2 &maxSize);
-        void SetWindowAspectRatio(const int &numerator, const int &denominator);
-        void SetWindowSize(const glm::vec2 &size);
-        glm::vec2 GetWindowContentScale();
-        float GetWindowOpacity();
-        void SetWindowOpacity(const float &opacity);
-        void IconifyWindow();
-        void RestoreWindow();
-        void MaximizeWindow();
-        void ShowWindow();
-        void HideWindow();
-        void FocusWindow();
-        void RequestWindowAttention();
-        void SetVSync(const bool &vsync);
-        void SetupImGuiStyle();
+    enum state {
+        runtime,
+        editor
+    } current_state = state::editor;
 
-        template <typename T>
-        void AttachPanel(T *panel)
-        {
-            panels[std::type_index(typeid(T))] = panel;
-            panel->editor = this;
+    editor_t(const window_t &window);
+    ~editor_t();
+
+    template <typename T>
+    T *get_panel() {
+        for (auto &p : panels) {
+            if (auto ptr = dynamic_cast<T *>(p.get())) {
+                return ptr;
+            }
         }
+        return nullptr;
+    }
 
-        template <typename T>
-        T *GetPanel()
-        {
-            return (T *)panels[std::type_index(typeid(T))];
-        }
+    void new_frame();
+    void end_frame();
 
-    private:
-        Window *window;
-        Renderer *renderer;
+    void start(context_t *ctx);
+    void draw(context_t *ctx, float dt);
 
-        ImGuiID dockspaceId;
-        std::unordered_map<std::type_index, Panel *> panels;
-    };
-}
+    void setup_ImGui_style();
+
+  private:
+    ImGuiID dockspace_id;
+};
+} // namespace dt
