@@ -13,18 +13,20 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-vec4 Vert()
+void main()
 {
-    FragPos = vec3(model * vec4(aPos, 1.0));
+    FragPos = vec3(model * vec4(aPos * 1.0, 1.0));
     Normal = mat3(transpose(inverse(model))) * aNormal; // TODO: Calculate this on CPU for inverse() is a heavy operation
     TexCoords = aTexCoords;
 
-    return projection * view * vec4(FragPos, 1.0);
-}
+    vec4 world_pos = view * vec4(FragPos, 1.0);
 
-void main()
-{
-    gl_Position = Vert();
+    // const float radius = 100.0;
+    // float angle = world_pos.z / radius;
+    // world_pos.y = radius * sin(angle) - radius;
+    // world_pos.z = radius * cos(angle);
+
+    gl_Position = projection * world_pos;
 }
 
 #type fragment;
@@ -138,6 +140,7 @@ void main()
         if (pointLights[i].enabled)
             result += CalculatePointLight(pointLights[i], norm, FragPos, viewDir);
 
-    // FragColor = vec4(result, 1.0);
-    FragColor = texture(material.diffuse, TexCoords);
+    vec4 texColor = texture(material.diffuse, TexCoords);
+    if (texColor.a < 0.01) discard;
+    FragColor = texColor;
 }

@@ -72,6 +72,10 @@ renderer_t::renderer_t(window_t *window) : window(window) {
         glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
     }
 
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     update_viewport();
 }
 
@@ -79,7 +83,7 @@ void renderer_t::update_shader_uniforms(shader_t &shader, const camera_component
     shader.use();
     shader.set_mat4("projection", active_camera->projection);
     shader.set_mat4("view", active_camera->view);
-    shader.set_vec3("view_pos", active_camera->shared_transform->translation);
+    shader.set_vec3("view_pos", active_camera->shared_transform->position);
 }
 
 void renderer_t::render(context_t &ctx, float dt) {
@@ -92,8 +96,6 @@ void renderer_t::render(context_t &ctx, float dt) {
 
         glfwMakeContextCurrent(camera.render_target_window);
 
-        glEnable(GL_DEPTH_TEST);
-
         glClearColor(camera.background_color.r, camera.background_color.g, camera.background_color.b, camera.background_color.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -102,18 +104,20 @@ void renderer_t::render(context_t &ctx, float dt) {
 }
 
 void renderer_t::draw(const glm::mat4 &model, const mesh_t &draw_mesh, material_t &material) {
-    shader_t &active_shader = material.shader_asset.get();
+    std::shared_ptr<shader_t> active_shader = material.shader_asset.get();
 
-    active_shader.set_vec3("material.color", std::get<glm::vec3>(material.uniforms.at("color")));
-    active_shader.set_float("material.shininess", std::get<float>(material.uniforms.at("shininess")));
-    active_shader.set_mat4("model", model);
+    if (material.uniforms.find("color") != material.uniforms.end())
+        active_shader->set_vec3("material.color", std::get<glm::vec3>(material.uniforms.at("color")));
+    if (material.uniforms.find("shininess") != material.uniforms.end())
+        active_shader->set_float("material.shininess", std::get<float>(material.uniforms.at("shininess")));
+    active_shader->set_mat4("model", model);
 
     int current_texture_index = 0;
 
     for (auto &texture_asset : material.texture_assets) {
         glActiveTexture(GL_TEXTURE0 + current_texture_index);
-        glBindTexture(GL_TEXTURE_2D, texture_asset.second.get().id);
-        active_shader.set_int("material." + texture_asset.first, current_texture_index);
+        glBindTexture(GL_TEXTURE_2D, texture_asset.second->id);
+        active_shader->set_int("material." + texture_asset.first, current_texture_index);
         current_texture_index++;
     }
 

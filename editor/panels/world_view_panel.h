@@ -72,7 +72,7 @@ class world_view_panel : public panel_base {
         first_person_controller_component::move(move_input, speed * dt, transform);
 
         glm::vec2 look_input = ctx->input_manager->get_mouse_delta() * (ctx->input_manager->is_mouse_down(MOUSE_BUTTON_RIGHT) ? 1.0f : 0.0f);
-        first_person_controller_component::look(look_input, sensitivity * dt, transform);
+        first_person_controller_component::look(look_input, sensitivity * dt, transform, transform);
 
         if (move_input.x != 0.0f || move_input.y != 0.0f || move_input.z != 0.0f || look_input.x != 0.0f || look_input.y != 0.0f)
             camera.update_projection_view_matrix(ctx->window->size);

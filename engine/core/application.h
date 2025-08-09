@@ -29,9 +29,7 @@ SOFTWARE.
 #include <fmt/core.h>
 #include <utils/math.h>
 
-#include "components/first_person_controller.h"
-#include "components/sprite_renderer.h"
-#include "components/tag.h"
+#include "components/joint.h"
 #include "core/context.h"
 #include "core/input_manager.h"
 #include "core/log.h"
@@ -53,21 +51,20 @@ SOFTWARE.
 namespace dt {
 class application_t {
   public:
-    window_t window;
+    window_t window; // window must be the first constructed object
     renderer_t renderer;
     input_manager_t input_manager;
     scene_manager_t scene_manager;
     editor_t editor;
 
     tag_system_t tag_system;
-    transform_system_t transform_system;
+    joint_system_t joint_system;
     camera_system_t camera_system;
+    transform_system_t transform_system;
     sprite_renderer_system_t sprite_renderer_system;
     first_person_controller_system_t first_person_controller_system;
 
     context_t context;
-
-    entt::entity camera;
 
     application_t() : renderer(&window), input_manager(&window), editor(window) {
         scene_manager.bind<&tag_system_t::inspector>(tag_system, scene_manager.systems.inspector, stage_t::both);
@@ -78,7 +75,6 @@ class application_t {
         scene_manager.bind<&camera_system_t::tick>(camera_system, scene_manager.systems.tick, stage_t::both);
         scene_manager.bind<&camera_system_t::inspector>(camera_system, scene_manager.systems.inspector, stage_t::both);
 
-        scene_manager.bind<&sprite_renderer_system_t::init>(sprite_renderer_system, scene_manager.systems.init, stage_t::both);
         scene_manager.bind<&sprite_renderer_system_t::render>(sprite_renderer_system, scene_manager.systems.render, stage_t::both);
         scene_manager.bind<&sprite_renderer_system_t::inspector>(sprite_renderer_system, scene_manager.systems.inspector, stage_t::both);
 
@@ -86,17 +82,8 @@ class application_t {
         scene_manager.bind<&first_person_controller_system_t::tick>(first_person_controller_system, scene_manager.systems.tick, stage_t::runtime);
         scene_manager.bind<&first_person_controller_system_t::inspector>(first_person_controller_system, scene_manager.systems.inspector, stage_t::both);
 
-        camera = scene_manager.scene.create();
-        scene_manager.scene.emplace<tag_component>(camera).name = "Camera";
-        scene_manager.scene.emplace<camera_component>(camera);
-
-        entt::entity logo = scene_manager.scene.create();
-        scene_manager.scene.emplace<tag_component>(logo).name = "Logo";
-        scene_manager.scene.emplace<sprite_renderer_component>(logo).set_sprite("textures/logo.png");
-
-        entt::entity nyan = scene_manager.scene.create();
-        scene_manager.scene.emplace<tag_component>(nyan).name = "Nyan";
-        scene_manager.scene.emplace<sprite_renderer_component>(nyan).set_sprite("textures/nyan.png");
+        scene_manager.bind<&joint_system_t::tick>(joint_system, scene_manager.systems.tick, stage_t::both);
+        scene_manager.bind<&joint_system_t::inspector>(joint_system, scene_manager.systems.inspector, stage_t::both);
 
         // editor
 #ifdef DT_EDITOR
@@ -157,10 +144,9 @@ class application_t {
     }
 
     ~application_t() {
-        asset<material_t>::cache.clear();
-        asset<mesh_t>::cache.clear();
-        asset<shader_t>::cache.clear();
-        asset<texture_t>::cache.clear();
+        asset<material_t>::cleanup();
+        asset<shader_t>::cleanup();
+        asset<texture_t>::cleanup();
     }
 };
 } // namespace dt

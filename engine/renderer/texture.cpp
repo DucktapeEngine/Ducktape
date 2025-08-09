@@ -59,28 +59,19 @@ texture_t::texture_t(unsigned char *data, int _width, int _height, int _noChanne
 }
 
 std::shared_ptr<texture_t> texture_t::load(const std::filesystem::path &path) {
-    static std::unordered_map<std::string, std::shared_ptr<texture_t>> cache;
-
-    std::string key = path.string();
-    auto it = cache.find(key);
-    if (it != cache.end()) {
-        return it->second;
-    }
-
     stbi_set_flip_vertically_on_load(true);
 
     int width, height, no_channels;
-    unsigned char *data = stbi_load(key.c_str(), &width, &height, &no_channels, 0);
+    unsigned char *data = stbi_load(path.c_str(), &width, &height, &no_channels, 0);
 
     if (!data) {
-        ERROR("failed to load texture: {}", key);
+        ERROR("failed to load texture: {}", path.c_str());
         return nullptr;
     }
 
     auto tex = std::make_shared<texture_t>(data, width, height, no_channels);
     stbi_image_free(data);
 
-    cache[key] = tex;
     return tex;
 }
 } // namespace dt

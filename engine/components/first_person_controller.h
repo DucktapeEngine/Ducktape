@@ -37,9 +37,12 @@ class first_person_controller_component {
   public:
     float speed = 5.0f;
     float sensitivity = 25.0f;
+    bool can_fly = false;
+    transform_component *head_transform;
+    transform_component *body_transform;
 
-    static void move(const glm::vec3 input, const float speed, transform_component &transform);
-    static void look(const glm::vec2 input, const float sensitivity, transform_component &transform);
+    static void move(const glm::vec3 input, const float speed, transform_component &body_transform);
+    static void look(const glm::vec2 input, const float sensitivity, transform_component &head_transform, transform_component &body_transform);
 
     friend class first_person_controller_system_t;
 };

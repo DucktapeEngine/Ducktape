@@ -31,13 +31,6 @@ SOFTWARE.
 #include "core/log.h"
 
 namespace dt {
-class foo {
-  public:
-    ~foo() {
-        std::cout << "oh lord i'm dying" << std::endl;
-    }
-};
-
 template <typename T>
 class asset {
   public:
@@ -52,7 +45,8 @@ class asset {
 
         auto it = cache.find(path);
 
-        LOG("loading asset from {} {}", path, it != cache.end() ? "(cached)" : "");
+        if (it == cache.end())
+            LOG("loading asset from {}", path);
 
         if (it != cache.end())
             data = it->second;
@@ -62,8 +56,9 @@ class asset {
         }
     }
 
-    void copy() {
+    void make_local_copy() {
         data = T::load(path);
+        stray.insert(data);
     }
 
     T *operator->() {
@@ -74,27 +69,31 @@ class asset {
         return data.get();
     }
 
-    T &get() {
-        return *data;
+    std::shared_ptr<T> get() {
+        return data;
     }
 
-    const T &get() const {
-        return *data;
+    const std::shared_ptr<T> get() const {
+        return data;
     }
 
     const bool has() const {
         return data != nullptr;
     }
 
-  protected:
-    std::shared_ptr<T> data = nullptr;
-    static inline std::unordered_map<std::string, std::shared_ptr<T>> cache;
-    static inline foo Foo;
-
     static std::filesystem::path get_absolute_path(const std::string &path) {
         return std::filesystem::current_path() / "assets" / path;
     }
 
-    friend class application_t;
+    static void cleanup() {
+        cache.clear();
+        stray.clear();
+    }
+
+  protected:
+    std::shared_ptr<T> data = nullptr;
+
+    static inline std::unordered_map<std::string, std::shared_ptr<T>> cache;
+    static inline std::unordered_set<std::shared_ptr<T>> stray;
 };
 } // namespace dt

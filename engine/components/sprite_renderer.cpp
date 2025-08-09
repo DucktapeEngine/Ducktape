@@ -32,26 +32,21 @@ SOFTWARE.
 #include "scene/scene_manager.h"
 
 namespace dt {
-void sprite_renderer_component::set_sprite(const std::string &path) {
-    material_asset->texture_assets.emplace("diffuse", asset<texture_t>(path));
+sprite_renderer_component::sprite_renderer_component() : mesh(mesh_t::quad()), material_asset("") {
+    material_asset.make_local_copy();
 }
 
-void sprite_renderer_system_t::init(context_t *ctx) {
-    auto view = ctx->scene_manager->scene.view<sprite_renderer_component>();
-
-    for (auto [entity, sprite_renderer] : view.each()) {
-        sprite_renderer.material_asset.copy();
-    }
+void sprite_renderer_component::set_sprite(const std::string &path) {
+    material_asset->texture_assets.emplace("diffuse", path);
 }
 
 void sprite_renderer_system_t::render(context_t *ctx, float dt, const camera_component *active_camera) {
-    auto view = ctx->scene_manager->scene.view<sprite_renderer_component>();
+    auto view = ctx->scene_manager->scene.view<transform_component, sprite_renderer_component>();
 
-    for (auto [entity, sprite_renderer] : view.each()) {
+    for (auto [entity, transform, sprite_renderer] : view.each()) {
         if (sprite_renderer.material_asset.has()) {
-            transform_component &transform = ctx->scene_manager->scene.get_or_emplace<transform_component>(entity);
-            ctx->renderer->update_shader_uniforms(sprite_renderer.material_asset->shader_asset.get(), active_camera);
-            ctx->renderer->draw(transform.get_model_matrix(), sprite_renderer.mesh, sprite_renderer.material_asset.get());
+            ctx->renderer->update_shader_uniforms(*sprite_renderer.material_asset->shader_asset.get(), active_camera);
+            ctx->renderer->draw(transform.get_model_matrix(), sprite_renderer.mesh, *sprite_renderer.material_asset.get());
         }
     }
 }

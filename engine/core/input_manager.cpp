@@ -34,7 +34,7 @@ input_manager_t::input_manager_t(window_t *window) : window(window) {
     double cur_pos_x, cur_pos_y;
     glfwGetCursorPos(window->handle, &cur_pos_x, &cur_pos_y);
     mouse_position = glm::vec2(cur_pos_x, cur_pos_y);
-    mouse_delta = glm::vec2(0.0f);
+    mouse_delta = glm::vec2(0.f);
 
     std::fill(std::begin(key_down), std::end(key_down), false);
     std::fill(std::begin(key_down_prev), std::end(key_down_prev), false);
@@ -53,7 +53,7 @@ void input_manager_t::process_input() {
 void input_manager_t::clear_tick_state() {
     std::copy(std::begin(key_down), std::end(key_down), std::begin(key_down_prev));
     std::copy(std::begin(mouse_down), std::end(mouse_down), std::begin(mouse_down_prev));
-    mouse_delta = glm::vec2(0.0f);
+    mouse_delta = glm::vec2(0.f);
 }
 
 glm::vec2 input_manager_t::get_mouse_position() {

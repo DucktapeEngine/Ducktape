@@ -30,20 +30,20 @@ SOFTWARE.
 
 namespace dt {
 void first_person_controller_component::move(const glm::vec3 input, const float speed, transform_component &transform) {
-    transform.translation += input.x * transform.right() * speed;
-    transform.translation += input.y * glm::vec3(0.f, 1.f, 0.f) * speed;
-    transform.translation += input.z * transform.forward() * speed;
+    transform.position += input.x * transform.right() * speed;
+    transform.position += input.y * glm::vec3(0.f, 1.f, 0.f) * speed;
+    transform.position += input.z * transform.forward() * speed;
 }
 
-void first_person_controller_component::look(const glm::vec2 input, const float sensitivity, transform_component &transform) {
+void first_person_controller_component::look(const glm::vec2 input, const float sensitivity, transform_component &head_transform, transform_component &body_transform) {
     float mouse_x = input.x * sensitivity;
     float mouse_y = input.y * sensitivity;
 
-    glm::quat yaw = glm::angleAxis(glm::radians(mouse_x), glm::vec3(0.0f, 1.0f, 0.0f));
-    glm::quat pitch = glm::angleAxis(glm::radians(-mouse_y), glm::vec3(1.0f, 0.0f, 0.0f));
+    glm::quat yaw = glm::angleAxis(glm::radians(mouse_x), glm::vec3(0.f, 1.f, 0.f));
+    glm::quat pitch = glm::angleAxis(glm::radians(-mouse_y), glm::vec3(1.f, 0.f, 0.f));
 
-    transform.rotation = glm::normalize(yaw * transform.rotation);
-    transform.rotation = glm::normalize(transform.rotation * pitch);
+    body_transform.rotation = glm::normalize(yaw * body_transform.rotation);
+    head_transform.rotation = glm::normalize(head_transform.rotation * pitch);
 }
 
 void first_person_controller_system_t::init(context_t *ctx) {
@@ -61,15 +61,15 @@ void first_person_controller_system_t::tick(context_t *ctx, float dt) {
     auto view = ctx->scene_manager->scene.view<first_person_controller_component, transform_component, camera_component>();
 
     for (auto [entity, first_person_controller, transform, camera] : view.each()) {
-        glm::vec3 move_input = {ctx->input_manager->is_key_down(KEY_A) * -1.0 + ctx->input_manager->is_key_down(KEY_D) * 1.0f,
-                                ctx->input_manager->is_key_down(KEY_LEFT_CONTROL) * -1.0 + ctx->input_manager->is_key_down(KEY_LEFT_SHIFT) * 1.0f,
-                                ctx->input_manager->is_key_down(KEY_S) * -1.0 + ctx->input_manager->is_key_down(KEY_W) * 1.0f};
+        glm::vec3 move_input = {ctx->input_manager->is_key_down(KEY_A) * -1.0 + ctx->input_manager->is_key_down(KEY_D) * 1.f,
+                                first_person_controller.can_fly ? (ctx->input_manager->is_key_down(KEY_LEFT_CONTROL) * -1.0 + ctx->input_manager->is_key_down(KEY_LEFT_SHIFT) * 1.f) : 0.f,
+                                ctx->input_manager->is_key_down(KEY_S) * -1.0 + ctx->input_manager->is_key_down(KEY_W) * 1.f};
         first_person_controller_component::move(move_input, first_person_controller.speed * dt, transform);
 
         glm::vec2 look_input = ctx->input_manager->get_mouse_delta();
-        first_person_controller_component::look(look_input, first_person_controller.sensitivity * dt, transform);
+        first_person_controller_component::look(look_input, first_person_controller.sensitivity * dt, *first_person_controller.head_transform, *first_person_controller.body_transform);
 
-        if (move_input.x != 0.0f || move_input.y != 0.0f || move_input.z != 0.0f || look_input.x != 0.0f || look_input.y != 0.0f)
+        if (move_input.x != 0.f || move_input.y != 0.f || move_input.z != 0.f || look_input.x != 0.f || look_input.y != 0.f)
             camera.update_projection_view_matrix(ctx->window->size);
     }
 }

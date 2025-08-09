@@ -23,13 +23,16 @@ SOFTWARE.
 */
 
 #include <GLFW/glfw3.h>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
 #include <glad/glad.h>
 
 #include "renderer/mesh.h"
 #include "renderer/renderer.h"
 
 namespace dt {
-mesh_t::mesh_t(std::vector<vertex> _vertices, std::vector<unsigned int> _indices) : vertices(_vertices), indices(_indices) {
+mesh_t::mesh_t(std::vector<vertex> vertices, std::vector<unsigned int> indices) : vertices(vertices), indices(indices) {
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
     glGenBuffers(1, &ebo);
@@ -73,18 +76,18 @@ mesh_t &mesh_t::quad() {
     std::vector<unsigned int> indices;
     vertex v0, v1, v2, v3;
 
-    v0.position = glm::vec3(-0.5f, -0.5f, 0.0f);
-    v1.position = glm::vec3(0.5f, -0.5f, 0.0f);
-    v2.position = glm::vec3(0.5f, 0.5f, 0.0f);
-    v3.position = glm::vec3(-0.5f, 0.5f, 0.0f);
-    v0.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    v1.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    v2.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    v3.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    v0.tex_coords = glm::vec2(0.0f, 0.0f);
-    v1.tex_coords = glm::vec2(1.0f, 0.0f);
-    v2.tex_coords = glm::vec2(1.0f, 1.0f);
-    v3.tex_coords = glm::vec2(0.0f, 1.0f);
+    v0.position = glm::vec3(-0.5f, -0.5f, 0.f);
+    v1.position = glm::vec3(0.5f, -0.5f, 0.f);
+    v2.position = glm::vec3(0.5f, 0.5f, 0.f);
+    v3.position = glm::vec3(-0.5f, 0.5f, 0.f);
+    v0.normal = glm::vec3(0.f, 0.f, 1.f);
+    v1.normal = glm::vec3(0.f, 0.f, 1.f);
+    v2.normal = glm::vec3(0.f, 0.f, 1.f);
+    v3.normal = glm::vec3(0.f, 0.f, 1.f);
+    v0.tex_coords = glm::vec2(0.f, 0.f);
+    v1.tex_coords = glm::vec2(1.f, 0.f);
+    v2.tex_coords = glm::vec2(1.f, 1.f);
+    v3.tex_coords = glm::vec2(0.f, 1.f);
     vertices.push_back(v0);
     vertices.push_back(v1);
     vertices.push_back(v2);

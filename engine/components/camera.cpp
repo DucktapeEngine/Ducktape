@@ -28,11 +28,11 @@ SOFTWARE.
 
 namespace dt {
 void camera_component::update_projection_view_matrix(const glm::ivec2 &window_size) {
-    view = glm::lookAtLH(shared_transform->translation, shared_transform->translation + shared_transform->forward(), shared_transform->up());
+    view = glm::lookAtLH(shared_transform->position, shared_transform->position + shared_transform->forward(), shared_transform->up());
 
     float aspect = (float)window_size.x / (float)window_size.y;
     if (is_orthographic)
-        projection = glm::orthoLH(-aspect, aspect, -1.0f, 1.0f, near_plane, far_plane);
+        projection = glm::orthoLH(-aspect, aspect, -1.f, 1.f, near_plane, far_plane);
     else
         projection = glm::perspectiveLH(glm::radians(field_of_view), aspect, near_plane, far_plane);
 }
@@ -67,7 +67,7 @@ void camera_system_t::inspector(context_t *ctx, float dt, entt::entity selected_
 
             camera_needs_update |= ImGui::ColorEdit4("background", &camera.background_color.x);
             camera_needs_update |= ImGui::Checkbox("is orthographic", &camera.is_orthographic);
-            camera_needs_update |= ImGui::DragFloat("field of view", &camera.field_of_view, 1.0f, 0.0f, 180.0f);
+            camera_needs_update |= ImGui::DragFloat("field of view", &camera.field_of_view, 1.f, 0.f, 180.f);
             camera_needs_update |= ImGui::DragFloat("near plane", &camera.near_plane);
             camera_needs_update |= ImGui::DragFloat("far plane", &camera.far_plane);
 

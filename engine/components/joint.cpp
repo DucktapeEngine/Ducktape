@@ -22,23 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "renderer/material.h"
+#include "components/joint.h"
+#include "core/context.h"
+#include "scene/scene_manager.h"
 
 namespace dt {
-material_t::material_t() : shader_asset("engine/shaders/default.glsl") {}
+void joint_system_t::tick(context_t *ctx, float dt) {
+    auto scene_view = ctx->scene_manager->scene.view<transform_component, joint_component>();
 
-std::shared_ptr<material_t> material_t::load(const std::filesystem::path &path) {
-    auto mat = std::make_shared<material_t>();
+    for (auto [entity, transform, joint] : scene_view.each()) {
+        transform.position = joint.joined_transform->position + joint.offset.position;
+    }
+}
 
-    // mat->shader_asset.load(path);
+void joint_system_t::inspector(context_t *ctx, float dt, entt::entity selected_entity) {
+    auto view = ctx->scene_manager->scene.view<joint_component>();
 
-    // default texture assignments
-    // mat->texture_assets["diffuse"] = asset<texture>();
+    for (auto [entity, camera] : view.each()) {
+        if (entity != selected_entity)
+            continue;
 
-    // default uniforms
-    mat->uniforms["color"] = uniform_value(glm::vec3{1.f, 1.f, 1.f});
-    mat->uniforms["shininess"] = uniform_value(32.f);
-
-    return mat;
+        if (ImGui::CollapsingHeader("Joint")) {
+            // todo: some better way to render components (architectural haul)
+        }
+    }
 }
 } // namespace dt

@@ -33,7 +33,7 @@ SOFTWARE.
 
 namespace dt {
 glm::mat4 transform_component::get_model_matrix() const {
-    glm::mat4 trans = glm::translate(glm::mat4(1.f), translation);
+    glm::mat4 trans = glm::translate(glm::mat4(1.f), position);
     glm::mat4 rot = glm::toMat4(rotation);
     glm::mat4 scl = glm::scale(glm::mat4(1.f), scale);
 
@@ -43,7 +43,7 @@ glm::mat4 transform_component::get_model_matrix() const {
 void transform_component::set_model_matrix(glm::mat4 model) {
     glm::vec3 skew;
     glm::vec4 perspective;
-    glm::decompose(model, scale, rotation, translation, skew, perspective);
+    glm::decompose(model, scale, rotation, position, skew, perspective);
 }
 
 glm::vec3 transform_component::right() const {
@@ -51,7 +51,7 @@ glm::vec3 transform_component::right() const {
 }
 
 glm::vec3 transform_component::forward() const {
-    return rotation * glm::vec3(0.0f, 0.0f, 1.0f);
+    return rotation * glm::vec3(0.f, 0.f, 1.f);
 }
 
 glm::vec3 transform_component::up() const {
@@ -67,7 +67,7 @@ void transform_component::set_euler_rotation(glm::vec3 euler_rotation) {
 }
 
 void transform_component::look_at(const glm::vec3 &at) {
-    rotation = glm::quatLookAt(glm::normalize(at - translation), {0.f, 1.f, 0.f});
+    rotation = glm::quatLookAt(glm::normalize(at - position), {0.f, 1.f, 0.f});
 }
 
 void transform_system_t::inspector(context_t *ctx, float dt, entt::entity selected_entity) {
@@ -80,14 +80,14 @@ void transform_system_t::inspector(context_t *ctx, float dt, entt::entity select
         if (ImGui::CollapsingHeader("Transform")) {
             if (ImGui::BeginPopupContextItem()) {
                 if (ImGui::MenuItem("Reset")) {
-                    transform_component.translation = glm::vec3(0);
+                    transform_component.position = glm::vec3(0);
                     transform_component.set_euler_rotation(glm::vec3(0));
                     transform_component.scale = glm::vec3(1);
                 }
                 ImGui::EndPopup();
             }
 
-            ImGui::Vec3("position", &transform_component.translation);
+            ImGui::Vec3("position", &transform_component.position);
 
             glm::vec3 euler_angles = transform_component.get_euler_rotation();
             if (ImGui::Vec3("rotation", &euler_angles))

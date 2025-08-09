@@ -34,7 +34,7 @@ class transform_component;
 
 class camera_component {
   public:
-    float field_of_view = 75.f, near_plane = 0.1f, far_plane = 100.f;
+    float field_of_view = 75.f, near_plane = 0.1f, far_plane = 1000.f;
     glm::mat4 projection, view;
     bool is_orthographic = false;
     unsigned int fbo, rbo, render_texture;

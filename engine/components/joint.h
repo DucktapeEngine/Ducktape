@@ -22,23 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "renderer/material.h"
+#pragma once
+
+#include <entt/entt.hpp>
+
+#include "components/transform.h"
 
 namespace dt {
-material_t::material_t() : shader_asset("engine/shaders/default.glsl") {}
+class joint_component {
+  public:
+    transform_component *joined_transform;
+    transform_component offset;
+};
 
-std::shared_ptr<material_t> material_t::load(const std::filesystem::path &path) {
-    auto mat = std::make_shared<material_t>();
-
-    // mat->shader_asset.load(path);
-
-    // default texture assignments
-    // mat->texture_assets["diffuse"] = asset<texture>();
-
-    // default uniforms
-    mat->uniforms["color"] = uniform_value(glm::vec3{1.f, 1.f, 1.f});
-    mat->uniforms["shininess"] = uniform_value(32.f);
-
-    return mat;
-}
+class joint_system_t {
+  public:
+    void tick(context_t *ctx, float dt);
+    void inspector(context_t *ctx, float dt, entt::entity selected_entity);
+};
 } // namespace dt

@@ -34,18 +34,18 @@ class context_t;
 
 class transform_component {
   public:
-    glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::quat rotation = glm::quat(0.0f, 0.0f, 0.0f, 0.0f);
     glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    glm::mat4 get_model_matrix() const;
-    void set_model_matrix(glm::mat4 model);
+    glm::vec3 up() const;
     glm::vec3 right() const;
     glm::vec3 forward() const;
-    glm::vec3 up() const;
+    void look_at(const glm::vec3 &at);
+    glm::mat4 get_model_matrix() const;
+    void set_model_matrix(glm::mat4 model);
     glm::vec3 get_euler_rotation() const;
     void set_euler_rotation(glm::vec3 euler_rotation);
-    void look_at(const glm::vec3 &at);
 };
 
 class transform_system_t {

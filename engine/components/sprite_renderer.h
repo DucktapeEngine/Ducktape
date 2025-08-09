@@ -33,7 +33,7 @@ class camera_component;
 
 class sprite_renderer_component {
   public:
-    sprite_renderer_component() : mesh(mesh_t::quad()), material_asset("") {}
+    sprite_renderer_component();
 
     void set_sprite(const std::string &path);
 
@@ -46,7 +46,6 @@ class sprite_renderer_component {
 
 class sprite_renderer_system_t {
   public:
-    void init(context_t *ctx);
     void render(context_t *ctx, float dt, const camera_component *active_camera);
     void inspector(context_t *ctx, float dt, entt::entity selected_entity);
 };
