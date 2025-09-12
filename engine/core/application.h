@@ -43,6 +43,7 @@ SOFTWARE.
 #include "editor.h"
 #include "panels/hierarchy_panel.h"
 #include "panels/inspector_panel.h"
+// #include "panels/resource_browser_panel.h"
 #include "panels/world_view_panel.h"
 #endif
 
@@ -90,6 +91,7 @@ class application_t {
         editor.panels.push_back(std::make_shared<inspector_panel>());
         editor.panels.push_back(std::make_shared<hierarchy_panel>());
         editor.panels.push_back(std::make_shared<world_view_panel>());
+        // editor.panels.push_back(std::make_shared<resource_browser_panel>());
 #endif
 
         context = {&window, &scene_manager, &renderer, &input_manager, &editor};
